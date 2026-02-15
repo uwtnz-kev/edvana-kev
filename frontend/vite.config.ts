@@ -9,6 +9,7 @@ const __dirname = dirname(__filename);
 
 export default defineConfig({
   plugins: [react()],
+  base: '/edvana-kev/',  // ← ADD THIS LINE (GitHub Pages repo name)
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
