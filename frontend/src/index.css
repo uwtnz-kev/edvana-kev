@@ -1,0 +1,219 @@
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import hover fixes */
+@import url('./components/ui/hover-fix.css');
+ 
+:root {
+    --background: hsl(0, 0%, 100%);
+    --foreground: hsl(20, 14.3%, 4.1%);
+    --muted: hsl(60, 4.8%, 95.9%);
+    --muted-foreground: hsl(25, 5.3%, 44.7%);
+    --popover: hsl(0, 0%, 100%);
+    --popover-foreground: hsl(20, 14.3%, 4.1%);
+    --card: hsl(0, 0%, 100%);
+    --card-foreground: hsl(20, 14.3%, 4.1%);
+    --border: hsl(20, 5.9%, 90%);
+    --input: hsl(20, 5.9%, 90%);
+    --primary: hsl(207, 90%, 54%);
+    --primary-foreground: hsl(211, 100%, 99%);
+    --secondary: hsl(60, 4.8%, 95.9%);
+    --secondary-foreground: hsl(24, 9.8%, 10%);
+    --accent: hsl(60, 4.8%, 95.9%);
+    --accent-foreground: hsl(24, 9.8%, 10%);
+    --destructive: hsl(0, 84.2%, 60.2%);
+    --destructive-foreground: hsl(60, 9.1%, 97.8%);
+    --ring: hsl(20, 14.3%, 4.1%);
+    --radius: 0.5rem;
+    /* Brand Colors */
+    --brand-primary: hsl(194, 8%, 31%);
+    --brand-accent: hsl(14, 100%, 67%);
+    --brand-light: hsl(0, 0%, 100%);
+    --brand-teal: hsl(172, 69%, 41%);
+    --brand-brown: hsl(18, 16%, 28%);
+    /* Glassmorphism Variables */
+    --glass-bg-opacity: 0.1;
+    --glass-border-opacity: 0.2;
+    --glass-blur: 10px;
+    --glass-card-bg-opacity: 0.08;
+    --glass-card-border-opacity: 0.15;
+    --glass-card-blur: 15px;
+    --glass-button-bg-opacity: 0.12;
+    --glass-button-border-opacity: 0.2;
+    --glass-button-blur: 8px;
+    --glass-input-bg-opacity: 0.06;
+    --glass-input-border-opacity: 0.15;
+    --glass-input-blur: 12px;
+    --glass-navbar-bg-opacity: 0.8;
+    --glass-navbar-border-opacity: 0.1;
+    --glass-navbar-blur: 20px;
+    --glass-modal-bg-opacity: 0.15;
+    --glass-modal-border-opacity: 0.2;
+    --glass-modal-blur: 25px;
+    --glass-dashboard-bg-opacity: 0.05;
+    --glass-dashboard-border-opacity: 0.1;
+    --glass-dashboard-blur: 18px;
+}
+
+.dark {
+    --background: hsl(240, 10%, 3.9%);
+    --foreground: hsl(0, 0%, 98%);
+    --muted: hsl(240, 3.7%, 15.9%);
+    --muted-foreground: hsl(240, 5%, 64.9%);
+    --popover: hsl(240, 10%, 3.9%);
+    --popover-foreground: hsl(0, 0%, 98%);
+    --card: hsl(240, 10%, 3.9%);
+    --card-foreground: hsl(0, 0%, 98%);
+    --border: hsl(240, 3.7%, 15.9%);
+    --input: hsl(240, 3.7%, 15.9%);
+    --primary: hsl(207, 90%, 54%);
+    --primary-foreground: hsl(211, 100%, 99%);
+    --secondary: hsl(240, 3.7%, 15.9%);
+    --secondary-foreground: hsl(0, 0%, 98%);
+    --accent: hsl(240, 3.7%, 15.9%);
+    --accent-foreground: hsl(0, 0%, 98%);
+    --destructive: hsl(0, 62.8%, 30.6%);
+    --destructive-foreground: hsl(0, 0%, 98%);
+    --ring: hsl(240, 4.9%, 83.9%);
+    --radius: 0.5rem;
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    html,
+    body {
+        overscroll-behavior: none;
+    }
+    body {
+        @apply font-sans antialiased bg-background text-white;
+        font-family: 'Inter', sans-serif;
+    }
+}
+
+@layer components {
+    /* Glass effect utilities */
+    .glass-effect {
+        background: rgba(255, 255, 255, var(--glass-bg-opacity));
+        backdrop-filter: blur(var(--glass-blur));
+        border: 1px solid rgba(255, 255, 255, var(--glass-border-opacity));
+    }
+    .glass-card {
+        background: rgba(255, 255, 255, var(--glass-card-bg-opacity));
+        backdrop-filter: blur(var(--glass-card-blur));
+        border: 1px solid rgba(255, 255, 255, var(--glass-card-border-opacity));
+    }
+    .glass-button {
+        background: rgba(255, 255, 255, var(--glass-button-bg-opacity));
+        backdrop-filter: blur(var(--glass-button-blur));
+        border: 1px solid rgba(255, 255, 255, var(--glass-button-border-opacity));
+    }
+    .glass-input {
+        background: rgba(255, 255, 255, var(--glass-input-bg-opacity));
+        backdrop-filter: blur(var(--glass-input-blur));
+        border: 1px solid rgba(255, 255, 255, var(--glass-input-border-opacity));
+    }
+    .glass-navbar {
+        background: rgba(76, 84, 84, var(--glass-navbar-bg-opacity));
+        backdrop-filter: blur(var(--glass-navbar-blur));
+        border-bottom: 1px solid rgba(255, 255, 255, var(--glass-navbar-border-opacity));
+    }
+    .glass-modal {
+        background: rgba(255, 255, 255, var(--glass-modal-bg-opacity));
+        backdrop-filter: blur(var(--glass-modal-blur));
+        border: 1px solid rgba(255, 255, 255, var(--glass-modal-border-opacity));
+    }
+    .glass-dashboard {
+        background: rgba(255, 255, 255, var(--glass-dashboard-bg-opacity));
+        backdrop-filter: blur(var(--glass-dashboard-blur));
+        border: 1px solid rgba(255, 255, 255, var(--glass-dashboard-border-opacity));
+    }
+    /* Brand glass effects */
+    .glass-brand-primary {
+        background: rgba(76, 84, 84, 0.2);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(76, 84, 84, 0.3);
+    }
+    .glass-brand-accent {
+        background: rgba(255, 113, 91, 0.15);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 113, 91, 0.25);
+    }
+    .glass-brand-teal {
+        background: rgba(30, 168, 150, 0.15);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(30, 168, 150, 0.25);
+    }
+    /* Hover effects with proper text color preservation */
+    .glass-hover:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        color: rgba(255, 255, 255, 0.95) !important;
+    }
+    /* Brand-specific hover effects */
+    .glass-brand-primary:hover {
+        background: rgba(76, 84, 84, 0.3);
+        border-color: rgba(76, 84, 84, 0.4);
+        color: white !important;
+    }
+    .glass-brand-accent:hover {
+        background: rgba(255, 113, 91, 0.25);
+        border-color: rgba(255, 113, 91, 0.35);
+        color: white !important;
+    }
+    .glass-brand-teal:hover {
+        background: rgba(30, 168, 150, 0.25);
+        border-color: rgba(30, 168, 150, 0.35);
+        color: white !important;
+    }
+    /* Universal button hover fix */
+    button:hover,
+    .btn:hover,
+    [role="button"]:hover {
+        color: inherit !important;
+    }
+    /* Specific hover states for different button types */
+    .glass-effect:hover {
+        color: rgba(255, 255, 255, 0.95) !important;
+    }
+    .glass-card:hover {
+        color: rgba(255, 255, 255, 0.95) !important;
+    }
+    /* Ensure link hovers maintain white text */
+    a:hover,
+    .link:hover {
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+    /* Animation utilities */
+    .glass-transition {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    /* Smooth text color transitions */
+    .text-transition {
+        transition: color 0.2s ease-in-out;
+    }
+    /* Enhanced button transitions */
+    .button-transition {
+        transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, transform 0.2s ease-in-out, color 0.2s ease-in-out;
+    }
+    /* Custom scrollbar */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.5);
+    }
+}
