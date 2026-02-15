@@ -66,7 +66,7 @@ import { SuperAdminDashboard } from "@/dashboard/superadmin/SuperAdminDashboard"
 
 export function AppRouter() {
   return (
-    <BrowserRouter>
+   <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
 
         {/* Public */}
