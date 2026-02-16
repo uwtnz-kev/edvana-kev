@@ -26,7 +26,8 @@ api.interceptors.response.use(
     const isLoginPage = window.location.pathname === "/login";
     if (error.response?.status === 401 && !isLoginPage) {
       clearAuthData();
-      window.location.href = "/login";
+      window.location.href = `${import.meta.env.BASE_URL}login`;
+
     }
     return Promise.reject(error);
   }
