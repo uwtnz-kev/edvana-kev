@@ -6,9 +6,9 @@ import { dirname, resolve } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(() => ({
   plugins: [react()],
-  base: mode === "production" ? "/edvana-kev/" : "/",
+  base: "/",
   resolve: {
     alias: {
       "@": resolve(__dirname, "./src"),
