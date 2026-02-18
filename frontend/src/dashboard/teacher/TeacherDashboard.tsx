@@ -4,9 +4,10 @@ import TeacherSidebar from "./layout/TeacherSidebar";
 
 export default function TeacherDashboard() {
   return (
-    <DashboardLayout
-      navbar={<TeacherNavbar />}
-      sidebar={<TeacherSidebar />}
-    />
+    <DashboardLayout navbar={<TeacherNavbar />} sidebar={<TeacherSidebar />}>
+      <div style={{ padding: 16, fontWeight: 700 }}>
+        Teacher dashboard mounted
+      </div>
+    </DashboardLayout>
   );
 }
