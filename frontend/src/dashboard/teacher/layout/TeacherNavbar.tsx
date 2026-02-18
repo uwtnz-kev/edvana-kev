@@ -26,18 +26,6 @@ export default function TeacherNavbar() {
 
   return (
     <header className="w-full sticky top-0 z-50 bg-white/5 backdrop-blur-lg border-b border-white/10 shadow-lg">
-      {/* DEBUG FINGERPRINT */}
-      <div
-        style={{
-          background: "red",
-          color: "white",
-          padding: 8,
-          fontWeight: 700,
-        }}
-      >
-        LILIANE V2 NAVBAR
-      </div>
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-3">
