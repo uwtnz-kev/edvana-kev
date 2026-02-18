@@ -19,11 +19,7 @@ export function DashboardLayout({ navbar, sidebar }: DashboardLayoutProps) {
 
         <main className="flex-1 w-0 min-w-0">
           <div className="bg-white/5 backdrop-blur-sm border-l border-white/10 min-h-[calc(100vh-4rem)]">
-            <div style={{ background: "red", color: "white", padding: 8, fontWeight: 700 }}>
-              DASHBOARDLAYOUT OUTLET AREA
-            </div>
-
-            <Outlet />
+            <Outlet /> {/* renders child routes */}
           </div>
         </main>
       </div>
