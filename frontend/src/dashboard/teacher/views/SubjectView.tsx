@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { TeacherSubjectsHeader, TeacherSubjectsControls, TeacherSubjectList } from "../components/subjects";
 import { BookOpen } from "lucide-react";
+import {
+  GlassSelect,
+  GlassSelectContent,
+  GlassSelectItem,
+  GlassSelectTrigger,
+  GlassSelectValue,
+} from "@/dashboard/schooladmin/components/ui/GlassSelect";
 
 export default function SubjectView() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -18,6 +25,8 @@ export default function SubjectView() {
   const totalSubjects = 6;
   const totalStudents = 148;
   const pendingToGrade = 23;
+
+  const maxPage = Math.max(1, Math.ceil(totalSubjects / itemsPerPage));
 
   return (
     <div className="p-4 sm:p-6">
@@ -95,44 +104,89 @@ export default function SubjectView() {
           />
         </div>
 
-        <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div
+          className="
+            bg-white/5 backdrop-blur-lg
+            border border-white/10
+            rounded-xl
+            p-4
+            flex flex-col sm:flex-row
+            sm:items-center sm:justify-between
+            gap-3
+            transition-all duration-300 ease-out
+            hover:bg-white/10
+            hover:border-white/20
+            hover:shadow-xl
+            hover:-translate-y-1
+          "
+        >
           <div className="text-white/70 text-sm">
-            Page {currentPage} of {Math.max(1, Math.ceil(totalSubjects / itemsPerPage))}
+            Page {currentPage} of {maxPage}
           </div>
 
-          <div className="flex items-center gap-2">
-            <button
-              className="px-3 py-2 rounded-lg bg-white/10 hover:bg-white/15 text-white/90 border border-white/10"
-              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-              disabled={currentPage === 1}
-            >
-              Prev
-            </button>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
+            <div className="flex gap-2 w-full sm:w-auto">
+              <button
+                className="
+                  h-11
+                  flex-1 sm:flex-none sm:w-[92px]
+                  rounded-xl
+                  bg-white/10
+                  hover:bg-white/15
+                  text-white/90
+                  border border-white/10
+                  transition
+                  disabled:opacity-50 disabled:cursor-not-allowed
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30
+                "
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+              >
+                Prev
+              </button>
 
-            <button
-              className="px-3 py-2 rounded-lg bg-white/10 hover:bg-white/15 text-white/90 border border-white/10"
-              onClick={() =>
-                setCurrentPage((p) => {
-                  const maxPage = Math.max(1, Math.ceil(totalSubjects / itemsPerPage));
-                  return Math.min(maxPage, p + 1);
-                })
-              }
-            >
-              Next
-            </button>
+              <button
+                className="
+                  h-11
+                  flex-1 sm:flex-none sm:w-[92px]
+                  rounded-xl
+                  bg-white/10
+                  hover:bg-white/15
+                  text-white/90
+                  border border-white/10
+                  transition
+                  disabled:opacity-50 disabled:cursor-not-allowed
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30
+                "
+                onClick={() =>
+                  setCurrentPage((p) => Math.min(maxPage, p + 1))
+                }
+                disabled={currentPage >= maxPage}
+              >
+                Next
+              </button>
+            </div>
 
-            <select
-              className="px-3 py-2 rounded-lg bg-white/10 text-white/90 border border-white/10"
-              value={itemsPerPage}
-              onChange={(e) => {
-                setItemsPerPage(Number(e.target.value));
-                setCurrentPage(1);
-              }}
-            >
-              <option value={6}>6 per page</option>
-              <option value={12}>12 per page</option>
-              <option value={24}>24 per page</option>
-            </select>
+            <div className="w-full sm:w-[180px]">
+              <GlassSelect
+                value={String(itemsPerPage)}
+                onValueChange={(v) => {
+                  setItemsPerPage(Number(v));
+                  setCurrentPage(1);
+                }}
+              >
+                
+                <GlassSelectTrigger className="h-11 rounded-xl bg-white/10 border-white/10 text-white/90 hover:bg-white/15 transition-colors">
+                  <GlassSelectValue placeholder="Per page" />
+                </GlassSelectTrigger>
+
+                <GlassSelectContent>
+                  <GlassSelectItem value="4">4 per page</GlassSelectItem>
+                  <GlassSelectItem value="12">12 per page</GlassSelectItem>
+                  <GlassSelectItem value="24">24 per page</GlassSelectItem>
+                </GlassSelectContent>
+              </GlassSelect>
+            </div>
           </div>
         </div>
       </div>

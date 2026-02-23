@@ -29,6 +29,7 @@ import { StudentDashboardErrorFallback } from "@/dashboard/student/states/ErrorB
 // Teacher Dashboard
 import TeacherDashboard from "@/dashboard/teacher/TeacherDashboard";
 import TeacherOverview from "@/dashboard/teacher/views/Overview";
+import TeacherParentsView from "@/dashboard/teacher/views/ParentView";
 import TeacherSubjectView from "@/dashboard/teacher/views/SubjectView";
 import TeacherStudentsView from "@/dashboard/teacher/views/StudentsView";
 import TeacherAssignmentsView from "@/dashboard/teacher/views/AssignmentsView";
@@ -40,6 +41,8 @@ import TeacherChatbotView from "@/dashboard/teacher/views/ai-tutor/ChatbotView";
 import TeacherQuizGeneratorView from "@/dashboard/teacher/views/ai-tutor/QuizGeneratorView";
 import TeacherGeneralSettingsView from "@/dashboard/teacher/views/settings/GeneralSettingsView";
 import TeacherAccountSettingsView from "@/dashboard/teacher/views/settings/AccountSettingsView";
+import TeacherSubjectDetailsView from "@/dashboard/teacher/views/SubjectDetailsView";
+import SubjectModuleView from "@/dashboard/teacher/views/SubjectModuleView";
 
 // School Admin Dashboard
 import SchoolAdminDashboard from "@/dashboard/schooladmin/SchoolAdminDashboard";
@@ -117,7 +120,9 @@ export function AppRouter() {
               <TeacherDashboard />
             </ProtectedRoute>
           }
+          
         >
+          <Route path="subjects/:subjectId" element={<TeacherSubjectDetailsView />} />
           <Route index element={<TeacherOverview />} />
           <Route path="overview" element={<TeacherOverview />} />
           <Route path="subjects" element={<TeacherSubjectView />} />
@@ -127,6 +132,8 @@ export function AppRouter() {
           <Route path="resources" element={<TeacherResourcesView />} />
           <Route path="schedule" element={<TeacherScheduleView />} />
           <Route path="support" element={<TeacherSupportView />} />
+          <Route path="parents" element={<TeacherParentsView />} />
+          <Route path="subjects/:subjectId/modules/:moduleId"element={<SubjectModuleView />}/>
 
           <Route path="ai-tutor">
             <Route index element={<Navigate to="chatbot" replace />} />
@@ -147,7 +154,7 @@ export function AppRouter() {
         <Route
           path="/dashboard/schooladmin"
           element={
-            <ProtectedRoute requiredRole={USER_ROLES.ADMIN}>
+            <ProtectedRoute requiredRole={USER_ROLES.SCHOOL_ADMIN}>
               <SchoolAdminDashboard />
             </ProtectedRoute>
           }

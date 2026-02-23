@@ -26,6 +26,7 @@ const navItems = [
   { label: "Overview", href: "/dashboard/teacher", icon: BarChart3 },
   { label: "Subjects", href: "/dashboard/teacher/subjects", icon: BookOpen },
   { label: "Students", href: "/dashboard/teacher/students", icon: Users },
+  { label: "Parents", href: "/dashboard/teacher/parents", icon: Users },
   { label: "Assignments", href: "/dashboard/teacher/assignments", icon: ClipboardList },
   { label: "Exams", href: "/dashboard/teacher/exams", icon: FileText },
   {
@@ -74,35 +75,37 @@ export default function TeacherSidebar() {
         variant="ghost"
         size="sm"
         onClick={toggleMobile}
-        className="fixed top-20 left-4 z-[100] lg:hidden bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-[#FF715B]/20 hover:border-[#FF715B]/40 text-white rounded-lg shadow-lg"
+        className="fixed top-20 left-4 z-[100] lg:hidden bg-white/25 backdrop-blur-xl border border-white/30 hover:bg-white/35 hover:border-white/45 text-[#3B240F] rounded-lg shadow-[0_10px_30px_rgba(59,36,15,0.25)]"
       >
-        {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        {isMobileOpen ? <X className="h-5 w-5 text-[#3B240F]" /> : <Menu className="h-5 w-5 text-[#3B240F]" />}
       </Button>
 
       {isMobileOpen && (
         <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-30 lg:hidden"
+          className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 lg:hidden"
           onClick={closeMobile}
         />
       )}
 
       <aside
         className={cn(
-          "fixed lg:static left-0 top-16 lg:top-0 h-[calc(100vh-4rem)] lg:h-full bg-white/5 backdrop-blur-lg border-r border-white/10 shadow-xl transition-all duration-300 z-40 rounded-r-xl lg:rounded-none overflow-hidden",
+          "fixed lg:static left-0 top-16 lg:top-0 h-[calc(100vh-4rem)] lg:h-full bg-white/18 backdrop-blur-xl border-r border-white/25 shadow-[0_18px_50px_rgba(59,36,15,0.25)] transition-all duration-300 z-40 rounded-r-xl lg:rounded-none overflow-hidden",
           isCollapsed ? "lg:w-16" : "lg:w-64",
           isMobileOpen ? "translate-x-0 w-64" : "-translate-x-full lg:translate-x-0"
         )}
       >
         <div className="flex flex-col h-full overflow-y-auto max-h-screen">
-          <div className="p-4 border-b border-white/10">
+          <div className="p-4 border-b border-white/25">
             {!isCollapsed ? (
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-white">My Dashboard</h2>
+                <h2 className="text-lg font-semibold text-[#3B240F]">
+                  My Dashboard
+                </h2>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setIsCollapsed(!isCollapsed)}
-                  className="hidden lg:flex h-8 w-8 p-0 hover:bg-white/10 text-white/60 hover:text-white rounded-lg"
+                  className="hidden lg:flex h-8 w-8 p-0 hover:bg-white/20 text-[#6B4F3A] hover:text-[#3B240F] rounded-lg"
                 >
                   <Menu className="h-4 w-4" />
                 </Button>
@@ -112,7 +115,7 @@ export default function TeacherSidebar() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsCollapsed(!isCollapsed)}
-                className="hidden lg:flex h-8 w-8 p-0 hover:bg-white/10 text-white/60 hover:text-white mx-auto rounded-lg"
+                className="hidden lg:flex h-8 w-8 p-0 hover:bg-white/20 text-[#6B4F3A] hover:text-[#3B240F] mx-auto rounded-lg"
               >
                 <Menu className="h-4 w-4" />
               </Button>
@@ -133,10 +136,10 @@ export default function TeacherSidebar() {
                     <button
                       onClick={() => toggleExpanded(item.label)}
                       className={cn(
-                        "flex items-center justify-between w-full gap-3 px-4 py-3 rounded-xl text-white/80 hover:text-white transition-all duration-200 group relative",
-                        "hover:bg-gradient-to-r hover:from-[#FF715B]/10 hover:to-[#FF715B]/5 hover:shadow-lg hover:shadow-[#FF715B]/10",
+                        "flex items-center justify-between w-full gap-3 px-4 py-3 rounded-xl text-[#6B4F3A] hover:text-[#3B240F] transition-all duration-200 group relative",
+                        "hover:bg-white/22",
                         isActive &&
-                          "bg-gradient-to-r from-[#FF715B]/20 to-[#FF715B]/10 text-white font-medium border border-[#FF715B]/30 shadow-lg shadow-[#FF715B]/20",
+                          "bg-white/28 text-[#3B240F] font-medium border border-white/35 shadow-[0_14px_35px_rgba(59,36,15,0.18)]",
                         isCollapsed && "lg:justify-center lg:px-2"
                       )}
                     >
@@ -144,11 +147,15 @@ export default function TeacherSidebar() {
                         <Icon
                           className={cn(
                             "h-5 w-5 flex-shrink-0 transition-colors duration-200",
-                            isActive ? "text-[#FF715B]" : "text-white/70",
-                            "group-hover:text-[#FF715B]"
+                            isActive ? "text-[#7A5A3A]" : "text-[#6B4F3A]",
+                            "group-hover:text-[#7A5A3A]"
                           )}
                         />
-                        {!isCollapsed && <span className="truncate font-medium">{item.label}</span>}
+                        {!isCollapsed && (
+                          <span className="truncate font-medium">
+                            {item.label}
+                          </span>
+                        )}
                       </div>
 
                       {!isCollapsed && (
@@ -156,7 +163,7 @@ export default function TeacherSidebar() {
                           className={cn(
                             "h-4 w-4 transition-transform duration-200",
                             isExpanded ? "rotate-180" : "",
-                            isActive ? "text-[#FF715B]" : "text-white/50"
+                            isActive ? "text-[#7A5A3A]" : "text-[#6B4F3A]"
                           )}
                         />
                       )}
@@ -166,21 +173,25 @@ export default function TeacherSidebar() {
                       to={item.href}
                       onClick={closeMobile}
                       className={cn(
-                        "flex items-center gap-3 px-4 py-3 rounded-xl text-white/80 hover:text-white transition-all duration-200 group relative",
-                        "hover:bg-gradient-to-r hover:from-[#FF715B]/10 hover:to-[#FF715B]/5 hover:shadow-lg hover:shadow-[#FF715B]/10",
+                        "flex items-center gap-3 px-4 py-3 rounded-xl text-[#6B4F3A] hover:text-[#3B240F] transition-all duration-200 group relative",
+                        "hover:bg-white/22",
                         isActive &&
-                          "bg-gradient-to-r from-[#FF715B]/20 to-[#FF715B]/10 text-white font-medium border border-[#FF715B]/30 shadow-lg shadow-[#FF715B]/20",
+                          "bg-white/28 text-[#3B240F] font-medium border border-white/35 shadow-[0_14px_35px_rgba(59,36,15,0.18)]",
                         isCollapsed && "lg:justify-center lg:px-2"
                       )}
                     >
                       <Icon
                         className={cn(
                           "h-5 w-5 flex-shrink-0 transition-colors duration-200",
-                          isActive ? "text-[#FF715B]" : "text-white/70",
-                          "group-hover:text-[#FF715B]"
+                          isActive ? "text-[#7A5A3A]" : "text-[#6B4F3A]",
+                          "group-hover:text-[#7A5A3A]"
                         )}
                       />
-                      {!isCollapsed && <span className="truncate font-medium">{item.label}</span>}
+                      {!isCollapsed && (
+                        <span className="truncate font-medium">
+                          {item.label}
+                        </span>
+                      )}
                     </NavLink>
                   )}
 
@@ -196,20 +207,22 @@ export default function TeacherSidebar() {
                             to={subItem.href}
                             onClick={closeMobile}
                             className={cn(
-                              "flex items-center gap-3 px-4 py-2 rounded-lg text-white/70 hover:text-white transition-all duration-200 group relative text-sm",
-                              "hover:bg-gradient-to-r hover:from-[#1EA896]/10 hover:to-[#1EA896]/5",
+                              "flex items-center gap-3 px-4 py-2 rounded-lg text-[#6B4F3A] hover:text-[#3B240F] transition-all duration-200 group relative text-sm",
+                              "hover:bg-white/22",
                               isSubActive &&
-                                "bg-gradient-to-r from-[#1EA896]/20 to-[#1EA896]/10 text-white font-medium border border-[#1EA896]/30 shadow-lg shadow-[#1EA896]/20"
+                                "bg-white/30 text-[#3B240F] font-medium border border-white/35 shadow-[0_12px_28px_rgba(59,36,15,0.16)]"
                             )}
                           >
                             <SubIcon
                               className={cn(
                                 "h-4 w-4 flex-shrink-0 transition-colors duration-200",
-                                isSubActive ? "text-[#1EA896]" : "text-white/60",
-                                "group-hover:text-[#1EA896]"
+                                isSubActive ? "text-[#7A5A3A]" : "text-[#6B4F3A]",
+                                "group-hover:text-[#7A5A3A]"
                               )}
                             />
-                            <span className="truncate font-medium">{subItem.label}</span>
+                            <span className="truncate font-medium">
+                              {subItem.label}
+                            </span>
                           </NavLink>
                         );
                       })}
@@ -220,19 +233,21 @@ export default function TeacherSidebar() {
             })}
           </nav>
 
-          <div className="p-4 border-t border-white/10">
+          <div className="p-4 border-t border-white/25">
             {!isCollapsed ? (
               <div className="text-center space-y-1">
-                <div className="w-8 h-8 mx-auto bg-gradient-to-br from-[#1EA896] to-[#1EA896]/80 rounded-full flex items-center justify-center mb-2">
-                  <span className="text-white text-xs font-bold">E</span>
+                <div className="w-8 h-8 mx-auto bg-gradient-to-br from-[#7A5A3A] to-[#3B240F] rounded-full flex items-center justify-center shadow-[0_10px_25px_rgba(59,36,15,0.25)]">
+                  <span className="text-[#F8F4E1] text-xs font-bold">E</span>
                 </div>
-                <p className="text-xs text-white/60 font-medium">Edvana Dashboard</p>
-                <p className="text-xs text-white/40">v1.0.0</p>
+                <p className="text-xs text-[#6B4F3A] font-medium">
+                  Edvana Dashboard
+                </p>
+                <p className="text-xs text-[#6B4F3A]">v1.0.0</p>
               </div>
             ) : (
               <div className="flex justify-center">
-                <div className="w-8 h-8 bg-gradient-to-br from-[#1EA896] to-[#1EA896]/80 rounded-full flex items-center justify-center">
-                  <span className="text-white text-xs font-bold">E</span>
+                <div className="w-8 h-8 bg-gradient-to-br from-[#7A5A3A] to-[#3B240F] rounded-full flex items-center justify-center shadow-[0_10px_25px_rgba(59,36,15,0.25)]">
+                  <span className="text-[#F8F4E1] text-xs font-bold">E</span>
                 </div>
               </div>
             )}

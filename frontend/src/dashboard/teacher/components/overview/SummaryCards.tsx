@@ -9,16 +9,62 @@ interface SummaryCardProps {
   bgColor: string;
 }
 
-function SummaryCard({ icon, title, value, subtitle, color, bgColor }: SummaryCardProps) {
+function SummaryCard({
+  icon,
+  title,
+  value,
+  subtitle,
+  color,
+  bgColor,
+}: SummaryCardProps) {
   return (
-    <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl shadow-lg p-6 hover:bg-white/10 transition-all duration-200">
+    <div
+      className="
+        group
+        bg-white/5
+        backdrop-blur-lg
+        border border-white/10
+        rounded-xl
+        shadow-lg
+        p-6
+        transition-all duration-300
+        hover:bg-white/10
+        hover:border-white/20
+        hover:shadow-2xl
+        hover:-translate-y-1
+      "
+    >
       <div className="flex items-center justify-between mb-4">
-        <div className={`w-12 h-12 ${bgColor} rounded-lg flex items-center justify-center shadow-lg`}>
+        <div
+          className={`
+            w-12 h-12
+            ${bgColor}
+            rounded-lg
+            flex items-center justify-center
+            shadow-lg
+            transition-transform duration-300
+            group-hover:scale-105
+          `}
+        >
           {icon}
         </div>
-        <span className={`text-3xl font-bold ${color}`}>{value}</span>
+
+        <span
+          className={`
+            text-3xl font-bold
+            ${color}
+            transition-transform duration-300
+            group-hover:scale-105
+          `}
+        >
+          {value}
+        </span>
       </div>
-      <h3 className="text-white font-semibold text-lg mb-1">{title}</h3>
+
+      <h3 className="text-white font-semibold text-lg mb-1 transition-colors duration-300">
+        {title}
+      </h3>
+
       <p className="text-white/60 text-sm">{subtitle}</p>
     </div>
   );

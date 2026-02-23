@@ -173,7 +173,7 @@ export default function ParentsView() {
             </Button>
             <Button
               onClick={handleAddParent}
-              className="bg-brand-accent hover:backdrop-blur-sm hover:bg-white/20 text-white rounded-xl"
+              className="bg-brand-accent hover:bg-brand-accent/80 text-white rounded-xl"
             >
               <Plus className="w-4 h-4 mr-2" />
               Add Parent

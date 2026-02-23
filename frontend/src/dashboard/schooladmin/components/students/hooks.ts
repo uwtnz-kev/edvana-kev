@@ -1,9 +1,10 @@
+// hooks.ts
 import { useState, useMemo } from 'react';
 import { Student, StudentFilters } from './types';
 import { mockStudents } from './mock';
 
 export function useStudents() {
-  const [students, setStudents] = useState<Student[]>(mockStudents);
+  const [students, setStudents] = useState<Student[]>(() => mockStudents ?? []);
   const [filters, setFilters] = useState<StudentFilters>({
     search: '',
     class: [],
@@ -15,14 +16,23 @@ export function useStudents() {
     return students.filter(student => {
       // Search filter - search in firstName, lastName, email, phone, rollNumber
       if (filters.search) {
-        const searchLower = filters.search.toLowerCase();
-        const matchesSearch = 
-          student.firstName.toLowerCase().includes(searchLower) ||
-          student.lastName.toLowerCase().includes(searchLower) ||
-          student.email.toLowerCase().includes(searchLower) ||
-          student.phone.toLowerCase().includes(searchLower) ||
-          student.rollNumber.toLowerCase().includes(searchLower);
-        if (!matchesSearch) return false;
+        const q = (filters.search ?? '').toLowerCase().trim();
+        if (q) {
+          const firstName = (student.firstName ?? '').toLowerCase();
+          const lastName = (student.lastName ?? '').toLowerCase();
+          const email = (student.email ?? '').toLowerCase();
+          const phone = (student.phone ?? '').toLowerCase();
+          const rollNumber = (student.rollNumber ?? '').toLowerCase();
+
+          const matchesSearch =
+            firstName.includes(q) ||
+            lastName.includes(q) ||
+            email.includes(q) ||
+            phone.includes(q) ||
+            rollNumber.includes(q);
+
+          if (!matchesSearch) return false;
+        }
       }
 
       // Class filter
@@ -53,8 +63,8 @@ export function useStudents() {
   };
 
   const updateStudent = (id: string, updatedData: Partial<Student>) => {
-    setStudents(prev => 
-      prev.map(student => 
+    setStudents(prev =>
+      prev.map(student =>
         student.id === id ? { ...student, ...updatedData } : student
       )
     );

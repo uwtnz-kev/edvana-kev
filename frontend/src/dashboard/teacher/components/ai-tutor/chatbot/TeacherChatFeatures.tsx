@@ -77,8 +77,8 @@ export default function TeacherChatFeatures() {
   <div className="flex items-start gap-2">
     <BarChart3 className="h-5 w-5 text-[#1EA896] mt-0.5 flex-shrink-0" />
     <div>
-      <h3 className="text-white font-semibold text-sm">Pro Tips</h3>
-      <p className="text-white/70 text-xs mt-1 leading-tight">
+      <h3 className=" #6B4F3A font-semibold text-sm">Pro Tips</h3>
+      <p className=" #6B4F3A text-xs mt-1 leading-tight">
          Include subject, class level, learning objective, and difficulty.
               Ask for one output at a time (lesson plan, quiz, rubric, or marking feedback). </p>
     </div>

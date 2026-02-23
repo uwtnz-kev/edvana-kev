@@ -9,6 +9,7 @@ import {
   type Student,
 } from "../components/students";
 import { Button } from "@/components/ui/button";
+import TeacherStudentDetailsModal from "../components/students/TeacherStudentDetailsModal";
 
 export default function StudentsView() {
   const { students, filters, setFilters } = useStudents();
@@ -16,15 +17,16 @@ export default function StudentsView() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(25);
 
+  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+  const [detailsOpen, setDetailsOpen] = useState(false);
+
   const totalPages = Math.max(1, Math.ceil(students.length / itemsPerPage));
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedStudents = students.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
+  const paginatedStudents = students.slice(startIndex, startIndex + itemsPerPage);
 
   const handleView = (student: Student) => {
-    console.log("view", student.id);
+    setSelectedStudent(student);
+    setDetailsOpen(true);
   };
 
   const handleMessage = (student: Student) => {
@@ -74,8 +76,7 @@ export default function StudentsView() {
               <div className="bg-white/15 backdrop-blur-xl border border-white/25 shadow-xl rounded-2xl p-6 pb-8">
                 <div className="flex items-center justify-between gap-3 flex-wrap">
                   <p className="text-sm text-white">
-                    Showing {startIndex + 1} to{" "}
-                    {Math.min(startIndex + itemsPerPage, students.length)} of{" "}
+                    Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, students.length)} of{" "}
                     {students.length} students
                   </p>
 
@@ -95,9 +96,7 @@ export default function StudentsView() {
                     </span>
 
                     <Button
-                      onClick={() =>
-                        setCurrentPage((p) => Math.min(totalPages, p + 1))
-                      }
+                      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                       disabled={currentPage === totalPages}
                       variant="ghost"
                       size="sm"
@@ -111,6 +110,15 @@ export default function StudentsView() {
             )}
           </>
         )}
+
+        <TeacherStudentDetailsModal
+          open={detailsOpen}
+          onOpenChange={(open) => {
+            setDetailsOpen(open);
+            if (!open) setSelectedStudent(null);
+          }}
+          student={selectedStudent}
+        />
       </div>
     </div>
   );

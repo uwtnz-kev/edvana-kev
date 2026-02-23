@@ -1,16 +1,14 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Eye, MessageSquare } from "lucide-react";
+import { Eye } from "lucide-react";
 import type { Student } from "./types";
 
 interface Props {
   students: Student[];
   onView: (student: Student) => void;
-  onMessage: (student: Student) => void;
 }
 
-export default function StudentsTable({ students, onView, onMessage }: Props) {
+export default function StudentsTable({ students, onView }: Props) {
   const statusClass = (status: Student["status"]) => {
     const map: Record<Student["status"], string> = {
       Active: "bg-green-500/20 text-green-700 border-green-500/30",
@@ -54,39 +52,45 @@ export default function StudentsTable({ students, onView, onMessage }: Props) {
               <TableCell className="text-black font-medium">
                 {s.firstName} {s.lastName}
               </TableCell>
+
               <TableCell className="text-black">{s.email}</TableCell>
+
               <TableCell>
                 <Badge className="bg-blue-500/20 text-blue-700 border-blue-500/30 rounded-full px-2 py-1 text-xs font-medium border">
                   {s.class}
                 </Badge>
               </TableCell>
+
               <TableCell>
                 <Badge className={`${statusClass(s.status)} rounded-full px-2 py-1 text-xs font-medium border`}>
                   {s.status}
                 </Badge>
               </TableCell>
+
               <TableCell className="text-black">{formatDate(s.enrollmentDate)}</TableCell>
-              <TableCell>
-                <div className="flex items-center justify-center gap-1">
-                  <Button
-                    variant="ghost"
-                    size="sm"
+
+              <TableCell className="px-6 py-4 align-middle">
+                <div className="flex items-center justify-center">
+                  <button
+                    type="button"
                     onClick={() => onView(s)}
-                    className="h-8 w-8 p-0 text-brand-teal hover:text-brand-teal/80 hover:bg-brand-teal/10 rounded-lg"
+                    className="
+                      h-10 w-10
+                      flex items-center justify-center
+                      rounded-xl
+                      bg-white/25
+                      hover:bg-white/35
+                      border border-white/35
+                      text-[#3B240F]
+                      shadow-[0_10px_20px_rgba(59,36,15,0.12)]
+                      transition-all duration-200
+                      hover:-translate-y-0.5
+                    "
+                    aria-label={`View ${s.firstName} ${s.lastName}`}
                     title="View details"
                   >
-                    <Eye className="h-4 w-4" />
-                  </Button>
-
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => onMessage(s)}
-                    className="h-8 w-8 p-0 text-brand-accent hover:text-brand-accent/80 hover:bg-brand-accent/10 rounded-lg"
-                    title="Message"
-                  >
-                    <MessageSquare className="h-4 w-4" />
-                  </Button>
+                    <Eye size={18} />
+                  </button>
                 </div>
               </TableCell>
             </TableRow>

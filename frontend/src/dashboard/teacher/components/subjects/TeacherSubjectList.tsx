@@ -1,19 +1,13 @@
+import React from "react";
 import { TeacherSubjectCard } from "./TeacherSubjectCard";
+import type { TeacherSubjectNavData } from "./TeacherSubjectCard";
 
-interface TeacherSubject {
+type TeacherSubject = TeacherSubjectNavData & {
   id: number;
-  title: string;
-  description: string;
-  classesCount: number;
-  studentsCount: number;
-  pendingToGrade: number;
-  nextLesson: string;
-  color: string;
-  bgGradient: string;
   category: "science" | "arts" | "languages";
-}
+};
 
-interface TeacherSubjectListProps {
+type TeacherSubjectListProps = {
   subjects?: TeacherSubject[];
   searchQuery?: string;
   filterValue?: string;
@@ -21,7 +15,7 @@ interface TeacherSubjectListProps {
   sortDirection?: "asc" | "desc";
   currentPage?: number;
   itemsPerPage?: number;
-}
+};
 
 const defaultSubjects: TeacherSubject[] = [
   {
@@ -110,12 +104,8 @@ export function TeacherSubjectList({
   const filtered = subjects.filter((s) => {
     const q = searchQuery.toLowerCase();
     const matchesSearch =
-      s.title.toLowerCase().includes(q) ||
-      s.nextLesson.toLowerCase().includes(q);
-
-    const matchesFilter =
-      filterValue === "all" || s.category === filterValue;
-
+      s.title.toLowerCase().includes(q) || s.nextLesson.toLowerCase().includes(q);
+    const matchesFilter = filterValue === "all" || s.category === filterValue;
     return matchesSearch && matchesFilter;
   });
 
@@ -142,7 +132,9 @@ export function TeacherSubjectList({
     }
 
     if (typeof aValue === "string" && typeof bValue === "string") {
-      return sortDirection === "asc" ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+      return sortDirection === "asc"
+        ? aValue.localeCompare(bValue)
+        : bValue.localeCompare(aValue);
     }
 
     return sortDirection === "asc"
@@ -156,17 +148,7 @@ export function TeacherSubjectList({
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {pageItems.map((s) => (
-        <TeacherSubjectCard
-          key={s.id}
-          title={s.title}
-          description={s.description}
-          classesCount={s.classesCount}
-          studentsCount={s.studentsCount}
-          pendingToGrade={s.pendingToGrade}
-          nextLesson={s.nextLesson}
-          color={s.color}
-          bgGradient={s.bgGradient}
-        />
+        <TeacherSubjectCard key={s.id} subject={s} />
       ))}
     </div>
   );

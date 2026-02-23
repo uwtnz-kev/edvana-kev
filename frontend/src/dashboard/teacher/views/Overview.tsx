@@ -1,19 +1,43 @@
-import {
-  TeacherGreeting,
-  SummaryCards,
-  WeeklyProgress,
-} from "../components/overview";
-import { Users, ClipboardList, Bot, Calendar } from "lucide-react";
+import { useMemo, useState } from "react";
+import { TeacherGreeting, SummaryCards, WeeklyProgress } from "../components/overview";
 import { useAuth } from "@/context/AuthContext";
+
+type ActivityItem = {
+  id: string;
+  tone: "teal" | "coral" | "slate";
+  title: string;
+  meta: string;
+};
+
+function toneDot(tone: ActivityItem["tone"]) {
+  if (tone === "teal") return "bg-[#1EA896]";
+  if (tone === "coral") return "bg-[#FF715B]";
+  return "bg-[#4C5454]";
+}
 
 export default function Overview() {
   const { user } = useAuth();
+  const [activityExpanded, setActivityExpanded] = useState(false);
+
+  const activities: ActivityItem[] = useMemo(
+    () => [
+      { id: "a1", tone: "teal", title: "14 assignments submitted", meta: "1 hour ago • Class S3A" },
+      { id: "a2", tone: "coral", title: "Quiz published: Algebra Unit 2", meta: "Yesterday • 3 classes assigned" },
+      { id: "a3", tone: "slate", title: "Lesson plan updated", meta: "2 days ago • Science Lab" },
+      { id: "a4", tone: "teal", title: "New student joined your class", meta: "2 days ago • Class S2B" },
+      { id: "a5", tone: "coral", title: "Assignment deadline approaching", meta: "Tomorrow • Math S3A" },
+      { id: "a6", tone: "slate", title: "Grades exported", meta: "3 days ago • Term report" },
+    ],
+    []
+  );
+
+  const visibleActivities = activityExpanded ? activities : activities.slice(0, 3);
 
   return (
     <div className="px-4 sm:px-6 md:px-8 py-6">
       <div className="space-y-8">
         <TeacherGreeting
-          teacherName={`${user?.firstName ?? ""} ${user?.lastName ?? ""}`}
+          teacherName={`${user?.firstName ?? ""} ${user?.lastName ?? ""}`.trim() || "Teacher"}
           subtitle="Ready to teach today?"
         />
 
@@ -32,81 +56,50 @@ export default function Overview() {
             gradingCompleted={14}
           />
 
-          <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl shadow-xl p-6">
-            <h2 className="text-xl font-bold text-white mb-4">
-              Recent Activity
-            </h2>
-            <div className="space-y-4">
-              <div className="flex items-center space-x-3 p-3 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors duration-200">
-                <div className="w-3 h-3 bg-[#1EA896] rounded-full flex-shrink-0" />
-                <div className="flex-1">
-                  <p className="text-white text-sm font-medium">
-                    14 assignments submitted
-                  </p>
-                  <p className="text-white/60 text-xs">
-                    1 hour ago • Class S3A
-                  </p>
-                </div>
-              </div>
+          <section
+            className="
+              group
+              bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl shadow-xl p-6
+              transition-all duration-300
+              hover:bg-white/10 hover:border-white/20 hover:shadow-2xl hover:-translate-y-1
+              min-w-0
+            "
+            aria-label="Recent activity"
+          >
+            <div className="flex items-center justify-between gap-4 mb-4">
+              <h2 className="text-xl font-bold text-white">Recent Activity</h2>
 
-              <div className="flex items-center space-x-3 p-3 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors duration-200">
-                <div className="w-3 h-3 bg-[#FF715B] rounded-full flex-shrink-0" />
-                <div className="flex-1">
-                  <p className="text-white text-sm font-medium">
-                    Quiz published: Algebra Unit 2
-                  </p>
-                  <p className="text-white/60 text-xs">
-                    Yesterday • 3 classes assigned
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-3 p-3 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors duration-200">
-                <div className="w-3 h-3 bg-[#4C5454] rounded-full flex-shrink-0" />
-                <div className="flex-1">
-                  <p className="text-white text-sm font-medium">
-                    Lesson plan updated
-                  </p>
-                  <p className="text-white/60 text-xs">
-                    2 days ago • Science Lab
-                  </p>
-                </div>
-              </div>
+              <button
+                type="button"
+                className="text-white/80 hover:text-white text-sm px-3 py-1.5 rounded-lg border border-white/15 bg-white/5"
+                onClick={() => setActivityExpanded((v) => !v)}
+                aria-expanded={activityExpanded}
+              >
+                {activityExpanded ? "Hide" : "View all"}
+              </button>
             </div>
-          </div>
-        </div>
 
-        <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl shadow-xl p-6">
-          <h2 className="text-xl font-bold text-white mb-4">Quick Actions</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <button className="flex items-center space-x-3 p-4 bg-gradient-to-r from-[#1EA896]/20 to-[#1EA896]/10 hover:from-[#1EA896]/30 hover:to-[#1EA896]/20 border border-[#1EA896]/30 rounded-xl transition-all duration-200">
-              <div className="w-8 h-8 bg-[#1EA896] rounded-lg flex items-center justify-center">
-                <Users className="h-4 w-4 text-white" />
-              </div>
-              <span className="text-white font-medium">Students</span>
-            </button>
+            <div className="space-y-3">
+              {visibleActivities.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex items-start gap-3 p-3 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors duration-200 min-w-0"
+                >
+                  <div className={`mt-1 w-3 h-3 rounded-full flex-shrink-0 ${toneDot(item.tone)}`} />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white text-sm font-medium break-words">{item.title}</p>
+                    <p className="text-white/60 text-xs break-words">{item.meta}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
 
-            <button className="flex items-center space-x-3 p-4 bg-gradient-to-r from-[#FF715B]/20 to-[#FF715B]/10 hover:from-[#FF715B]/30 hover:to-[#FF715B]/20 border border-[#FF715B]/30 rounded-xl transition-all duration-200">
-              <div className="w-8 h-8 bg-[#FF715B] rounded-lg flex items-center justify-center">
-                <ClipboardList className="h-4 w-4 text-white" />
-              </div>
-              <span className="text-white font-medium">Assignments</span>
-            </button>
-
-            <button className="flex items-center space-x-3 p-4 bg-gradient-to-r from-[#4C5454]/20 to-[#4C5454]/10 hover:from-[#4C5454]/30 hover:to-[#4C5454]/20 border border-[#4C5454]/30 rounded-xl transition-all duration-200">
-              <div className="w-8 h-8 bg-[#4C5454] rounded-lg flex items-center justify-center">
-                <Bot className="h-4 w-4 text-white" />
-              </div>
-              <span className="text-white font-medium">AI Tutor</span>
-            </button>
-
-            <button className="flex items-center space-x-3 p-4 bg-gradient-to-r from-[#523F38]/20 to-[#523F38]/10 hover:from-[#523F38]/30 hover:to-[#523F38]/20 border border-[#523F38]/30 rounded-xl transition-all duration-200">
-              <div className="w-8 h-8 bg-[#523F38] rounded-lg flex items-center justify-center">
-                <Calendar className="h-4 w-4 text-white" />
-              </div>
-              <span className="text-white font-medium">Schedule</span>
-            </button>
-          </div>
+            {!activityExpanded && activities.length > 3 && (
+              <p className="mt-4 text-white/50 text-xs">
+                Showing 3 of {activities.length}
+              </p>
+            )}
+          </section>
         </div>
       </div>
     </div>

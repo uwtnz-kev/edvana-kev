@@ -1,3 +1,4 @@
+// StudentsView.tsx
 import React, { useState } from 'react';
 import {
   StudentsHeader,
@@ -38,11 +39,13 @@ export default function StudentsView() {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [modalMode, setModalMode] = useState<StudentMode>('create');
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
-  const [confirmAction, setConfirmAction] = useState<{ action: () => void; title: string; description: string; variant?: 'delete' | 'archive' }>({
-    action: () => {},
-    title: '',
-    description: '',
-  });
+  const [confirmAction, setConfirmAction] = useState<{ action: () => void; title: string; description: string; variant?: 'delete' | 'archive' }>(
+    {
+      action: () => {},
+      title: '',
+      description: '',
+    }
+  );
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -154,7 +157,7 @@ export default function StudentsView() {
         { key: 'phone', label: 'Phone', visible: true },
         { key: 'class', label: 'Class', visible: true },
         { key: 'status', label: 'Status', visible: true },
-        { key: 'enrollmentDate', label: 'Enrollment Date', visible: true }
+        { key: 'enrollmentDate', label: 'Enrollment Date', visible: true },
       ];
 
       // Get filtered data (students array is already filtered by the hook)
