@@ -77,18 +77,19 @@ export default function TeacherQuizGenerator() {
       <TeacherQuizFeatures />
 
       {/* Pro tips at bottom */}
-     <div className="bg-gradient-to-r from-[#1EA896]/10 to-[#FF715B]/10 border border-white/10 rounded-xl p-4">
-  <div className="flex items-start gap-2">
-    <BarChart3 className="h-5 w-5 text-[#1EA896] mt-0.5 flex-shrink-0" />
-    <div>
-      <h3 className="text-white font-semibold text-sm">Pro tips</h3>
-      <p className="text-white/70 text-xs mt-1 leading-tight">
-      Align quizzes with curriculum goals. Use varied question types 
-      (multiple choice, short answer, application) at different difficulties for all learners.Regular 
-      quizzes track progress and improve teaching. </p>
-    </div>
-  </div>
-</div>
+      <div className="group bg-gradient-to-r from-[#1EA896]/10 to-[#FF715B]/10 border border-white/10 rounded-xl p-4 hover:bg-gradient-to-r from-[#1EA896]/20 to-[#FF715B]/20 transition-all duration-300 hover:shadow-2xl hover:shadow-[#8B6F52]/25 hover:-translate-y-1">
+        <div className="flex items-start gap-2">
+          <BarChart3 className="h-5 w-5 text-[#1EA896] mt-0.5 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
+          <div>
+            <h3 className="text-white font-semibold text-sm group-hover:text-white transition-colors duration-300">Pro tips</h3>
+            <p className="text-white/70 text-xs mt-1 leading-tight">
+              Align quizzes with curriculum goals. Use varied question types 
+              (multiple choice, short answer, application) at different difficulties for all learners.Regular 
+              quizzes track progress and improve teaching. 
+            </p>
+          </div>
+        </div>
+      </div>
 
     </div>
   );

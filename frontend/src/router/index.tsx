@@ -33,6 +33,7 @@ import TeacherParentsView from "@/dashboard/teacher/views/ParentView";
 import TeacherSubjectView from "@/dashboard/teacher/views/SubjectView";
 import TeacherStudentsView from "@/dashboard/teacher/views/StudentsView";
 import TeacherAssignmentsView from "@/dashboard/teacher/views/AssignmentsView";
+import AssignmentDetailsView from "@/dashboard/teacher/views/AssignmentDetailsView.";
 import TeacherExamsView from "@/dashboard/teacher/views/ExamsView";
 import TeacherResourcesView from "@/dashboard/teacher/views/ResourcesView";
 import TeacherScheduleView from "@/dashboard/teacher/views/ScheduleView";
@@ -43,6 +44,14 @@ import TeacherGeneralSettingsView from "@/dashboard/teacher/views/settings/Gener
 import TeacherAccountSettingsView from "@/dashboard/teacher/views/settings/AccountSettingsView";
 import TeacherSubjectDetailsView from "@/dashboard/teacher/views/SubjectDetailsView";
 import SubjectModuleView from "@/dashboard/teacher/views/SubjectModuleView";
+import AssignmentCreateView from "@/dashboard/teacher/views/AssignmentCreateView";
+import ExamCreateView from "@/dashboard/teacher/views/ExamCreateView";
+import ExamDetailsView from "@/dashboard/teacher/views/ExamDetailsView";
+import TeacherAttendanceView from "@/dashboard/teacher/views/AttendanceView";
+import CreateAttendanceListView from "@/dashboard/teacher/views/CreateAttendanceListView";
+import GradesView from "@/dashboard/teacher/views/GradesView";
+ import ExportGradesView from "@/dashboard/teacher/views/ExportGradesView";
+
 
 // School Admin Dashboard
 import SchoolAdminDashboard from "@/dashboard/schooladmin/SchoolAdminDashboard";
@@ -69,7 +78,7 @@ import { SuperAdminDashboard } from "@/dashboard/superadmin/SuperAdminDashboard"
 
 export function AppRouter() {
   return (
-   <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
 
         {/* Public */}
@@ -79,7 +88,7 @@ export function AppRouter() {
         <Route path="/selfstudent/student-signup" element={<SelfStudentSignup />} />
         <Route path="/selfteacher/teacher-signup" element={<SelfTeacherSignup />} />
 
-        {/* STUDENT (nested) */}
+        {/* STUDENT */}
         <Route
           path="/dashboard/student"
           element={
@@ -112,7 +121,7 @@ export function AppRouter() {
           <Route path="*" element={<StudentDashboardErrorFallback />} />
         </Route>
 
-        {/* TEACHER (nested) */}
+        {/* TEACHER */}
         <Route
           path="/dashboard/teacher"
           element={
@@ -120,37 +129,47 @@ export function AppRouter() {
               <TeacherDashboard />
             </ProtectedRoute>
           }
-          
         >
-          <Route path="subjects/:subjectId" element={<TeacherSubjectDetailsView />} />
           <Route index element={<TeacherOverview />} />
           <Route path="overview" element={<TeacherOverview />} />
           <Route path="subjects" element={<TeacherSubjectView />} />
           <Route path="students" element={<TeacherStudentsView />} />
-          <Route path="assignments" element={<TeacherAssignmentsView />} />
-          <Route path="exams" element={<TeacherExamsView />} />
+          <Route path="assignments">
+            <Route index element={<TeacherAssignmentsView />} />
+            <Route path="create" element={<AssignmentCreateView />} />
+            <Route path=":assignmentId" element={<AssignmentDetailsView />} />
+          </Route>
+         <Route path="exams">
+          <Route index element={<TeacherExamsView />} />
+          <Route path="create" element={<ExamCreateView />} />
+          <Route path=":examId" element={<ExamDetailsView />} />
+        </Route>
           <Route path="resources" element={<TeacherResourcesView />} />
           <Route path="schedule" element={<TeacherScheduleView />} />
+          <Route path="attendance" element={<TeacherAttendanceView />} />
+          <Route path="attendance/create" element={<CreateAttendanceListView />} />    
+          <Route path="grades" element={<GradesView />} />    
+          <Route path="grades/export" element={<ExportGradesView />} />  
           <Route path="support" element={<TeacherSupportView />} />
           <Route path="parents" element={<TeacherParentsView />} />
-          <Route path="subjects/:subjectId/modules/:moduleId"element={<SubjectModuleView />}/>
-
+          <Route path="subjects/:subjectId" element={<TeacherSubjectDetailsView />} />
+          <Route path="subjects/:subjectId/modules/:moduleId" element={<SubjectModuleView />} />
           <Route path="ai-tutor">
             <Route index element={<Navigate to="chatbot" replace />} />
             <Route path="chatbot" element={<TeacherChatbotView />} />
             <Route path="quiz-generator" element={<TeacherQuizGeneratorView />} />
           </Route>
-
           <Route path="settings">
             <Route index element={<Navigate to="general" replace />} />
             <Route path="general" element={<TeacherGeneralSettingsView />} />
             <Route path="account" element={<TeacherAccountSettingsView />} />
           </Route>
-
-          <Route path="*" element={<Navigate to="overview" replace />} />
+          <Route path="*" element={<Navigate to="/dashboard/teacher/overview" replace />} />  
         </Route>
+         
 
-        {/* SCHOOL ADMIN (nested) */}
+
+        {/* SCHOOL ADMIN */}
         <Route
           path="/dashboard/schooladmin"
           element={
@@ -170,15 +189,17 @@ export function AppRouter() {
           <Route path="edvana-bank" element={<SchoolAdminEdvanaBankView />} />
           <Route path="parents" element={<SchoolAdminParentsView />} />
           <Route path="support" element={<SchoolAdminSupportView />} />
+
           <Route path="settings">
             <Route index element={<Navigate to="general" replace />} />
             <Route path="general" element={<GeneralSettingsView />} />
             <Route path="account" element={<AccountSettingsView />} />
           </Route>
+
           <Route path="*" element={<SchoolAdminDashboardErrorFallback />} />
         </Route>
 
-        {/* Other Dashboards */}
+        {/* Other dashboards */}
         <Route
           path="/dashboard/selfstudent/*"
           element={
@@ -205,7 +226,6 @@ export function AppRouter() {
         />
 
         <Route path="*" element={<NotFound />} />
-
       </Routes>
     </BrowserRouter>
   );

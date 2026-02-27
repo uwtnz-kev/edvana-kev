@@ -1,3 +1,5 @@
+// src/dashboard/teacher/components/ai-tutor/chatbot/TeacherChatbotPanel.tsx
+
 import { useMemo, useState } from "react";
 import { Bot, ClipboardList, FileText, Sparkles, Send } from "lucide-react";
 import TeacherChatFeatures from "./TeacherChatFeatures";
@@ -49,18 +51,45 @@ export default function TeacherChatbotPanel() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-4xl font-bold text-white">AI Chatbot</h1>
-        <p className="text-white/70 mt-2">
-          Focused teaching assistant for CBC aligned lessons, quizzes, and rubrics.
-        </p>
+      <div className="flex items-center gap-4">
+        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#2CB7A7] shadow-md">
+          <Bot className="h-6 w-6 text-[#1F2326]" />
+        </div>
+        <div>
+          <h1 className="text-4xl font-bold text-white">AI Chatbot</h1>
+          <p className="text-white/70 mt-1">
+            Focused teaching assistant for CBC aligned lessons, quizzes, and rubrics.
+          </p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        <StatCard icon={<Sparkles className="h-6 w-6 text-white" />} value="24/7" label="Planning support" iconBg="bg-[#1EA896]" />
-        <StatCard icon={<ClipboardList className="h-6 w-6 text-white" />} value="Rubrics" label="Marking templates" iconBg="bg-[#FF715B]" />
-        <StatCard icon={<FileText className="h-6 w-6 text-white" />} value="Quizzes" label="Draft questions" iconBg="bg-[#4C5454]" />
-        <StatCard icon={<Bot className="h-6 w-6 text-white" />} value="CBC" label="Curriculum aligned" iconBg="bg-purple-600" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 items-stretch">
+        <div className="transition-transform duration-200 hover:scale-[1.01] hover:-translate-y-0.5">
+          <StatCard
+            icon={<Sparkles className="h-6 w-6 text-white" />}
+            value="24/7"
+            label="Planning support"
+            iconBg="bg-[#1EA896]"
+          />
+        </div>
+
+        <div className="transition-transform duration-200 hover:scale-[1.01] hover:-translate-y-0.5">
+          <StatCard
+            icon={<ClipboardList className="h-6 w-6 text-white" />}
+            value="Rubrics"
+            label="Marking templates"
+            iconBg="bg-[#FF715B]"
+          />
+        </div>
+
+        <div className="transition-transform duration-200 hover:scale-[1.01] hover:-translate-y-0.5">
+          <StatCard
+            icon={<FileText className="h-6 w-6 text-white" />}
+            value="Quizzes"
+            label="Draft questions"
+            iconBg="bg-[#4C5454]"
+          />
+        </div>
       </div>
 
       <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl shadow-xl overflow-hidden">
@@ -100,7 +129,9 @@ export default function TeacherChatbotPanel() {
               className="px-4 py-3 rounded-xl bg-gradient-to-r from-[#1EA896]/20 to-[#1EA896]/10 border border-[#1EA896]/30 text-white hover:opacity-90 flex items-center justify-center gap-2 disabled:opacity-50"
             >
               <Send className="h-4 w-4" />
-              <span className="hidden sm:inline">{isThinking ? "Thinking" : "Send"}</span>
+              <span className="hidden sm:inline">
+                {isThinking ? "Thinking" : "Send"}
+              </span>
             </button>
           </div>
         </div>

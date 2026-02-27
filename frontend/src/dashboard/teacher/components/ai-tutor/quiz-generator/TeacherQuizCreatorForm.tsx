@@ -54,9 +54,9 @@ export default function TeacherQuizCreatorForm({
   };
 
   return (
-    <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6">
+    <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 transition-all duration-300 ease-out hover:bg-white/10 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.01] group">
       <div className="flex items-center space-x-3 mb-6">
-        <div className="w-10 h-10 bg-gradient-to-br from-[#1EA896] to-[#1EA896]/80 rounded-lg flex items-center justify-center">
+        <div className="w-10 h-10 bg-gradient-to-br from-[#1EA896] to-[#1EA896]/80 rounded-lg flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110">
           <Brain className="h-5 w-5 text-white" />
         </div>
         <div>
@@ -81,13 +81,20 @@ export default function TeacherQuizCreatorForm({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="space-y-2">
             <label className="block text-white/80 text-sm font-medium">Subject</label>
-            <Select value={form.subject} onValueChange={(v) => setForm((p) => ({ ...p, subject: v }))}>
+            <Select
+              value={form.subject}
+              onValueChange={(v) => setForm((p) => ({ ...p, subject: v }))}
+            >
               <SelectTrigger className="bg-white/5 border-white/20 text-white rounded-xl">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-white/5 backdrop-blur-xl border border-white/10 text-white rounded-xl">
                 {subjects.map((s) => (
-                  <SelectItem key={s} value={s} className="text-white hover:bg-white/10 focus:bg-white/10">
+                  <SelectItem
+                    key={s}
+                    value={s}
+                    className="text-white hover:bg-white/10 focus:bg-white/10"
+                  >
                     {s}
                   </SelectItem>
                 ))}
@@ -97,13 +104,20 @@ export default function TeacherQuizCreatorForm({
 
           <div className="space-y-2">
             <label className="block text-white/80 text-sm font-medium">Grade</label>
-            <Select value={form.grade} onValueChange={(v) => setForm((p) => ({ ...p, grade: v }))}>
+            <Select
+              value={form.grade}
+              onValueChange={(v) => setForm((p) => ({ ...p, grade: v }))}
+            >
               <SelectTrigger className="bg-white/5 border-white/20 text-white rounded-xl">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-white/5 backdrop-blur-xl border border-white/10 text-white rounded-xl">
                 {grades.map((g) => (
-                  <SelectItem key={g} value={g} className="text-white hover:bg-white/10 focus:bg-white/10">
+                  <SelectItem
+                    key={g}
+                    value={g}
+                    className="text-white hover:bg-white/10 focus:bg-white/10"
+                  >
                     {g}
                   </SelectItem>
                 ))}
@@ -113,13 +127,20 @@ export default function TeacherQuizCreatorForm({
 
           <div className="space-y-2">
             <label className="block text-white/80 text-sm font-medium">Type</label>
-            <Select value={form.type} onValueChange={(v) => setForm((p) => ({ ...p, type: v as any }))}>
+            <Select
+              value={form.type}
+              onValueChange={(v) => setForm((p) => ({ ...p, type: v as any }))}
+            >
               <SelectTrigger className="bg-white/5 border-white/20 text-white rounded-xl">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-white/5 backdrop-blur-xl border border-white/10 text-white rounded-xl">
                 {(["MCQ", "Open", "Mixed"] as QuizType[]).map((t) => (
-                  <SelectItem key={t} value={t} className="text-white hover:bg-white/10 focus:bg-white/10">
+                  <SelectItem
+                    key={t}
+                    value={t}
+                    className="text-white hover:bg-white/10 focus:bg-white/10"
+                  >
                     {t}
                   </SelectItem>
                 ))}
@@ -131,13 +152,20 @@ export default function TeacherQuizCreatorForm({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="space-y-2">
             <label className="block text-white/80 text-sm font-medium">Difficulty</label>
-            <Select value={form.difficulty} onValueChange={(v) => setForm((p) => ({ ...p, difficulty: v as any }))}>
+            <Select
+              value={form.difficulty}
+              onValueChange={(v) => setForm((p) => ({ ...p, difficulty: v as any }))}
+            >
               <SelectTrigger className="bg-white/5 border-white/20 text-white rounded-xl">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-white/5 backdrop-blur-xl border border-white/10 text-white rounded-xl">
                 {(["Easy", "Medium", "Hard"] as Difficulty[]).map((d) => (
-                  <SelectItem key={d} value={d} className="text-white hover:bg-white/10 focus:bg-white/10">
+                  <SelectItem
+                    key={d}
+                    value={d}
+                    className="text-white hover:bg-white/10 focus:bg-white/10"
+                  >
                     {d}
                   </SelectItem>
                 ))}
@@ -152,7 +180,9 @@ export default function TeacherQuizCreatorForm({
               min={1}
               max={20}
               value={form.questionCount}
-              onChange={(e) => setForm((p) => ({ ...p, questionCount: Number(e.target.value) || 10 }))}
+              onChange={(e) =>
+                setForm((p) => ({ ...p, questionCount: Number(e.target.value) || 10 }))
+              }
               className="bg-white/5 border-white/20 text-white rounded-xl"
             />
           </div>
@@ -164,7 +194,9 @@ export default function TeacherQuizCreatorForm({
               min={5}
               max={60}
               value={form.estimatedTime}
-              onChange={(e) => setForm((p) => ({ ...p, estimatedTime: Number(e.target.value) || 15 }))}
+              onChange={(e) =>
+                setForm((p) => ({ ...p, estimatedTime: Number(e.target.value) || 15 }))
+              }
               className="bg-white/5 border-white/20 text-white rounded-xl"
             />
           </div>

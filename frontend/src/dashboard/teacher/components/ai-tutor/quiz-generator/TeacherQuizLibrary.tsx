@@ -48,7 +48,7 @@ export default function TeacherQuizLibrary({
   }, [filtered, page]);
 
   return (
-    <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6">
+    <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl shadow-xl p-6 transition-all duration-300 ease-out hover:bg-white/10 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.01] group">
       <div className="flex flex-col lg:flex-row lg:items-center gap-3">
         <div className="flex items-center gap-2 text-white/80">
           <Filter className="h-4 w-4 text-[#1EA896]" />
@@ -68,14 +68,29 @@ export default function TeacherQuizLibrary({
             className="bg-white/5 border-white/20 text-white placeholder:text-white/50 rounded-xl sm:w-72"
           />
 
-          <Select value={filterStatus} onValueChange={(v) => { setFilterStatus(v as any); setPage(1); }}>
+          <Select
+            value={filterStatus}
+            onValueChange={(v) => {
+              setFilterStatus(v as any);
+              setPage(1);
+            }}
+          >
             <SelectTrigger className="bg-white/5 border-white/20 text-white rounded-xl sm:w-44">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-white/5 backdrop-blur-xl border border-white/10 text-white rounded-xl">
-              <SelectItem value="all" className="text-white hover:bg-white/10 focus:bg-white/10">All</SelectItem>
-              <SelectItem value="draft" className="text-white hover:bg-white/10 focus:bg-white/10">Drafts</SelectItem>
-              <SelectItem value="published" className="text-white hover:bg-white/10 focus:bg-white/10">Published</SelectItem>
+              <SelectItem value="all" className="text-white hover:bg-white/10 focus:bg-white/10">
+                All
+              </SelectItem>
+              <SelectItem value="draft" className="text-white hover:bg-white/10 focus:bg-white/10">
+                Drafts
+              </SelectItem>
+              <SelectItem
+                value="published"
+                className="text-white hover:bg-white/10 focus:bg-white/10"
+              >
+                Published
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -89,7 +104,10 @@ export default function TeacherQuizLibrary({
       ) : (
         <div className="space-y-4 mt-6">
           {paged.map((q) => (
-            <div key={q.id} className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <div
+              key={q.id}
+              className="bg-white/5 border border-white/10 rounded-xl p-4 transition-all duration-300 ease-out hover:bg-white/10 hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.01]"
+            >
               <div className="flex flex-col lg:flex-row lg:items-center gap-4 justify-between">
                 <div className="min-w-0">
                   <h3 className="text-white font-semibold truncate">{q.title}</h3>
@@ -101,8 +119,12 @@ export default function TeacherQuizLibrary({
                     <span className="bg-white/10 px-2 py-1 rounded-md flex items-center gap-1">
                       <Clock className="h-3 w-3" /> ~{q.estimatedTime} min
                     </span>
-                    <span className="bg-white/10 px-2 py-1 rounded-md">{q.totalQuestions} questions</span>
-                    <span className="text-white/40">{new Date(q.createdAt).toLocaleDateString()}</span>
+                    <span className="bg-white/10 px-2 py-1 rounded-md">
+                      {q.totalQuestions} questions
+                    </span>
+                    <span className="text-white/40">
+                      {new Date(q.createdAt).toLocaleDateString()}
+                    </span>
                   </div>
 
                   {q.status === "published" && q.publishedTo?.length ? (
@@ -167,7 +189,9 @@ export default function TeacherQuizLibrary({
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
               className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                page === totalPages ? "bg-white/5 text-white/40" : "bg-white/10 hover:bg-white/20 text-white"
+                page === totalPages
+                  ? "bg-white/5 text-white/40"
+                  : "bg-white/10 hover:bg-white/20 text-white"
               }`}
             >
               Next

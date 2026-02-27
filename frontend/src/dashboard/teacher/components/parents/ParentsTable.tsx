@@ -8,7 +8,21 @@ type Props = {
 
 export default function ParentsTable({ rows, onView }: Props) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/35 bg-white/25 backdrop-blur-xl shadow-[0_18px_40px_rgba(59,36,15,0.18)]">
+    <div
+  className="
+    overflow-hidden
+    rounded-2xl
+    border border-white/35
+    bg-white/25
+    backdrop-blur-xl
+    shadow-[0_18px_40px_rgba(59,36,15,0.18)]
+    transition-all duration-300
+    hover:bg-white/30
+    hover:border-white/45
+    hover:shadow-[0_25px_50px_rgba(59,36,15,0.25)]
+    hover:-translate-y-1
+  "
+>
       <div className="overflow-x-auto">
         <table className="w-full table-fixed text-left">
           <thead className="bg-white/20">

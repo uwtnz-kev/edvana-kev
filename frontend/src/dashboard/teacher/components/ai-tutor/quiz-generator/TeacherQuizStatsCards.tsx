@@ -12,9 +12,9 @@ function StatCard({
   iconBg: string;
 }) {
   return (
-    <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-4">
+    <div className="group bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-4 hover:bg-white/10 transition-all duration-300 hover:shadow-2xl hover:shadow-[#8B6F52]/25 hover:-translate-y-1">
       <div className="flex items-center space-x-3">
-        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${iconBg}`}>
+        <div className={`w-10 h-10 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-300 ${iconBg}`}>
           {icon}
         </div>
         <div>

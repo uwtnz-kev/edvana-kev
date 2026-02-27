@@ -21,7 +21,11 @@ export default function StudentsTable({ students, onView }: Props) {
   };
 
   const formatDate = (dateString: string) =>
-    new Date(dateString).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+    new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
 
   if (students.length === 0) {
     return (
@@ -62,12 +66,18 @@ export default function StudentsTable({ students, onView }: Props) {
               </TableCell>
 
               <TableCell>
-                <Badge className={`${statusClass(s.status)} rounded-full px-2 py-1 text-xs font-medium border`}>
+                <Badge
+                  className={`${statusClass(
+                    s.status
+                  )} rounded-full px-2 py-1 text-xs font-medium border`}
+                >
                   {s.status}
                 </Badge>
               </TableCell>
 
-              <TableCell className="text-black">{formatDate(s.enrollmentDate)}</TableCell>
+              <TableCell className="text-black">
+                {formatDate(s.enrollmentDate)}
+              </TableCell>
 
               <TableCell className="px-6 py-4 align-middle">
                 <div className="flex items-center justify-center">

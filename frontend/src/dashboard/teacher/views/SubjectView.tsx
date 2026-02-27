@@ -167,26 +167,25 @@ export default function SubjectView() {
               </button>
             </div>
 
-            <div className="w-full sm:w-[180px]">
-              <GlassSelect
-                value={String(itemsPerPage)}
-                onValueChange={(v) => {
-                  setItemsPerPage(Number(v));
-                  setCurrentPage(1);
-                }}
-              >
-                
-                <GlassSelectTrigger className="h-11 rounded-xl bg-white/10 border-white/10 text-white/90 hover:bg-white/15 transition-colors">
-                  <GlassSelectValue placeholder="Per page" />
-                </GlassSelectTrigger>
+              <div className="w-full sm:w-[180px]">
+            <GlassSelect
+              value={String(itemsPerPage)}
+              onValueChange={(v) => {
+                setItemsPerPage(Number(v));
+                setCurrentPage(1);
+              }}
+            >
+              <GlassSelectTrigger className="h-11 rounded-xl bg-white/10 border-white/10 text-white/90 hover:bg-white/15 transition-colors">
+                <span className="text-white/90">{itemsPerPage} per page</span>
+              </GlassSelectTrigger>
 
-                <GlassSelectContent>
-                  <GlassSelectItem value="4">4 per page</GlassSelectItem>
-                  <GlassSelectItem value="12">12 per page</GlassSelectItem>
-                  <GlassSelectItem value="24">24 per page</GlassSelectItem>
-                </GlassSelectContent>
-              </GlassSelect>
-            </div>
+              <GlassSelectContent>
+                <GlassSelectItem value="6">6 per page</GlassSelectItem>
+                <GlassSelectItem value="12">12 per page</GlassSelectItem>
+                <GlassSelectItem value="24">24 per page</GlassSelectItem>
+              </GlassSelectContent>
+            </GlassSelect>
+          </div>
           </div>
         </div>
       </div>

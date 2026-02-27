@@ -30,13 +30,15 @@ export function TeacherScheduleCard({
     "Lunch Break": "from-yellow-500 to-yellow-600",
   };
 
-  const isBreak = subject === "Break" || subject === "Lunch Break";
-  const baseClasses = `rounded-lg p-3 bg-gradient-to-r ${
-    colors[subject] || "from-gray-500 to-gray-600"
-  } ${isBreak ? "border-2 border-dashed border-white/30" : "shadow-lg"}`;
+   const baseClasses = `rounded-lg p-3 bg-gradient-to-r ${
+  colors[subject] || "from-gray-500 to-gray-600"
+} shadow-lg transition-all duration-300 ease-in-out hover:scale-[1.03] hover:shadow-2xl cursor-pointer`;
 
   const textSize = variant === "mobile" ? "text-sm" : "text-xs";
-  const titleSize = variant === "mobile" ? "font-medium mb-1" : "font-medium text-sm mb-1";
+  const titleSize =
+    variant === "mobile"
+      ? "font-medium mb-1"
+      : "font-medium text-sm mb-1";
 
   return (
     <div className={baseClasses}>

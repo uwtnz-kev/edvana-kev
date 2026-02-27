@@ -1,4 +1,13 @@
-import { SearchInput, FilterDropdown, SortControls } from "@/dashboard/student/components/shared";
+// src/dashboard/teacher/components/exams/TeacherExamsControls.tsx
+
+import { SearchInput, SortControls } from "@/dashboard/student/components/shared";
+import {
+  GlassSelect,
+  GlassSelectContent,
+  GlassSelectItem,
+  GlassSelectTrigger,
+  GlassSelectValue,
+} from "@/dashboard/schooladmin/components/ui/GlassSelect";
 
 interface TeacherExamsControlsProps {
   searchQuery: string;
@@ -44,13 +53,25 @@ export function TeacherExamsControls({
       />
 
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 lg:ml-auto">
-        <FilterDropdown
-          label="Filter by Status"
-          options={filterOptions}
-          value={filterValue}
-          onChange={onFilterChange}
-          className="sm:w-48"
-        />
+        <div className="sm:w-48">
+          <div className="text-xs font-medium text-white/70 mb-2">
+            Filter by Status
+          </div>
+
+          <GlassSelect value={filterValue} onValueChange={onFilterChange}>
+            <GlassSelectTrigger className="h-10 w-full rounded-xl bg-white/10 border border-white/20 text-white hover:bg-white/15 transition-colors">
+              <GlassSelectValue placeholder="All Exams" />
+            </GlassSelectTrigger>
+
+            <GlassSelectContent>
+              {filterOptions.map((opt) => (
+                <GlassSelectItem key={opt.value} value={opt.value}>
+                  {opt.label}
+                </GlassSelectItem>
+              ))}
+            </GlassSelectContent>
+          </GlassSelect>
+        </div>
 
         <SortControls
           options={sortOptions}

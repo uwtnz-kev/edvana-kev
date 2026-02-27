@@ -6,6 +6,7 @@ import {
   FileText,
   Bot,
   ClipboardList,
+  ClipboardCheck,
   HelpCircle,
   Settings,
   User,
@@ -16,8 +17,9 @@ import {
   MessageSquare,
   Brain,
   Calendar,
-  Package,
+  Award,
   Users,
+  /*Package,*/
 } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { Button } from "@/components/ui/button";
@@ -25,10 +27,14 @@ import { Button } from "@/components/ui/button";
 const navItems = [
   { label: "Overview", href: "/dashboard/teacher", icon: BarChart3 },
   { label: "Subjects", href: "/dashboard/teacher/subjects", icon: BookOpen },
-  { label: "Students", href: "/dashboard/teacher/students", icon: Users },
-  { label: "Parents", href: "/dashboard/teacher/parents", icon: Users },
   { label: "Assignments", href: "/dashboard/teacher/assignments", icon: ClipboardList },
   { label: "Exams", href: "/dashboard/teacher/exams", icon: FileText },
+  { label: "Grades", href: "/dashboard/teacher/grades", icon: Award },
+  { label: "Attendance", href: "/dashboard/teacher/attendance", icon: ClipboardCheck },
+  { label: "Schedule", href: "/dashboard/teacher/schedule", icon: Calendar },
+  { label: "Students", href: "/dashboard/teacher/students", icon: Users },
+  { label: "Parents", href: "/dashboard/teacher/parents", icon: Users },
+  
   {
     label: "AI Tutor",
     href: "/dashboard/teacher/ai-tutor",
@@ -39,8 +45,7 @@ const navItems = [
       { label: "Quiz Generator", href: "/dashboard/teacher/ai-tutor/quiz-generator", icon: Brain },
     ],
   },
-  { label: "Resources", href: "/dashboard/teacher/resources", icon: Package },
-  { label: "Schedule", href: "/dashboard/teacher/schedule", icon: Calendar },
+  /*{ label: "Resources", href: "/dashboard/teacher/resources", icon: Package },*/
   {
     label: "Settings",
     href: "/dashboard/teacher/settings",

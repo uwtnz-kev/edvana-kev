@@ -12,14 +12,32 @@ export function StatCard({
   iconBg: string;
 }) {
   return (
-    <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-5 shadow-lg">
-      <div className="flex items-center gap-4">
-        <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${iconBg}`}>
+    <div
+      className="
+        h-full
+        bg-white/5 backdrop-blur-lg
+        border border-white/10
+        rounded-2xl p-5
+        shadow-[0_12px_24px_rgba(0,0,0,0.18)]
+        transition-colors duration-200
+        hover:bg-white/8
+        hover:border-white/15
+      "
+    >
+      <div className="flex items-center gap-4 h-full">
+        <div
+          className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${iconBg}`}
+        >
           {icon}
         </div>
-        <div>
-          <div className="text-3xl font-bold text-white leading-none">{value}</div>
-          <div className="text-white/60 text-sm mt-1">{label}</div>
+
+        <div className="min-w-0">
+          <div className="text-3xl font-bold text-white leading-none">
+            {value}
+          </div>
+          <div className="text-white/60 text-sm mt-1 truncate">
+            {label}
+          </div>
         </div>
       </div>
     </div>
