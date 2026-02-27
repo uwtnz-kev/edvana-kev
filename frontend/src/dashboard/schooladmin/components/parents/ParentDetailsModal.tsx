@@ -36,15 +36,16 @@ export default function ParentDetailsModal({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className={[
-          "fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
-          "w-[calc(100vw-2rem)] sm:w-full max-w-4xl",
-          "max-h-[85vh] overflow-hidden",
-          "bg-white/15 backdrop-blur-xl border border-white/20 text-white",
-          "p-0",
-        ].join(" ")}
-        onKeyDown={handleKeyDown}
-      >
+      className={[
+        "fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
+        "w-[calc(100vw-2rem)] sm:w-full max-w-4xl",
+        "max-h-[85vh] overflow-hidden",
+        "bg-white/15 backdrop-blur-xl border border-white/20 text-white",
+        "p-0",
+        "[&>button]:hidden"
+      ].join(" ")}
+      onKeyDown={handleKeyDown}
+    >
         <div className="flex flex-col max-h-[85vh]">
           <DialogHeader className="flex flex-row items-center justify-between px-6 py-4 border-b border-white/20">
             <DialogTitle className="text-white text-xl font-semibold">Parent Details</DialogTitle>

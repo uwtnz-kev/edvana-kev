@@ -19,7 +19,6 @@ import {
   Calendar,
   Award,
   Users,
-  /*Package,*/
 } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { Button } from "@/components/ui/button";
@@ -34,7 +33,8 @@ const navItems = [
   { label: "Schedule", href: "/dashboard/teacher/schedule", icon: Calendar },
   { label: "Students", href: "/dashboard/teacher/students", icon: Users },
   { label: "Parents", href: "/dashboard/teacher/parents", icon: Users },
-  
+  { label: "Messages", href: "/dashboard/teacher/messages", icon: MessageSquare },
+
   {
     label: "AI Tutor",
     href: "/dashboard/teacher/ai-tutor",
@@ -45,7 +45,6 @@ const navItems = [
       { label: "Quiz Generator", href: "/dashboard/teacher/ai-tutor/quiz-generator", icon: Brain },
     ],
   },
-  /*{ label: "Resources", href: "/dashboard/teacher/resources", icon: Package },*/
   {
     label: "Settings",
     href: "/dashboard/teacher/settings",
@@ -69,8 +68,8 @@ export default function TeacherSidebar() {
   const closeMobile = () => setIsMobileOpen(false);
 
   const toggleExpanded = (label: string) => {
-    setExpandedItems((prev) =>
-      prev.includes(label) ? prev.filter((i) => i !== label) : [...prev, label]
+    setExpandedItems(prev =>
+      prev.includes(label) ? prev.filter(i => i !== label) : [...prev, label],
     );
   };
 
@@ -82,7 +81,11 @@ export default function TeacherSidebar() {
         onClick={toggleMobile}
         className="fixed top-20 left-4 z-[100] lg:hidden bg-white/25 backdrop-blur-xl border border-white/30 hover:bg-white/35 hover:border-white/45 text-[#3B240F] rounded-lg shadow-[0_10px_30px_rgba(59,36,15,0.25)]"
       >
-        {isMobileOpen ? <X className="h-5 w-5 text-[#3B240F]" /> : <Menu className="h-5 w-5 text-[#3B240F]" />}
+        {isMobileOpen ? (
+          <X className="h-5 w-5 text-[#3B240F]" />
+        ) : (
+          <Menu className="h-5 w-5 text-[#3B240F]" />
+        )}
       </Button>
 
       {isMobileOpen && (
@@ -96,16 +99,14 @@ export default function TeacherSidebar() {
         className={cn(
           "fixed lg:static left-0 top-16 lg:top-0 h-[calc(100vh-4rem)] lg:h-full bg-white/18 backdrop-blur-xl border-r border-white/25 shadow-[0_18px_50px_rgba(59,36,15,0.25)] transition-all duration-300 z-40 rounded-r-xl lg:rounded-none overflow-hidden",
           isCollapsed ? "lg:w-16" : "lg:w-64",
-          isMobileOpen ? "translate-x-0 w-64" : "-translate-x-full lg:translate-x-0"
+          isMobileOpen ? "translate-x-0 w-64" : "-translate-x-full lg:translate-x-0",
         )}
       >
         <div className="flex flex-col h-full overflow-y-auto max-h-screen">
           <div className="p-4 border-b border-white/25">
             {!isCollapsed ? (
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-[#3B240F]">
-                  My Dashboard
-                </h2>
+                <h2 className="text-lg font-semibold text-[#3B240F]">My Dashboard</h2>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -128,11 +129,11 @@ export default function TeacherSidebar() {
           </div>
 
           <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
-            {navItems.map((item) => {
+            {navItems.map(item => {
               const Icon = item.icon;
               const isActive =
                 location.pathname === item.href ||
-                (item.subItems && item.subItems.some((s) => location.pathname === s.href));
+                (item.subItems && item.subItems.some(s => location.pathname === s.href));
               const isExpanded = expandedItems.includes(item.label);
 
               return (
@@ -145,7 +146,7 @@ export default function TeacherSidebar() {
                         "hover:bg-white/22",
                         isActive &&
                           "bg-white/28 text-[#3B240F] font-medium border border-white/35 shadow-[0_14px_35px_rgba(59,36,15,0.18)]",
-                        isCollapsed && "lg:justify-center lg:px-2"
+                        isCollapsed && "lg:justify-center lg:px-2",
                       )}
                     >
                       <div className="flex items-center gap-3">
@@ -153,14 +154,10 @@ export default function TeacherSidebar() {
                           className={cn(
                             "h-5 w-5 flex-shrink-0 transition-colors duration-200",
                             isActive ? "text-[#7A5A3A]" : "text-[#6B4F3A]",
-                            "group-hover:text-[#7A5A3A]"
+                            "group-hover:text-[#7A5A3A]",
                           )}
                         />
-                        {!isCollapsed && (
-                          <span className="truncate font-medium">
-                            {item.label}
-                          </span>
-                        )}
+                        {!isCollapsed && <span className="truncate font-medium">{item.label}</span>}
                       </div>
 
                       {!isCollapsed && (
@@ -168,7 +165,7 @@ export default function TeacherSidebar() {
                           className={cn(
                             "h-4 w-4 transition-transform duration-200",
                             isExpanded ? "rotate-180" : "",
-                            isActive ? "text-[#7A5A3A]" : "text-[#6B4F3A]"
+                            isActive ? "text-[#7A5A3A]" : "text-[#6B4F3A]",
                           )}
                         />
                       )}
@@ -182,27 +179,23 @@ export default function TeacherSidebar() {
                         "hover:bg-white/22",
                         isActive &&
                           "bg-white/28 text-[#3B240F] font-medium border border-white/35 shadow-[0_14px_35px_rgba(59,36,15,0.18)]",
-                        isCollapsed && "lg:justify-center lg:px-2"
+                        isCollapsed && "lg:justify-center lg:px-2",
                       )}
                     >
                       <Icon
                         className={cn(
                           "h-5 w-5 flex-shrink-0 transition-colors duration-200",
                           isActive ? "text-[#7A5A3A]" : "text-[#6B4F3A]",
-                          "group-hover:text-[#7A5A3A]"
+                          "group-hover:text-[#7A5A3A]",
                         )}
                       />
-                      {!isCollapsed && (
-                        <span className="truncate font-medium">
-                          {item.label}
-                        </span>
-                      )}
+                      {!isCollapsed && <span className="truncate font-medium">{item.label}</span>}
                     </NavLink>
                   )}
 
                   {item.hasDropdown && item.subItems && isExpanded && !isCollapsed && (
                     <div className="ml-4 mt-2 space-y-1">
-                      {item.subItems.map((subItem) => {
+                      {item.subItems.map(subItem => {
                         const SubIcon = subItem.icon;
                         const isSubActive = location.pathname === subItem.href;
 
@@ -215,19 +208,17 @@ export default function TeacherSidebar() {
                               "flex items-center gap-3 px-4 py-2 rounded-lg text-[#6B4F3A] hover:text-[#3B240F] transition-all duration-200 group relative text-sm",
                               "hover:bg-white/22",
                               isSubActive &&
-                                "bg-white/30 text-[#3B240F] font-medium border border-white/35 shadow-[0_12px_28px_rgba(59,36,15,0.16)]"
+                                "bg-white/30 text-[#3B240F] font-medium border border-white/35 shadow-[0_12px_28px_rgba(59,36,15,0.16)]",
                             )}
                           >
                             <SubIcon
                               className={cn(
                                 "h-4 w-4 flex-shrink-0 transition-colors duration-200",
                                 isSubActive ? "text-[#7A5A3A]" : "text-[#6B4F3A]",
-                                "group-hover:text-[#7A5A3A]"
+                                "group-hover:text-[#7A5A3A]",
                               )}
                             />
-                            <span className="truncate font-medium">
-                              {subItem.label}
-                            </span>
+                            <span className="truncate font-medium">{subItem.label}</span>
                           </NavLink>
                         );
                       })}
@@ -244,9 +235,7 @@ export default function TeacherSidebar() {
                 <div className="w-8 h-8 mx-auto bg-gradient-to-br from-[#7A5A3A] to-[#3B240F] rounded-full flex items-center justify-center shadow-[0_10px_25px_rgba(59,36,15,0.25)]">
                   <span className="text-[#F8F4E1] text-xs font-bold">E</span>
                 </div>
-                <p className="text-xs text-[#6B4F3A] font-medium">
-                  Edvana Dashboard
-                </p>
+                <p className="text-xs text-[#6B4F3A] font-medium">Edvana Dashboard</p>
                 <p className="text-xs text-[#6B4F3A]">v1.0.0</p>
               </div>
             ) : (

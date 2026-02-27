@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { TeacherSubjectsHeader, TeacherSubjectsControls, TeacherSubjectList } from "../components/subjects";
-import { BookOpen } from "lucide-react";
+import {
+  TeacherSubjectsHeader,
+  TeacherSubjectsControls,
+  TeacherSubjectList,
+  SubjectBodyCards,
+} from "../components/subjects";
 import {
   GlassSelect,
   GlassSelectContent,
   GlassSelectItem,
   GlassSelectTrigger,
-  GlassSelectValue,
 } from "@/dashboard/schooladmin/components/ui/GlassSelect";
 
 export default function SubjectView() {
@@ -49,49 +52,19 @@ export default function SubjectView() {
           onSortChange={handleSortChange}
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-[#1EA896] to-[#1EA896]/80 rounded-lg flex items-center justify-center">
-                <BookOpen className="h-5 w-5 text-white" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-white">{totalSubjects}</p>
-                <p className="text-white/60 text-sm">Subjects Assigned</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-[#FF715B] to-[#FF715B]/80 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">{totalStudents}</span>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-white">{totalStudents}</p>
-                <p className="text-white/60 text-sm">Total Students</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-[#4C5454] to-[#523F38] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">{pendingToGrade}</span>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-white">{pendingToGrade}</p>
-                <p className="text-white/60 text-sm">Pending To Grade</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <SubjectBodyCards
+          totalSubjects={totalSubjects}
+          totalStudents={totalStudents}
+          pendingToGrade={pendingToGrade}
+        />
 
         <div>
           <h2 className="text-xl font-semibold text-white mb-4">
             {filterValue === "all"
               ? "All Subjects"
-              : `${filterValue.charAt(0).toUpperCase()}${filterValue.slice(1).replace("teacher", "Teacher")}`}
+              : `${filterValue.charAt(0).toUpperCase()}${filterValue
+                  .slice(1)
+                  .replace("teacher", "Teacher")}`}
           </h2>
 
           <TeacherSubjectList
@@ -125,11 +98,11 @@ export default function SubjectView() {
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
-            <div className="flex gap-2 w-full sm:w-auto">
+            <div className="grid grid-cols-2 gap-2 w-full sm:w-auto sm:flex sm:gap-2">
               <button
                 className="
                   h-11
-                  flex-1 sm:flex-none sm:w-[92px]
+                  w-full sm:w-[92px]
                   rounded-xl
                   bg-white/10
                   hover:bg-white/15
@@ -148,7 +121,7 @@ export default function SubjectView() {
               <button
                 className="
                   h-11
-                  flex-1 sm:flex-none sm:w-[92px]
+                  w-full sm:w-[92px]
                   rounded-xl
                   bg-white/10
                   hover:bg-white/15
@@ -156,36 +129,31 @@ export default function SubjectView() {
                   border border-white/10
                   transition
                   disabled:opacity-50 disabled:cursor-not-allowed
-                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30
-                "
-                onClick={() =>
-                  setCurrentPage((p) => Math.min(maxPage, p + 1))
-                }
-                disabled={currentPage >= maxPage}
-              >
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30" 
+                 onClick={() => setCurrentPage((p) => Math.min(maxPage, p + 1))}
+                disabled={currentPage >= maxPage}>
                 Next
               </button>
             </div>
+            <div className="w-full sm:w-[180px]">
+              <GlassSelect
+                value={String(itemsPerPage)}
+                onValueChange={(v) => {
+                  setItemsPerPage(Number(v));
+                  setCurrentPage(1);
+                }}
+              >
+                <GlassSelectTrigger className="h-11 rounded-xl bg-white/10 border-white/10 text-white/90 hover:bg-white/15 transition-colors">
+                  <span className="text-white/90">{itemsPerPage} per page</span>
+                </GlassSelectTrigger>
 
-              <div className="w-full sm:w-[180px]">
-            <GlassSelect
-              value={String(itemsPerPage)}
-              onValueChange={(v) => {
-                setItemsPerPage(Number(v));
-                setCurrentPage(1);
-              }}
-            >
-              <GlassSelectTrigger className="h-11 rounded-xl bg-white/10 border-white/10 text-white/90 hover:bg-white/15 transition-colors">
-                <span className="text-white/90">{itemsPerPage} per page</span>
-              </GlassSelectTrigger>
-
-              <GlassSelectContent>
-                <GlassSelectItem value="6">6 per page</GlassSelectItem>
-                <GlassSelectItem value="12">12 per page</GlassSelectItem>
-                <GlassSelectItem value="24">24 per page</GlassSelectItem>
-              </GlassSelectContent>
-            </GlassSelect>
-          </div>
+                <GlassSelectContent>
+                  <GlassSelectItem value="6">6 per page</GlassSelectItem>
+                  <GlassSelectItem value="12">12 per page</GlassSelectItem>
+                  <GlassSelectItem value="24">24 per page</GlassSelectItem>
+                </GlassSelectContent>
+              </GlassSelect>
+            </div>
           </div>
         </div>
       </div>

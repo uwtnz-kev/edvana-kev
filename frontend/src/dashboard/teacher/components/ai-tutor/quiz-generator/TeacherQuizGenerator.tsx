@@ -1,5 +1,3 @@
-// src/dashboard/teacher/components/ai-tutor/quiz-generator/TeacherQuizGenerator.tsx
-
 import { useMemo, useState } from "react";
 import { BarChart3 } from "lucide-react";
 import type { TeacherQuiz } from "./teacherQuizTypes";
@@ -8,9 +6,16 @@ import TeacherQuizCreatorForm from "./TeacherQuizCreatorForm";
 import TeacherQuizStatsCards from "./TeacherQuizStatsCards";
 import TeacherQuizLibrary from "./TeacherQuizLibrary";
 import TeacherQuizFeatures from "./TeacherQuizFeatures";
+import QuizPreviewModal from "./QuizPreviewModal";
 
 export default function TeacherQuizGenerator() {
   const [quizzes, setQuizzes] = useState<TeacherQuiz[]>(seedQuizzes);
+  const [previewId, setPreviewId] = useState<string | null>(null);
+
+  const previewQuiz = useMemo(() => {
+    if (!previewId) return null;
+    return quizzes.find((q) => q.id === previewId) ?? null;
+  }, [previewId, quizzes]);
 
   const stats = useMemo(() => {
     const total = quizzes.length;
@@ -49,23 +54,15 @@ export default function TeacherQuizGenerator() {
   };
 
   const onPreview = (id: string) => {
-    const q = quizzes.find((x) => x.id === id);
-    if (!q) return;
-
-    alert(
-      `Preview:\n${q.title}\n${q.subject} ${q.grade}\n${q.totalQuestions} questions\n${q.difficulty} • ${q.type}`
-    );
+    setPreviewId(id);
   };
 
   return (
     <div className="space-y-6">
-      {/* Stats */}
       <TeacherQuizStatsCards stats={stats} />
 
-      {/* Create quiz */}
       <TeacherQuizCreatorForm onCreated={onCreated} />
 
-      {/* Library */}
       <TeacherQuizLibrary
         quizzes={quizzes}
         onPreview={onPreview}
@@ -73,24 +70,31 @@ export default function TeacherQuizGenerator() {
         onPublish={onPublish}
       />
 
-      {/* Features */}
       <TeacherQuizFeatures />
 
-      {/* Pro tips at bottom */}
       <div className="group bg-gradient-to-r from-[#1EA896]/10 to-[#FF715B]/10 border border-white/10 rounded-xl p-4 hover:bg-gradient-to-r from-[#1EA896]/20 to-[#FF715B]/20 transition-all duration-300 hover:shadow-2xl hover:shadow-[#8B6F52]/25 hover:-translate-y-1">
         <div className="flex items-start gap-2">
           <BarChart3 className="h-5 w-5 text-[#1EA896] mt-0.5 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
           <div>
-            <h3 className="text-white font-semibold text-sm group-hover:text-white transition-colors duration-300">Pro tips</h3>
+            <h3 className="text-white font-semibold text-sm group-hover:text-white transition-colors duration-300">
+              Pro tips
+            </h3>
             <p className="text-white/70 text-xs mt-1 leading-tight">
-              Align quizzes with curriculum goals. Use varied question types 
-              (multiple choice, short answer, application) at different difficulties for all learners.Regular 
-              quizzes track progress and improve teaching. 
+              Align quizzes with curriculum goals. Use varied question types (multiple choice,
+              short answer, application) at different difficulties for all learners. Regular quizzes
+              track progress and improve teaching.
             </p>
           </div>
         </div>
       </div>
 
+      <QuizPreviewModal
+        open={previewId !== null}
+        quiz={previewQuiz}
+        onOpenChange={(open) => {
+          if (!open) setPreviewId(null);
+        }}
+      />
     </div>
   );
 }

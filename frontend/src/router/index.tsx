@@ -51,6 +51,7 @@ import TeacherAttendanceView from "@/dashboard/teacher/views/AttendanceView";
 import CreateAttendanceListView from "@/dashboard/teacher/views/CreateAttendanceListView";
 import GradesView from "@/dashboard/teacher/views/GradesView";
  import ExportGradesView from "@/dashboard/teacher/views/ExportGradesView";
+ import MessagesView from "@/dashboard/teacher/views/MessagesView";
 
 
 // School Admin Dashboard
@@ -153,6 +154,7 @@ export function AppRouter() {
           <Route path="support" element={<TeacherSupportView />} />
           <Route path="parents" element={<TeacherParentsView />} />
           <Route path="subjects/:subjectId" element={<TeacherSubjectDetailsView />} />
+          <Route path="messages" element={<MessagesView />} />
           <Route path="subjects/:subjectId/modules/:moduleId" element={<SubjectModuleView />} />
           <Route path="ai-tutor">
             <Route index element={<Navigate to="chatbot" replace />} />

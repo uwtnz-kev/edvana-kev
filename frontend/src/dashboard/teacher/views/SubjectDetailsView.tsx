@@ -1,7 +1,7 @@
 // src/dashboard/teacher/views/SubjectDetailsView.tsx
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, BookOpen, Users, ClipboardList } from "lucide-react";
+import { ArrowLeft, BookOpen, Users, ClipboardList, Upload } from "lucide-react";
 import {
   GlassSelect,
   GlassSelectContent,
@@ -63,21 +63,7 @@ function StatCard({
   const v = variants[variant] ?? variants.charcoal;
 
   return (
-    <div
-      className="
-        w-full
-        rounded-2xl
-        border border-white/20
-        bg-white/10
-        px-5 py-4
-        backdrop-blur-md
-        transition-all duration-300
-        hover:bg-white/15
-        hover:border-white/30
-        hover:shadow-lg
-        hover:-translate-y-1
-      "
-    >
+    <div className="w-full rounded-2xl border border-white/20 bg-white/10 px-5 py-4 backdrop-blur-md transition-all duration-300 hover:bg-white/15 hover:border-white/30 hover:shadow-lg hover:-translate-y-1">
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-3 min-w-0">
           <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${v.iconBg}`}>
@@ -85,15 +71,13 @@ function StatCard({
               ? React.cloneElement(icon, { className: "h-5 w-5 text-[#1F2326]" })
               : icon}
           </div>
-
           <div className="min-w-0">
             <div className="text-sm font-semibold text-[#4B2E1F]">{label}</div>
-            {sublabel ? (
+            {sublabel && (
               <div className="text-xs text-[#4B2E1F]/60">{sublabel}</div>
-            ) : null}
+            )}
           </div>
         </div>
-
         <div className={`text-3xl font-semibold ${v.valueText}`}>{value}</div>
       </div>
     </div>
@@ -109,7 +93,7 @@ function MetaChip({
 }) {
   return (
     <div className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-sm text-[#4B2E1F]/80">
-      {icon ? <span className="text-[#4B2E1F]/70">{icon}</span> : null}
+      {icon && <span className="text-[#4B2E1F]/70">{icon}</span>}
       <span className="whitespace-nowrap">{children}</span>
     </div>
   );
@@ -120,14 +104,27 @@ export default function SubjectDetailsView() {
   const { subjectId } = useParams<SubjectDetailsRouteParams>();
   const location = useLocation();
   const state = (location.state || {}) as LocationState;
-
   const subject = state.subject;
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    console.log("Imported file:", files[0]);
+  };
 
   const modules = useMemo(() => defaultModules, []);
   const [selectedModuleId, setSelectedModuleId] = useState(modules[0]?.id || "");
 
   useEffect(() => {
-    if (!selectedModuleId && modules[0]?.id) setSelectedModuleId(modules[0].id);
+    if (!selectedModuleId && modules[0]?.id) {
+      setSelectedModuleId(modules[0].id);
+    }
   }, [modules, selectedModuleId]);
 
   const handleModuleChange = (moduleId: string) => {
@@ -137,15 +134,15 @@ export default function SubjectDetailsView() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-16">
       <div className="flex items-center justify-between gap-3">
         <button
           type="button"
           onClick={() => navigate(-1)}
-          className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-[#4B2E1F] transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+          className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-[#4B2E1F] transition hover:bg-white/10"
         >
           <ArrowLeft className="h-4 w-4" />
-          <span>Back</span>
+          Back
         </button>
 
         <div className="rounded-lg border border-white/15 bg-white/10 px-3 py-2 text-sm text-[#4B2E1F]/70">
@@ -156,41 +153,42 @@ export default function SubjectDetailsView() {
       <div className="rounded-2xl border border-white/20 bg-white/10 backdrop-blur-lg p-5">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6 items-start">
           <div className="flex items-start gap-4 min-w-0">
-            <div
-              className={`flex h-12 w-12 items-center justify-center rounded-xl ${
-                subject?.bgGradient || "bg-white/10"
-              }`}
-            >
+            <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${subject?.bgGradient || "bg-white/10"}`}>
               <BookOpen className="h-5 w-5 text-white" />
             </div>
 
             <div className="min-w-0">
-              <h1 className="text-2xl font-semibold text-[#4B2E1F] leading-tight">
+              <h1 className="text-2xl font-semibold text-[#4B2E1F]">
                 {subject?.title || "Subject details"}
               </h1>
-
               <p className="mt-1 text-sm text-[#4B2E1F]/75 max-w-xl">
-                {subject?.description ||
-                  "No subject data was passed to this page yet. Pass subject details in navigation state or fetch by subjectId."}
+                {subject?.description || "No subject data available."}
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 w-full">
-            <StatCard
-              icon={<Users />}
-              label="Students"
-              sublabel="Across all classes"
-              value={subject?.studentsCount ?? 0}
-              variant="coral"
-            />
-            <StatCard
-              icon={<BookOpen />}
-              label="Classes"
-              sublabel="Assigned this term"
-              value={subject?.classesCount ?? 0}
-              variant="teal"
-            />
+          <div className="space-y-4">
+            {/* Import Button */}
+            <div className="flex justify-end">
+              <button
+                onClick={handleImportClick}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 border border-white/20 text-[#4B2E1F] hover:bg-white/15 transition"
+              >
+                <Upload className="h-4 w-4" />
+                Import
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <StatCard icon={<Users />} label="Students" sublabel="Across all classes" value={subject?.studentsCount ?? 0} variant="coral" />
+              <StatCard icon={<BookOpen />} label="Classes" sublabel="Assigned this term" value={subject?.classesCount ?? 0} variant="teal" />
+            </div>
           </div>
         </div>
 
@@ -202,8 +200,7 @@ export default function SubjectDetailsView() {
               {subject?.pendingToGrade ?? 0} to grade
             </MetaChip>
             <MetaChip>
-              Next lesson:{" "}
-              <span className="font-medium text-[#4B2E1F]">{subject?.nextLesson || "Not set"}</span>
+              Next lesson: <span className="font-medium">{subject?.nextLesson || "Not set"}</span>
             </MetaChip>
           </div>
 
@@ -213,7 +210,6 @@ export default function SubjectDetailsView() {
               <GlassSelectTrigger className="h-12 w-full rounded-2xl bg-white/15 border border-white/20 text-[#4B2E1F] hover:bg-white/20 transition-colors">
                 <GlassSelectValue placeholder="Select module" />
               </GlassSelectTrigger>
-
               <GlassSelectContent>
                 {modules.map((m) => (
                   <GlassSelectItem key={m.id} value={m.id}>
@@ -234,6 +230,7 @@ export default function SubjectDetailsView() {
           <li>Add tabs: Overview, Students, Assignments, Exams, Resources</li>
         </ol>
       </div>
+       
     </div>
   );
 }

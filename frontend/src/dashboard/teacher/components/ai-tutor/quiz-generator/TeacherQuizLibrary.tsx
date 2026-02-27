@@ -106,7 +106,7 @@ export default function TeacherQuizLibrary({
           {paged.map((q) => (
             <div
               key={q.id}
-              className="bg-white/5 border border-white/10 rounded-xl p-4 transition-all duration-300 ease-out hover:bg-white/10 hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.01]"
+              className="bg-white/5 border border-white/10 rounded-xl p-4 transition-all duration-300 ease-out hover:bg-white/10 hover:shadow-2xl hover:scale-[1.01]"
             >
               <div className="flex flex-col lg:flex-row lg:items-center gap-4 justify-between">
                 <div className="min-w-0">
