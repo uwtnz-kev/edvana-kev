@@ -1,6 +1,6 @@
 // Renders the quiz preview summary badges and stat cards.
 import { Badge } from "@/components/ui/badge";
-import type { TeacherQuiz } from "../quizTypes";
+import type { TeacherQuiz } from "../QuizTypes";
 import {
   getQuizPreviewBadges,
   getQuizPreviewStats,

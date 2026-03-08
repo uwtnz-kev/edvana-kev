@@ -1,5 +1,5 @@
 // Provides formatting and badge helpers for the teacher quiz card.
-import type { TeacherQuiz } from "../quizTypes";
+import type { TeacherQuiz } from "../QuizTypes";
 
 export function formatQuizDate(dateISO: string) {
   const date = new Date(dateISO);

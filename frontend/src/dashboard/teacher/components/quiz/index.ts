@@ -3,7 +3,7 @@
  * -----
  * Provides barrel exports for the teacher dashboard q ui z module.
  */
-export * from "./quizTypes";
+export * from "./QuizTypes";
 export * from "./quizMock";
 export * from "./quizStore";
 export * from "./TeacherQuizSubjectSidebar";

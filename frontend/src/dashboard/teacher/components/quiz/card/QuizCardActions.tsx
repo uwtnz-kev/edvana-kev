@@ -1,6 +1,6 @@
 /** Renders quiz card actions through the shared assessment action row. */
 import { AssessmentCardActions } from "@/dashboard/teacher/components/shared/assessment/AssessmentCardActions";
-import type { TeacherQuiz } from "../quizTypes";
+import type { TeacherQuiz } from "../QuizTypes";
 
 type Props = {
   quiz: TeacherQuiz;

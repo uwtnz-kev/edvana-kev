@@ -1,6 +1,6 @@
 // Orchestrates the teacher quiz card using focused card subcomponents.
 import { useState } from "react";
-import type { TeacherQuiz } from "./quizTypes";
+import type { TeacherQuiz } from "./QuizTypes";
 import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
 import { QuizCardActions } from "./card/QuizCardActions";
 import { QuizCardHeader } from "./card/QuizCardHeader";

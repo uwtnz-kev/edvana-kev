@@ -5,7 +5,7 @@ import {
   DialogDescription,
   DialogHeader,
 } from "@/components/ui/dialog";
-import type { TeacherQuiz } from "./quizTypes";
+import type { TeacherQuiz } from "./QuizTypes";
 import { QuizPreviewBody } from "./preview/QuizPreviewBody";
 import { QuizPreviewFooter } from "./preview/QuizPreviewFooter";
 import { QuizPreviewHeader } from "./preview/QuizPreviewHeader";

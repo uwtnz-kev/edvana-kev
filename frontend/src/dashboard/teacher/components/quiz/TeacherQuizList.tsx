@@ -5,7 +5,7 @@
  */
 import { TeacherQuizCard } from "./TeacherQuizCard";
 import { TeacherQuizEmptyState } from "./TeacherQuizEmptyState";
-import type { TeacherQuiz, TeacherSubject2 } from "./quizTypes";
+import type { TeacherQuiz, TeacherSubject2 } from "./QuizTypes";
 
 type Props = {
   quizzes: TeacherQuiz[];

@@ -7,7 +7,7 @@ import {
   HelpCircle,
   type LucideIcon,
 } from "lucide-react";
-import type { TeacherQuiz } from "../quizTypes";
+import type { TeacherQuiz } from "../QuizTypes";
 
 type QuizPreviewStat = { icon: LucideIcon; label: string; value: string | number };
 

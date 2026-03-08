@@ -4,7 +4,7 @@
  * Renders the sidebar content for the teacher dashboard q ui z feature.
  */
 import { BookOpen } from "lucide-react";
-import type { TeacherSubject2 } from "./quizTypes";
+import type { TeacherSubject2 } from "./QuizTypes";
 import { DEFAULT_SUBJECT_ICON_THEME, SUBJECT_ICON_THEME } from "./quizTheme";
 
 type Props = {

@@ -1,6 +1,6 @@
 // Renders metadata chips and summary values for the teacher quiz card.
 import { CalendarDays, Clock3, HelpCircle, Layers } from "lucide-react";
-import type { TeacherQuiz } from "../quizTypes";
+import type { TeacherQuiz } from "../QuizTypes";
 import { formatQuizDate, getQuizStatusClass, getQuizStatusLabel } from "./quizCardHelpers";
 
 type Props = { quiz: TeacherQuiz };
