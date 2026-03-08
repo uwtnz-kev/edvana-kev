@@ -3,9 +3,9 @@
  * -----
  * Provides barrel exports for the teacher dashboard a ss ig nm en ts module.
  */
-export * from "./assignmentsTypes";
-export * from "./assignmentsMock";
-export * from "./assignmentStore";
+export * from "./AssignmentsTypes";
+export * from "./AssignmentsMock";
+export * from "./AssignmentStore";
 export * from "./TeacherAssignmentsSubjectSidebar";
 export * from "./TeacherAssignmentsHome";
 export * from "./TeacherAssignmentsHeader";

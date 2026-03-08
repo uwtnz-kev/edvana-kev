@@ -4,7 +4,7 @@
  * Renders the sidebar content for the teacher dashboard a ss ig nm en ts feature.
  */
 import { BookOpen } from "lucide-react";
-import type { TeacherSubject2 } from "./assignmentsTypes";
+import type { TeacherSubject2 } from "./AssignmentsTypes";
 import { getSubjectThemeById } from "../shared";
 
 type ChildOption = {

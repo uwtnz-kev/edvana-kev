@@ -1,6 +1,6 @@
 // Provides formatting and badge helpers for the teacher assignment card.
-import { getAssignmentStatusLabel } from "../assignmentStore";
-import type { TeacherAssignment } from "../assignmentsTypes";
+import { getAssignmentStatusLabel } from "../AssignmentStore";
+import type { TeacherAssignment } from "../AssignmentsTypes";
 
 export function formatAssignmentDate(dateISO: string) {
   const date = new Date(dateISO);

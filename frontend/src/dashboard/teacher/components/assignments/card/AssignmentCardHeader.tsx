@@ -1,7 +1,7 @@
 /** Renders the shared assessment card header for assignments. */
 import { AssessmentCardHeader } from "@/dashboard/teacher/components/shared/assessment/AssessmentCardHeader";
 import { getSubjectIconTheme } from "@/dashboard/teacher/components/shared/subjectIconTheme";
-import type { TeacherAssignment } from "../assignmentsTypes";
+import type { TeacherAssignment } from "../AssignmentsTypes";
 
 type Props = { assignment: TeacherAssignment };
 

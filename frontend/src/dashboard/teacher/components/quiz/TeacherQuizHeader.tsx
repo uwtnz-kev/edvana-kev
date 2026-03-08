@@ -5,7 +5,7 @@
  */
 import { ArrowLeft, ClipboardList, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SUBJECT_ICON_THEME } from "./quizTheme";
+import { SUBJECT_ICON_THEME } from "./QuizTheme";
 
 type Props = {
   title?: string;

@@ -5,7 +5,7 @@
  */
 import { TeacherAssignmentCard } from "./TeacherAssignmentCard";
 import { TeacherAssignmentEmptyState } from "./TeacherAssignmentEmptyState";
-import type { TeacherAssignment, TeacherSubject2 } from "./assignmentsTypes";
+import type { TeacherAssignment, TeacherSubject2 } from "./AssignmentsTypes";
 
 type Props = {
   assignments: TeacherAssignment[];

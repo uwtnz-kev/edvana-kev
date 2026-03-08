@@ -5,7 +5,7 @@
  */
 import { ArrowLeft, ClipboardPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SUBJECT_ICON_THEME } from "../examsTheme";
+import { SUBJECT_ICON_THEME } from "../ExamsTheme";
 
 type Props = {
   subjectName: string;

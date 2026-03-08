@@ -1,6 +1,6 @@
 // Renders subject, status, and scheduling metadata for the assignment card.
 import { CalendarDays, Clock3 } from "lucide-react";
-import type { TeacherAssignment } from "../assignmentsTypes";
+import type { TeacherAssignment } from "../AssignmentsTypes";
 import { formatAssignmentDate, getAssignmentStatusChipLabel, getAssignmentStatusClass } from "./assignmentCardHelpers";
 
 type Props = { assignment: TeacherAssignment };

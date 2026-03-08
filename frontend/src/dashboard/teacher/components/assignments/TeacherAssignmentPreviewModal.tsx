@@ -3,7 +3,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { AssignmentPreviewBody } from "./preview/AssignmentPreviewBody";
 import { AssignmentPreviewFooter } from "./preview/AssignmentPreviewFooter";
 import { AssignmentPreviewHeader } from "./preview/AssignmentPreviewHeader";
-import type { TeacherAssignment } from "./assignmentsTypes";
+import type { TeacherAssignment } from "./AssignmentsTypes";
 
 type Props = {
   assignment: TeacherAssignment | null;

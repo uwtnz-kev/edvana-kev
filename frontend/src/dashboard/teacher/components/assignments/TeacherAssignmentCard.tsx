@@ -1,6 +1,6 @@
 // Orchestrates the teacher assignment card using focused card subcomponents.
 import { useState } from "react";
-import type { TeacherAssignment } from "./assignmentsTypes";
+import type { TeacherAssignment } from "./AssignmentsTypes";
 import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
 import { AssignmentCardActions } from "./card/AssignmentCardActions";
 import { AssignmentCardHeader } from "./card/AssignmentCardHeader";

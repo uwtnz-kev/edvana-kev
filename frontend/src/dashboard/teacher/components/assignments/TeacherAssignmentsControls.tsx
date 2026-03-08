@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { AssignmentStatusFilter } from "./assignmentsTypes";
+import type { AssignmentStatusFilter } from "./AssignmentsTypes";
 
 export type AssignmentSort = "all" | "ongoing" | "already_closed";
 

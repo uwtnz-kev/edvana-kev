@@ -1,6 +1,6 @@
 /** Renders assignment card actions through the shared assessment action row. */
 import { AssessmentCardActions } from "@/dashboard/teacher/components/shared/assessment/AssessmentCardActions";
-import type { TeacherAssignment } from "../assignmentsTypes";
+import type { TeacherAssignment } from "../AssignmentsTypes";
 
 type Props = {
   assignment: TeacherAssignment;

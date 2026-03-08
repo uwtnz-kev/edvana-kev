@@ -5,7 +5,7 @@
  */
 import { BookOpen } from "lucide-react";
 import type { TeacherSubject2 } from "./ExamsTypes";
-import { DEFAULT_SUBJECT_ICON_THEME, SUBJECT_ICON_THEME } from "./examsTheme";
+import { DEFAULT_SUBJECT_ICON_THEME, SUBJECT_ICON_THEME } from "./ExamsTheme";
 
 type Props = {
   subjects: TeacherSubject2[];

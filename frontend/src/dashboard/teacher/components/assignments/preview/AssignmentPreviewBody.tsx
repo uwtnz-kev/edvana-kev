@@ -6,7 +6,7 @@ import {
   getAssignmentPreviewStatus,
   getAssignmentStatusClass,
 } from "./assignmentPreviewHelpers";
-import type { TeacherAssignment } from "../assignmentsTypes";
+import type { TeacherAssignment } from "../AssignmentsTypes";
 
 type Props = {
   assignment: TeacherAssignment;
