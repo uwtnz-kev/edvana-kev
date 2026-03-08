@@ -3,6 +3,7 @@
  * ---------------
  * Renders the A tt en da nc eT ab le UI for the teacher dashboard a tt en da nc e feature.
  */
+import { Pencil, Trash2 } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -77,6 +78,7 @@ export default function AttendanceTable({ rows, onEdit, onDelete }: Props) {
                       onClick={() => onEdit(row)}
                       className="bg-white/10 hover:bg-white/20 text-white border border-white/10 rounded-2xl h-8 px-3"
                     >
+                      <Pencil className="mr-1.5 h-3.5 w-3.5" />
                       Edit
                     </Button>
                   ) : null}
@@ -86,6 +88,7 @@ export default function AttendanceTable({ rows, onEdit, onDelete }: Props) {
                       onClick={() => onDelete(row)}
                       className="bg-white/10 hover:bg-white/20 text-white border border-white/10 rounded-2xl h-8 px-3"
                     >
+                      <Trash2 className="mr-1.5 h-3.5 w-3.5" />
                       Delete
                     </Button>
                   ) : null}

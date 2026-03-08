@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { ConfirmDeleteModal } from "@/dashboard/teacher/components/assignments/ConfirmDeleteModal";
 import type { TeacherPublishedItem } from "@/dashboard/teacher/components/grades";
+import { Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { TEACHER_ROUTES } from "@/dashboard/teacher/routes";
 
@@ -55,6 +56,7 @@ export function GradeSubmissionsContent({
                       onClick={() => onDelete(item.id)}
                       className="bg-white/10 hover:bg-white/20 text-white border border-white/10 rounded-2xl h-8 px-3"
                     >
+                      <Trash2 className="mr-1.5 h-3.5 w-3.5" />
                       Delete
                     </Button>
                   </div>

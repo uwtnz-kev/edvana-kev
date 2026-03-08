@@ -5,7 +5,7 @@
  */
 export * from "./AssignmentsTypes";
 export * from "./AssignmentsMock";
-export * from "./AssignmentStore";
+export * from "./assignmentstore";
 export * from "./TeacherAssignmentsSubjectSidebar";
 export * from "./TeacherAssignmentsHome";
 export * from "./TeacherAssignmentsHeader";

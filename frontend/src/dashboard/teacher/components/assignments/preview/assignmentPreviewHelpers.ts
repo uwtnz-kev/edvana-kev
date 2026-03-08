@@ -1,5 +1,5 @@
 /** Provides derived labels and formatting for assignment preview content. */
-import { getAssignmentStatusLabel } from "../AssignmentStore";
+import { getAssignmentStatusLabel } from "../assignmentstore";
 import type { TeacherAssignment } from "../AssignmentsTypes";
 
 export function formatAssignmentDate(dateString: string) {

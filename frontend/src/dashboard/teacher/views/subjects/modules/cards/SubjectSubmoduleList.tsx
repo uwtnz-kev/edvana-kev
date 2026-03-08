@@ -1,5 +1,6 @@
 // Expanded submodule list shown under an open module.
 import { Button } from "@/components/ui/button";
+import { Trash2 } from "lucide-react";
 import type { SubjectModuleItem } from "@/dashboard/teacher/components/subjects/store/subjectModulesTypes";
 
 type Props = {
@@ -38,6 +39,7 @@ export function SubjectSubmoduleList({ module, onDeleteSubmodule, onOpenSubmodul
               }}
               className="h-6 shrink-0 rounded-2xl border border-white/10 bg-white/10 px-2 text-[11px] text-white hover:bg-white/20"
             >
+              <Trash2 className="mr-1.5 h-3.5 w-3.5" />
               Delete
             </Button>
           </div>
