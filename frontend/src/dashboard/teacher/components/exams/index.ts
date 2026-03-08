@@ -3,7 +3,7 @@
  * -----
  * Provides barrel exports for the teacher dashboard e xa ms module.
  */
-export * from "./examsTypes";
+export * from "./ExamsTypes";
 export * from "./examsMock";
 export * from "./examStore";
 export * from "./TeacherExamsSubjectSidebar";

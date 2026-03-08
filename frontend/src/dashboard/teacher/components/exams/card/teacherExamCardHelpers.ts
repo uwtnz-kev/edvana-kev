@@ -1,5 +1,5 @@
 // Provides formatting and style helpers for the teacher exam card.
-import type { TeacherExam } from "../examsTypes";
+import type { TeacherExam } from "../ExamsTypes";
 
 export function formatExamDate(dateISO: string) {
   const date = new Date(dateISO);

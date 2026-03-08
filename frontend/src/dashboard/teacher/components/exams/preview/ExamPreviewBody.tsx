@@ -1,6 +1,6 @@
 // Renders the exam preview summary badges and stat cards.
 import { Badge } from "@/components/ui/badge";
-import type { TeacherExam } from "../examsTypes";
+import type { TeacherExam } from "../ExamsTypes";
 import {
   examPreviewHeroIcon,
   getExamPreviewBadges,

@@ -1,5 +1,5 @@
 // Orchestrates the modular teacher exam card sections.
-import type { TeacherExam } from "../examsTypes";
+import type { TeacherExam } from "../ExamsTypes";
 import { TeacherExamCardActions } from "./TeacherExamCardActions";
 import { TeacherExamCardHeader } from "./TeacherExamCardHeader";
 import { TeacherExamCardMeta } from "./TeacherExamCardMeta";

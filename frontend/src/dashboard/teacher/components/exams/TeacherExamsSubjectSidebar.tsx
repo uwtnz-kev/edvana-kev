@@ -4,7 +4,7 @@
  * Renders the sidebar content for the teacher dashboard e xa ms feature.
  */
 import { BookOpen } from "lucide-react";
-import type { TeacherSubject2 } from "./examsTypes";
+import type { TeacherSubject2 } from "./ExamsTypes";
 import { DEFAULT_SUBJECT_ICON_THEME, SUBJECT_ICON_THEME } from "./examsTheme";
 
 type Props = {

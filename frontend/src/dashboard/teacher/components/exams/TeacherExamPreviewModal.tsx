@@ -5,7 +5,7 @@ import {
   DialogDescription,
   DialogHeader,
 } from "@/components/ui/dialog";
-import type { TeacherExam } from "./examsTypes";
+import type { TeacherExam } from "./ExamsTypes";
 import { ExamPreviewBody } from "./preview/ExamPreviewBody";
 import { ExamPreviewFooter } from "./preview/ExamPreviewFooter";
 import { ExamPreviewHeader } from "./preview/ExamPreviewHeader";

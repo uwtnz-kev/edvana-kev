@@ -1,6 +1,6 @@
 /** Renders the shared assessment card header for exams. */
 import { AssessmentCardHeader } from "@/dashboard/teacher/components/shared/assessment/AssessmentCardHeader";
-import type { TeacherExam } from "../examsTypes";
+import type { TeacherExam } from "../ExamsTypes";
 import { DEFAULT_SUBJECT_ICON_THEME, SUBJECT_ICON_THEME } from "../examsTheme";
 
 type Props = {

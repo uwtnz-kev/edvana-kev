@@ -5,7 +5,7 @@
  */
 import { TeacherExamCard } from "./TeacherExamCard";
 import { TeacherExamEmptyState } from "./TeacherExamEmptyState";
-import type { TeacherExam, TeacherSubject2 } from "./examsTypes";
+import type { TeacherExam, TeacherSubject2 } from "./ExamsTypes";
 
 type Props = {
   exams: TeacherExam[];

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { AssessmentCardActions } from "@/dashboard/teacher/components/shared/assessment/AssessmentCardActions";
 import { ConfirmDeleteModal } from "../ConfirmDeleteModal";
-import type { TeacherExam } from "../examsTypes";
+import type { TeacherExam } from "../ExamsTypes";
 
 type Props = {
   exam: TeacherExam;

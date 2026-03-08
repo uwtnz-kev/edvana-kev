@@ -1,6 +1,6 @@
 // Renders the status chips and key exam metadata rows.
 import { CalendarDays, Clock3, HelpCircle } from "lucide-react";
-import type { TeacherExam } from "../examsTypes";
+import type { TeacherExam } from "../ExamsTypes";
 import { formatExamDate, getExamStatusChipClass, getExamStatusLabel } from "./teacherExamCardHelpers";
 
 type Props = {
