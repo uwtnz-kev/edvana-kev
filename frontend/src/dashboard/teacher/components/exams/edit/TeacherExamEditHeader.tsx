@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
   DEFAULT_SUBJECT_ICON_THEME,
   SUBJECT_ICON_THEME,
-} from "@/dashboard/teacher/components/exams/examsTheme";
+} from "@/dashboard/teacher/components/exams/ExamsTheme";
 
 type Props = {
   subjectName: string;

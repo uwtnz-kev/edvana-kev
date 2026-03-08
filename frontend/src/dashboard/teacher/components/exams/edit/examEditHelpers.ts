@@ -1,6 +1,6 @@
 /** Provides defaults, theme lookup, and shared attachment helpers for exam editing. */
 import { buildAssessmentAttachmentId, formatAssessmentFileSize } from "@/dashboard/teacher/components/shared/assessment/assessmentAttachmentHelpers";
-import { DEFAULT_SUBJECT_ICON_THEME, SUBJECT_ICON_THEME } from "@/dashboard/teacher/components/exams/examsTheme";
+import { DEFAULT_SUBJECT_ICON_THEME, SUBJECT_ICON_THEME } from "@/dashboard/teacher/components/exams/ExamsTheme";
 import type { ExamAttachment, TeacherExam } from "@/dashboard/teacher/components/exams";
 import type { FieldName, FormValues, TouchedState } from "../create/examCreateTypes";
 

@@ -3,9 +3,9 @@
  * -----------------
  * Implements the p ub li sh ed Ad ap te rs module for the teacher dashboard g ra de s feature.
  */
-import { seedAssignments, seedSubjects2 as assignmentSubjects } from "@/dashboard/teacher/components/assignments/assignmentsMock";
-import { seedExams } from "@/dashboard/teacher/components/exams/examsMock";
-import { seedQuizzes2 } from "@/dashboard/teacher/components/quiz/quizMock";
+import { seedAssignments, seedSubjects2 as assignmentSubjects } from "@/dashboard/teacher/components/assignments/AssignmentsMock";
+import { seedExams } from "@/dashboard/teacher/components/exams/ExamsMock";
+import { seedQuizzes2 } from "@/dashboard/teacher/components/quiz/QuizMock";
 import type { TeacherPublishedItem } from "./gradesTypes";
 
 const subjectIdByName = new Map(assignmentSubjects.map((subject) => [subject.name, subject.id] as const));

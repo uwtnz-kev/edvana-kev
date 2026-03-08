@@ -3,7 +3,7 @@ import { buildAssessmentAttachmentId, formatAssessmentFileSize } from "@/dashboa
 import {
   DEFAULT_SUBJECT_ICON_THEME,
   SUBJECT_ICON_THEME,
-} from "@/dashboard/teacher/components/quiz/quizTheme";
+} from "@/dashboard/teacher/components/quiz/QuizTheme";
 import type { QuizAttachment, TeacherQuiz } from "@/dashboard/teacher/components/quiz";
 import type { FieldName, FormValues, TouchedState } from "../create/quizCreateTypes";
 
