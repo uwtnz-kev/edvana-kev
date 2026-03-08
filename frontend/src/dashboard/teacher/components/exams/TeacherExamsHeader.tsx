@@ -1,18 +1,77 @@
-import { FileText } from "lucide-react";
+/**
+ * TeacherExamsHeader
+ * ------------------
+ * Renders the header for the teacher dashboard e xa ms feature.
+ */
+import { ArrowLeft, ClipboardList, Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { SUBJECT_ICON_THEME } from "./examsTheme";
 
-export function TeacherExamsHeader() {
+type Props = {
+  title?: string;
+  subtitle: string;
+  subjectName?: string | null;
+  showBack: boolean;
+  showCreate: boolean;
+  onBack: () => void;
+  canCreate: boolean;
+  onCreate: () => void;
+};
+
+export function TeacherExamsHeader({
+  title = "Exams",
+  subtitle,
+  subjectName,
+  showBack,
+  showCreate,
+  onBack,
+  canCreate,
+  onCreate,
+}: Props) {
+  const theme =
+    (subjectName ? SUBJECT_ICON_THEME[subjectName] : null) ?? {
+      bg: "bg-teal-500/20",
+      text: "text-teal-700",
+    };
+
   return (
-    <div className="flex items-center gap-4">
-  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#2CB7A7] shadow-md">
-    <FileText className="h-6 w-6 text-[#1F2326]" />
-  </div>
+    <header className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl px-6 py-5">
+      <div className={`flex flex-col sm:flex-row sm:items-center gap-4 ${showCreate ? "sm:justify-between" : "sm:justify-start"}`}>
+        <div className="flex items-center gap-4">
+          {showBack ? (
+            <Button
+              type="button"
+              onClick={onBack}
+              className="bg-white/10 hover:bg-white/30 hover:shadow-sm transition-all duration-200 text-white border border-white/20 rounded-2xl"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back
+            </Button>
+          ) : null}
 
-  <div>
-    <h1 className="text-3xl font-bold text-[#3B240F]">Exams</h1>
-    <p className="text-[#6B4F3A] mt-1">
-      Create exams, monitor submissions, and grade results
-    </p>
-  </div>
-</div>
+          <div className={`h-12 w-12 flex items-center justify-center rounded-2xl ${theme.bg}`}>
+            <ClipboardList className={`h-6 w-6 ${theme.text}`} />
+          </div>
+
+          <div>
+            <h1 className="text-2xl font-semibold text-[#3B240F]">{title}</h1>
+            <p className="text-[#3B240F]/70 mt-1">{subtitle}</p>
+          </div>
+        </div>
+
+        {showCreate ? (
+          <Button
+            type="button"
+            onClick={onCreate}
+            disabled={!canCreate}
+            className="bg-white/15 hover:bg-white/30 hover:shadow-sm transition-all duration-200 text-white border border-white/20 rounded-2xl disabled:opacity-50"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Create Exam
+          </Button>
+        ) : null}
+      </div>
+    </header>
   );
 }
+

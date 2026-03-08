@@ -1,3 +1,8 @@
+/**
+ * types
+ * -----
+ * Defines types used by the teacher dashboard s tu de nt s feature.
+ */
 export type StudentStatus = "Active" | "Inactive" | "Transferred" | "Suspended" | "Graduated";
 
 export type Student = {
@@ -17,3 +22,4 @@ export type StudentsFilters = {
   class: string;
   status: "all" | StudentStatus;
 };
+

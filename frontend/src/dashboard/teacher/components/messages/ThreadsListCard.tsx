@@ -1,3 +1,8 @@
+/**
+ * ThreadsListCard
+ * ---------------
+ * Renders the T hr ea ds Li st Ca rd UI for the teacher dashboard m es sa ge s feature.
+ */
 import ThreadRow from "./ThreadRow";
 import type { MessageThread } from "./messagesTypes";
 
@@ -14,9 +19,9 @@ export default function ThreadsListCard(props: Props) {
   const threads = props.threads ?? [];
 
   return (
-    <div className="h-full rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md overflow-hidden">
+    <div className="overflow-hidden rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md">
       <div className="h-full overflow-y-auto">
-        {threads.map(t => (
+        {threads.map((t) => (
           <ThreadRow
             key={t.id}
             thread={t}
@@ -35,3 +40,4 @@ export default function ThreadsListCard(props: Props) {
     </div>
   );
 }
+

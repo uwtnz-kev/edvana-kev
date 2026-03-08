@@ -1,0 +1,9 @@
+// Provides the first half of seeded exam records.
+import type { TeacherExam } from "../ExamsTypes";
+
+export const examSeedBatchA: TeacherExam[] = [
+  { id: "e2-001", title: "Linear Equations Unit Exam", subject: "Mathematics", classId: "c1", classLabel: "S3A", scheduledAt: "2026-03-04T08:00:00.000Z", durationMinutes: 75, status: "published", createdAt: "2026-02-25T08:10:00.000Z", totalQuestions: 35, maxScore: 100, rubric: "Method and final answer both graded.", instructions: "Show complete solution steps for every item." },
+  { id: "e2-002", title: "Cell Structure Mastery Test", subject: "Biology", classId: "c2", classLabel: "S3B", scheduledAt: "2026-03-06T01:00:00.000Z", durationMinutes: 60, status: "draft", createdAt: "2026-02-24T11:20:00.000Z", totalQuestions: 30, maxScore: 80, instructions: "Label each diagram and explain one function per organelle." },
+  { id: "e2-003", title: "Acids and Bases Quarterly Exam", subject: "Chemistry", classId: "c3", classLabel: "S2A", scheduledAt: "2026-03-07T06:30:00.000Z", durationMinutes: 90, status: "published", createdAt: "2026-02-20T09:00:00.000Z", totalQuestions: 40, maxScore: 100, rubric: "Free response weighted higher than multiple choice." },
+  { id: "e2-004", title: "Newton's Laws Summative", subject: "Physics", classId: "c4", classLabel: "S2B", scheduledAt: "2026-03-10T05:00:00.000Z", durationMinutes: 80, status: "published", createdAt: "2026-02-26T07:45:00.000Z", totalQuestions: 32, maxScore: 90, instructions: "Include free-body diagrams where required." },
+];

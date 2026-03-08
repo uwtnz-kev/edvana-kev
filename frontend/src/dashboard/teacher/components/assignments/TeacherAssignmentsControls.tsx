@@ -1,104 +1,100 @@
-import { Search, Filter } from "lucide-react";
+/**
+ * TeacherAssignmentsControls
+ * --------------------------
+ * Renders controls for the teacher dashboard a ss ig nm en ts feature.
+ */
+import { Search, SlidersHorizontal } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
+import type { AssignmentStatusFilter } from "./assignmentsTypes";
 
-export type AssignmentStatusFilter = "all" | "draft" | "active" | "grading";
-
-export type TeacherAssignmentsFilters = {
-  query: string;
-  status: AssignmentStatusFilter;
-  className: string;
-};
+export type AssignmentSort = "all" | "ongoing" | "already_closed";
 
 type Props = {
-  filters: TeacherAssignmentsFilters;
-  onFiltersChange: (next: TeacherAssignmentsFilters) => void;
+  search: string;
+  statusFilter: AssignmentStatusFilter;
+  sort: AssignmentSort;
+  onSearchChange: (value: string) => void;
+  onStatusFilterChange: (value: AssignmentStatusFilter) => void;
+  onSortChange: (value: AssignmentSort) => void;
+  disabled?: boolean;
 };
 
 const statusOptions: Array<{ value: AssignmentStatusFilter; label: string }> = [
   { value: "all", label: "All status" },
   { value: "draft", label: "Draft" },
-  { value: "active", label: "Active" },
-  { value: "grading", label: "Grading" },
+  { value: "published", label: "Published" },
 ];
 
-export default function TeacherAssignmentsControls({ filters, onFiltersChange }: Props) {
+export function TeacherAssignmentsControls({
+  search,
+  statusFilter,
+  sort,
+  onSearchChange,
+  onStatusFilterChange,
+  onSortChange,
+  disabled = false,
+}: Props) {
   return (
-    <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-4">
+    <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-4 transition-colors duration-200 hover:bg-white/20">
       <div className="flex flex-col lg:flex-row lg:items-center gap-3">
-        <div className="flex items-center gap-2 text-[#3B2A1A]">
-          <Filter className="h-4 w-4 text-[#1EA896]" />
-          <span className="font-semibold">Filters</span>
+        <div className="flex items-center gap-2 text-white/80">
+          <SlidersHorizontal className="h-4 w-4 text-teal-600" />
+          <span className="text-sm font-medium">Filters</span>
         </div>
-
-        <div className="flex-1" />
 
         <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
           <div className="relative sm:w-72 w-full">
-            <Search className="h-4 w-4 text-[#6B5A4A] absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="h-4 w-4 text-white/60 absolute left-3 top-1/2 -translate-y-1/2" />
             <Input
-              value={filters.query}
-              onChange={(e) =>
-                onFiltersChange({
-                  ...filters,
-                  query: e.target.value,
-                })
-              }
-              placeholder="Search title or class"
-              className="pl-9 bg-white/5 border-white/20 text-[#3B2A1A] placeholder:text-[#6B5A4A] rounded-xl"
+              value={search}
+              onChange={(event) => onSearchChange(event.target.value)}
+              placeholder="Search title, grade, or class"
+              disabled={disabled}
+              className="pl-9 bg-white/10 border-white/10 backdrop-blur-xl rounded-2xl text-white placeholder:text-white/60"
             />
           </div>
 
           <Select
-            value={filters.className}
-            onValueChange={(v) => onFiltersChange({ ...filters, className: v })}
+            value={statusFilter}
+            onValueChange={(value) => onStatusFilterChange(value as AssignmentStatusFilter)}
+            disabled={disabled}
           >
-            <SelectTrigger className="bg-white/5 border-white/20 text-[#3B2A1A] rounded-xl sm:w-44">
-              <SelectValue placeholder="All classes" />
-            </SelectTrigger>
-            <SelectContent className="bg-white/5 backdrop-blur-xl border border-white/10 text-[#3B2A1A] rounded-xl">
-              <SelectItem value="all" className="hover:bg-white/10 focus:bg-white/10">
-                All classes
-              </SelectItem>
-              <SelectItem value="S3A" className="hover:bg-white/10 focus:bg-white/10">
-                S3A
-              </SelectItem>
-              <SelectItem value="S3B" className="hover:bg-white/10 focus:bg-white/10">
-                S3B
-              </SelectItem>
-              <SelectItem value="S4A" className="hover:bg-white/10 focus:bg-white/10">
-                S4A
-              </SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Select
-            value={filters.status}
-            onValueChange={(v) => onFiltersChange({ ...filters, status: v as AssignmentStatusFilter })}
-          >
-            <SelectTrigger className="bg-white/5 border-white/20 text-[#3B2A1A] rounded-xl sm:w-44">
+            <SelectTrigger className="sm:w-44 bg-white/10 border-white/10 backdrop-blur-xl rounded-2xl text-white">
               <SelectValue placeholder="All status" />
             </SelectTrigger>
-            <SelectContent className="bg-white/5 backdrop-blur-xl border border-white/10 text-[#3B2A1A] rounded-xl">
-              {statusOptions.map((o) => (
-                <SelectItem
-                  key={o.value}
-                  value={o.value}
-                  className="hover:bg-white/10 focus:bg-white/10"
-                >
-                  {o.label}
+            <SelectContent className="bg-white/10 border-white/10 backdrop-blur-xl text-white rounded-2xl">
+              {statusOptions.map((option) => (
+                <SelectItem key={option.value} value={option.value} className="focus:bg-white/10">
+                  {option.label}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
+
+          <Select value={sort} onValueChange={(value) => onSortChange(value as AssignmentSort)} disabled={disabled}>
+            <SelectTrigger className="sm:w-40 bg-white/10 border-white/10 backdrop-blur-xl rounded-2xl text-white">
+              <SelectValue placeholder="Sort" />
+            </SelectTrigger>
+            <SelectContent className="bg-white/10 border-white/10 backdrop-blur-xl text-white rounded-2xl">
+              <SelectItem value="all" className="focus:bg-white/10">All</SelectItem>
+              <SelectItem value="ongoing" className="focus:bg-white/10">Ongoing Assignments</SelectItem>
+              <SelectItem value="already_closed" className="focus:bg-white/10">Already Closed</SelectItem>
+            </SelectContent>
+          </Select>
+
         </div>
       </div>
     </div>
   );
 }
+
+
+
+

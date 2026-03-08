@@ -1,3 +1,8 @@
+/**
+ * ThreadRow
+ * ---------
+ * Implements the T hr ea dR ow module for the teacher dashboard m es sa ge s feature.
+ */
 import { Check, Star } from "lucide-react";
 import type { MessageThread } from "./messagesTypes";
 
@@ -18,82 +23,69 @@ export default function ThreadRow(props: Props) {
     <button
       type="button"
       onClick={props.onOpen}
-      className={`
-        w-full text-left px-4 py-4 border-b border-white/10 hover:bg-white/10 transition
-        ${props.active ? "bg-white/10 ring-1 ring-white/20" : ""}
-      `}
+      className={`w-full cursor-pointer border-b border-white/10 px-4 py-4 text-left transition hover:bg-white/10 ${
+        props.active ? "bg-white/10 ring-1 ring-white/20" : ""
+      }`}
     >
-      <div className="flex items-start gap-3">
+      <div className="flex items-center gap-3">
         <button
           type="button"
-          onClick={e => {
+          onClick={(e) => {
             e.stopPropagation();
             props.onToggleSelect();
           }}
-          className={`
-            mt-1 h-5 w-5 rounded border-2 flex items-center justify-center transition
-            ${
-              props.selected
-                ? "bg-[#1EA896] border-[#1EA896]"
-                : "bg-transparent border-[#6B4F3A]/50"
-            }
-          `}
+          className={`flex h-5 w-5 items-center justify-center rounded border-2 transition ${
+            props.selected
+              ? "border-[#1EA896] bg-[#1EA896]"
+              : "border-[#6B4F3A]/50 bg-transparent"
+          }`}
           title="Select"
         >
           {props.selected && <Check className="h-3 w-3 text-white" />}
         </button>
 
-        <div className="mt-2">
-          <div
-            className={`
-              h-3 w-3 rounded-full
-              ${isUnread ? "bg-[#C65A5A]/70" : "bg-[#3F7D5C]/70"}
-            `}
-          />
+        <div className="flex w-4 justify-center">
+          <div className={`h-2.5 w-2.5 rounded-full ${isUnread ? "bg-[#1EA896]" : "bg-transparent"}`} />
         </div>
 
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center justify-between">
-            <div className="text-xs font-semibold text-[#1EA896]">
-              {t.dateLabel}
-            </div>
-
-            {t.unreadCount > 0 && (
-              <div className="h-6 w-6 rounded-full bg-[#1EA896] text-white text-xs font-semibold flex items-center justify-center shadow-md">
-                {t.unreadCount}
-              </div>
-            )}
-          </div>
-
-          <div className="mt-2 font-semibold text-sm text-[#3B240F] truncate">
+        <div className="min-w-0 w-[220px] shrink-0">
+          <div className={`truncate text-sm ${isUnread ? "font-semibold text-[#3B240F]" : "font-medium text-[#3B240F]"}`}>
             {t.fromName}
           </div>
+          <div className="mt-1 truncate text-xs text-[#6B4F3A]">{t.courseName}</div>
+        </div>
 
-          <div className="mt-2 text-sm text-[#3B240F] truncate">
-            {t.subject}
+        <div className="min-w-0 flex-1">
+          <div className="truncate text-sm text-[#3B240F]">
+            <span className={isUnread ? "font-semibold" : "font-medium"}>{t.subject}</span>
+            <span className="mx-2 text-[#6B4F3A]">-</span>
+            <span className="text-[#6B4F3A]">{t.preview}</span>
           </div>
+        </div>
 
-          <div className="mt-1 text-sm text-[#6B4F3A] truncate">
-            {t.preview}
+        {t.unreadCount > 0 ? (
+          <div className="hidden shrink-0 rounded-full bg-[#1EA896] px-2 py-1 text-xs font-semibold text-white sm:flex">
+            {t.unreadCount}
           </div>
+        ) : null}
+
+        <div className="w-[104px] shrink-0 text-right text-xs font-semibold text-[#1EA896]">
+          {t.dateLabel}
         </div>
 
         <button
           type="button"
-          onClick={e => {
+          onClick={(e) => {
             e.stopPropagation();
             props.onStar();
           }}
-          className="mt-10 p-2 rounded-lg hover:bg-white/10 transition"
+          className="rounded-lg p-2 transition hover:bg-white/10"
           title="Star"
         >
-          <Star
-            className={`h-4 w-4 ${
-              t.starred ? "text-[#FF715B]" : "text-[#6B4F3A]"
-            }`}
-          />
+          <Star className={`h-4 w-4 ${t.starred ? "text-[#FF715B]" : "text-[#6B4F3A]"}`} />
         </button>
       </div>
     </button>
   );
 }
+

@@ -1,147 +1,106 @@
-import React from "react";
-import { CalendarDays, Search } from "lucide-react";
+/**
+ * AttendanceFilters
+ * -----------------
+ * Renders controls for the teacher dashboard a tt en da nc e feature.
+ */
+import { Search, SlidersHorizontal, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
 import {
-  GlassSelect,
-  GlassSelectContent,
-  GlassSelectItem,
-  GlassSelectTrigger,
-  GlassSelectValue,
-} from "@/dashboard/schooladmin/components/ui/GlassSelect";
-
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { TeacherDatePicker } from "@/dashboard/teacher/components/shared";
 import type { AttendanceFilters, AttendanceStatus } from "./attendanceTypes";
 
 type Props = {
   value: AttendanceFilters;
   onChange: (next: AttendanceFilters) => void;
-  classOptions: string[];
-  subjectOptions: string[];
+  selectedDate: string | null;
+  onDateChange: (next: string | null) => void;
+  disabled?: boolean;
 };
 
-const statusOptions: Array<"all" | AttendanceStatus> = [
-  "all",
-  "Present",
-  "Absent",
-  "Late",
-  "Excused",
+const statusOptions: Array<{ value: "all" | AttendanceStatus; label: string }> = [
+  { value: "all", label: "All status" },
+  { value: "present", label: "Present" },
+  { value: "absent", label: "Absent" },
 ];
-
-function Pill({ children }: { children: React.ReactNode }) {
-  return (
-    <div
-      className="
-        group
-        bg-white/35
-        border border-white/45
-        rounded-2xl
-        shadow-[0_14px_35px_rgba(59,36,15,0.12)]
-        transition-all duration-300
-        hover:-translate-y-1
-        hover:bg-white/45
-        hover:shadow-[0_20px_45px_rgba(59,36,15,0.22)]
-      "
-    >
-      {children}
-    </div>
-  );
-}
 
 export default function AttendanceFiltersBar({
   value,
   onChange,
-  classOptions,
-  subjectOptions,
+  selectedDate,
+  onDateChange,
+  disabled = false,
 }: Props) {
+  const selectedDateObj = selectedDate ? new Date(`${selectedDate}T00:00:00`) : null;
+
   return (
-    <div className="rounded-2xl border border-white/25 bg-white/15 backdrop-blur-xl shadow-xl p-5">
-      <div className="grid gap-4 md:grid-cols-5">
-        <Pill>
-          <div className="relative">
-            <Search className="h-5 w-5 text-[#6B4F3A] absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-300 group-hover:text-[#3B240F]" />
+    <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-4 transition-colors duration-200 hover:bg-white/20">
+      <div className="flex flex-col lg:flex-row lg:items-center gap-3">
+        <div className="flex items-center gap-2 text-white/80">
+          <SlidersHorizontal className="h-4 w-4 text-teal-600" />
+          <span className="text-sm font-medium">Filters</span>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+          <div className="relative sm:w-72 w-full">
+            <Search className="h-4 w-4 text-white/60 absolute left-3 top-1/2 -translate-y-1/2" />
             <Input
               value={value.query}
-              onChange={(e) => onChange({ ...value, query: e.target.value })}
-              placeholder="Search student.."
-              className="
-                h-12
-                bg-transparent
-                border-0
-                pl-12
-                text-[#3B240F]
-                placeholder:text-[#6B4F3A]/70
-                focus-visible:ring-0
-              "
+              onChange={(event) => onChange({ ...value, query: event.target.value })}
+              placeholder="Search student"
+              disabled={disabled}
+              className="pl-9 bg-white/10 border-white/10 backdrop-blur-xl rounded-2xl text-white placeholder:text-white/60"
             />
           </div>
-        </Pill>
 
-        <Pill>
-          <GlassSelect
-            value={value.classValue}
-            onValueChange={(v) => onChange({ ...value, classValue: v })}
-          >
-            <GlassSelectTrigger className="h-12 w-full bg-transparent border-0 focus:ring-0">
-              <GlassSelectValue placeholder="All classes" />
-            </GlassSelectTrigger>
-            <GlassSelectContent>
-              {classOptions.map((v) => (
-                <GlassSelectItem key={v} value={v}>
-                  {v === "all" ? "All classes" : v}
-                </GlassSelectItem>
-              ))}
-            </GlassSelectContent>
-          </GlassSelect>
-        </Pill>
+          <div className="flex items-center gap-2">
+            <div className="sm:w-48">
+              <TeacherDatePicker
+                value={selectedDateObj}
+                onChange={(next) => onDateChange(next ? next.toISOString().slice(0, 10) : null)}
+                placeholder="All dates"
+                disabled={disabled}
+              />
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              disabled={disabled || !selectedDateObj}
+              onClick={() => onDateChange(null)}
+              className="h-10 px-3 bg-white/10 border-white/10 backdrop-blur-xl rounded-2xl text-white hover:bg-white/20"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
 
-        <Pill>
-          <GlassSelect
-            value={value.subjectValue}
-            onValueChange={(v) => onChange({ ...value, subjectValue: v })}
-          >
-            <GlassSelectTrigger className="h-12 w-full bg-transparent border-0 focus:ring-0">
-              <GlassSelectValue placeholder="All subjects" />
-            </GlassSelectTrigger>
-            <GlassSelectContent>
-              {subjectOptions.map((v) => (
-                <GlassSelectItem key={v} value={v}>
-                  {v === "all" ? "All subjects" : v}
-                </GlassSelectItem>
-              ))}
-            </GlassSelectContent>
-          </GlassSelect>
-        </Pill>
-
-        <Pill>
-          <GlassSelect
+          <Select
             value={value.statusValue}
-            onValueChange={(v) => onChange({ ...value, statusValue: v as any })}
+            onValueChange={(next) => onChange({ ...value, statusValue: next as AttendanceFilters["statusValue"] })}
+            disabled={disabled}
           >
-            <GlassSelectTrigger className="h-12 w-full bg-transparent border-0 focus:ring-0">
-              <GlassSelectValue placeholder="All status" />
-            </GlassSelectTrigger>
-            <GlassSelectContent>
-              {statusOptions.map((v) => (
-                <GlassSelectItem key={v} value={v}>
-                  {v === "all" ? "All status" : v}
-                </GlassSelectItem>
+            <SelectTrigger className="sm:w-40 bg-white/10 border-white/10 backdrop-blur-xl rounded-2xl text-white">
+              <SelectValue placeholder="All status" />
+            </SelectTrigger>
+            <SelectContent className="bg-white/10 border-white/10 backdrop-blur-xl text-white rounded-2xl">
+              {statusOptions.map((option) => (
+                <SelectItem key={option.value} value={option.value} className="focus:bg-white/10">
+                  {option.label}
+                </SelectItem>
               ))}
-            </GlassSelectContent>
-          </GlassSelect>
-        </Pill>
+            </SelectContent>
+          </Select>
 
-        <Pill>
-          <div className="flex items-center gap-3 px-4 h-12">
-            <CalendarDays className="h-5 w-5 text-[#6B4F3A] transition-colors duration-300 group-hover:text-[#3B240F]" />
-            <input
-              type="date"
-              value={value.date}
-              onChange={(e) => onChange({ ...value, date: e.target.value })}
-              className="w-full bg-transparent text-[#3B240F] outline-none"
-            />
-          </div>
-        </Pill>
+        </div>
       </div>
     </div>
   );
 }
+
+
+

@@ -1,3 +1,8 @@
+/**
+ * AssessmentItemSearchSelect
+ * --------------------------
+ * Implements the A ss es sm en tI te mS ea rc hS el ec t module for the teacher dashboard g ra de s feature.
+ */
 import { useMemo, useState } from "react";
 import { Check, ChevronsUpDown, Search } from "lucide-react";
 import { cn } from "@/utils/cn";
@@ -88,3 +93,4 @@ export default function AssessmentItemSearchSelect({
     </Popover>
   );
 }
+

@@ -1,6 +1,10 @@
-import { Filter, Calendar } from "lucide-react";
+/**
+ * TeacherScheduleFilters
+ * ----------------------
+ * Renders schedule filters using the same structure as the assignments filter bar.
+ */
+import { SlidersHorizontal } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
 
 interface TeacherScheduleFiltersProps {
   selectedDay: string;
@@ -9,7 +13,6 @@ interface TeacherScheduleFiltersProps {
   onSubjectChange: (subject: string) => void;
   days: string[];
   subjects: string[];
-  onReset: () => void;
 }
 
 export function TeacherScheduleFilters({
@@ -19,75 +22,49 @@ export function TeacherScheduleFilters({
   onSubjectChange,
   days,
   subjects,
-  onReset,
 }: TeacherScheduleFiltersProps) {
   const allDays = ["All Days", ...days];
   const allSubjects = ["All Subjects", ...subjects];
 
   return (
-    <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 transition-all duration-300 ease-in-out hover:bg-white/10 hover:border-white/20 hover:shadow-xl">
-      <div className="flex items-center space-x-3 mb-4">
-        <Filter className="h-5 w-5 text-[#1EA896]" />
-        <h3 className="text-lg font-semibold text-white">Filter Schedule</h3>
-      </div>
+    <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-4 transition-colors duration-200 hover:bg-white/20">
+      <div className="flex flex-col lg:flex-row lg:items-center gap-3">
+        <div className="flex items-center gap-2 text-white/80">
+          <SlidersHorizontal className="h-4 w-4 text-teal-600" />
+          <span className="text-sm font-medium">Filters</span>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* Day */}
-        <div>
-          <label className="block text-sm font-medium text-white/80 mb-2">Day</label>
+        <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
           <Select value={selectedDay} onValueChange={onDayChange}>
-            <SelectTrigger className="bg-[#D6CBB6] border border-[#8B5E3C]/40 text-[#3B2A1A] focus:border-[#8B5E3C] focus:ring-[#8B5E3C]/20 hover:border-[#8B5E3C]/60 transition-colors duration-200">
-              <div className="flex items-center space-x-2">
-                <Calendar className="h-4 w-4 text-[#1EA896]" />
-                <SelectValue />
-              </div>
+            <SelectTrigger className="sm:w-44 bg-white/10 border-white/10 backdrop-blur-xl rounded-2xl text-white">
+              <SelectValue placeholder="All Days" />
             </SelectTrigger>
-            <SelectContent className="bg-[#D6CBB6] border border-[#8B5E3C]/40 text-[#3B2A1A]">
+            <SelectContent className="bg-white/10 border-white/10 backdrop-blur-xl text-white rounded-2xl">
               {allDays.map((day) => (
-                <SelectItem
-                  key={day}
-                  value={day}
-                  className="text-[#3B2A1A] hover:bg-[#CBB89D] focus:bg-[#CBB89D]"
-                >
+                <SelectItem key={day} value={day} className="focus:bg-white/10">
                   {day}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
-        </div>
 
-        {/* Subject */}
-        <div>
-          <label className="block text-sm font-medium text-white/80 mb-2">Subject</label>
           <Select value={selectedSubject} onValueChange={onSubjectChange}>
-            <SelectTrigger className="bg-[#D6CBB6] border border-[#8B5E3C]/40 text-[#3B2A1A] focus:border-[#8B5E3C] focus:ring-[#8B5E3C]/20 hover:border-[#8B5E3C]/60 transition-colors duration-200">
-              <SelectValue />
+            <SelectTrigger className="sm:w-44 bg-white/10 border-white/10 backdrop-blur-xl rounded-2xl text-white">
+              <SelectValue placeholder="All Subjects" />
             </SelectTrigger>
-            <SelectContent className="bg-[#D6CBB6] border border-[#8B5E3C]/40 text-[#3B2A1A]">
+            <SelectContent className="bg-white/10 border-white/10 backdrop-blur-xl text-white rounded-2xl">
               {allSubjects.map((subject) => (
-                <SelectItem
-                  key={subject}
-                  value={subject}
-                  className="text-[#3B2A1A] hover:bg-[#CBB89D] focus:bg-[#CBB89D]"
-                >
+                <SelectItem key={subject} value={subject} className="focus:bg-white/10">
                   {subject}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
         </div>
-
-        {/* Reset */}
-        <div className="flex items-end">
-          <Button
-            onClick={onReset}
-            variant="outline"
-            className="w-full bg-[#D6CBB6] border border-[#8B5E3C]/40 text-[#3B2A1A] hover:bg-[#CBB89D] hover:border-[#8B5E3C]/60 transition-colors duration-200"
-          >
-            Reset Filters
-          </Button>
-        </div>
       </div>
     </div>
   );
 }
+
+
+

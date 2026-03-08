@@ -1,5 +1,5 @@
 // src/dashboard/teacher/components/attendance/attendanceTypes.ts
-export type AttendanceStatus = "Present" | "Absent" | "Late" | "Excused";
+export type AttendanceStatus = "present" | "absent";
 
 export type AttendanceRecord = {
   id: string; // date:studentId
@@ -29,8 +29,6 @@ export type AttendanceStats = {
   total: number;
   present: number;
   absent: number;
-  late: number;
-  excused: number;
 };
 
 export type AttendanceMarkPayload = {

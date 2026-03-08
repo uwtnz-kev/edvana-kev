@@ -1,3 +1,8 @@
+/**
+ * AttendanceCreateTable
+ * ---------------------
+ * Renders the A tt en da nc eC re at eT ab le UI for the teacher dashboard a tt en da nc e feature.
+ */
 import {
   Table,
   TableBody,
@@ -67,3 +72,5 @@ export default function AttendanceCreateTable({ rows, onStatusChange }: Props) {
     </div>
   );
 }
+
+

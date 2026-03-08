@@ -1,17 +1,18 @@
+/**
+ * MessagesHeader
+ * --------------
+ * Renders the header for the teacher dashboard m es sa ge s feature.
+ */
 import { Mail } from "lucide-react";
+import { getSubjectTheme } from "@/dashboard/teacher/components/shared/subjectTheme";
 
-export default function MessagesHeader() {
+export default function MessagesHeader({ subjectId = "" }: { subjectId?: string }) {
+  const theme = getSubjectTheme(subjectId);
+
   return (
     <div className="flex items-center gap-5">
-      <div
-        className="
-          h-12 w-12
-          rounded-2xl
-          flex items-center justify-center
-          bg-[#1EA896]
-        "
-      >
-        <Mail className="h-6 w-6 text-[#3B240F]" />
+      <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${theme.bgClass}`}>
+        <Mail className={`h-6 w-6 ${theme.iconClass}`} />
       </div>
 
       <div>
@@ -25,3 +26,4 @@ export default function MessagesHeader() {
     </div>
   );
 }
+

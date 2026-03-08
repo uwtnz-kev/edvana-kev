@@ -1,3 +1,8 @@
+/**
+ * hooks
+ * -----
+ * Implements the h oo ks module for the teacher dashboard s tu de nt s feature.
+ */
 import { useMemo, useState } from "react";
 import type { StudentsFilters, Student } from "./types";
 import { mockStudents } from "./mock";
@@ -38,3 +43,4 @@ export function useStudents() {
     setFilters,
   };
 }
+

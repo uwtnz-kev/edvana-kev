@@ -1,4 +1,9 @@
-import { BarChart3, Download } from "lucide-react";
+/**
+ * GradesHeader
+ * ------------
+ * Renders the header for the teacher dashboard g ra de s feature.
+ */
+import { BarChart3, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import {
   GlassSelect,
@@ -46,13 +51,16 @@ export default function GradesHeader({ subjectId, onSubjectChange }: Props) {
         </GlassSelect>
 
         <button
-          onClick={() => navigate("/dashboard/teacher/grades/export")}
+          onClick={() => navigate("/dashboard/teacher/grades/create")}
           className="group flex items-center gap-2 h-11 px-4 rounded-2xl bg-gradient-to-br from-[#1EA896]/85 to-[#159A85]/85 text-white hover:opacity-90 transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-lg hover:shadow-[#1EA896]/25"
         >
-          <Download className="h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
-          <span className="text-sm font-medium">Import Grades</span>
+          <Plus className="h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
+          <span className="text-sm font-medium">Create Grade List</span>
         </button>
       </div>
     </div>
   );
 }
+
+
+

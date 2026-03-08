@@ -1,0 +1,28 @@
+// Seed data used to initialize the teacher messages store.
+import type { CourseOption, MessageThread, ThreadMessage } from "../messagesTypes";
+
+export const seedCourses: CourseOption[] = [
+  { id: "all", name: "All Courses" },
+  { id: "c1", name: "Mathematics S3A" },
+  { id: "c2", name: "Biology S2B" },
+  { id: "c3", name: "S6 Biology Class" },
+  { id: "c4", name: "Parents of S5A" },
+];
+
+export const seedThreads: MessageThread[] = [
+  { id: "t1", courseId: "c3", courseName: "S6 Biology Class", fromName: "Aline Mukamana", fromRole: "Student", senderName: "Aline Mukamana", senderRole: "Student", participants: ["Aline Mukamana", "You"], subject: "Question about tomorrow's exam", preview: "Good afternoon teacher, I wanted to confirm the exam room...", body: "Good afternoon teacher, I wanted to confirm the exam room for tomorrow's Biology assessment. I also wanted to ask whether we should bring graph paper. Thank you.", dateLabel: "Today", timestamp: "Mar 8, 2026 at 8:20am", unreadCount: 1, isRead: false, starred: false, folder: "inbox" },
+  { id: "t2", courseId: "c4", courseName: "Parents of S5A", fromName: "Jean Claude Habimana", fromRole: "Parent", senderName: "Jean Claude Habimana", senderRole: "Parent", participants: ["Jean Claude Habimana", "You"], subject: "Absence explanation for Iradukunda", preview: "My child was absent because of a clinic visit...", body: "Hello teacher, I am writing to explain that Iradukunda missed class yesterday because of a clinic visit. Please let us know if there is any missed work to catch up on.", dateLabel: "Today", timestamp: "Mar 8, 2026 at 7:10am", unreadCount: 0, isRead: true, starred: false, folder: "inbox" },
+  { id: "t3", courseId: "all", courseName: "School Notices", fromName: "School Admin Office", fromRole: "Admin", senderName: "School Admin Office", senderRole: "Admin", participants: ["School Admin Office", "You"], subject: "Updated assessment submission deadline", preview: "Please note the grading deadline has been moved...", body: "Please note the grading deadline for this week's assessments has been moved to Friday at 5 PM. Kindly ensure all marks are submitted before then.", dateLabel: "Yesterday", timestamp: "Mar 7, 2026 at 3:45pm", unreadCount: 1, isRead: false, starred: true, folder: "inbox" },
+  { id: "t4", courseId: "c3", courseName: "S6 Biology Class", fromName: "You", fromRole: "Teacher", senderName: "You", senderRole: "Teacher", recipientName: "S6 Biology Class", participants: ["You", "S6 Biology Class"], subject: "Reminder: bring lab materials", preview: "Please remember to come with your notebooks...", body: "Please remember to come with your notebooks, lab coats, and completed preparation notes for tomorrow's lab session.", dateLabel: "Yesterday", timestamp: "Mar 7, 2026 at 2:15pm", unreadCount: 0, isRead: true, starred: false, folder: "sent" },
+  { id: "t5", courseId: "c2", courseName: "Biology S2B", fromName: "You", fromRole: "Teacher", senderName: "You", senderRole: "Teacher", recipientName: "Marie Claire Uwera", participants: ["You", "Marie Claire Uwera"], subject: "Feedback on your assignment", preview: "You did well overall, but revise question 3...", body: "You did well overall, but please revise question 3 and improve the explanation in your final paragraph. Once updated, resubmit by Thursday.", dateLabel: "Mar 5, 2026", timestamp: "Mar 5, 2026 at 5:40pm", unreadCount: 0, isRead: true, starred: false, folder: "sent" },
+  { id: "t6", courseId: "c1", courseName: "Mathematics S3A", fromName: "Patrick Nshimiyimana", fromRole: "Student", senderName: "Patrick Nshimiyimana", senderRole: "Student", participants: ["Patrick Nshimiyimana", "You"], subject: "Thank you for the support", preview: "Thank you for explaining the topic again...", body: "Thank you for explaining the topic again after class. I understand it much better now.", dateLabel: "Mar 1, 2026", timestamp: "Mar 1, 2026 at 11:05am", unreadCount: 0, isRead: true, starred: false, folder: "archived" },
+];
+
+export const seedMessages: ThreadMessage[] = [
+  { id: "m1", threadId: "t1", authorName: "Aline Mukamana", authorMeta: "Student", createdAtLabel: "Mar 8, 2026 at 8:20am", body: "Good afternoon teacher, I wanted to confirm the exam room for tomorrow's Biology assessment. I also wanted to ask whether we should bring graph paper. Thank you." },
+  { id: "m2", threadId: "t2", authorName: "Jean Claude Habimana", authorMeta: "Parent", createdAtLabel: "Mar 8, 2026 at 7:10am", body: "Hello teacher, I am writing to explain that Iradukunda missed class yesterday because of a clinic visit. Please let us know if there is any missed work to catch up on." },
+  { id: "m3", threadId: "t3", authorName: "School Admin Office", authorMeta: "Admin", createdAtLabel: "Mar 7, 2026 at 3:45pm", body: "Please note the grading deadline for this week's assessments has been moved to Friday at 5 PM. Kindly ensure all marks are submitted before then." },
+  { id: "m4", threadId: "t4", authorName: "You", authorMeta: "Teacher", createdAtLabel: "Mar 7, 2026 at 2:15pm", body: "Please remember to come with your notebooks, lab coats, and completed preparation notes for tomorrow's lab session." },
+  { id: "m5", threadId: "t5", authorName: "You", authorMeta: "Teacher", createdAtLabel: "Mar 5, 2026 at 5:40pm", body: "You did well overall, but please revise question 3 and improve the explanation in your final paragraph. Once updated, resubmit by Thursday." },
+  { id: "m6", threadId: "t6", authorName: "Patrick Nshimiyimana", authorMeta: "Student", createdAtLabel: "Mar 1, 2026 at 11:05am", body: "Thank you for explaining the topic again after class. I understand it much better now." },
+];

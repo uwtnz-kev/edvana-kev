@@ -1,3 +1,8 @@
+/**
+ * GradesFilters
+ * -------------
+ * Renders controls for the teacher dashboard g ra de s feature.
+ */
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
@@ -21,3 +26,4 @@ export default function GradesFilters({ search, onSearchChange }: Props) {
     </div>
   );
 }
+

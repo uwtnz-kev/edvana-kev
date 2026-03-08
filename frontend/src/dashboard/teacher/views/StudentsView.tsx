@@ -1,125 +1,83 @@
-import { useState } from "react";
+// Orchestrates the teacher students workspace using extracted view modules.
 import {
-  StudentsHeader,
   StudentsStats,
-  StudentsToolbar,
-  StudentsTable,
-  EmptyState,
-  useStudents,
-  type Student,
+  StudentsHome,
 } from "../components/students";
-import { Button } from "@/components/ui/button";
 import TeacherStudentDetailsModal from "../components/students/TeacherStudentDetailsModal";
+import {
+  TeacherAssignmentsSubjectSidebar,
+} from "@/dashboard/teacher/components/assignments";
+import {
+  StudentsFilters,
+  StudentsHeader,
+  StudentsPagination,
+  StudentsTable,
+  useStudentsViewState,
+} from "./students";
 
 export default function StudentsView() {
-  const { students, filters, setFilters } = useStudents();
+  const state = useStudentsViewState();
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(25);
-
-  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
-  const [detailsOpen, setDetailsOpen] = useState(false);
-
-  const totalPages = Math.max(1, Math.ceil(students.length / itemsPerPage));
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedStudents = students.slice(startIndex, startIndex + itemsPerPage);
-
-  const handleView = (student: Student) => {
-    setSelectedStudent(student);
-    setDetailsOpen(true);
-  };
-
-  const handleMessage = (student: Student) => {
-    console.log("message", student.id);
-  };
-
-  const handleItemsPerPageChange = (n: number) => {
-    setItemsPerPage(n);
-    setCurrentPage(1);
-  };
-
-  const isEmpty =
-    students.length === 0 &&
-    filters.search.trim() === "" &&
-    filters.class.trim() === "" &&
-    filters.status === "all";
+  if (!state.selectedSubject) {
+    return (
+      <div className="w-full overflow-x-hidden p-4 sm:p-6" style={{ overflowX: "hidden" }}>
+        <div className="flex w-full gap-6">
+          <aside className="w-[220px] shrink-0">
+            <TeacherAssignmentsSubjectSidebar
+              subjects={state.subjects}
+              selectedSubjectId={state.selectedSubjectId}
+              onSelectSubject={state.setSelectedSubjectId}
+            />
+          </aside>
+          <section className="flex-1 min-w-0 space-y-4">
+            <StudentsHeader />
+            <StudentsHome />
+          </section>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="px-4 sm:px-6 md:px-8 py-6">
-      <div className="space-y-6">
-        <StudentsHeader />
-
-        <StudentsStats studentsCount={students.length} />
-
-        <StudentsToolbar
-          filters={filters}
-          onFiltersChange={(next) => {
-            setFilters(next);
-            setCurrentPage(1);
-          }}
-          itemsPerPage={itemsPerPage}
-          onItemsPerPageChange={handleItemsPerPageChange}
-          totalStudents={students.length}
+    <div className="w-full overflow-x-hidden p-4 sm:p-6" style={{ overflowX: "hidden" }}>
+      <section className="flex-1 min-w-0 space-y-4">
+        <StudentsHeader
+          selectedSubjectName={state.selectedSubject.name}
+          onBack={state.handleBack}
         />
 
-        {isEmpty ? (
-          <EmptyState />
-        ) : (
-          <>
-            <StudentsTable
-              students={paginatedStudents}
-              onView={handleView}
-              onMessage={handleMessage}
-            />
+        <StudentsStats studentsCount={state.filteredStudents.length} />
 
-            {totalPages > 1 && (
-              <div className="bg-white/15 backdrop-blur-xl border border-white/25 shadow-xl rounded-2xl p-6 pb-8">
-                <div className="flex items-center justify-between gap-3 flex-wrap">
-                  <p className="text-sm text-white">
-                    Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, students.length)} of{" "}
-                    {students.length} students
-                  </p>
+        <StudentsFilters
+          filters={state.filters}
+          onFiltersChange={(next) => {
+            state.setFilters(next);
+            state.setCurrentPage(1);
+          }}
+          selectedClass={state.selectedClass}
+          onClassChange={(value) => {
+            state.setSelectedClass(value);
+            state.setCurrentPage(1);
+          }}
+          classes={state.classes}
+        />
 
-                  <div className="flex items-center gap-2">
-                    <Button
-                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                      disabled={currentPage === 1}
-                      variant="ghost"
-                      size="sm"
-                      className="px-3 py-1 text-sm bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
-                    >
-                      Previous
-                    </Button>
+        <StudentsTable students={state.paginatedStudents} onView={state.handleView} />
 
-                    <span className="text-sm text-white px-3">
-                      Page {currentPage} of {totalPages}
-                    </span>
-
-                    <Button
-                      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                      disabled={currentPage === totalPages}
-                      variant="ghost"
-                      size="sm"
-                      className="px-3 py-1 text-sm bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
-                    >
-                      Next
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </>
-        )}
+        <StudentsPagination
+          currentPage={state.currentPage}
+          onPageChange={state.setCurrentPage}
+          startIndex={state.startIndex}
+          totalItems={state.filteredStudents.length}
+          totalPages={state.totalPages}
+        />
 
         <TeacherStudentDetailsModal
-          open={detailsOpen}
-          onOpenChange={(open) => {
-            setDetailsOpen(open);
-            if (!open) setSelectedStudent(null);
-          }}
-          student={selectedStudent}
+          open={state.detailsOpen}
+          onOpenChange={(open) => (open ? state.setDetailsOpen(true) : state.closeDetails())}
+          student={state.selectedStudent}
         />
-      </div>
+      </section>
     </div>
   );
 }

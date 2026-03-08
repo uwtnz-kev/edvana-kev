@@ -1,3 +1,8 @@
+/**
+ * EmptyState
+ * ----------
+ * Renders the empty state for the teacher dashboard s tu de nt s feature.
+ */
 import { Users } from "lucide-react";
 
 export default function EmptyState() {
@@ -13,3 +18,4 @@ export default function EmptyState() {
     </div>
   );
 }
+

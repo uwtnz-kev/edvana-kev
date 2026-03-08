@@ -1,3 +1,8 @@
+/**
+ * AccountSettingsView
+ * -------------------
+ * Renders the teacher dashboard s et ti ng s page content.
+ */
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -71,8 +76,8 @@ export default function AccountSettingsView() {
     <div className="p-4 sm:p-6">
       <div className="max-w-2xl mx-auto space-y-6">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-[#FF715B] to-[#FF715B]/80 rounded-lg flex items-center justify-center">
-            <User className="h-5 w-5 text-white" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/20">
+            <User className="h-6 w-6 text-emerald-700" />
           </div>
           <div>
             <h1 className="text-3xl font-bold text-white">Account Settings</h1>
@@ -91,3 +96,4 @@ export default function AccountSettingsView() {
     </div>
   );
 }
+

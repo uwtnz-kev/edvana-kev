@@ -1,4 +1,10 @@
-import { Users, MapPin } from "lucide-react";
+/**
+ * TeacherScheduleCard
+ * -------------------
+ * Renders a single schedule entry using the shared teacher dashboard card styling.
+ */
+import { BookOpen, MapPin, Users } from "lucide-react";
+import { getSubjectIconTheme } from "@/dashboard/teacher/components/shared/subjectIconTheme";
 
 interface TeacherScheduleCardProps {
   subject: string;
@@ -13,47 +19,37 @@ export function TeacherScheduleCard({
   room,
   variant = "desktop",
 }: TeacherScheduleCardProps) {
-  const colors: Record<string, string> = {
-    Mathematics: "from-blue-500 to-blue-600",
-    Physics: "from-purple-500 to-purple-600",
-    Chemistry: "from-green-500 to-green-600",
-    Biology: "from-emerald-500 to-emerald-600",
-    English: "from-orange-500 to-orange-600",
-    French: "from-pink-500 to-pink-600",
-    History: "from-amber-500 to-amber-600",
-    Geography: "from-teal-500 to-teal-600",
-    Kinyarwanda: "from-red-500 to-red-600",
-    "Office Hours": "from-[#1EA896] to-[#1EA896]/80",
-    Planning: "from-[#4C5454] to-[#523F38]",
-    "Free Period": "from-slate-500 to-slate-600",
-    Break: "from-gray-400 to-gray-500",
-    "Lunch Break": "from-yellow-500 to-yellow-600",
-  };
-
-   const baseClasses = `rounded-lg p-3 bg-gradient-to-r ${
-  colors[subject] || "from-gray-500 to-gray-600"
-} shadow-lg transition-all duration-300 ease-in-out hover:scale-[1.03] hover:shadow-2xl cursor-pointer`;
-
-  const textSize = variant === "mobile" ? "text-sm" : "text-xs";
+  const theme = getSubjectIconTheme(subject);
+  const isBreakSlot = subject === "Break" || subject === "Lunch Break" || subject === "Free Period";
+  const baseClasses = `rounded-xl border border-white/10 bg-white/10 p-2.5 shadow-sm backdrop-blur-xl transition-all duration-200 hover:-translate-y-[1px] hover:bg-white/20 hover:shadow-md`;
+  const textSize = variant === "mobile" ? "text-xs" : "text-[11px]";
   const titleSize =
     variant === "mobile"
-      ? "font-medium mb-1"
-      : "font-medium text-sm mb-1";
+      ? "mb-1 font-medium text-sm"
+      : "mb-0.5 text-[13px] font-medium leading-tight";
 
   return (
     <div className={baseClasses}>
-      <div className={`text-white ${titleSize}`}>{subject}</div>
+      <div className="mb-1.5 flex items-start gap-2">
+        <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${theme.bgClass}`}>
+          <BookOpen className={`h-3.5 w-3.5 ${theme.iconClass}`} />
+        </div>
+        <div className="min-w-0">
+          <div className={`text-[#3B240F] ${titleSize}`}>{subject}</div>
+          {isBreakSlot ? <span className="inline-flex rounded-full border border-white/15 bg-white/20 px-1.5 py-0.5 text-[10px] font-medium text-[#3B240F]/70">Break</span> : null}
+        </div>
+      </div>
 
       {classNameLabel && (
-        <div className={`text-white/80 ${textSize} flex items-center space-x-1 mb-1`}>
-          <Users className="h-3 w-3" />
+        <div className={`mb-0.5 flex items-center gap-1 text-[#3B240F]/75 ${textSize}`}>
+          <Users className="h-3 w-3 shrink-0" />
           <span>{classNameLabel}</span>
         </div>
       )}
 
       {room && (
-        <div className={`text-white/80 ${textSize} flex items-center space-x-1`}>
-          <MapPin className="h-3 w-3" />
+        <div className={`flex items-center gap-1 text-[#3B240F]/75 ${textSize}`}>
+          <MapPin className="h-3 w-3 shrink-0" />
           <span>{room}</span>
         </div>
       )}

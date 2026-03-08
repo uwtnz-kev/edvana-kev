@@ -1,77 +1,54 @@
-import { Users, ClipboardList, BarChart3, AlertTriangle } from "lucide-react";
+/**
+ * StudentsStats
+ * -------------
+ * Renders summary metrics for the teacher dashboard s tu de nt s feature.
+ */
+import { Users, BarChart3 } from "lucide-react";
+import { getSubjectIconTheme } from "@/dashboard/teacher/components/shared/subjectIconTheme";
 
 interface StudentsStatsProps {
   studentsCount: number;
-  pendingGrading?: number;
   attendanceRate?: number;
-  atRiskCount?: number;
 }
 
 export default function StudentsStats({
   studentsCount,
-  pendingGrading = 12,
   attendanceRate = 92,
-  atRiskCount = 3,
 }: StudentsStatsProps) {
+  const totalTheme = getSubjectIconTheme("students-total");
+  const attendanceTheme = getSubjectIconTheme("students-attendance");
+
   const cards = [
     {
-      icon: <Users className="h-5 w-5 text-white" />,
+      icon: <Users className={`h-5 w-5 ${totalTheme.iconClass}`} />,
       value: studentsCount,
       label: "Total Students",
-      bg: "bg-gradient-to-br from-[#1EA896] to-[#1EA896]/80",
+      bg: totalTheme.bgClass,
     },
     {
-      icon: <ClipboardList className="h-5 w-5 text-white" />,
-      value: pendingGrading,
-      label: "Pending Grading",
-      bg: "bg-gradient-to-br from-[#FF715B] to-[#FF715B]/80",
+      icon: <BarChart3 className={`h-5 w-5 ${attendanceTheme.iconClass}`} />,
+      value: `${attendanceRate}%`,
+      label: "Attendance Rate",
+      bg: attendanceTheme.bgClass,
     },
-    {
-  icon: <BarChart3 className="h-5 w-5 text-white" />,
-  value: `${attendanceRate}%`,
-  label: "Attendance Rate",
-  bg: "bg-gradient-to-br from-[#3B82F6]/80 to-[#2563EB]/70",
-},
-{
-  icon: <AlertTriangle className="h-5 w-5 text-white" />,
-  value: atRiskCount,
-  label: "At Risk Students",
-  bg: "bg-gradient-to-br from-[#FACC15]/80 to-[#EAB308]/70",
-},
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
       {cards.map((card, index) => (
         <div
           key={index}
-          className="
-            group
-            bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl p-4
-            transition-all duration-300
-            hover:bg-white/10 hover:border-white/20
-            hover:shadow-2xl hover:-translate-y-1
-          "
+          className="group rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-4 transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:bg-white/20"
         >
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center gap-3">
             <div
-              className={`
-                w-10 h-10
-                ${card.bg}
-                rounded-lg flex items-center justify-center
-                transition-transform duration-300
-                group-hover:scale-105
-              `}
+              className={`h-12 w-12 rounded-2xl flex items-center justify-center transition-transform duration-200 group-hover:scale-105 ${card.bg}`}
             >
               {card.icon}
             </div>
             <div>
-              <p className="text-2xl font-bold text-white">
-                {card.value}
-              </p>
-              <p className="text-white/60 text-sm">
-                {card.label}
-              </p>
+              <p className="text-xs text-white/60">{card.label}</p>
+              <p className="mt-1 text-lg font-semibold text-white">{card.value}</p>
             </div>
           </div>
         </div>
@@ -79,3 +56,4 @@ export default function StudentsStats({
     </div>
   );
 }
+

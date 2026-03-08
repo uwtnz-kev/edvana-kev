@@ -32,26 +32,43 @@ import TeacherOverview from "@/dashboard/teacher/views/Overview";
 import TeacherParentsView from "@/dashboard/teacher/views/ParentView";
 import TeacherSubjectView from "@/dashboard/teacher/views/SubjectView";
 import TeacherStudentsView from "@/dashboard/teacher/views/StudentsView";
-import TeacherAssignmentsView from "@/dashboard/teacher/views/AssignmentsView";
-import AssignmentDetailsView from "@/dashboard/teacher/views/AssignmentDetailsView.";
-import TeacherExamsView from "@/dashboard/teacher/views/ExamsView";
-import TeacherResourcesView from "@/dashboard/teacher/views/ResourcesView";
+import AssignmentsView from "@/dashboard/teacher/views/AssignmentsView";
+import AssignmentsCreateView from "@/dashboard/teacher/views/AssignmentsCreateView";
+import AssignmentsEditView from "@/dashboard/teacher/views/AssignmentsEditView";
+import AnnouncementsView from "@/dashboard/teacher/views/AnnouncementsView";
+import AnnouncementCreateView from "@/dashboard/teacher/views/AnnouncementCreateView";
+import AnnouncementEditView from "@/dashboard/teacher/views/AnnouncementEditView";
+import ExamsView from "@/dashboard/teacher/views/ExamsView";
+import ExamsCreateView from "@/dashboard/teacher/views/ExamsCreateView";
+import ExamsEditView from "@/dashboard/teacher/views/ExamsEditView";
+import QuizView from "@/dashboard/teacher/views/QuizView";
+import QuizCreateView from "@/dashboard/teacher/views/QuizCreateView";
+import QuizEditView from "@/dashboard/teacher/views/QuizEditView";
 import TeacherScheduleView from "@/dashboard/teacher/views/ScheduleView";
 import TeacherSupportView from "@/dashboard/teacher/views/SupportView";
-import TeacherChatbotView from "@/dashboard/teacher/views/ai-tutor/ChatbotView";
-import TeacherQuizGeneratorView from "@/dashboard/teacher/views/ai-tutor/QuizGeneratorView";
 import TeacherGeneralSettingsView from "@/dashboard/teacher/views/settings/GeneralSettingsView";
 import TeacherAccountSettingsView from "@/dashboard/teacher/views/settings/AccountSettingsView";
 import TeacherSubjectDetailsView from "@/dashboard/teacher/views/SubjectDetailsView";
+import SubjectModuleContentView from "@/dashboard/teacher/views/SubjectModuleContentView";
+import SubjectModulesView from "@/dashboard/teacher/views/SubjectModulesView";
 import SubjectModuleView from "@/dashboard/teacher/views/SubjectModuleView";
-import AssignmentCreateView from "@/dashboard/teacher/views/AssignmentCreateView";
-import ExamCreateView from "@/dashboard/teacher/views/ExamCreateView";
-import ExamDetailsView from "@/dashboard/teacher/views/ExamDetailsView";
+import SubjectUploadModuleView from "@/dashboard/teacher/views/SubjectUploadModuleView";
 import TeacherAttendanceView from "@/dashboard/teacher/views/AttendanceView";
 import CreateAttendanceListView from "@/dashboard/teacher/views/CreateAttendanceListView";
+import AttendanceEditView from "@/dashboard/teacher/views/AttendanceEditView";
 import GradesView from "@/dashboard/teacher/views/GradesView";
- import ExportGradesView from "@/dashboard/teacher/views/ExportGradesView";
- import MessagesView from "@/dashboard/teacher/views/MessagesView";
+import CreateGradeListView from "@/dashboard/teacher/views/CreateGradeListView";
+import ExportGradesView from "@/dashboard/teacher/views/ExportGradesView";
+import GradeSubmissionsView from "@/dashboard/teacher/views/GradeSubmissionsView";
+import GradeSubmissionDetailsView from "@/dashboard/teacher/views/GradeSubmissionDetailsView";
+import GradeItemSubmissionsView from "@/dashboard/teacher/views/GradeItemSubmissionsView";
+import GradeItemSubmissionDetailsView from "@/dashboard/teacher/views/GradeItemSubmissionDetailsView";
+import GradeItemSubmittedListView from "@/dashboard/teacher/views/GradeItemSubmittedListView";
+import GradeItemNotSubmittedListView from "@/dashboard/teacher/views/GradeItemNotSubmittedListView";
+import MessagesView from "@/dashboard/teacher/views/MessagesView";
+import MessageDetailsView from "@/dashboard/teacher/views/MessageDetailsView";
+import QuestionBuilderCreateView from "@/dashboard/teacher/views/questions/QuestionBuilderCreateView";
+import QuestionBuilderEditView from "@/dashboard/teacher/views/questions/QuestionBuilderEditView";
 
 
 // School Admin Dashboard
@@ -136,31 +153,56 @@ export function AppRouter() {
           <Route path="subjects" element={<TeacherSubjectView />} />
           <Route path="students" element={<TeacherStudentsView />} />
           <Route path="assignments">
-            <Route index element={<TeacherAssignmentsView />} />
-            <Route path="create" element={<AssignmentCreateView />} />
-            <Route path=":assignmentId" element={<AssignmentDetailsView />} />
+            <Route index element={<AssignmentsView />} />
+            <Route path="create" element={<AssignmentsCreateView />} />
+            <Route path=":assignmentId/edit" element={<AssignmentsEditView />} />
           </Route>
-         <Route path="exams">
-          <Route index element={<TeacherExamsView />} />
-          <Route path="create" element={<ExamCreateView />} />
-          <Route path=":examId" element={<ExamDetailsView />} />
-        </Route>
-          <Route path="resources" element={<TeacherResourcesView />} />
+          <Route path="announcements">
+            <Route index element={<AnnouncementsView />} />
+            <Route path="create" element={<AnnouncementCreateView />} />
+            <Route path="edit/:announcementId" element={<AnnouncementEditView />} />
+          </Route>
+          <Route path="exams">
+            <Route index element={<ExamsView />} />
+            <Route path="create" element={<ExamsCreateView />} />
+            <Route path=":examId/edit" element={<ExamsEditView />} />
+          </Route>
+          <Route path="quiz">
+            <Route index element={<QuizView />} />
+            <Route path="create" element={<QuizCreateView />} />
+            <Route path=":quizId/edit" element={<QuizEditView />} />
+          </Route>
           <Route path="schedule" element={<TeacherScheduleView />} />
           <Route path="attendance" element={<TeacherAttendanceView />} />
-          <Route path="attendance/create" element={<CreateAttendanceListView />} />    
-          <Route path="grades" element={<GradesView />} />    
-          <Route path="grades/export" element={<ExportGradesView />} />  
+          <Route path="attendance/create" element={<CreateAttendanceListView />} />
+          <Route path="attendance/:attendanceId/edit" element={<AttendanceEditView />} />
+          <Route path="grades" element={<GradesView />} />
+          <Route path="grades/workspace" element={<GradesView />} />
+          <Route path="grades/workspace/:itemId" element={<GradeItemSubmissionsView />} />
+          <Route path="grades/workspace/:itemId/submitted" element={<GradeItemSubmittedListView />} />
+          <Route path="grades/workspace/:itemId/not-submitted" element={<GradeItemNotSubmittedListView />} />
+          <Route
+            path="grades/workspace/:itemId/submissions/:submissionId"
+            element={<GradeItemSubmissionDetailsView />}
+          />
+          <Route path="grades/create" element={<CreateGradeListView />} />
+          <Route path="grades/export" element={<ExportGradesView />} />
+          <Route path="grades/submissions" element={<GradeSubmissionsView />} />
+          <Route path="grades/submissions/:submissionId" element={<GradeSubmissionDetailsView />} />
+          <Route path="questions/create" element={<QuestionBuilderCreateView />} />
+          <Route path="questions/edit/:itemId" element={<QuestionBuilderEditView />} />
           <Route path="support" element={<TeacherSupportView />} />
           <Route path="parents" element={<TeacherParentsView />} />
           <Route path="subjects/:subjectId" element={<TeacherSubjectDetailsView />} />
+          <Route path="subjects/:subjectId/modules" element={<SubjectModulesView />} />
+          <Route
+            path="subjects/:subjectId/modules/:moduleId/submodules/:submoduleId"
+            element={<SubjectModuleContentView />}
+          />
+          <Route path="subjects/:subjectId/upload-module" element={<SubjectUploadModuleView />} />
           <Route path="messages" element={<MessagesView />} />
+          <Route path="messages/:messageId" element={<MessageDetailsView />} />
           <Route path="subjects/:subjectId/modules/:moduleId" element={<SubjectModuleView />} />
-          <Route path="ai-tutor">
-            <Route index element={<Navigate to="chatbot" replace />} />
-            <Route path="chatbot" element={<TeacherChatbotView />} />
-            <Route path="quiz-generator" element={<TeacherQuizGeneratorView />} />
-          </Route>
           <Route path="settings">
             <Route index element={<Navigate to="general" replace />} />
             <Route path="general" element={<TeacherGeneralSettingsView />} />
@@ -232,3 +274,7 @@ export function AppRouter() {
     </BrowserRouter>
   );
 }
+
+
+
+

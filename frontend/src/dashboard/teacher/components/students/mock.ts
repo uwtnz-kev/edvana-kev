@@ -1,3 +1,8 @@
+/**
+ * mock
+ * ----
+ * Provides seed and mock data for the teacher dashboard s tu de nt s feature.
+ */
 import type { Student } from "./types";
 
 export const mockStudents: Student[] = [
@@ -35,3 +40,4 @@ export const mockStudents: Student[] = [
     parentEmail: "parent3@email.com",
   },
 ];
+

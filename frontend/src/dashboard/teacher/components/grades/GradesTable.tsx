@@ -1,3 +1,8 @@
+/**
+ * GradesTable
+ * -----------
+ * Renders the G ra de sT ab le UI for the teacher dashboard g ra de s feature.
+ */
 import { StudentGrade, GradeItem } from "./gradesTypes";
 import GradeEditCell from "./GradeEditCell";
 
@@ -66,3 +71,4 @@ export default function GradesTable({ grades, gradeItems, onGradeSaved }: Props)
     </div>
   );
 }
+

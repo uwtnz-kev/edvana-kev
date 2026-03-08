@@ -1,160 +1,71 @@
-import { useEffect, useMemo, useState } from "react";
+/**
+ * TeacherAssignmentList
+ * ---------------------
+ * Renders the T ea ch er As si gn me nt Li st UI for the teacher dashboard a ss ig nm en ts feature.
+ */
 import { TeacherAssignmentCard } from "./TeacherAssignmentCard";
+import { TeacherAssignmentEmptyState } from "./TeacherAssignmentEmptyState";
+import type { TeacherAssignment, TeacherSubject2 } from "./assignmentsTypes";
 
-type Filter = "all" | "active" | "grading" | "draft";
-
-export interface TeacherAssignment {
-  id: string;
-  title: string;
-  classNameLabel: string;
-  dueDate: string;
-  submissions: number;
-  totalStudents: number;
-  status: "draft" | "active" | "grading";
-  color: string;
-  bgGradient: string;
-}
-
-interface TeacherAssignmentListProps {
-  filter: Filter;
-  query?: string;
-  classFilter?: string;
-}
-
-const STORAGE_KEY = "teacher.assignments.v1";
-
-const defaultAssignments: TeacherAssignment[] = [
-  {
-    id: "1",
-    title: "Algebra Homework 2",
-    classNameLabel: "S3A • Mathematics",
-    dueDate: "2025-02-20",
-    submissions: 18,
-    totalStudents: 32,
-    status: "active",
-    color: "text-[#1EA896]",
-    bgGradient: "bg-gradient-to-br from-[#1EA896] to-[#1EA896]/80",
-  },
-  {
-    id: "2",
-    title: "Physics Lab Report",
-    classNameLabel: "S4B • Physics",
-    dueDate: "2025-02-16",
-    submissions: 24,
-    totalStudents: 28,
-    status: "grading",
-    color: "text-[#FF715B]",
-    bgGradient: "bg-gradient-to-br from-[#FF715B] to-[#FF715B]/80",
-  },
-  {
-    id: "3",
-    title: "Essay Draft",
-    classNameLabel: "S2A • English",
-    dueDate: "2025-02-25",
-    submissions: 0,
-    totalStudents: 30,
-    status: "draft",
-    color: "text-[#4C5454]",
-    bgGradient: "bg-gradient-to-br from-[#4C5454] to-[#523F38]",
-  },
-];
-
-function safeParse<T>(raw: string | null, fallback: T): T {
-  try {
-    return raw ? (JSON.parse(raw) as T) : fallback;
-  } catch {
-    return fallback;
-  }
-}
-
-function loadAssignments(): TeacherAssignment[] {
-  const stored = safeParse<TeacherAssignment[]>(localStorage.getItem(STORAGE_KEY), []);
-  if (stored.length) return stored;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultAssignments));
-  return defaultAssignments;
-}
-
-function saveAssignments(items: TeacherAssignment[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  window.dispatchEvent(new Event("teacher-assignments-changed"));
-}
-
-function normalizeText(s: string) {
-  return s.toLowerCase().replace(/\s+/g, " ").trim();
-}
+type Props = {
+  assignments: TeacherAssignment[];
+  selectedSubject: TeacherSubject2 | null;
+  onPreview: (id: string) => void;
+  onDuplicate: (id: string) => void;
+  onPublish: (id: string) => void;
+  onEdit: (id: string) => void;
+  onDelete: (id: string) => void;
+  onCreate: () => void;
+};
 
 export function TeacherAssignmentList({
-  filter,
-  query = "",
-  classFilter = "all",
-}: TeacherAssignmentListProps) {
-  const [assignments, setAssignments] = useState<TeacherAssignment[]>(() => loadAssignments());
+  assignments,
+  selectedSubject,
+  onPreview,
+  onDuplicate,
+  onPublish,
+  onEdit,
+  onDelete,
+  onCreate,
+}: Props) {
+  if (!selectedSubject) {
+    return (
+      <TeacherAssignmentEmptyState
+        message="Choose a subject from the sidebar to manage assignments"
+        onCreate={onCreate}
+        createDisabled
+      />
+    );
+  }
 
-  useEffect(() => {
-    const onChange = () => setAssignments(loadAssignments());
-    window.addEventListener("teacher-assignments-changed", onChange);
-    window.addEventListener("storage", onChange);
-    return () => {
-      window.removeEventListener("teacher-assignments-changed", onChange);
-      window.removeEventListener("storage", onChange);
-    };
-  }, []);
-
-  const filtered = useMemo(() => {
-    const q = normalizeText(query);
-    const cls = normalizeText(classFilter);
-
-    return assignments.filter((a) => {
-      const matchesStatus = filter === "all" || a.status === filter;
-
-      const haystack = normalizeText(`${a.title} ${a.classNameLabel}`);
-      const matchesQuery = q === "" || haystack.includes(q);
-
-      const matchesClass =
-        cls === "" || cls === "all" || normalizeText(a.classNameLabel).includes(cls);
-
-      return matchesStatus && matchesQuery && matchesClass;
-    });
-  }, [assignments, filter, query, classFilter]);
-
-  const handleDelete = (id: string) => {
-    const next = assignments.filter((a) => a.id !== id);
-    setAssignments(next);
-    saveAssignments(next);
-  };
+  if (assignments.length === 0) {
+    return (
+      <TeacherAssignmentEmptyState
+        message={`No assignments in ${selectedSubject.name}. Create your first assignment.`}
+        onCreate={onCreate}
+      />
+    );
+  }
 
   return (
-    <div className="space-y-3">
-      <div className="text-white/60 text-sm">
-        Showing {filtered.length} of {assignments.length}
-      </div>
+    <div className="space-y-3 transition-all duration-300">
+      <p className="text-white/60 text-sm">Showing {assignments.length} assignment records</p>
 
-      {filtered.length === 0 ? (
-        <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-8 text-center">
-          <div className="text-white/80 font-semibold">No matches</div>
-          <div className="text-white/60 mt-2 text-sm">
-            Try a different search term or change filters.
-          </div>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {filtered.map((a) => (
-            <TeacherAssignmentCard
-              key={a.id}
-              id={a.id}
-              title={a.title}
-              classNameLabel={a.classNameLabel}
-              dueDate={a.dueDate}
-              submissions={a.submissions}
-              totalStudents={a.totalStudents}
-              status={a.status}
-              color={a.color}
-              bgGradient={a.bgGradient}
-              onDelete={handleDelete}
-            />
-          ))}
-        </div>
-      )}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {assignments.map((assignment) => (
+          <TeacherAssignmentCard
+            key={assignment.id}
+            assignment={assignment}
+            onPreview={onPreview}
+            onDuplicate={onDuplicate}
+            onPublish={onPublish}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
+        ))}
+      </div>
     </div>
   );
 }
+
+

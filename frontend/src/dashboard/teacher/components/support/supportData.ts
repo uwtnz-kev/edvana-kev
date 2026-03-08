@@ -1,3 +1,8 @@
+/**
+ * supportData
+ * -----------
+ * Provides seed and mock data for the teacher dashboard s up po rt feature.
+ */
 export type TicketType = "technical" | "content" | "assessment" | "schedule" | "account";
 
 export const cards = [
@@ -34,3 +39,4 @@ export const faqs = [
     a: "Use Schedule change. Include day, time slot, class, and reason. Admin approves.",
   },
 ];
+
