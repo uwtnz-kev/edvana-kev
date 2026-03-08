@@ -7,6 +7,8 @@ export type {
 } from "./store/subjectModulesTypes";
 export {
   addSubjectModule,
+  deleteSubjectModule,
+  deleteSubjectSubmodule,
   getSubjectModulesSnapshot,
   subscribeToSubjectModules,
   updateSubjectModuleStatus,

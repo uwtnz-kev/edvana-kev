@@ -24,3 +24,24 @@ export function addSubjectModule(subjectId: string, payload: SubjectModulePayloa
   }));
   return nextModule;
 }
+
+export function deleteSubjectModule(subjectId: string, moduleId: string) {
+  updateSubjectModulesState((current) => ({
+    ...current,
+    [subjectId]: (current[subjectId] ?? []).filter((module) => module.id !== moduleId),
+  }));
+}
+
+export function deleteSubjectSubmodule(subjectId: string, moduleId: string, submoduleId: string) {
+  updateSubjectModulesState((current) => ({
+    ...current,
+    [subjectId]: (current[subjectId] ?? []).map((module) =>
+      module.id === moduleId
+        ? {
+            ...module,
+            submodules: module.submodules.filter((submodule) => submodule.id !== submoduleId),
+          }
+        : module
+    ),
+  }));
+}

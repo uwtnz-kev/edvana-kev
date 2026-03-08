@@ -6,5 +6,7 @@ export {
 export { useSubjectModules } from "./subjectModulesSelectors";
 export {
   addSubjectModule,
+  deleteSubjectModule,
+  deleteSubjectSubmodule,
   updateSubjectModuleStatus,
 } from "./subjectModulesMutations";

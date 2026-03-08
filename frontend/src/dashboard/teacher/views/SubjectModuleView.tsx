@@ -1,7 +1,10 @@
 // src/dashboard/teacher/views/SubjectModuleView.tsx
-import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useMemo } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, BookOpen } from "lucide-react";
+import { getSubjectThemeById } from "@/dashboard/teacher/components/shared";
+import { useSubjectModules } from "@/dashboard/teacher/components/subjects/subjectModulesStore";
+import type { SubjectModulesRouteState } from "./subjects/modules/subjectModulesViewHelpers";
 
 type Params = {
   subjectId?: string;
@@ -10,7 +13,20 @@ type Params = {
 
 export default function SubjectModuleView() {
   const navigate = useNavigate();
-  const { subjectId, moduleId } = useParams<Params>();
+  const location = useLocation();
+  const { subjectId = "", moduleId = "" } = useParams<Params>();
+  const routeState = (location.state as SubjectModulesRouteState | null) ?? null;
+  const theme = getSubjectThemeById(subjectId);
+  const modules = useSubjectModules(subjectId);
+  const module = useMemo(() => modules.find((item) => item.id === moduleId) ?? null, [moduleId, modules]);
+
+  useEffect(() => {
+    if (module) return;
+    navigate(`/dashboard/teacher/subjects/${subjectId}/modules`, {
+      replace: true,
+      state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null },
+    });
+  }, [module, navigate, routeState?.subject, subjectId]);
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-6 p-6">
@@ -26,7 +42,7 @@ export default function SubjectModuleView() {
 
           <div>
             <h1 className="text-xl font-semibold text-[#3B240F]">
-              Module {moduleId}
+              {module?.title ?? `Module ${moduleId}`}
             </h1>
             <p className="text-sm text-[#6B4F3A]">
               Subject: {subjectId}
@@ -41,16 +57,16 @@ export default function SubjectModuleView() {
 
       <div className="group rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-8 hover:bg-white/15 transition-all duration-300 hover:shadow-xl hover:shadow-[#8B6F52]/20">
         <div className="flex items-center gap-4">
-          <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-[#8B6F52]/75 to-[#6F5238]/75 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-            <BookOpen className="h-6 w-6 text-white group-hover:scale-110 transition-transform duration-300" />
+          <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${theme.bgClass} group-hover:scale-105 transition-transform duration-300`}>
+            <BookOpen className={`h-6 w-6 ${theme.iconClass} group-hover:scale-110 transition-transform duration-300`} />
           </div>
 
           <div>
             <h1 className="text-3xl font-semibold text-[#3B240F]">
-              Module {moduleId}
+              {module?.title ?? `Module ${moduleId}`}
             </h1>
             <p className="text-[#6B4F3A] mt-1">
-              This is the module page for this subject.
+              {module?.description ?? "This is the module page for this subject."}
             </p>
           </div>
         </div>

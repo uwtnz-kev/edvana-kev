@@ -1,5 +1,5 @@
 // Owns route parsing, module lookup, and derived labels for the content page.
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getSubjectThemeById } from "@/dashboard/teacher/components/shared";
 import { useSubjectModules } from "@/dashboard/teacher/components/subjects/subjectModulesStore";
@@ -25,6 +25,23 @@ export function useSubjectModuleContentState() {
   const pageTitle = submodule?.title ?? module?.title ?? "Module Content";
   const contentDescription = submodule?.description ?? module?.description ?? "Detailed module content will appear here.";
   const sections = useMemo(() => getContentSections(submodule?.summary), [submodule?.summary]);
+
+  useEffect(() => {
+    if (!moduleId) return;
+    if (!module) {
+      navigate(`/dashboard/teacher/subjects/${subjectId}/modules`, {
+        replace: true,
+        state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null },
+      });
+      return;
+    }
+    if (submoduleId && !submodule) {
+      navigate(`/dashboard/teacher/subjects/${subjectId}/modules/${moduleId}`, {
+        replace: true,
+        state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null },
+      });
+    }
+  }, [module, moduleId, navigate, routeState?.subject, subjectId, submodule, submoduleId]);
 
   return {
     contentDescription,
