@@ -1,5 +1,6 @@
 // Defines the shared data contracts for the extracted exam create form.
 import type { ExamAttachment } from "@/dashboard/teacher/components/exams";
+import type { SubmissionMethod } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
 
 export type TeacherExamCreateFormProps = {
   subjectId: string;
@@ -15,8 +16,11 @@ export type FormValues = {
   scheduledAt: string;
   classId: string;
   classLabel: string;
+  accessCode: string;
   durationMinutes: string;
+  totalAttempts: string;
   totalQuestions: string;
+  submissionMethods: SubmissionMethod[];
   rubric: string;
   maxScore: string;
 };
@@ -38,6 +42,7 @@ export type ExamFieldProps = {
   touched: TouchedState;
   onFieldChange: (name: FieldName, value: string) => void;
   onFieldBlur: (name: FieldName) => void;
+  onSubmissionMethodsChange: (methods: SubmissionMethod[]) => void;
 };
 
 export type ExamAttachmentSectionProps = {

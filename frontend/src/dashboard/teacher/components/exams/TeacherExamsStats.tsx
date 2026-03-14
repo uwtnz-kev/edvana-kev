@@ -29,7 +29,7 @@ function StatCard({
   iconClassName: string;
 }) {
   return (
-    <div className="group rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-4 transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:bg-white/20">
+    <div className="group rounded-2xl teacher-panel-surface p-4 teacher-panel-hover-lift">
       <div className="flex items-center gap-3">
         <div className={`h-12 w-12 rounded-2xl flex items-center justify-center transition-transform duration-200 group-hover:scale-105 ${iconClassName}`}>
           {icon}
@@ -50,28 +50,29 @@ export function TeacherExamsStats({ stats }: Props) {
         label="Total"
         value={stats.total}
         icon={<ClipboardCheck className="h-5 w-5" />}
-        iconClassName="bg-teal-500/20 text-teal-700"
+        iconClassName="rounded-xl p-3 bg-[var(--sidebar-item-active)] text-[var(--accent-primary)]"
       />
       <StatCard
         label="Published"
         value={stats.published}
         icon={<CheckCircle2 className="h-5 w-5" />}
-        iconClassName="bg-gray-700/20 text-gray-800"
+        iconClassName="rounded-xl p-3 bg-emerald-500/15 text-emerald-300"
       />
       <StatCard
         label="Drafts"
         value={stats.drafts}
         icon={<FileText className="h-5 w-5" />}
-        iconClassName="bg-red-400/20 text-red-600"
+        iconClassName="rounded-xl p-3 bg-blue-500/15 text-blue-300"
       />
       <StatCard
         label="Scheduled Soon"
         value={stats.scheduledSoon}
         icon={<CalendarClock className="h-5 w-5" />}
-        iconClassName="bg-orange-400/20 text-orange-600"
+        iconClassName="rounded-xl p-3 bg-amber-500/15 text-amber-300"
       />
     </div>
   );
 }
+
 
 

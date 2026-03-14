@@ -3,7 +3,9 @@
  * ----------------
  * Defines types used by the teacher dashboard a ss ig nm en ts feature.
  */
-export type AssignmentStatus = "draft" | "published" | "archived";
+import type { SubmissionMethod } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
+
+export type AssignmentStatus = "draft" | "published" | "closed";
 
 export type AssignmentAttachment = {
   id: string;
@@ -19,13 +21,16 @@ export interface TeacherAssignment {
   subject: string;
   classId: string;
   classLabel: string;
+  accessCode?: string;
   dueAt: string;
   createdAt: string;
   status: AssignmentStatus;
+  totalAttempts: number;
   totalQuestions: number;
   totalSubmissions: number;
   pendingToGrade: number;
   estimatedMinutes: number;
+  submissionMethods: SubmissionMethod[];
   instructions?: string;
   questionsText?: string;
   attachments?: AssignmentAttachment[];
@@ -43,7 +48,7 @@ export interface TeacherClass2 {
   label: string;
 }
 
-export type AssignmentStatusFilter = "all" | AssignmentStatus;
+export type AssignmentStatusFilter = "all" | AssignmentStatus | "ongoing";
 
 export interface AssignmentFilters {
   query: string;

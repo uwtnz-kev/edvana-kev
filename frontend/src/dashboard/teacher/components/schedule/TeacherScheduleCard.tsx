@@ -35,20 +35,20 @@ export function TeacherScheduleCard({
           <BookOpen className={`h-3.5 w-3.5 ${theme.iconClass}`} />
         </div>
         <div className="min-w-0">
-          <div className={`text-[#3B240F] ${titleSize}`}>{subject}</div>
-          {isBreakSlot ? <span className="inline-flex rounded-full border border-white/15 bg-white/20 px-1.5 py-0.5 text-[10px] font-medium text-[#3B240F]/70">Break</span> : null}
+          <div className={`text-white ${titleSize}`}>{subject}</div>
+          {isBreakSlot ? <span className="inline-flex rounded-full border border-white/15 bg-white/20 px-1.5 py-0.5 text-[10px] font-medium text-white/80">Break</span> : null}
         </div>
       </div>
 
       {classNameLabel && (
-        <div className={`mb-0.5 flex items-center gap-1 text-[#3B240F]/75 ${textSize}`}>
+        <div className={`mb-0.5 flex items-center gap-1 text-white ${textSize}`}>
           <Users className="h-3 w-3 shrink-0" />
           <span>{classNameLabel}</span>
         </div>
       )}
 
       {room && (
-        <div className={`flex items-center gap-1 text-[#3B240F]/75 ${textSize}`}>
+        <div className={`flex items-center gap-1 text-white ${textSize}`}>
           <MapPin className="h-3 w-3 shrink-0" />
           <span>{room}</span>
         </div>

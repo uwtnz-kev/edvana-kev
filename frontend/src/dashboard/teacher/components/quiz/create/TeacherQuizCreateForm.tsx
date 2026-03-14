@@ -20,6 +20,7 @@ export function TeacherQuizCreateForm(props: TeacherQuizCreateFormProps) {
         touched={form.touched}
         onFieldChange={form.onFieldChange}
         onFieldBlur={form.onFieldBlur}
+        onSubmissionMethodsChange={form.onSubmissionMethodsChange}
       />
 
       <TeacherQuizSchedulingFieldsSection
@@ -28,6 +29,7 @@ export function TeacherQuizCreateForm(props: TeacherQuizCreateFormProps) {
         touched={form.touched}
         onFieldChange={form.onFieldChange}
         onFieldBlur={form.onFieldBlur}
+        onSubmissionMethodsChange={form.onSubmissionMethodsChange}
         onClassChange={form.onClassChange}
       />
 
@@ -37,6 +39,8 @@ export function TeacherQuizCreateForm(props: TeacherQuizCreateFormProps) {
         touched={form.touched}
         onFieldChange={form.onFieldChange}
         onFieldBlur={form.onFieldBlur}
+        onSubmissionMethodsChange={form.onSubmissionMethodsChange}
+        requiresQuestionBuilder={form.requiresQuestionBuilder}
         onOpenPreview={() => form.setIsQuestionsPreviewOpen(true)}
         onOpenQuestionBuilder={form.onOpenQuestionBuilder}
       />

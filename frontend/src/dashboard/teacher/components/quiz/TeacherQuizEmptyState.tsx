@@ -18,7 +18,7 @@ export function TeacherQuizEmptyState({
   createDisabled = false,
 }: Props) {
   return (
-    <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-8 text-center transition-all duration-300 hover:bg-white/20">
+    <div className="teacher-panel-surface rounded-2xl p-8 text-center teacher-panel-hover">
       <div className="mx-auto h-14 w-14 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center">
         <ClipboardList className="h-7 w-7 text-white" />
       </div>
@@ -40,5 +40,6 @@ export function TeacherQuizEmptyState({
     </div>
   );
 }
+
 
 

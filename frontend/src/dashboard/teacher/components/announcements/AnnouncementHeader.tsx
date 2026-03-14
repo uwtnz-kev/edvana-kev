@@ -16,6 +16,7 @@ type Props = {
 
 export function AnnouncementHeader({ title, subtitle, subjectName, onBack }: Props) {
   const theme = subjectName ? getSubjectIconTheme(subjectName) : null;
+  const subtitleClassName = onBack ? "text-[var(--text-secondary)]" : "text-white";
 
   return (
     <header className="rounded-2xl border border-white/10 bg-white/10 px-6 py-5 backdrop-blur-xl">
@@ -35,8 +36,8 @@ export function AnnouncementHeader({ title, subtitle, subjectName, onBack }: Pro
             <Megaphone className={`h-6 w-6 ${theme?.iconClass ?? "text-amber-700"}`} />
           </div>
           <div>
-            <h1 className="text-2xl font-semibold text-[#3B240F]">{title}</h1>
-            <p className="mt-1 text-[#3B240F]/70">{subtitle}</p>
+            <h1 className="text-2xl font-semibold text-white">{title}</h1>
+            <p className={`mt-1 ${subtitleClassName}`}>{subtitle}</p>
           </div>
         </div>
       </div>

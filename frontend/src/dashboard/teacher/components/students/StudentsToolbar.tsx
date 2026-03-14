@@ -47,23 +47,23 @@ export default function StudentsToolbar({
   }, [searchInput, filters, onFiltersChange]);
 
   return (
-    <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-3 transition-colors duration-200 hover:bg-white/20">
+    <div className="teacher-panel-surface rounded-2xl p-3 teacher-panel-hover">
       <div className="flex flex-col sm:flex-row sm:items-center gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-900 w-4 h-4" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/70" />
           <Input
             placeholder="Search name, email, phone"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            className="pl-10 bg-white/20 backdrop-blur-sm border-white/30 rounded-xl text-blue-900 placeholder:text-blue-900/60 focus:border-white/50 focus:bg-white/30 h-11"
+            className="h-11 rounded-xl border-white/30 bg-white/20 pl-10 text-white placeholder:text-white/70 focus:border-white/50 focus:bg-white/30"
             aria-label="Search students"
           />
         </div>
 
         <div className="sm:w-56">
           <GlassSelect value={selectedClass} onValueChange={onClassChange}>
-            <GlassSelectTrigger className="h-11 w-full text-sm">
-              <GlassSelectValue placeholder="All classes" />
+            <GlassSelectTrigger className="h-11 w-full text-sm text-white hover:text-white [&>span]:text-white [&>svg]:text-white">
+              <GlassSelectValue className="text-white" placeholder="All classes" />
             </GlassSelectTrigger>
             <GlassSelectContent>
               {classes.map((className) => (
@@ -78,6 +78,7 @@ export default function StudentsToolbar({
     </div>
   );
 }
+
 
 
 

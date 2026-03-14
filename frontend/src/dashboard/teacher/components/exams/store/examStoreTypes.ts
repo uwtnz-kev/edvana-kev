@@ -5,6 +5,7 @@ export interface ExamStatsSummary {
   total: number;
   drafts: number;
   published: number;
+  closed: number;
   totalQuestions: number;
   scheduledSoon: number;
 }

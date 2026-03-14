@@ -21,10 +21,10 @@ export function QuizPreviewBody({ quiz }: Props) {
         </div>
         {getQuizPreviewBadges(quiz).map((badge) => (
           <Badge
-            key={badge}
-            className="bg-white/10 text-white border border-white/20 rounded-full px-2 py-1 text-xs font-medium"
+            key={badge.label}
+            className={`${badge.className} rounded-full px-2 py-1 text-xs font-medium`}
           >
-            {badge}
+            {badge.label}
           </Badge>
         ))}
       </div>

@@ -22,20 +22,20 @@ export function QuestionEditorPanel({ index, question, onDelete, onMoveDown, onM
     <section className="space-y-4 rounded-2xl border border-white/20 bg-white/15 p-4 backdrop-blur-xl sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/20 px-3 py-1.5">
-          <GripVertical className="h-4 w-4 text-[#3B240F]/70" />
-          <span className="text-sm font-semibold text-[#3B240F]">Question {index + 1}</span>
+          <GripVertical className="h-4 w-4 text-white/70" />
+          <span className="text-sm font-semibold text-white">Question {index + 1}</span>
         </div>
         <QuestionCardActions onDelete={onDelete} onMoveDown={onMoveDown} onMoveUp={onMoveUp} />
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <div className="space-y-2 lg:col-span-2">
-          <label className="text-sm text-[#3B240F]">Question Text</label>
-          <Textarea value={question.questionText} onChange={(event) => onUpdate((current) => ({ ...current, questionText: event.target.value }))} placeholder="Enter question text..." className="min-h-[120px] border-white/20 bg-white/20 text-[#3B240F] placeholder:text-[#3B240F]/50" />
+          <label className="text-sm text-white">Question Text</label>
+          <Textarea value={question.questionText} onChange={(event) => onUpdate((current) => ({ ...current, questionText: event.target.value }))} placeholder="Enter question text..." className="min-h-[120px] border-white/20 bg-white/20 text-white placeholder:text-white/70" />
         </div>
         <div className="space-y-2">
-          <label className="text-sm text-[#3B240F]">Points</label>
-          <Input type="number" min={0} value={question.points} onChange={(event) => onUpdate((current) => ({ ...current, points: normalizePoints(event.target.value) }))} className="h-12 border-white/20 bg-white/20 text-[#3B240F]" />
+          <label className="text-sm text-white">Points</label>
+          <Input type="number" min={0} value={question.points} onChange={(event) => onUpdate((current) => ({ ...current, points: normalizePoints(event.target.value) }))} className="h-12 border-white/20 bg-white/20 text-white" />
         </div>
       </div>
 

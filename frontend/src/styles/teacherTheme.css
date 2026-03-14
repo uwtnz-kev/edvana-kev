@@ -1,71 +1,142 @@
+:root {
+  --bg-main: linear-gradient(145deg, #0d1117 0%, #21262d 60%, #30363d 100%);
+  --bg-page: #0d1117;
+
+  --sidebar-bg: #161b22;
+  --sidebar-item-hover: rgba(255, 255, 255, 0.05);
+  --sidebar-item-active: rgba(99, 102, 241, 0.15);
+  --sidebar-text: #8b949e;
+  --sidebar-text-active: #ffffff;
+
+  --topbar-bg: #0d1117;
+  --topbar-border: rgba(255, 255, 255, 0.06);
+
+  --card-bg: rgba(33, 38, 45, 0.85);
+  --card-border: rgba(255, 255, 255, 0.07);
+  --card-hover: rgba(48, 54, 61, 0.95);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+
+  --accent-primary: #58a6ff;
+  --accent-green: #3fb950;
+  --accent-purple: #bc8cff;
+  --accent-yellow: #f1c40f;
+
+  --text-primary: #ffffff;
+  --text-secondary: #8b949e;
+  --text-muted: #6e7681;
+}
+
 .teacher-theme {
-  color: #3B240F;
+  background: var(--bg-page);
+  color: var(--text-primary);
 }
 
-/* Force common white text utilities to dark */
-.teacher-theme .text-white,
-.teacher-theme .text-white\/90,
-.teacher-theme .text-white\/80,
-.teacher-theme .text-white\/70,
-.teacher-theme .text-white\/60,
-.teacher-theme .text-white\/50,
-.teacher-theme .text-white\/40,
-.teacher-theme .text-white\/30,
-.teacher-theme .text-white\/20,
-.teacher-theme .text-white\/10 {
-  color: #3B240F !important;
+.teacher-dashboard-shell {
+  background:
+    radial-gradient(circle at top center, rgba(88, 166, 255, 0.08), transparent 24%),
+    var(--bg-main);
 }
 
-/* Force light slate and neutral text utilities */
-.teacher-theme .text-slate-50,
-.teacher-theme .text-slate-100,
-.teacher-theme .text-slate-200,
-.teacher-theme .text-slate-300,
-.teacher-theme .text-neutral-100,
-.teacher-theme .text-neutral-200,
-.teacher-theme .text-neutral-300 {
-  color: #3B240F !important;
+.teacher-topbar-surface {
+  background: var(--topbar-bg);
+  border-bottom: 1px solid var(--topbar-border);
 }
 
-.teacher-theme .text-slate-400,
-.teacher-theme .text-slate-500,
-.teacher-theme .text-slate-600,
-.teacher-theme .text-neutral-400,
-.teacher-theme .text-neutral-500 {
-  color: #6B4F3A !important;
+.teacher-sidebar-surface {
+  background: var(--sidebar-bg);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* Inputs and textareas */
-.teacher-theme input,
-.teacher-theme textarea,
-.teacher-theme select {
-  color: #3B240F !important;
-  caret-color: #3B240F;
+.teacher-content-surface {
+  background: linear-gradient(180deg, rgba(13, 17, 23, 0.08), rgba(13, 17, 23, 0.24));
 }
 
-/* Placeholder styling aligned with palette */
-.teacher-theme input::placeholder,
-.teacher-theme textarea::placeholder {
-  color: rgba(122, 90, 58, 0.65) !important; /* #7A5A3A */
-  opacity: 1 !important;
+.teacher-card-surface {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-color: var(--card-border);
+  box-shadow: var(--card-shadow);
 }
 
-/* Tailwind placeholder utilities override */
-.teacher-theme .placeholder\:text-white::placeholder,
-.teacher-theme .placeholder\:text-white\/80::placeholder,
-.teacher-theme .placeholder\:text-white\/70::placeholder,
-.teacher-theme .placeholder\:text-white\/60::placeholder,
-.teacher-theme .placeholder\:text-white\/50::placeholder,
-.teacher-theme .placeholder\:text-white\/40::placeholder {
-  color: rgba(122, 90, 58, 0.65) !important;
-  opacity: 1 !important;
+.teacher-panel-surface {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-color: var(--card-border);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(20px);
 }
 
-/* Focus state to match palette */
-.teacher-theme input:focus,
-.teacher-theme textarea:focus,
-.teacher-theme select:focus {
-  outline: none;
-  border-color: #7A5A3A;
-  box-shadow: 0 0 0 2px rgba(122, 90, 58, 0.25);
+.teacher-panel-muted {
+  background: rgba(33, 38, 45, 0.72);
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(20px);
+}
+
+.teacher-panel-hover {
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.teacher-panel-hover:hover {
+  background: var(--card-hover);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.36);
+}
+
+.teacher-panel-hover-lift {
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.teacher-panel-hover-lift:hover {
+  background: var(--card-hover);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.42);
+  transform: translateY(-4px);
+}
+
+.teacher-stat-surface {
+  background: rgba(33, 38, 45, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(18px);
+}
+
+.teacher-theme section[class*="rounded-2xl"][class*="bg-white/10"][class*="border"],
+.teacher-theme article[class*="rounded-2xl"][class*="bg-white/10"][class*="border"],
+.teacher-theme aside[class*="rounded-2xl"][class*="bg-white/10"][class*="border"],
+.teacher-theme header[class*="rounded-2xl"][class*="bg-white/10"][class*="border"],
+.teacher-theme div[class*="rounded-2xl"][class*="bg-white/10"][class*="border"],
+.teacher-theme section[class*="rounded-2xl"][class*="bg-white/15"][class*="border"],
+.teacher-theme article[class*="rounded-2xl"][class*="bg-white/15"][class*="border"],
+.teacher-theme aside[class*="rounded-2xl"][class*="bg-white/15"][class*="border"],
+.teacher-theme header[class*="rounded-2xl"][class*="bg-white/15"][class*="border"],
+.teacher-theme div[class*="rounded-2xl"][class*="bg-white/15"][class*="border"] {
+  background: var(--card-bg) !important;
+  border-color: var(--card-border) !important;
+  box-shadow: var(--card-shadow) !important;
+}
+
+.teacher-theme section[class*="rounded-2xl"][class*="backdrop-blur"],
+.teacher-theme article[class*="rounded-2xl"][class*="backdrop-blur"],
+.teacher-theme aside[class*="rounded-2xl"][class*="backdrop-blur"],
+.teacher-theme header[class*="rounded-2xl"][class*="backdrop-blur"],
+.teacher-theme div[class*="rounded-2xl"][class*="backdrop-blur"] {
+  backdrop-filter: blur(20px) !important;
+}
+
+.teacher-theme section[class*="hover:bg-white/20"]:hover,
+.teacher-theme article[class*="hover:bg-white/20"]:hover,
+.teacher-theme aside[class*="hover:bg-white/20"]:hover,
+.teacher-theme header[class*="hover:bg-white/20"]:hover,
+.teacher-theme div[class*="hover:bg-white/20"]:hover {
+  background: var(--card-hover) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.36) !important;
 }

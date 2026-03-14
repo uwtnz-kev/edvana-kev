@@ -5,6 +5,9 @@ import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
 import { AssignmentCardActions } from "./card/AssignmentCardActions";
 import { AssignmentCardHeader } from "./card/AssignmentCardHeader";
 import { AssignmentCardMeta } from "./card/AssignmentCardMeta";
+import { RepublishAssignmentModal } from "./republish/RepublishAssignmentModal";
+import { getRepublishEligibleStudents } from "./republish/republishHelpers";
+import type { RepublishAssignmentPayload } from "./republish/republishTypes";
 
 type Props = {
   assignment: TeacherAssignment;
@@ -17,13 +20,21 @@ type Props = {
 
 export function TeacherAssignmentCard({ assignment, onDelete, onDuplicate, onEdit, onPreview, onPublish }: Props) {
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [republishOpen, setRepublishOpen] = useState(false);
+  const eligibleStudents = getRepublishEligibleStudents(assignment);
+
+  const handleRepublishConfirm = (payload: RepublishAssignmentPayload) => {
+    console.info("Republish assignment payload", { assignmentId: assignment.id, payload });
+  };
 
   return (
-    <article className="group bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-4 space-y-4 transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:bg-white/20">
+    <article className="group teacher-panel-surface rounded-2xl p-4 space-y-4 teacher-panel-hover-lift">
       <AssignmentCardHeader assignment={assignment} />
       <AssignmentCardMeta assignment={assignment} />
-      <AssignmentCardActions assignment={assignment} onDelete={() => setConfirmOpen(true)} onDuplicate={onDuplicate} onEdit={onEdit} onPreview={onPreview} onPublish={onPublish} />
+      <AssignmentCardActions assignment={assignment} onDelete={() => setConfirmOpen(true)} onDuplicate={onDuplicate} onEdit={onEdit} onPreview={onPreview} onPublish={onPublish} onRepublish={() => setRepublishOpen(true)} />
       <ConfirmDeleteModal open={confirmOpen} onOpenChange={setConfirmOpen} onConfirm={() => onDelete(assignment.id)} />
+      <RepublishAssignmentModal open={republishOpen} assignmentTitle={assignment.title} classLabel={assignment.classLabel} eligibleStudents={eligibleStudents} onClose={() => setRepublishOpen(false)} onConfirm={handleRepublishConfirm} />
     </article>
   );
 }
+

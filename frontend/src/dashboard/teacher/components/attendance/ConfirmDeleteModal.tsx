@@ -35,19 +35,19 @@ export function ConfirmDeleteModal({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogPortal>
-        <DialogOverlay className="bg-black/50" />
-        <DialogContent className="max-w-2xl rounded-2xl bg-[#E9DEC9]/95 text-[#3B240F] border border-white/20 backdrop-blur-xl p-10 shadow-2xl [&>button]:hidden">
+        <DialogOverlay className="bg-slate-950/70 backdrop-blur-sm" />
+        <DialogContent className="max-w-xl rounded-3xl border border-white/10 bg-[#1b2430]/95 p-8 text-white shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl [&>button]:hidden">
           <DialogHeader>
-            <DialogTitle className="text-3xl font-semibold text-[#3B240F]">{title}</DialogTitle>
+            <DialogTitle className="text-2xl font-semibold tracking-tight text-white">{title}</DialogTitle>
           </DialogHeader>
 
-          <p className="text-[#3B240F]/70 text-base mt-3 leading-relaxed">{description}</p>
+          <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">{description}</p>
 
-          <div className="flex justify-end gap-4 mt-8">
+          <div className="mt-8 flex justify-end gap-3">
             <Button
               type="button"
               onClick={() => onOpenChange(false)}
-              className="bg-white/20 border border-[#3B240F]/20 text-[#3B240F] rounded-xl px-8 py-3 hover:bg-white/30"
+              className="rounded-2xl border border-white/15 bg-white/10 px-6 py-3 text-white transition-colors duration-200 hover:bg-white/15"
             >
               {cancelLabel}
             </Button>
@@ -57,7 +57,7 @@ export function ConfirmDeleteModal({
                 onConfirm();
                 onOpenChange(false);
               }}
-              className="bg-[#FF715B] text-[#3B240F] rounded-xl px-8 py-3 font-semibold hover:opacity-90"
+              className="rounded-2xl border border-red-400/30 bg-[#ff6b57] px-6 py-3 font-semibold text-white transition-colors duration-200 hover:bg-[#ff5a44]"
             >
               {confirmLabel}
             </Button>

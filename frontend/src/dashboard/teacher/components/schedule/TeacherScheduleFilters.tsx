@@ -27,7 +27,7 @@ export function TeacherScheduleFilters({
   const allSubjects = ["All Subjects", ...subjects];
 
   return (
-    <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-4 transition-colors duration-200 hover:bg-white/20">
+    <div className="teacher-panel-surface rounded-2xl p-4 teacher-panel-hover">
       <div className="flex flex-col lg:flex-row lg:items-center gap-3">
         <div className="flex items-center gap-2 text-white/80">
           <SlidersHorizontal className="h-4 w-4 text-teal-600" />
@@ -65,6 +65,7 @@ export function TeacherScheduleFilters({
     </div>
   );
 }
+
 
 
 

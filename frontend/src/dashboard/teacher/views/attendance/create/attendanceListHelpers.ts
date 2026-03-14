@@ -1,7 +1,8 @@
 // Provides route parsing and student mapping helpers for attendance creation.
 import type { Student } from "@/dashboard/teacher/components/students";
+import type { AttendanceStatus } from "@/dashboard/teacher/components/attendance";
 
-export type Status = "Present" | "Absent" | "Late";
+export type Status = AttendanceStatus;
 
 export type AttendanceCreateState = {
   subjectId: string;

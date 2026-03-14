@@ -8,6 +8,7 @@ import { getCreateGradeListTitle, getCreateState, isSelectionType, toSelectionTy
 import { getBackRoute, saveGradeListRecord } from "./gradeListSubmission";
 import { buildRowErrors, hasValidMaxScore } from "./gradeListValidation";
 import type { GradeRowDraft } from "./gradeListTypes";
+import { buildGradesTypeSelectionRoute } from "../gradesViewHelpers";
 
 export function useGradeListState() {
   const navigate = useNavigate(); const location = useLocation(); const { students } = useStudents();
@@ -16,20 +17,20 @@ export function useGradeListState() {
   const [classId, setClassId] = useState(""); const [assessmentType, setAssessmentType] = useState<Exclude<TeacherGradeAssessmentType, "all"> | "">(lockedAssessmentType ?? ""); const [title, setTitle] = useState(""); const [date, setDate] = useState(""); const [maxScore, setMaxScore] = useState(""); const [rowsByStudentId, setRowsByStudentId] = useState<Record<string, GradeRowDraft>>({}); const [isSubmitted, setIsSubmitted] = useState(false);
   const selectedSubject = useMemo(() => seedSubjects2.find((subject) => subject.id === subjectId) ?? null, [subjectId]); const iconTheme = useMemo(() => getSubjectThemeById(selectedSubject?.id ?? ""), [selectedSubject?.id]);
 
-  useEffect(() => { const currentWorkspace = loadGradesWorkspace(); if (!subjectId) { navigate("/dashboard/teacher/grades/workspace", { replace: true }); return; } if (!currentWorkspace.selectedSubjectId) { saveGradesWorkspace({ ...currentWorkspace, selectedSubjectId: subjectId, selectedGradeType: currentWorkspace.selectedGradeType ?? lockedAssessmentType }); return; } if (!currentWorkspace.selectedGradeType && lockedAssessmentType) saveGradesWorkspace({ ...currentWorkspace, selectedGradeType: lockedAssessmentType }); }, [lockedAssessmentType, navigate, subjectId]);
+  useEffect(() => { const currentWorkspace = loadGradesWorkspace(); if (!subjectId) { navigate("/dashboard/teacher/grades", { replace: true }); return; } if (!currentWorkspace.selectedSubjectId) { saveGradesWorkspace({ ...currentWorkspace, selectedSubjectId: subjectId, selectedGradeType: currentWorkspace.selectedGradeType ?? lockedAssessmentType }); return; } if (!currentWorkspace.selectedGradeType && lockedAssessmentType) saveGradesWorkspace({ ...currentWorkspace, selectedGradeType: lockedAssessmentType }); }, [lockedAssessmentType, navigate, subjectId]);
   useEffect(() => { if (subjectId && !lockedAssessmentType) navigate("/dashboard/teacher/grades", { replace: true }); }, [lockedAssessmentType, navigate, subjectId]);
-  useEffect(() => { if (subjectId && !selectedSubject) navigate("/dashboard/teacher/grades/workspace", { replace: true }); }, [navigate, selectedSubject, subjectId]);
+  useEffect(() => { if (subjectId && !selectedSubject) navigate(buildGradesTypeSelectionRoute(subjectId), { replace: true }); }, [navigate, selectedSubject, subjectId]);
 
   const classOptions = useMemo(() => { if (!selectedSubject) return []; const subjectClasses = SUBJECT_CLASS_MAP[selectedSubject.name] ?? []; if (subjectClasses.length > 0) return [...subjectClasses].sort(); return Array.from(new Set(students.map((student) => student.class))).sort(); }, [selectedSubject, students]);
   const classStudents = useMemo(() => !classId ? [] : students.filter((student) => student.class === classId), [classId, students]);
   const effectiveAssessmentType = lockedAssessmentType ?? assessmentType; const headerTitle = getCreateGradeListTitle(lockedAssessmentType); const parsedMaxScore = Number(maxScore); const validMaxScore = hasValidMaxScore(parsedMaxScore); const rowErrors = useMemo(() => buildRowErrors(classStudents, rowsByStudentId, parsedMaxScore), [classStudents, parsedMaxScore, rowsByStudentId]);
   const hasFormErrors = !subjectId || !classId || !effectiveAssessmentType || !title.trim() || !date || !validMaxScore || classStudents.length === 0 || Object.keys(rowErrors).length > 0;
-  const backRoute = getBackRoute(lockedAssessmentType);
+  const backRoute = getBackRoute(subjectId, effectiveAssessmentType);
 
   return {
     assessmentType, backRoute, classId, classOptions, classStudents, date, effectiveAssessmentType, hasFormErrors, headerTitle, iconTheme, isSubmitted, lockedAssessmentType, maxScore, parsedMaxScore, rowErrors, rowsByStudentId, selectedSubject, subjectId, title, validMaxScore,
-    backToGrades: () => navigate(backRoute, { state: subjectId ? { restoreSubjectId: subjectId } : undefined }),
-    saveGradeList: () => { setIsSubmitted(true); if (hasFormErrors || !effectiveAssessmentType) return; saveGradeListRecord({ subjectId, classId, title, assessmentType: effectiveAssessmentType, date, maxScore: parsedMaxScore, classStudents, rowsByStudentId }); navigate(backRoute, { state: { restoreSubjectId: subjectId } }); },
+    backToGrades: () => navigate(backRoute),
+    saveGradeList: () => { setIsSubmitted(true); if (hasFormErrors || !effectiveAssessmentType) return; saveGradeListRecord({ subjectId, classId, title, assessmentType: effectiveAssessmentType, date, maxScore: parsedMaxScore, classStudents, rowsByStudentId }); navigate(backRoute); },
     setAssessmentType,
     setClassId,
     setDate,

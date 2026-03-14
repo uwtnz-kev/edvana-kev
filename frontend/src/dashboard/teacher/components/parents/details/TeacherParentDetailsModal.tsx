@@ -27,7 +27,7 @@ export default function TeacherParentDetailsModal({ open, onClose, parent }: Pro
         onClick={onClose}
       />
       <div className="absolute inset-0 flex items-center justify-center p-4">
-        <div className="w-full max-w-6xl max-h-[85vh] overflow-hidden rounded-2xl border border-white/10 bg-white/10 backdrop-blur-xl shadow-2xl">
+        <div className="w-full max-w-6xl max-h-[85vh] overflow-hidden rounded-2xl teacher-panel-surface shadow-2xl">
           <ParentDetailsHeader fullName={parent.fullName} onClose={onClose} />
           <div className="h-px bg-white/10" />
           <div className="px-7 py-5 overflow-y-auto max-h-[calc(85vh-88px)] space-y-6">
@@ -41,3 +41,4 @@ export default function TeacherParentDetailsModal({ open, onClose, parent }: Pro
     document.body
   );
 }
+

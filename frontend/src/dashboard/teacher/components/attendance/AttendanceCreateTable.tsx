@@ -18,8 +18,9 @@ import {
   GlassSelectTrigger,
   GlassSelectValue,
 } from "@/dashboard/schooladmin/components/ui/GlassSelect";
+import type { AttendanceStatus } from "./attendanceTypes";
 
-type Status = "Present" | "Absent" | "Late";
+type Status = AttendanceStatus;
 
 type Row = {
   id: string;
@@ -35,35 +36,44 @@ interface Props {
 
 export default function AttendanceCreateTable({ rows, onStatusChange }: Props) {
   return (
-    <div className="bg-white/15 backdrop-blur-xl border border-white/25 shadow-xl rounded-2xl overflow-hidden">
-      <Table>
+    <div className="teacher-panel-surface rounded-2xl overflow-hidden">
+      <Table className="table-fixed">
+        <colgroup>
+          <col className="w-[50%]" />
+          <col className="w-[20%]" />
+          <col className="w-[30%]" />
+        </colgroup>
         <TableHeader>
           <TableRow className="border-white/20 hover:bg-white/5">
-            <TableHead className="text-blue-900 font-semibold">Student</TableHead>
-            <TableHead className="text-blue-900 font-semibold">Class</TableHead>
-            <TableHead className="text-blue-900 font-semibold">Status</TableHead>
+            <TableHead className="px-6 text-white font-semibold">Student</TableHead>
+            <TableHead className="px-6 text-white font-semibold">Class</TableHead>
+            <TableHead className="px-6 text-white font-semibold text-center">Status</TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
           {rows.map(r => (
             <TableRow key={r.id} className="border-white/10 hover:bg-white/5">
-              <TableCell className="text-black font-medium">{r.name}</TableCell>
-              <TableCell className="text-black">{r.className}</TableCell>
-              <TableCell className="w-[220px]">
-                <GlassSelect
-                  value={r.status}
-                  onValueChange={v => onStatusChange(r.id, v as Status)}
-                >
-                  <GlassSelectTrigger className="w-full bg-white/25 border-white/35">
-                    <GlassSelectValue placeholder="Select status" />
-                  </GlassSelectTrigger>
-                  <GlassSelectContent>
-                    <GlassSelectItem value="Present">Present</GlassSelectItem>
-                    <GlassSelectItem value="Late">Late</GlassSelectItem>
-                    <GlassSelectItem value="Absent">Absent</GlassSelectItem>
-                  </GlassSelectContent>
-                </GlassSelect>
+              <TableCell className="px-6 text-white font-medium">{r.name}</TableCell>
+              <TableCell className="px-6 text-white">{r.className}</TableCell>
+              <TableCell className="px-6 text-white">
+                <div className="flex items-center justify-center">
+                  <div className="w-full max-w-[220px]">
+                    <GlassSelect
+                      value={r.status}
+                      onValueChange={v => onStatusChange(r.id, v as Status)}
+                    >
+                      <GlassSelectTrigger className="w-full bg-white/25 border-white/35 text-white [&>span]:text-white [&_svg]:text-white [&_svg]:opacity-80">
+                        <GlassSelectValue placeholder="Select status" />
+                      </GlassSelectTrigger>
+                      <GlassSelectContent className="text-white">
+                        <GlassSelectItem value="present" className="text-white focus:bg-white/10 focus:text-white">Present</GlassSelectItem>
+                        <GlassSelectItem value="late" className="text-white focus:bg-white/10 focus:text-white">Late</GlassSelectItem>
+                        <GlassSelectItem value="absent" className="text-white focus:bg-white/10 focus:text-white">Absent</GlassSelectItem>
+                      </GlassSelectContent>
+                    </GlassSelect>
+                  </div>
+                </div>
               </TableCell>
             </TableRow>
           ))}
@@ -72,5 +82,6 @@ export default function AttendanceCreateTable({ rows, onStatusChange }: Props) {
     </div>
   );
 }
+
 
 

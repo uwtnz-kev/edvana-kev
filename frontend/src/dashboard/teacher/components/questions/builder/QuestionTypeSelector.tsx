@@ -11,12 +11,12 @@ type Props = {
 export function QuestionTypeSelector({ value, onChange }: Props) {
   return (
     <div className="space-y-2">
-      <label className="text-sm text-[#3B240F]">Question Type</label>
+      <label className="text-sm text-white">Question Type</label>
       <Select value={value} onValueChange={(next) => onChange(next as QuestionBuilderQuestionType)}>
-        <SelectTrigger className="h-12 rounded-2xl border border-white/20 bg-white/20 text-[#3B240F]">
+        <SelectTrigger className="h-12 rounded-2xl border border-white/20 bg-white/20 text-white data-[placeholder]:text-white/70">
           <SelectValue placeholder="Select type" />
         </SelectTrigger>
-        <SelectContent className="rounded-2xl border border-white/20 bg-white/80 text-[#3B240F] backdrop-blur-xl">
+        <SelectContent className="rounded-2xl border border-white/20 bg-[#1b2430]/95 text-white backdrop-blur-xl">
           {QUESTION_TYPE_OPTIONS.map((option) => <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>)}
         </SelectContent>
       </Select>

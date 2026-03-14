@@ -1,5 +1,6 @@
 // Maps the teacher sidebar config into top-level items and nested dropdown links.
 import { NavLink } from "react-router-dom";
+import { teacherDashboardTheme } from "@/dashboard/teacher/theme/teacherDashboardTheme";
 import { cn } from "@/utils/cn";
 import { SidebarItem } from "./SidebarItem";
 import { isSidebarItemActive, isSidebarItemExpanded } from "./sidebarHelpers";
@@ -55,11 +56,11 @@ export function SidebarSection({
                       to={subItem.href}
                       onClick={onCloseMobile}
                       className={cn(
-                        "group relative flex items-center gap-3 rounded-lg px-4 py-2 text-sm text-[#6B4F3A] transition-all duration-200 hover:bg-white/22 hover:text-[#3B240F]",
-                        isSubActive && "border border-white/35 bg-white/30 font-medium text-[#3B240F] shadow-[0_12px_28px_rgba(59,36,15,0.16)]"
+                        teacherDashboardTheme.nav.itemSub,
+                        isSubActive && teacherDashboardTheme.nav.itemSubActive
                       )}
                     >
-                      <SubIcon className={cn("h-4 w-4 flex-shrink-0 transition-colors duration-200 group-hover:text-[#7A5A3A]", isSubActive ? "text-[#7A5A3A]" : "text-[#6B4F3A]")} />
+                      <SubIcon className={cn("h-4 w-4 flex-shrink-0 transition-colors duration-200 group-hover:text-[var(--accent-primary)]", isSubActive ? "text-[var(--accent-primary)]" : "text-[var(--sidebar-text)]")} />
                       <span className="truncate font-medium">{subItem.label}</span>
                     </NavLink>
                   );

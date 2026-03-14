@@ -1,10 +1,11 @@
 // Provides submission helpers for creating grade lists and returning to grades.
 import { createGradeList, type TeacherGradeAssessmentType } from "@/dashboard/teacher/components/grades";
 import type { Student } from "@/dashboard/teacher/components/students";
-import type { GradeRowDraft, GradeSelectionType } from "./gradeListTypes";
+import type { GradeRowDraft } from "./gradeListTypes";
+import { buildGradesWorkspaceRoute } from "../gradesViewHelpers";
 
-export function getBackRoute(type: GradeSelectionType | null) {
-  return type ? "/dashboard/teacher/grades/workspace" : "/dashboard/teacher/grades";
+export function getBackRoute(subjectId: string, assessmentType: Exclude<TeacherGradeAssessmentType, "all"> | null) {
+  return buildGradesWorkspaceRoute(subjectId, assessmentType);
 }
 
 export function saveGradeListRecord(payload: {

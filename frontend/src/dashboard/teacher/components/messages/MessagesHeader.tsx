@@ -16,10 +16,10 @@ export default function MessagesHeader({ subjectId = "" }: { subjectId?: string 
       </div>
 
       <div>
-        <h1 className="text-3xl font-semibold text-[#3B240F] leading-tight">
+        <h1 className="text-3xl font-semibold leading-tight text-white">
           Messages
         </h1>
-        <p className="mt-1 text-[#6B4F3A] text-base">
+        <p className="mt-1 text-base text-[var(--text-secondary)]">
           Manage conversations across your classes
         </p>
       </div>

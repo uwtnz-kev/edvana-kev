@@ -12,7 +12,7 @@ export default function GradeListBuilderCard({ listName }: Props) {
   const state = useGradeListBuilderState(listName);
 
   return (
-    <div className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-4 hover:bg-white/15 transition space-y-4">
+    <div className="rounded-2xl teacher-panel-surface p-4 hover:bg-white/15 transition space-y-4">
       <GradeListBuilderHeader listName={listName} />
       <GradeListBuilderControls
         assessmentType={state.assessmentType}
@@ -35,3 +35,4 @@ export default function GradeListBuilderCard({ listName }: Props) {
     </div>
   );
 }
+

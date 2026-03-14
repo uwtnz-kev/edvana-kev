@@ -1,5 +1,5 @@
 // Switches between the landing, empty-subject, and active workspace grades content.
-import type { TeacherGradesSubject, TeacherPublishedItem } from "@/dashboard/teacher/components/grades";
+import { TeacherGradesHome, type TeacherGradesSubject, type TeacherPublishedItem } from "@/dashboard/teacher/components/grades";
 import { GradesWorkspaceHeader } from "./GradesWorkspaceHeader";
 import { GradesWorkspaceFilters } from "./GradesWorkspaceFilters";
 import { GradeSubmissionsContent } from "./content/GradeSubmissionsContent";
@@ -7,6 +7,8 @@ import { GradesHomeContent } from "./content/GradesHomeContent";
 import { GradesLandingContent } from "./content/GradesLandingContent";
 
 type Props = {
+  hasInvalidWorkspaceSubject: boolean;
+  hasInvalidWorkspaceType: boolean;
   isLanding: boolean;
   selectedGradeType: string;
   selectedSubject: { id: string; name: string } | null;
@@ -33,11 +35,50 @@ type Props = {
 
 export function GradesWorkspaceContent(props: Props) {
   if (props.isLanding) {
-    return <GradesLandingContent selectedGradeType={props.selectedGradeType} onPickType={props.onPickType} />;
+    return <GradesHomeContent subjects={props.subjects} selectedSubjectId={props.selectedSubjectId} onSelectSubject={props.onSelectSubject} title="Grades" onBack={props.onBack} />;
   }
 
   if (!props.selectedSubject) {
-    return <GradesHomeContent subjects={props.subjects} selectedSubjectId={props.selectedSubjectId} onSelectSubject={props.onSelectSubject} title={props.workspaceTitle} onBack={props.onBack} />;
+    const description = props.hasInvalidWorkspaceSubject
+      ? "The selected subject is missing or invalid. Choose a subject again to continue."
+      : props.hasInvalidWorkspaceType
+        ? "The selected grade type is invalid. Choose a grade type again to continue."
+        : "Grades is still resolving the selected subject. Try again from the subject list.";
+
+    return (
+      <div className="space-y-4">
+        <GradesWorkspaceHeader
+          title="Grades"
+          subtitle="Subject unavailable"
+          subjectId={null}
+          showBack
+          showCreate={false}
+          canCreate={false}
+          onBack={props.onBack}
+          onCreate={props.onCreate}
+        />
+        <section className="rounded-2xl border border-white/10 bg-white/10 p-6 text-white/80 backdrop-blur-xl">
+          {description}
+        </section>
+      </div>
+    );
+  }
+
+  if (props.selectedSubject && !props.selectedGradeType) {
+    return (
+      <div className="flex w-full gap-6 overflow-x-hidden">
+        <aside className="w-[220px] shrink-0">
+          <GradesLandingContent selectedGradeType="" onPickType={props.onPickType} />
+        </aside>
+        <section className="flex-1 min-w-0 space-y-4">
+          <GradesWorkspaceHeader title="Grades" subtitle={`Choose what you want to grade for ${props.selectedSubject.name}`} subjectId={props.selectedSubject.id} showBack showCreate={false} canCreate={false} onBack={props.onBack} onCreate={props.onCreate} />
+          <TeacherGradesHome
+            quickActionsText="Select the assessment type to review and manage grades for this subject. You can choose between quizzes, assignments, and exams."
+            scoringGuidanceText="Use the grading workspace to view submissions, update scores, and track student performance. Filters and class selectors will help you quickly locate the work you need to grade."
+          />
+        </section>
+      </div>
+    );
   }
 
   return (

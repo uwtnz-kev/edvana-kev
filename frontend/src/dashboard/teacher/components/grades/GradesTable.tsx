@@ -19,7 +19,7 @@ function getPercent(score: number | null, max: number) {
 
 export default function GradesTable({ grades, gradeItems, onGradeSaved }: Props) {
   return (
-    <div className="group rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 overflow-hidden hover:bg-white/15 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#8B6F52]/25">
+    <div className="group rounded-2xl teacher-panel-surface overflow-hidden hover:bg-white/15 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#8B6F52]/25">
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-white">
           <thead className="bg-white/10">
@@ -71,4 +71,5 @@ export default function GradesTable({ grades, gradeItems, onGradeSaved }: Props)
     </div>
   );
 }
+
 

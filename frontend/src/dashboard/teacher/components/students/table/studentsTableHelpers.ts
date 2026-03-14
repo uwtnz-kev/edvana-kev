@@ -1,15 +1,25 @@
 // Provides display helpers for student rows and status badges.
 import type { Student } from "../types";
 
+const studentBadgeBaseClass = "rounded-full px-3 py-1 text-xs font-medium border backdrop-blur-sm";
+
 export function getStudentStatusClass(status: Student["status"]) {
   const statusClassMap: Record<Student["status"], string> = {
-    Active: "bg-green-500/20 text-green-700 border-green-500/30",
-    Inactive: "bg-yellow-500/20 text-yellow-700 border-yellow-500/30",
-    Transferred: "bg-blue-500/20 text-blue-700 border-blue-500/30",
-    Suspended: "bg-red-500/20 text-red-700 border-red-500/30",
-    Graduated: "bg-purple-500/20 text-purple-700 border-purple-500/30",
+    Active: `${studentBadgeBaseClass} bg-emerald-500/10 text-emerald-300 border-emerald-500/20`,
+    Inactive: `${studentBadgeBaseClass} bg-yellow-500/10 text-yellow-300 border-yellow-500/20`,
+    Transferred: `${studentBadgeBaseClass} bg-sky-500/10 text-sky-300 border-sky-500/20`,
+    Suspended: `${studentBadgeBaseClass} bg-rose-500/10 text-rose-300 border-rose-500/20`,
+    Graduated: `${studentBadgeBaseClass} bg-violet-500/10 text-violet-300 border-violet-500/20`,
   };
   return statusClassMap[status];
+}
+
+export function getStudentClassBadgeClass(className: string) {
+  const upper = className.trim().toUpperCase();
+  if (upper.startsWith("S1")) return `${studentBadgeBaseClass} bg-cyan-500/10 text-cyan-300 border-cyan-500/20`;
+  if (upper.startsWith("S2")) return `${studentBadgeBaseClass} bg-blue-500/10 text-blue-300 border-blue-500/20`;
+  if (upper.startsWith("S3")) return `${studentBadgeBaseClass} bg-violet-500/10 text-violet-300 border-violet-500/20`;
+  return `${studentBadgeBaseClass} bg-white/10 text-white/80 border-white/10`;
 }
 
 export function formatStudentDate(dateString: string) {

@@ -17,7 +17,7 @@ export default function RecipientSearchSelect(props: Props) {
 
   return (
     <div className="space-y-2" ref={state.wrapRef}>
-      <div className="text-sm text-white/70">To</div>
+      <div className="text-sm text-white">To</div>
       <div className="relative">
         <RecipientSearchInput
           query={state.query}

@@ -1,5 +1,6 @@
 // Defines the shared types used across the extracted assignment create form files.
 import type { AssignmentAttachment } from "@/dashboard/teacher/components/assignments";
+import type { SubmissionMethod } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
 
 export type TeacherAssignmentCreateFormProps = {
   subjectId: string;
@@ -15,8 +16,11 @@ export type FormValues = {
   dueAt: string;
   classId: string;
   classLabel: string;
+  accessCode: string;
   estimatedMinutes: string;
+  totalAttempts: string;
   totalQuestions: string;
+  submissionMethods: SubmissionMethod[];
   rubric: string;
   maxScore: string;
 };
@@ -38,6 +42,7 @@ export type AssignmentFieldProps = {
   touched: TouchedState;
   onFieldChange: (name: FieldName, value: string) => void;
   onFieldBlur: (name: FieldName) => void;
+  onSubmissionMethodsChange: (methods: SubmissionMethod[]) => void;
 };
 
 export type AssignmentAttachmentSectionProps = {

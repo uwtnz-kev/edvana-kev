@@ -13,7 +13,7 @@ export default function GradeItemSubmissionDetailsView() {
     <div className="w-full overflow-x-hidden p-4 sm:p-6" style={{ overflowX: "hidden" }}>
       <div className="w-full max-w-5xl mx-auto space-y-4">
         <GradeSubmissionHeader state={state} />
-        <section className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-6 space-y-6">
+        <section className="teacher-panel-surface rounded-2xl p-6 space-y-6">
           <GradeSubmissionSummary state={state} />
           <GradeSubmissionAttachments state={state} />
           <GradeSubmissionComments state={state} />
@@ -22,3 +22,4 @@ export default function GradeItemSubmissionDetailsView() {
     </div>
   );
 }
+

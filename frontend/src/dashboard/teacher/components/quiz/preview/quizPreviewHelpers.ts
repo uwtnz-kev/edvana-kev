@@ -1,4 +1,5 @@
 // Provides derived labels and stat-card data for the quiz preview modal.
+import { getAssessmentStatusBadgeClass } from "@/dashboard/teacher/components/shared/assessment/assessmentVisualStyles";
 import {
   BookOpen,
   Calendar,
@@ -10,6 +11,7 @@ import {
 import type { TeacherQuiz } from "../QuizTypes";
 
 type QuizPreviewStat = { icon: LucideIcon; label: string; value: string | number };
+export type QuizPreviewBadge = { label: string; className: string };
 
 export function formatQuizPreviewDate(dateString: string) {
   const date = new Date(dateString);
@@ -18,7 +20,9 @@ export function formatQuizPreviewDate(dateString: string) {
 }
 
 export function getQuizStatusLabel(status: TeacherQuiz["status"]) {
-  return status === "published" ? "Published" : "Draft";
+  if (status === "published") return "Published";
+  if (status === "closed") return "Closed";
+  return "Draft";
 }
 
 // Preserves the existing dash placeholder for missing scores.
@@ -36,7 +40,11 @@ export function getQuizPreviewStats(quiz: TeacherQuiz): QuizPreviewStat[] {
 }
 
 export function getQuizPreviewBadges(quiz: TeacherQuiz) {
-  return [quiz.subject, quiz.classLabel, getQuizStatusLabel(quiz.status)];
+  return [
+    { label: quiz.subject, className: "bg-white/10 text-white border border-white/20" },
+    { label: quiz.classLabel, className: "bg-white/10 text-white border border-white/20" },
+    { label: getQuizStatusLabel(quiz.status), className: getAssessmentStatusBadgeClass(quiz.status) },
+  ] satisfies QuizPreviewBadge[];
 }
 
 export const quizPreviewHeroIcon = BookOpen;

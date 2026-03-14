@@ -8,12 +8,13 @@ import type { TeacherSubjectNavData } from "./TeacherSubjectCard";
 
 type TeacherSubjectListProps = {
   subjects: TeacherSubjectNavData[];
+  onOpenSubject?: (subject: TeacherSubjectNavData) => void;
 };
 
-export function TeacherSubjectList({ subjects }: TeacherSubjectListProps) {
+export function TeacherSubjectList({ subjects, onOpenSubject }: TeacherSubjectListProps) {
   if (subjects.length === 0) {
     return (
-      <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-8 text-center">
+      <div className="teacher-panel-surface rounded-2xl p-8 text-center">
         <p className="text-white/70 text-lg">No subjects found</p>
         <p className="text-white/50 text-sm mt-2">Try adjusting your search or class filter.</p>
       </div>
@@ -21,11 +22,12 @@ export function TeacherSubjectList({ subjects }: TeacherSubjectListProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {subjects.map((subject) => (
-        <TeacherSubjectCard key={subject.id} subject={subject} />
+        <TeacherSubjectCard key={subject.id} subject={subject} onOpenSubject={onOpenSubject} />
       ))}
     </div>
   );
 }
+
 

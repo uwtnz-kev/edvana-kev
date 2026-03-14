@@ -16,7 +16,7 @@ export default function QuestionBuilderCreateView() {
         <QuestionBuilderHeader title={builder.title} totalPoints={builder.totalPoints} theme={builder.theme} onBack={builder.handleBackClick} />
         <QuestionBuilderCanvas questions={builder.questions} onMove={builder.moveQuestion} onRemove={builder.removeQuestion} onUpdate={builder.updateQuestion} />
         <div className="flex justify-start">
-          <Button type="button" onClick={builder.addQuestion} className="rounded-2xl border border-white/25 bg-white/20 text-[#3B240F] hover:bg-white/30">
+          <Button type="button" onClick={builder.addQuestion} className="rounded-2xl border border-white/25 bg-white/20 text-white hover:bg-white/30">
             <Plus className="h-4 w-4" />
             Add Question
           </Button>
@@ -26,3 +26,4 @@ export default function QuestionBuilderCreateView() {
     </div>
   );
 }
+

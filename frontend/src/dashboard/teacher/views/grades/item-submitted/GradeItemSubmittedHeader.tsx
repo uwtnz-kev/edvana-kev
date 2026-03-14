@@ -10,7 +10,7 @@ type Props = {
 
 export function GradeItemSubmittedHeader({ state }: Props) {
   return (
-    <header className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl px-6 py-5">
+    <header className="teacher-panel-surface rounded-2xl px-6 py-5">
       <div className="flex items-center gap-4">
         <Button
           type="button"
@@ -21,10 +21,12 @@ export function GradeItemSubmittedHeader({ state }: Props) {
           Back
         </Button>
         <div>
-          <h1 className="text-2xl font-semibold text-[#3B240F]">{state.item?.title}</h1>
-          <p className="text-[#3B240F]/70 mt-1">{`${toTypeLabel(state.type!)} Submissions | Subject: ${state.subjectName} | Class: ${state.item?.className}`}</p>
+          <h1 className="text-2xl font-semibold text-[var(--text-primary)]">{state.item?.title}</h1>
+          <p className="text-[var(--text-secondary)] mt-1">{`${toTypeLabel(state.type!)} Submissions | Subject: ${state.subjectName} | Class: ${state.item?.className}`}</p>
         </div>
       </div>
     </header>
   );
 }
+
+

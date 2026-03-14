@@ -8,7 +8,7 @@ type Props = { workspace: AttendanceWorkspaceState };
 export function AttendanceWorkspaceFilters({ workspace }: Props) {
   return (
     <>
-      <AttendanceStatsCards stats={workspace.stats} />
+      <AttendanceStatsCards stats={workspace.stats} totalLabel="Attendance Sessions" />
       <AttendanceFiltersBar value={workspace.filters} onChange={workspace.setFilters} selectedDate={workspace.selectedDate} onDateChange={workspace.setSelectedDate} />
     </>
   );

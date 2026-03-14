@@ -6,6 +6,7 @@ export type {
 } from "./store/assignmentStoreTypes";
 export {
   archiveAssignment,
+  closeAssignment,
   createAssignment,
   deleteAssignment,
   duplicateAssignment,

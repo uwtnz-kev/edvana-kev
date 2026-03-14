@@ -24,8 +24,8 @@ export function AnnouncementList({ items, subjectName, onCreate, onEdit, onDelet
   if (!subjectName || items.length === 0) {
     return (
       <div className="rounded-2xl border border-dashed border-white/20 bg-white/10 p-8 text-center backdrop-blur-xl">
-        <p className="text-[#3B240F]/75">{message}</p>
-        <Button type="button" onClick={onCreate} disabled={!subjectName} className="mt-4 rounded-2xl bg-white/15 text-white hover:bg-white/25">
+        <p className="text-white">{message}</p>
+        <Button type="button" onClick={onCreate} disabled={!subjectName} className="mt-4 rounded-2xl bg-white/15 text-white hover:bg-white/25 hover:text-white">
           Create Announcement
         </Button>
       </div>

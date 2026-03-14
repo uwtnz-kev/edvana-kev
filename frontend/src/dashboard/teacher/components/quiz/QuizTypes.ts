@@ -3,7 +3,9 @@
  * ---------
  * Defines types used by the teacher dashboard q ui z feature.
  */
-export type QuizStatus = "draft" | "published";
+import type { SubmissionMethod } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
+
+export type QuizStatus = "draft" | "published" | "closed";
 
 export interface TeacherSubject2 {
   id: string;
@@ -33,14 +35,17 @@ export interface TeacherQuiz {
   subject: string;
   classId: string;
   classLabel: string;
+  accessCode?: string;
   dueAt: string;
   // durationMinutes is used by the student attempt timer to auto submit when time expires.
   durationMinutes: number;
+  totalAttempts: number;
   totalQuestions: number;
   difficulty: QuizDifficulty;
   type: QuizType;
   status: QuizStatus;
   createdAt: string;
+  submissionMethods: SubmissionMethod[];
   maxScore?: number;
   rubric?: string;
   instructions?: string;

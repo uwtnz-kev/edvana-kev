@@ -49,17 +49,17 @@ export default function ThreadRow(props: Props) {
         </div>
 
         <div className="min-w-0 w-[220px] shrink-0">
-          <div className={`truncate text-sm ${isUnread ? "font-semibold text-[#3B240F]" : "font-medium text-[#3B240F]"}`}>
+          <div className={`truncate text-sm ${isUnread ? "font-semibold text-white" : "font-medium text-white"}`}>
             {t.fromName}
           </div>
-          <div className="mt-1 truncate text-xs text-[#6B4F3A]">{t.courseName}</div>
+          <div className="mt-1 truncate text-xs text-[var(--text-muted)]">{t.courseName}</div>
         </div>
 
         <div className="min-w-0 flex-1">
-          <div className="truncate text-sm text-[#3B240F]">
+          <div className="truncate text-sm text-white">
             <span className={isUnread ? "font-semibold" : "font-medium"}>{t.subject}</span>
-            <span className="mx-2 text-[#6B4F3A]">-</span>
-            <span className="text-[#6B4F3A]">{t.preview}</span>
+            <span className="mx-2 text-[var(--text-muted)]">-</span>
+            <span className="text-[var(--text-secondary)]">{t.preview}</span>
           </div>
         </div>
 
@@ -69,7 +69,7 @@ export default function ThreadRow(props: Props) {
           </div>
         ) : null}
 
-        <div className="w-[104px] shrink-0 text-right text-xs font-semibold text-[#1EA896]">
+        <div className="w-[104px] shrink-0 text-right text-xs font-semibold text-[var(--text-muted)]">
           {t.dateLabel}
         </div>
 
@@ -82,7 +82,7 @@ export default function ThreadRow(props: Props) {
           className="rounded-lg p-2 transition hover:bg-white/10"
           title="Star"
         >
-          <Star className={`h-4 w-4 ${t.starred ? "text-[#FF715B]" : "text-[#6B4F3A]"}`} />
+          <Star className={`h-4 w-4 ${t.starred ? "text-[#FF715B]" : "text-[var(--text-muted)]"}`} />
         </button>
       </div>
     </button>

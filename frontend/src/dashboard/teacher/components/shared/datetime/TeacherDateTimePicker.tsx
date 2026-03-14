@@ -47,14 +47,14 @@ export function TeacherDateTimePicker({ value, onChange, placeholder = "Pick dat
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild><DateTimeTrigger disabled={disabled} hasValue={hasValue} label={formatTriggerLabel(value, placeholder)} /></DialogTrigger>
       <DialogPortal>
-        <DialogOverlay className="fixed inset-0 z-50 bg-black/25 backdrop-blur-[2px] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
-        <DialogPrimitive.Content className="fixed left-1/2 top-1/2 z-50 w-[calc(100vw-2rem)] max-w-xl -translate-x-1/2 -translate-y-1/2 max-h-[80vh] overflow-hidden rounded-3xl border border-white/30 bg-white/20 backdrop-blur-2xl shadow-lg text-[#3B240F] p-0">
+        <DialogOverlay className="fixed inset-0 z-[1200] bg-black/25 backdrop-blur-[2px] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+        <DialogPrimitive.Content className="fixed left-1/2 top-1/2 z-[1201] w-[calc(100vw-2rem)] max-w-xl -translate-x-1/2 -translate-y-1/2 max-h-[80vh] overflow-hidden rounded-3xl border border-white/20 bg-[#161b22]/95 p-0 text-white shadow-lg backdrop-blur-2xl pointer-events-auto">
           <DialogHeader className="sr-only"><DialogTitle>Select date and time</DialogTitle><DialogDescription>Choose date and time, then apply changes.</DialogDescription></DialogHeader>
           <div className="p-4 sm:p-5 flex flex-col gap-5 max-h-[80vh] overflow-y-auto overscroll-contain">
             <DateTimeCalendarPanel selectedDate={selectedDate} onSelectDate={setSelectedDate} minDate={minDate} maxDate={maxDate} />
             <DateTimeTimePanel selectedDate={selectedDate} selectedHour={selectedHour} selectedMinute={selectedMinute} selectedMeridiem={selectedMeridiem} minuteOptions={minuteOptions} onHourChange={setSelectedHour} onMinuteChange={setSelectedMinute} onMeridiemChange={setSelectedMeridiem} onClose={() => setOpen(false)} onApply={onApply} />
           </div>
-          <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-[#3B240F]/40 disabled:pointer-events-none"><X className="h-4 w-4" /><span className="sr-only">Close</span></DialogPrimitive.Close>
+          <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-white/40 disabled:pointer-events-none"><X className="h-4 w-4" /><span className="sr-only">Close</span></DialogPrimitive.Close>
         </DialogPrimitive.Content>
       </DialogPortal>
     </Dialog>

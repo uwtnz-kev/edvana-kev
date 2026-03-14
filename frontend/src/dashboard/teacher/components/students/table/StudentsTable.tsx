@@ -14,7 +14,7 @@ export default function StudentsTable({ onView, students }: Props) {
   if (students.length === 0) return <EmptyState />;
 
   return (
-    <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl overflow-hidden transition-colors duration-200 hover:bg-white/20">
+    <div className="teacher-panel-surface rounded-2xl overflow-hidden teacher-panel-hover">
       <Table>
         <StudentsTableHeader />
         <TableBody>
@@ -26,3 +26,4 @@ export default function StudentsTable({ onView, students }: Props) {
     </div>
   );
 }
+

@@ -81,6 +81,7 @@ export interface TeacherGradeListRow {
 
 export interface TeacherGradeList {
   id: string;
+  gradeItemId?: string;
   subjectId: string;
   classId: string;
   title: string;

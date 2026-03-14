@@ -26,6 +26,9 @@ export function SubjectSidebarPanel(props: Props) {
 
   return (
     <aside className="rounded-2xl border border-white/10 bg-white/10 p-3 backdrop-blur-xl">
+      <div className="px-2 pt-1 pb-3">
+        <h2 className="text-sm font-semibold text-white">Module Actions</h2>
+      </div>
       <div className="space-y-2">
         {props.actions.map((action) => (
           <SubjectSidebarActionButton key={action.value} action={action} onClick={props.onActionClick} />

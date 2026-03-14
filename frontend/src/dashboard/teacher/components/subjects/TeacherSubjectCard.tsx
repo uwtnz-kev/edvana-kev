@@ -1,6 +1,7 @@
 // Orchestrates the teacher subject card using focused card subcomponents.
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { getSubjectThemeById } from "@/dashboard/teacher/components/shared";
+import { appendClassIdToPath, getClassIdFromSearchParams } from "@/dashboard/teacher/views/subjects/subjectClassRouting";
 import { SubjectCardActions } from "./card/SubjectCardActions";
 import { SubjectCardHeader } from "./card/SubjectCardHeader";
 import { SubjectCardMeta } from "./card/SubjectCardMeta";
@@ -21,10 +22,13 @@ export type TeacherSubjectNavData = {
 
 interface TeacherSubjectCardProps {
   subject: TeacherSubjectNavData;
+  onOpenSubject?: (subject: TeacherSubjectNavData) => void;
 }
 
-export function TeacherSubjectCard({ subject }: TeacherSubjectCardProps) {
+export function TeacherSubjectCard({ subject, onOpenSubject }: TeacherSubjectCardProps) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const classId = getClassIdFromSearchParams(searchParams);
   const theme = getSubjectThemeById(String(subject.id));
 
   return (
@@ -48,9 +52,11 @@ export function TeacherSubjectCard({ subject }: TeacherSubjectCardProps) {
       <SubjectCardActions
         nextLesson={subject.nextLesson}
         onOpen={() =>
-          navigate("/dashboard/teacher/subjects", {
-            state: { restoreSubjectId: subject.id, subject },
-          })
+          onOpenSubject
+            ? onOpenSubject(subject)
+            : navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subject.id}`, classId), {
+                state: { restoreSubjectId: subject.id, subject },
+              })
         }
         subjectColor={subject.color}
       />

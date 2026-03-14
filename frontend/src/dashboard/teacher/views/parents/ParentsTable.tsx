@@ -10,7 +10,7 @@ type Props = {
 
 export function ParentsTable({ onView, rows }: Props) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/10 backdrop-blur-xl transition-colors duration-200 hover:bg-white/20">
+    <div className="overflow-hidden rounded-2xl teacher-panel-surface teacher-panel-hover">
       <div className="overflow-x-auto">
         <table className="w-full table-fixed text-left">
           <ParentsTableHeader />
@@ -18,7 +18,7 @@ export function ParentsTable({ onView, rows }: Props) {
             {rows.map((row) => <ParentRow key={row.id} row={row} onView={onView} />)}
             {rows.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-6 py-10 text-[#6B4F3A] text-center">No parents found</td>
+                <td colSpan={5} className="px-6 py-10 text-[var(--text-secondary)] text-center">No parents found</td>
               </tr>
             )}
           </tbody>
@@ -27,3 +27,5 @@ export function ParentsTable({ onView, rows }: Props) {
     </div>
   );
 }
+
+

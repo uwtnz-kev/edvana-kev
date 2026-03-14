@@ -6,7 +6,7 @@ type Props = { state: ReturnType<typeof useGradeItemNotSubmittedState> };
 
 export function GradeItemNotSubmittedTable({ state }: Props) {
   return (
-    <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl overflow-hidden">
+    <div className="teacher-panel-surface rounded-2xl overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-white">
           <thead className="bg-white/10">
@@ -29,3 +29,4 @@ export function GradeItemNotSubmittedTable({ state }: Props) {
     </div>
   );
 }
+

@@ -1,4 +1,5 @@
 // Centralizes defaults and field ids for assignment create validation and scrolling.
+import { DEFAULT_SUBMISSION_METHODS } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
 import type { FieldName, FormValues, TouchedState } from "./assignmentCreateTypes";
 
 const DEFAULT_TOTAL_QUESTIONS = 10;
@@ -10,8 +11,11 @@ export const initialValues: FormValues = {
   dueAt: "",
   classId: "",
   classLabel: "",
+  accessCode: "",
   estimatedMinutes: "",
+  totalAttempts: "",
   totalQuestions: String(DEFAULT_TOTAL_QUESTIONS),
+  submissionMethods: DEFAULT_SUBMISSION_METHODS,
   rubric: "",
   maxScore: "",
 };
@@ -23,8 +27,11 @@ export const initialTouched: TouchedState = {
   dueAt: false,
   classId: false,
   classLabel: false,
+  accessCode: false,
   estimatedMinutes: false,
+  totalAttempts: false,
   totalQuestions: false,
+  submissionMethods: false,
   rubric: false,
   maxScore: false,
 };
@@ -41,8 +48,11 @@ export const FIELD_IDS: Record<FieldName, string> = {
   dueAt: "assignment-due-picker",
   classId: "assignment-class-trigger",
   classLabel: "assignment-class-trigger",
+  accessCode: "assignment-access-code",
   estimatedMinutes: "assignment-estimated",
+  totalAttempts: "assignment-total-attempts",
   totalQuestions: "assignment-total-questions",
+  submissionMethods: "assignment-submission-methods",
   rubric: "assignment-rubric",
   maxScore: "assignment-max-score",
 };

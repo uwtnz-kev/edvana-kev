@@ -14,6 +14,7 @@ import {
   updateSubmissionScore,
 } from "@/dashboard/teacher/components/grades";
 import { TEACHER_ROUTES } from "@/dashboard/teacher/routes";
+import { buildGradesWorkspaceRoute } from "../gradesViewHelpers";
 
 export function useGradeItemSubmissionsState() {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ export function useGradeItemSubmissionsState() {
   const classRoster = useMemo(() => !lockedClass ? [] : getClassRosterByClass(lockedClass), [lockedClass]);
   return {
     activeTab, editingError, editingScore, editingSubmissionId, item, itemId, notSubmittedRows, search, subjectName, subjectTheme, submittedCount: allSubmissions.filter((s) => s.status === "submitted" || s.status === "graded").length, submittedRows, type, notSubmittedCount: Math.max(classRoster.length - allSubmissions.length, 0),
-    backToWorkspace: () => navigate(`${TEACHER_ROUTES.GRADES_WORKSPACE}${location.search}`),
+    backToWorkspace: () => navigate(buildGradesWorkspaceRoute(subjectId, type)),
     openDetails: (submissionId: string) => navigate(`${TEACHER_ROUTES.GRADES_WORKSPACE}/${itemId}/submissions/${submissionId}${location.search}`),
     setActiveTab,
     setEditingError,

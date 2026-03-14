@@ -13,16 +13,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export type QuizStatusFilter = "all" | "draft" | "published";
-export type QuizSort = "all" | "ongoing" | "already_closed";
+export type QuizStatusFilter = "all" | "draft" | "published" | "closed";
 
 type Props = {
   search: string;
   statusFilter: QuizStatusFilter;
-  sort: QuizSort;
   onSearchChange: (value: string) => void;
   onStatusFilterChange: (value: QuizStatusFilter) => void;
-  onSortChange: (value: QuizSort) => void;
   disabled?: boolean;
 };
 
@@ -30,19 +27,18 @@ const statusOptions: Array<{ value: QuizStatusFilter; label: string }> = [
   { value: "all", label: "All status" },
   { value: "draft", label: "Draft" },
   { value: "published", label: "Published" },
+  { value: "closed", label: "Closed" },
 ];
 
 export function TeacherQuizControls({
   search,
   statusFilter,
-  sort,
   onSearchChange,
   onStatusFilterChange,
-  onSortChange,
   disabled = false,
 }: Props) {
   return (
-    <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-4 transition-all duration-300 hover:bg-white/20 hover:shadow-md">
+    <div className="teacher-panel-surface rounded-2xl p-4 teacher-panel-hover hover:shadow-md">
       <div className="flex flex-col lg:flex-row lg:items-center gap-3">
         <div className="flex items-center gap-2 text-white/80">
           <SlidersHorizontal className="h-4 w-4 text-teal-600" />
@@ -77,23 +73,12 @@ export function TeacherQuizControls({
               ))}
             </SelectContent>
           </Select>
-
-          <Select value={sort} onValueChange={(value) => onSortChange(value as QuizSort)} disabled={disabled}>
-            <SelectTrigger className="sm:w-44 bg-white/10 border-white/10 backdrop-blur-xl rounded-2xl text-white">
-              <SelectValue placeholder="Sort" />
-            </SelectTrigger>
-            <SelectContent className="bg-white/10 border-white/10 backdrop-blur-xl text-white rounded-2xl">
-              <SelectItem value="all" className="focus:bg-white/10">All</SelectItem>
-              <SelectItem value="ongoing" className="focus:bg-white/10">Ongoing Assignments</SelectItem>
-              <SelectItem value="already_closed" className="focus:bg-white/10">Already Closed</SelectItem>
-            </SelectContent>
-          </Select>
-
         </div>
       </div>
     </div>
   );
 }
+
 
 
 

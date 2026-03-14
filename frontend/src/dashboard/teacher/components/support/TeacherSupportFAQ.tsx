@@ -12,8 +12,8 @@ export default function TeacherSupportFAQ() {
 
   return (
     <div className="rounded-2xl border border-white/15 bg-white/10 p-6 backdrop-blur-xl shadow-sm">
-      <h2 className="text-xl font-semibold text-[#3B240F]">Quick help</h2>
-      <p className="text-[#3B240F]/70 text-sm mt-1">Common teacher questions and fixes</p>
+      <h2 className="text-xl font-semibold text-white">Quick help</h2>
+      <p className="mt-1 text-sm text-[var(--text-secondary)]">Common teacher questions and fixes</p>
 
       <div className="mt-4 space-y-3">
         {faqs.map((f, idx) => {
@@ -24,10 +24,10 @@ export default function TeacherSupportFAQ() {
                 onClick={() => setOpen((p) => (p === idx ? null : idx))}
                 className="w-full flex items-center justify-between p-4 text-left transition-colors duration-200 hover:bg-white/15"
               >
-                <span className="text-[#3B240F] font-medium">{f.q}</span>
-                <ChevronDown className={`h-4 w-4 text-[#3B240F]/70 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+                <span className="font-medium text-white">{f.q}</span>
+                <ChevronDown className={`h-4 w-4 text-[var(--text-secondary)] transition-transform ${isOpen ? "rotate-180" : ""}`} />
               </button>
-              {isOpen && <div className="px-4 pb-4 text-[#3B240F]/70 text-sm">{f.a}</div>}
+              {isOpen && <div className="px-4 pb-4 text-sm text-[var(--text-secondary)]">{f.a}</div>}
             </div>
           );
         })}

@@ -2,9 +2,12 @@
 import { TeacherAssignmentsHeader, TeacherAssignmentsHome, TeacherAssignmentsSubjectSidebar } from "@/dashboard/teacher/components/assignments";
 import type { useAssignmentsWorkspaceState } from "./useAssignmentsWorkspaceState";
 
-type Props = { workspace: ReturnType<typeof useAssignmentsWorkspaceState> };
+type Props = {
+  workspace: ReturnType<typeof useAssignmentsWorkspaceState>;
+  onBackToClassEntry: () => void;
+};
 
-export function AssignmentsWorkspaceHeader({ workspace }: Props) {
+export function AssignmentsWorkspaceHeader({ workspace, onBackToClassEntry }: Props) {
   return (
     <div className="flex w-full gap-6 overflow-x-hidden">
       {!workspace.selectedSubject ? (
@@ -13,7 +16,7 @@ export function AssignmentsWorkspaceHeader({ workspace }: Props) {
             <TeacherAssignmentsSubjectSidebar subjects={workspace.subjects} selectedSubjectId={workspace.selectedSubjectId} onSelectSubject={workspace.setSelectedSubjectId} />
           </aside>
           <section className="flex-1 min-w-0 space-y-4">
-            <TeacherAssignmentsHeader title="Assignments" subtitle="Choose a subject from the sidebar to manage assignments" subjectId={null} showBack={false} showCreate={false} onBack={workspace.onBack} canCreate={false} onCreate={workspace.onCreate} />
+            <TeacherAssignmentsHeader title="Assignments" subtitle="Choose a subject from the sidebar to manage assignments" subjectId={null} showBack onBack={onBackToClassEntry} showCreate={false} canCreate={false} onCreate={workspace.onCreate} />
             <TeacherAssignmentsHome />
           </section>
         </>

@@ -21,6 +21,7 @@ export function getQuizStats(): QuizStatsSummary {
     total: items.length,
     drafts: items.filter((item) => item.status === "draft").length,
     published: items.filter((item) => item.status === "published").length,
+    closed: items.filter((item) => item.status === "closed").length,
     totalQuestions: items.reduce((sum, item) => sum + item.totalQuestions, 0),
     dueSoon,
   };

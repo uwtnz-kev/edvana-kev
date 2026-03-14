@@ -2,7 +2,9 @@
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { seedClasses2, updateAssignment, type AssignmentAttachment } from "@/dashboard/teacher/components/assignments";
-import { ensureQuestionsForBuilderFromText, getQuestionsTextForBuilder } from "@/dashboard/teacher/components/questions/questionsStore";
+import { clearQuestionsForBuilder, ensureQuestionsForBuilderFromText, getQuestionsTextForBuilder } from "@/dashboard/teacher/components/questions/questionsStore";
+import { getSubjectIdByName } from "@/dashboard/teacher/components/shared/subjectTheme";
+import { getQuestionBuilderPersistenceValues, requiresQuestionBuilder, type SubmissionMethod } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
 import { ALL_TOUCHED, buildAttachmentId, FIELD_IDS, INITIAL_TOUCHED, toInitialValues } from "./assignmentEditHelpers";
 import { buildAssignmentEditErrors, canSaveAssignmentEdit } from "./assignmentEditValidation";
 import type { FieldName, TeacherAssignmentEditFormProps, TouchedState } from "./assignmentEditTypes";
@@ -15,6 +17,7 @@ export function useTeacherAssignmentEditForm({ assignment, onSaved }: Pick<Teach
   const [attachments, setAttachments] = useState<AssignmentAttachment[]>(() => [...(assignment.attachments ?? [])]);
   const [isQuestionsPreviewOpen, setIsQuestionsPreviewOpen] = useState(false);
   const attachmentsInputRef = useRef<HTMLInputElement | null>(null);
+  const previousQuestionCountRef = useRef(String(assignment.totalQuestions || 10));
   const errors = useMemo(() => buildAssignmentEditErrors(values), [values]);
 
   useEffect(() => {
@@ -28,6 +31,19 @@ export function useTeacherAssignmentEditForm({ assignment, onSaved }: Pick<Teach
   const onFieldChange = (name: FieldName, value: string) => setValues((prev) => ({ ...prev, [name]: value }));
   const onFieldBlur = (name: FieldName) => setTouched((prev) => ({ ...prev, [name]: true }));
   const showError = (name: FieldName) => touched[name] && Boolean(errors[name]);
+  const onSubmissionMethodsChange = (methods: SubmissionMethod[]) => {
+    const nextRequiresBuilder = requiresQuestionBuilder(methods);
+    setValues((prev) => {
+      const currentRequiresBuilder = requiresQuestionBuilder(prev.submissionMethods);
+      if (currentRequiresBuilder && !nextRequiresBuilder && prev.totalQuestions !== "0") previousQuestionCountRef.current = prev.totalQuestions;
+      return {
+        ...prev,
+        submissionMethods: methods,
+        totalQuestions: nextRequiresBuilder ? (prev.totalQuestions === "0" ? previousQuestionCountRef.current : prev.totalQuestions) : "0",
+      };
+    });
+    setTouched((prev) => ({ ...prev, submissionMethods: true }));
+  };
 
   const onClassChange = (classId: string) => {
     const selectedClass = seedClasses2.find((item) => item.id === classId) ?? null;
@@ -45,12 +61,15 @@ export function useTeacherAssignmentEditForm({ assignment, onSaved }: Pick<Teach
   const onSave = () => {
     if (!canSaveAssignmentEdit(errors)) return markInvalidFields(errors, setTouched);
     const dueDate = new Date(values.dueAt);
+    const accessCode = values.accessCode.trim() || undefined;
     const maxScore = values.maxScore.trim() ? Number(values.maxScore.trim()) : undefined;
-    const updated = updateAssignment(assignment.id, { title: values.title.trim(), classId: values.classId, classLabel: values.classLabel, dueAt: Number.isNaN(dueDate.getTime()) ? assignment.dueAt : dueDate.toISOString(), estimatedMinutes: Number(values.estimatedMinutes), totalQuestions: Number(values.totalQuestions), instructions: values.instructions.trim(), questionsText: values.questionsText.trim() || undefined, attachments: attachments.length ? attachments : undefined, rubric: values.rubric.trim() || undefined, maxScore: typeof maxScore === "number" && Number.isFinite(maxScore) ? maxScore : undefined });
+    const questionBuilderValues = getQuestionBuilderPersistenceValues(values.submissionMethods, values.questionsText, values.totalQuestions);
+    if (!requiresQuestionBuilder(values.submissionMethods)) clearQuestionsForBuilder("assignment", assignment.id);
+    const updated = updateAssignment(assignment.id, { title: values.title.trim(), classId: values.classId, classLabel: values.classLabel, dueAt: Number.isNaN(dueDate.getTime()) ? assignment.dueAt : dueDate.toISOString(), estimatedMinutes: Number(values.estimatedMinutes), totalAttempts: Number(values.totalAttempts), totalQuestions: questionBuilderValues.totalQuestions, submissionMethods: values.submissionMethods, instructions: values.instructions.trim(), questionsText: questionBuilderValues.questionsText, attachments: attachments.length ? attachments : undefined, rubric: values.rubric.trim() || undefined, maxScore: typeof maxScore === "number" && Number.isFinite(maxScore) ? maxScore : undefined, accessCode });
     if (updated) onSaved();
   };
 
-  return { attachments, attachmentsInputRef, errors, isQuestionsPreviewOpen, onClassChange, onFieldBlur, onFieldChange, onOpenQuestionBuilder: () => { ensureQuestionsForBuilderFromText("assignment", assignment.id, values.questionsText); navigate(`/dashboard/teacher/questions/edit/${assignment.id}?type=assignment`, { state: { originPath: `${location.pathname}${location.search}`, originState: location.state, parentType: "assignment", mode: "edit", itemId: assignment.id } }); }, onPickAttachments, onRemoveAttachment: (id: string) => setAttachments((prev) => prev.filter((item) => item.id !== id)), onClearAttachments: () => setAttachments([]), onSave, setIsQuestionsPreviewOpen, showError, touched, values };
+  return { attachments, attachmentsInputRef, errors, isQuestionsPreviewOpen, onClassChange, onFieldBlur, onFieldChange, onOpenQuestionBuilder: () => { if (!requiresQuestionBuilder(values.submissionMethods)) return; ensureQuestionsForBuilderFromText("assignment", assignment.id, values.questionsText); navigate(`/dashboard/teacher/questions/edit/${assignment.id}?type=assignment`, { state: { originPath: `${location.pathname}${location.search}`, originState: location.state, parentType: "assignment", mode: "edit", itemId: assignment.id, subjectId: getSubjectIdByName(assignment.subject) ?? undefined } }); }, onPickAttachments, onRemoveAttachment: (id: string) => setAttachments((prev) => prev.filter((item) => item.id !== id)), onClearAttachments: () => setAttachments([]), onSave, onSubmissionMethodsChange, requiresQuestionBuilder: requiresQuestionBuilder(values.submissionMethods), setIsQuestionsPreviewOpen, showError, touched, values };
 }
 
 // Marks invalid fields and scrolls the earliest failing input into view.

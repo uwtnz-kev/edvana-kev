@@ -23,7 +23,7 @@ export default function MessageDetailsView() {
           >
             Back to Messages
           </Button>
-          <p className="mt-6 text-sm text-[#6B4F3A]">Message thread not found.</p>
+          <p className="mt-6 text-sm text-[var(--text-secondary)]">Message thread not found.</p>
         </section>
       </div>
     );
@@ -33,7 +33,7 @@ export default function MessageDetailsView() {
     <div className="space-y-6 px-8 pt-8">
       <MessagesHeader subjectId={state.subjectId} />
 
-      <section className="rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md">
+      <section className="rounded-2xl teacher-panel-surface">
         <MessageDetailsHeader state={state} />
         <MessageThreadBody messages={state.messages} />
         <MessageReplyComposer state={state} />
@@ -41,3 +41,5 @@ export default function MessageDetailsView() {
     </div>
   );
 }
+
+

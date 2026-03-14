@@ -29,7 +29,7 @@ export default function ParentFilterBar({
   classes,
 }: Props) {
   return (
-    <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-3 transition-colors duration-200 hover:bg-white/20">
+    <div className="teacher-panel-surface rounded-2xl p-3 teacher-panel-hover">
       <div className="flex flex-col lg:flex-row lg:items-center gap-3">
         <div className="flex items-center gap-2 text-white/80">
           <SlidersHorizontal className="h-4 w-4 text-teal-600" />
@@ -48,8 +48,8 @@ export default function ParentFilterBar({
         </div>
 
         <GlassSelect value={selectedClass} onValueChange={onClassChange}>
-          <GlassSelectTrigger className="h-11 w-full sm:w-[170px] text-sm">
-            <GlassSelectValue placeholder="All classes" />
+          <GlassSelectTrigger className="h-11 w-full text-sm text-white hover:text-white [&>span]:text-white [&>svg]:text-white sm:w-[170px]">
+            <GlassSelectValue className="text-white" placeholder="All classes" />
           </GlassSelectTrigger>
           <GlassSelectContent>
             {classes.map((className) => (
@@ -63,6 +63,7 @@ export default function ParentFilterBar({
     </div>
   );
 }
+
 
 
 

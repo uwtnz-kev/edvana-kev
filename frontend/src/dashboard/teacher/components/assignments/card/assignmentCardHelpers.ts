@@ -1,4 +1,5 @@
 // Provides formatting and badge helpers for the teacher assignment card.
+import { getAssessmentStatusBadgeClass } from "@/dashboard/teacher/components/shared/assessment/assessmentVisualStyles";
 import { getAssignmentStatusLabel } from "../assignmentstore";
 import type { TeacherAssignment } from "../AssignmentsTypes";
 
@@ -9,9 +10,7 @@ export function formatAssignmentDate(dateISO: string) {
 }
 
 export function getAssignmentStatusClass(status: TeacherAssignment["status"]) {
-  if (status === "published") return "bg-teal-500/20 border-teal-500/30 text-teal-700";
-  if (status === "archived") return "bg-red-400/20 border-red-400/30 text-red-700";
-  return "bg-amber-400/20 border-amber-400/30 text-amber-700";
+  return getAssessmentStatusBadgeClass(status);
 }
 
 export function getAssignmentStatusChipLabel(status: TeacherAssignment["status"]) {

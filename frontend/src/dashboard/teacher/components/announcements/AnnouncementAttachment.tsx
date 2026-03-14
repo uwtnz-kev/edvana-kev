@@ -14,9 +14,9 @@ type Props = {
 export function AnnouncementAttachment({ value, onChange }: Props) {
   return (
     <div className="space-y-3">
-      <label className="text-sm font-medium text-[#3B240F]">Attachment</label>
-      <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-dashed border-[#3B240F]/20 bg-white/10 p-4 text-[#3B240F]">
-        <Upload className="h-4 w-4 text-[#7A5A3A]" />
+      <label className="text-sm font-medium text-white">Attachment</label>
+      <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-dashed border-white/20 bg-white/10 p-4 text-white">
+        <Upload className="h-4 w-4 text-white/70" />
         <span className="text-sm">{value ? "Replace attachment" : "Upload file"}</span>
         <input
           type="file"
@@ -28,7 +28,7 @@ export function AnnouncementAttachment({ value, onChange }: Props) {
         />
       </label>
       {value ? (
-        <div className="flex items-center gap-2 text-sm text-[#3B240F]/75">
+        <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
           <Paperclip className="h-4 w-4" />
           <span>{value.name}</span>
         </div>

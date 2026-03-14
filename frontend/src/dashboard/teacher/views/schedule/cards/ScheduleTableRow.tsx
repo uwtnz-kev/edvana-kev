@@ -8,7 +8,7 @@ type Props = { dayOrder: string[]; index: number; timeSlot: string; timetable: S
 export function ScheduleTableRow({ dayOrder, index, timeSlot, timetable }: Props) {
   return (
     <tr className={index % 2 === 0 ? "bg-white/5" : "bg-transparent"}>
-      <td className="border-r border-white/10 px-3 py-3 font-medium text-[#3B240F]/80">
+      <td className="border-r border-white/10 px-3 py-3 font-medium text-white">
         <div className="flex items-center gap-2">
           <Clock className="h-3.5 w-3.5 text-[#1EA896]" />
           <span className="text-xs leading-tight">{timeSlot}</span>
@@ -32,3 +32,4 @@ export function ScheduleTableRow({ dayOrder, index, timeSlot, timetable }: Props
     </tr>
   );
 }
+

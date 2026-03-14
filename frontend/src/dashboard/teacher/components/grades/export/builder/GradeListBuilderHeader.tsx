@@ -12,8 +12,8 @@ export function GradeListBuilderHeader({ listName }: Props) {
         <Users className="h-5 w-5 text-white" />
       </div>
       <div>
-        <p className="text-sm font-medium text-[#3B240F]">New grade list</p>
-        <p className="text-xs text-[#6B4F3A] truncate max-w-[360px]">{listName}</p>
+        <p className="text-sm font-medium text-white">New grade list</p>
+        <p className="max-w-[360px] truncate text-xs text-[var(--text-secondary)]">{listName}</p>
       </div>
     </div>
   );

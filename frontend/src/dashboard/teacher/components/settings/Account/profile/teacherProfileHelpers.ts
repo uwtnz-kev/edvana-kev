@@ -21,14 +21,14 @@ type ProfileField = {
 export function getTeacherProfileFields(profile: TeacherProfile): [ProfileField[], ProfileField[]] {
   return [
     [
-      { backgroundClass: "bg-emerald-500/20", icon: User, iconClass: "text-emerald-700", label: "Full Name", value: profile.fullName },
-      { backgroundClass: "bg-blue-500/20", icon: Mail, iconClass: "text-blue-700", label: "Email Address", value: profile.email },
-      { backgroundClass: "bg-red-500/20", icon: GraduationCap, iconClass: "text-red-600", label: "Role", value: profile.role },
-      { backgroundClass: "bg-purple-500/20", icon: BookOpen, iconClass: "text-purple-700", label: "Subjects", value: profile.subjects },
+      { backgroundClass: "bg-emerald-500/15", icon: User, iconClass: "text-emerald-300", label: "Full Name", value: profile.fullName },
+      { backgroundClass: "bg-sky-500/15", icon: Mail, iconClass: "text-sky-300", label: "Email Address", value: profile.email },
+      { backgroundClass: "bg-amber-500/15", icon: GraduationCap, iconClass: "text-amber-300", label: "Role", value: profile.role },
+      { backgroundClass: "bg-fuchsia-500/15", icon: BookOpen, iconClass: "text-fuchsia-300", label: "Subjects", value: profile.subjects },
     ],
     [
-      { backgroundClass: "bg-cyan-500/20", icon: Users, iconClass: "text-cyan-700", label: "Classes", value: profile.classes },
-      { backgroundClass: "bg-amber-500/20", icon: School, iconClass: "text-amber-700", label: "School Name", value: profile.schoolName },
+      { backgroundClass: "bg-indigo-500/15", icon: Users, iconClass: "text-indigo-300", label: "Classes", value: profile.classes },
+      { backgroundClass: "bg-orange-500/15", icon: School, iconClass: "text-orange-300", label: "School Name", value: profile.schoolName },
     ],
   ];
 }

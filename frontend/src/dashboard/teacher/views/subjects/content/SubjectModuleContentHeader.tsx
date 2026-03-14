@@ -22,8 +22,8 @@ export function SubjectModuleContentHeader({ state }: Props) {
             <BookOpen className={`h-6 w-6 ${state.theme.iconClass}`} />
           </div>
           <div>
-            <h1 className="text-2xl font-semibold text-[#3B240F]">{state.pageTitle}</h1>
-            <p className="mt-1 text-[#3B240F]/70">
+            <h1 className="text-2xl font-semibold text-[var(--text-primary)]">{state.pageTitle}</h1>
+            <p className="mt-1 text-[var(--text-secondary)]">
               Subject: {state.subjectName}
               {state.module ? ` | Module: ${state.module.title}` : ""}
             </p>
@@ -33,3 +33,4 @@ export function SubjectModuleContentHeader({ state }: Props) {
     </header>
   );
 }
+

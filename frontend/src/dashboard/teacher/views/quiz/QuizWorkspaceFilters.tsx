@@ -11,10 +11,8 @@ export function QuizWorkspaceFilters({ workspace }: Props) {
       <TeacherQuizControls
         search={workspace.search}
         statusFilter={workspace.statusFilter}
-        sort={workspace.sort}
         onSearchChange={workspace.setSearch}
         onStatusFilterChange={workspace.setStatusFilter}
-        onSortChange={workspace.setSort}
         disabled={false}
       />
     </>

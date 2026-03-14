@@ -18,7 +18,7 @@ export function getSubjectIconTheme(key: string): SubjectIconTheme {
   return {
     bgClass: theme.bgClass,
     iconClass: theme.iconClass,
-    iconOnTintClass: "text-[#3B240F]",
+    iconOnTintClass: "text-white",
     ringClass: theme.ringClass,
   };
 }
@@ -27,7 +27,7 @@ export function getSubjectIconTheme(key: string): SubjectIconTheme {
 export function getSubjectTheme(subjectName: string): SubjectTheme {
   const theme = getNamedSubjectTheme(subjectName);
   return {
-    bg: theme.bgClass.replace("/20", "/5"),
+    bg: theme.bgClass.replace("/15", "/8").replace("/20", "/8"),
     border: (theme.ringClass ?? "ring-blue-500/30").replace("ring-", "border-"),
     iconBg: theme.bgClass,
     iconText: theme.iconClass,
@@ -39,7 +39,7 @@ export function getSubjectThemeById(subjectId: string): SubjectIconTheme {
   return {
     bgClass: theme.bgClass,
     iconClass: theme.iconClass,
-    iconOnTintClass: "text-[#3B240F]",
+    iconOnTintClass: "text-white",
     ringClass: theme.ringClass,
   };
 }

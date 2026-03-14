@@ -31,15 +31,15 @@ export function RecipientSearchResults({ filtered, onSelect, open, selected }: P
                 key={option.value}
                 type="button"
                 onClick={() => onSelect(option)}
-                className="w-full px-3 py-2 text-left flex items-center justify-between text-white/90 hover:bg-white/10"
+                className="flex w-full items-center justify-between px-3 py-2 text-left text-white hover:bg-white/10"
               >
                 <span className="text-sm">{option.label}</span>
-                {selectedOption ? <Check className="h-4 w-4 text-white/70" /> : null}
+                {selectedOption ? <Check className="h-4 w-4 text-[var(--text-secondary)]" /> : null}
               </button>
             );
           })
         ) : (
-          <div className="px-3 py-3 text-sm text-white/60">No matches</div>
+          <div className="px-3 py-3 text-sm text-[var(--text-secondary)]">No matches</div>
         )}
       </div>
     </div>

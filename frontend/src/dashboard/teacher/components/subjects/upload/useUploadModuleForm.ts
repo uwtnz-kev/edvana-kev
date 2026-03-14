@@ -7,7 +7,6 @@ import type { FieldTouchedState } from "./uploadModuleTypes";
 export function useUploadModuleForm() {
   const [moduleTitle, setModuleTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [fileName, setFileName] = useState("");
   const [submodules, setSubmodules] = useState([createEmptySubmodule()]);
   const [touched, setTouched] = useState<FieldTouchedState>({ moduleTitle: false, description: false, submodules: {} });
   const errors = useMemo(() => buildModuleErrors(moduleTitle, description, submodules), [description, moduleTitle, submodules]);
@@ -15,12 +14,10 @@ export function useUploadModuleForm() {
   return {
     description,
     errors,
-    fileName,
     moduleTitle,
     submodules,
     touched,
     setDescription,
-    setFileName,
     setModuleTitle,
     setTouched,
     addSubmodule: () => {

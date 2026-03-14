@@ -13,7 +13,7 @@ export function TeacherScheduleNote() {
           <AlertCircle className="h-5 w-5" />
         </span>
         <div>
-          <p className="text-sm text-[#3B240F]/85">
+          <p className="text-sm text-white">
             <strong>Note:</strong> This schedule is based on the school timetable. If you need changes, contact the school admin.
           </p>
         </div>

@@ -46,21 +46,21 @@ export default function AssessmentItemSearchSelect({
         <Button
           variant="ghost"
           className={cn(
-            "w-full justify-between rounded-2xl bg-white/18 backdrop-blur-xl border border-white/25 hover:bg-white/22 text-[#3B240F] h-12 px-4",
+            "w-full justify-between rounded-2xl bg-white/18 backdrop-blur-xl border border-white/25 hover:bg-white/22 text-white h-12 px-4",
             className
           )}
         >
-          <span className={cn("truncate", selectedLabel ? "text-[#1E3A8A]" : "text-[#6B4F3A]")}>
+          <span className={cn("truncate", selectedLabel ? "text-white" : "text-[var(--text-secondary)]")}>
             {selectedLabel || placeholder}
           </span>
-          <ChevronsUpDown className="h-4 w-4 text-[#6B4F3A]" />
+          <ChevronsUpDown className="h-4 w-4 text-[var(--text-secondary)]" />
         </Button>
       </PopoverTrigger>
 
       <PopoverContent className="w-[--radix-popover-trigger-width] p-2 bg-white/18 backdrop-blur-xl border border-white/25 rounded-2xl">
         <Command>
           <div className="flex items-center gap-2 px-2">
-            <Search className="h-4 w-4 text-[#6B4F3A]" />
+            <Search className="h-4 w-4 text-[var(--text-secondary)]" />
             <CommandInput placeholder="Search..." className="h-10" />
           </div>
 
@@ -80,7 +80,7 @@ export default function AssessmentItemSearchSelect({
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === item.id ? "opacity-100" : "opacity-0"
+                      value === item.id ? "opacity-100 text-[var(--accent-primary)]" : "opacity-0"
                     )}
                   />
                   <span className="truncate">{item.title}</span>

@@ -27,7 +27,6 @@ export function isSubmoduleBlank(submodule: SubmoduleDraft) {
 // Creates the module in the store and returns the route payload used by the page redirect.
 export function saveSubjectModule(
   subjectId: string,
-  fileName: string,
   moduleTitle: string,
   description: string,
   submodules: SubmoduleDraft[]
@@ -36,7 +35,6 @@ export function saveSubjectModule(
   addSubjectModule(subjectId, {
     title: moduleTitle.trim(),
     description: description.trim(),
-    fileName,
     submodules: nonBlankSubmodules.map((submodule) => ({
       title: submodule.title.trim(),
       description: submodule.description.trim(),

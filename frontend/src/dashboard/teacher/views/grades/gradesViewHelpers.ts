@@ -27,3 +27,16 @@ export function isGradesLanding(pathname: string) {
 export function isGradesWorkspace(pathname: string) {
   return pathname === TEACHER_ROUTES.GRADES_WORKSPACE;
 }
+
+export function buildGradesTypeSelectionRoute(subjectId: string | null) {
+  if (!subjectId) return TEACHER_ROUTES.GRADES;
+  const params = new URLSearchParams({ subjectId });
+  return `${TEACHER_ROUTES.GRADES_WORKSPACE}?${params.toString()}`;
+}
+
+export function buildGradesWorkspaceRoute(subjectId: string | null, type: TeacherGradeSelectionType | null) {
+  if (!subjectId) return TEACHER_ROUTES.GRADES;
+  if (!type) return buildGradesTypeSelectionRoute(subjectId);
+  const params = new URLSearchParams({ subjectId, type });
+  return `${TEACHER_ROUTES.GRADES_WORKSPACE}?${params.toString()}`;
+}

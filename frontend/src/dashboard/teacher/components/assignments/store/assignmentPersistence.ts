@@ -16,6 +16,12 @@ function parseAssignments(raw: string | null): TeacherAssignment[] | null {
   }
 }
 
+function mergeSeedAssignments(items: TeacherAssignment[]) {
+  const existingIds = new Set(items.map((item) => item.id));
+  const missingSeedAssignments = seedAssignments.filter((item) => !existingIds.has(item.id));
+  return missingSeedAssignments.length > 0 ? [...items, ...cloneAssignments(missingSeedAssignments)] : items;
+}
+
 export function saveAssignments(items: TeacherAssignment[]): TeacherAssignment[] {
   const next = cloneAssignments(items);
   writeStoredJson(ASSIGNMENTS2_STORAGE_KEY, next);
@@ -26,7 +32,12 @@ export function loadAssignments(): TeacherAssignment[] {
   const storage = getBrowserStorage();
   if (!storage) return cloneAssignments(seedAssignments);
   const parsed = parseAssignments(storage.getItem(ASSIGNMENTS2_STORAGE_KEY));
-  if (parsed && parsed.length > 0) return cloneAssignments(parsed);
+  if (parsed && parsed.length > 0) {
+    const merged = mergeSeedAssignments(parsed);
+    const shouldResave = merged.length !== parsed.length || merged.some((item, index) => item.status !== parsed[index]?.status);
+    if (shouldResave) saveAssignments(merged);
+    return cloneAssignments(merged);
+  }
   const seeded = cloneAssignments(seedAssignments);
   saveAssignments(seeded);
   return seeded;

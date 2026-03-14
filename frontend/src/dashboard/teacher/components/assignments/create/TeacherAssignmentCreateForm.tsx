@@ -21,6 +21,7 @@ export function TeacherAssignmentCreateForm(props: TeacherAssignmentCreateFormPr
         touched={form.touched}
         onFieldChange={form.onFieldChange}
         onFieldBlur={form.onFieldBlur}
+        onSubmissionMethodsChange={form.onSubmissionMethodsChange}
       />
 
       <TeacherAssignmentSchedulingFieldsSection
@@ -29,6 +30,7 @@ export function TeacherAssignmentCreateForm(props: TeacherAssignmentCreateFormPr
         touched={form.touched}
         onFieldChange={form.onFieldChange}
         onFieldBlur={form.onFieldBlur}
+        onSubmissionMethodsChange={form.onSubmissionMethodsChange}
         onClassChange={form.onClassChange}
       />
 
@@ -38,6 +40,7 @@ export function TeacherAssignmentCreateForm(props: TeacherAssignmentCreateFormPr
         touched={form.touched}
         onFieldChange={form.onFieldChange}
         onFieldBlur={form.onFieldBlur}
+        onSubmissionMethodsChange={form.onSubmissionMethodsChange}
       />
 
       <TeacherAssignmentSubmissionSection
@@ -46,6 +49,8 @@ export function TeacherAssignmentCreateForm(props: TeacherAssignmentCreateFormPr
         touched={form.touched}
         onFieldChange={form.onFieldChange}
         onFieldBlur={form.onFieldBlur}
+        onSubmissionMethodsChange={form.onSubmissionMethodsChange}
+        requiresQuestionBuilder={form.requiresQuestionBuilder}
         onOpenPreview={() => form.setIsQuestionsPreviewOpen(true)}
         onOpenQuestionBuilder={form.onOpenQuestionBuilder}
       />

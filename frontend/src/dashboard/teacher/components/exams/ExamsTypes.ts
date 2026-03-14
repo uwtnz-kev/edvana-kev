@@ -3,7 +3,9 @@
  * ----------
  * Defines types used by the teacher dashboard e xa ms feature.
  */
-export type ExamStatus = "draft" | "published";
+import type { SubmissionMethod } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
+
+export type ExamStatus = "draft" | "published" | "closed";
 
 export interface TeacherSubject2 {
   id: string;
@@ -29,11 +31,14 @@ export interface TeacherExam {
   subject: string;
   classId: string;
   classLabel: string;
+  accessCode?: string;
   scheduledAt: string;
   durationMinutes: number;
+  totalAttempts: number;
   status: ExamStatus;
   createdAt: string;
   totalQuestions: number;
+  submissionMethods: SubmissionMethod[];
   maxScore?: number;
   rubric?: string;
   instructions?: string;

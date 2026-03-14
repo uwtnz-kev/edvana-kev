@@ -14,8 +14,8 @@ export function SubjectModuleLessonCard({ state }: Props) {
         </div>
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#1EA896]">Module Content</p>
-          <h2 className="mt-2 text-lg font-semibold text-[#4B2E1F]">{state.contentTitle}</h2>
-          <p className="mt-1 text-sm text-[#4B2E1F]/70">{state.contentDescription}</p>
+          <h2 className="mt-2 text-lg font-semibold text-[var(--text-primary)]">{state.contentTitle}</h2>
+          <p className="mt-1 text-sm text-[var(--text-primary)]/70">{state.contentDescription}</p>
         </div>
       </div>
 
@@ -25,3 +25,4 @@ export function SubjectModuleLessonCard({ state }: Props) {
     </section>
   );
 }
+

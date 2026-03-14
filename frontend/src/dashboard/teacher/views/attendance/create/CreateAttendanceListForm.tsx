@@ -10,7 +10,7 @@ type Props = {
 
 export function CreateAttendanceListForm({ state }: Props) {
   return (
-    <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-6 space-y-6">
+    <div className="teacher-panel-surface rounded-2xl p-6 space-y-6">
       <AttendanceListControls
         classOptions={state.classOptions}
         classValue={state.classValue}
@@ -20,10 +20,15 @@ export function CreateAttendanceListForm({ state }: Props) {
         subjectName={state.createState?.subjectName ?? ""}
       />
       {state.classValue ? <AttendanceRosterTable className={state.classValue} onStatusChange={state.onStatusChange} rows={state.rows} /> : null}
-      <div className="flex items-center justify-end gap-3">
-        <Button type="button" onClick={state.goBackToAttendanceWorkspace} className="bg-white/10 hover:bg-white/20 text-white border border-white/10 rounded-2xl">Cancel</Button>
-        <Button type="button" disabled={!state.canGenerate} onClick={state.onSave} className="bg-white/15 hover:bg-white/30 hover:shadow-sm transition-all duration-200 text-white border border-white/20 rounded-2xl px-6">Save Attendance List</Button>
+      <div className="mt-6 flex justify-end gap-4">
+        <Button type="button" onClick={state.goBackToAttendanceWorkspace} className="bg-white/10 hover:bg-white/20 text-white border border-white/10 rounded-2xl">
+          Cancel
+        </Button>
+        <Button type="button" disabled={!state.canGenerate} onClick={state.onSave} className="bg-white/15 hover:bg-white/30 hover:shadow-sm transition-all duration-200 text-white border border-white/20 rounded-2xl px-6">
+          Save Attendance List
+        </Button>
       </div>
     </div>
   );
 }
+

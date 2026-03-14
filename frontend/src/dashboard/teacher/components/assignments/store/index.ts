@@ -7,6 +7,7 @@ export {
 } from "./assignmentSelectors";
 export {
   archiveAssignment,
+  closeAssignment,
   createAssignment,
   deleteAssignment,
   duplicateAssignment,

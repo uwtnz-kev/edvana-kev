@@ -1,6 +1,6 @@
 // State hook for subject modules loading, expansion, and route context.
 import { useEffect, useMemo, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { getSubjectThemeById } from "@/dashboard/teacher/components/shared";
 import {
   deleteSubjectModule,
@@ -8,6 +8,7 @@ import {
   updateSubjectModuleStatus,
   useSubjectModules,
 } from "@/dashboard/teacher/components/subjects/subjectModulesStore";
+import { appendClassIdToPath, getClassIdFromSearchParams } from "../subjectClassRouting";
 import { getSubjectName, getSubjectTitle, type SubjectModulesRouteState } from "./subjectModulesViewHelpers";
 
 type Params = { subjectId?: string };
@@ -19,7 +20,9 @@ type PendingDeleteTarget =
 export function useSubjectModulesViewState() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const { subjectId = "" } = useParams<Params>();
+  const classId = getClassIdFromSearchParams(searchParams);
   const routeState = (location.state as SubjectModulesRouteState | null) ?? null;
   const theme = getSubjectThemeById(subjectId);
   const subjectName = useMemo(() => getSubjectName(subjectId, routeState), [routeState, subjectId]);
@@ -66,12 +69,13 @@ export function useSubjectModulesViewState() {
     deleteConfirmOpen,
     deleteConfirmTitle:
       pendingDeleteTarget?.type === "module" ? "Delete module?" : "Delete submodule?",
-    goBack: () => navigate("/dashboard/teacher/subjects", { state: { restoreSubjectId: subjectId } }),
+    goBack: () => navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}`, classId)),
+    goToSubjectsSelection: () => navigate(appendClassIdToPath("/dashboard/teacher/subjects", classId)),
     openModule: (moduleId: string) =>
-      navigate(`/dashboard/teacher/subjects/${subjectId}/modules/${moduleId}`, {
+      navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/modules/${moduleId}`, classId), {
         state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null },
       }),
-    openSubmodule: (moduleId: string, submoduleId: string) => navigate(`/dashboard/teacher/subjects/${subjectId}/modules/${moduleId}/submodules/${submoduleId}`, { state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null } }),
+    openSubmodule: (moduleId: string, submoduleId: string) => navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/modules/${moduleId}/submodules/${submoduleId}`, classId), { state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null } }),
     publishModule: (moduleId: string) => updateSubjectModuleStatus(subjectId, moduleId, "published"),
     requestDeleteModule: (moduleId: string) => {
       setPendingDeleteTarget({ type: "module", moduleId });

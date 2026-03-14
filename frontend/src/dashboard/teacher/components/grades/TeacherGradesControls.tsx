@@ -38,10 +38,10 @@ export function TeacherGradesControls({
   disabled = false,
 }: Props) {
   return (
-    <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-4 transition-colors duration-200 hover:bg-white/20">
+    <div className="teacher-panel-surface rounded-2xl p-4 teacher-panel-hover">
       <div className="flex flex-col lg:flex-row lg:items-center gap-4 md:gap-6">
         <div className="flex items-center gap-2 text-white/80">
-          <SlidersHorizontal className="h-4 w-4 text-teal-600" />
+          <SlidersHorizontal className="h-4 w-4 text-[var(--text-secondary)]" />
           <span className="text-sm font-medium">Filters</span>
         </div>
 
@@ -60,7 +60,7 @@ export function TeacherGradesControls({
           </Select>
 
           <div className="relative w-full sm:w-72">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/60" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-secondary)]" />
             <Input
               value={search}
               onChange={(event) => onSearchChange(event.target.value)}
@@ -74,6 +74,7 @@ export function TeacherGradesControls({
     </div>
   );
 }
+
 
 
 

@@ -5,9 +5,9 @@ import type { useGradeSubmissionsState } from "./useGradeSubmissionsState";
 type Props = { state: ReturnType<typeof useGradeSubmissionsState> };
 
 export function GradeSubmissionsTable({ state }: Props) {
-  if (!state.selectedSubject) return <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-8 text-center text-white/80">No subject selected. Go back and choose a subject to review submissions.</div>;
+  if (!state.selectedSubject) return <div className="teacher-panel-surface rounded-2xl p-8 text-center text-white/80">No subject selected. Go back and choose a subject to review submissions.</div>;
   return (
-    <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl overflow-hidden">
+    <div className="teacher-panel-surface rounded-2xl overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-white">
           <thead className="bg-white/10"><tr><th className="px-4 py-3 text-left font-medium">Student</th><th className="px-4 py-3 text-left font-medium">Class</th><th className="px-4 py-3 text-left font-medium">Assessment</th><th className="px-4 py-3 text-left font-medium">Submitted</th><th className="px-4 py-3 text-left font-medium">Status</th><th className="px-4 py-3 text-left font-medium">Score</th></tr></thead>
@@ -18,3 +18,4 @@ export function GradeSubmissionsTable({ state }: Props) {
     </div>
   );
 }
+

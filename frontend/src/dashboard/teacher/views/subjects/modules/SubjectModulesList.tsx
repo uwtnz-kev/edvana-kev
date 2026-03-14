@@ -10,7 +10,7 @@ export function SubjectModulesList({ state }: Props) {
     <>
       <div className="mt-6 flex flex-col gap-6">
         {state.visibleModules.length === 0 ? (
-          <div className="rounded-2xl border border-white/15 bg-white/10 px-5 py-6 text-sm text-[#4B2E1F]/70">
+          <div className="rounded-2xl border border-white/15 bg-white/10 px-5 py-6 text-sm text-[var(--text-primary)]/70">
             No modules available for this subject.
           </div>
         ) : null}
@@ -21,7 +21,6 @@ export function SubjectModulesList({ state }: Props) {
             isExpanded={state.expandedModuleId === module.id}
             onDeleteModule={state.requestDeleteModule}
             onDeleteSubmodule={state.requestDeleteSubmodule}
-            onOpenModule={state.openModule}
             onOpenSubmodule={state.openSubmodule}
             onPublish={state.publishModule}
             onToggle={state.toggleModule}

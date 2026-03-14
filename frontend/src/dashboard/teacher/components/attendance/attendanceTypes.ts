@@ -1,5 +1,5 @@
 // src/dashboard/teacher/components/attendance/attendanceTypes.ts
-export type AttendanceStatus = "present" | "absent";
+export type AttendanceStatus = "present" | "absent" | "late";
 
 export type AttendanceRecord = {
   id: string; // date:studentId
@@ -17,11 +17,22 @@ export type AttendanceRecord = {
   markedAt?: string; // ISO
 };
 
+export type AttendanceSessionSummary = {
+  id: string;
+  title: string;
+  date: string;
+  className: string;
+  subjectName: string;
+  totalStudents: number;
+  presentCount: number;
+  absentCount: number;
+  lateCount: number;
+};
+
 export type AttendanceFilters = {
   query: string;
   classValue: string; // "all" or class name
   subjectValue: string; // "all" or subject name
-  statusValue: "all" | AttendanceStatus;
   date: string; // YYYY-MM-DD
 };
 
@@ -29,6 +40,7 @@ export type AttendanceStats = {
   total: number;
   present: number;
   absent: number;
+  late: number;
 };
 
 export type AttendanceMarkPayload = {

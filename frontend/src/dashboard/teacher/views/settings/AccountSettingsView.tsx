@@ -76,8 +76,8 @@ export default function AccountSettingsView() {
     <div className="p-4 sm:p-6">
       <div className="max-w-2xl mx-auto space-y-6">
         <div className="flex items-center space-x-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/20">
-            <User className="h-6 w-6 text-emerald-700" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/15">
+            <User className="h-6 w-6 text-emerald-300" />
           </div>
           <div>
             <h1 className="text-3xl font-bold text-white">Account Settings</h1>

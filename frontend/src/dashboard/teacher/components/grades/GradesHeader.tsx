@@ -29,10 +29,10 @@ export default function GradesHeader({ subjectId, onSubjectChange }: Props) {
           <BarChart3 className="h-5 w-5 text-white group-hover:scale-110 transition-transform duration-300" />
         </div>
         <div>
-          <h1 className="text-xl font-semibold text-[#3B240F]">
+          <h1 className="text-xl font-semibold text-white">
             Grades
           </h1>
-          <p className="text-sm text-[#6B4F3A]">
+          <p className="text-sm text-[var(--text-secondary)]">
             Track, edit, and review assessments
           </p>
         </div>

@@ -11,15 +11,16 @@ type Props = {
   onEdit: (id: string) => void;
   onPreview: (id: string) => void;
   onPublish: (id: string) => void;
+  onRepublish: () => void;
 };
 
-export function TeacherExamCardActions({ exam, onDelete, onDuplicate, onEdit, onPreview, onPublish }: Props) {
+export function TeacherExamCardActions({ exam, onDelete, onDuplicate, onEdit, onPreview, onPublish, onRepublish }: Props) {
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const publishDisabled = exam.status === "published";
+  const publishDisabled = exam.status === "published" || exam.status === "closed";
 
   return (
     <>
-      <AssessmentCardActions id={exam.id} publishDisabled={publishDisabled} onPreview={onPreview} onDuplicate={onDuplicate} onPublish={onPublish} onEdit={onEdit} onDelete={() => setConfirmOpen(true)} />
+      <AssessmentCardActions id={exam.id} publishDisabled={publishDisabled} showRepublish={exam.status === "closed"} onPreview={onPreview} onDuplicate={onDuplicate} onPublish={onPublish} onEdit={onEdit} onRepublish={onRepublish} onDelete={() => setConfirmOpen(true)} />
       <ConfirmDeleteModal
         open={confirmOpen}
         onOpenChange={setConfirmOpen}

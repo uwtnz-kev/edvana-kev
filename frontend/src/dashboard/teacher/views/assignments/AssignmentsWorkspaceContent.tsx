@@ -16,7 +16,7 @@ export function AssignmentsWorkspaceContent({ workspace }: Props) {
         <AssignmentsWorkspaceFilters workspace={workspace} />
         <AssignmentsWorkspacePagination page={workspace.page} totalPages={workspace.totalPages} onPageChange={workspace.setPage} />
         {workspace.previewAssignment ? (
-          <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-3 flex flex-wrap items-center gap-2 transition-colors duration-200 hover:bg-white/20">
+          <div className="teacher-panel-surface rounded-2xl p-3 flex flex-wrap items-center gap-2 teacher-panel-hover">
             <p className="text-white/60 text-sm mr-2">Actions: {workspace.previewAssignment.title}</p>
             <Button type="button" onClick={() => workspace.onDuplicate(workspace.previewAssignment!.id)} className="bg-white/10 hover:bg-white/20 text-white border border-white/10 rounded-2xl">Duplicate</Button>
             <Button type="button" onClick={() => workspace.onPublish(workspace.previewAssignment!.id)} className="bg-white/10 hover:bg-white/20 text-white border border-white/10 rounded-2xl">Publish</Button>
@@ -28,3 +28,4 @@ export function AssignmentsWorkspaceContent({ workspace }: Props) {
     </div>
   );
 }
+

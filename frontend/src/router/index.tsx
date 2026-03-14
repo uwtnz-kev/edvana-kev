@@ -30,7 +30,11 @@ import { StudentDashboardErrorFallback } from "@/dashboard/student/states/ErrorB
 import TeacherDashboard from "@/dashboard/teacher/TeacherDashboard";
 import TeacherOverview from "@/dashboard/teacher/views/Overview";
 import TeacherParentsView from "@/dashboard/teacher/views/ParentView";
+import SubjectsClassEntryView from "@/dashboard/teacher/views/SubjectsClassEntryView";
 import TeacherSubjectView from "@/dashboard/teacher/views/SubjectView";
+import SubjectFilesView from "@/dashboard/teacher/views/SubjectFilesView";
+import SubjectUploadFilesView from "@/dashboard/teacher/views/SubjectUploadFilesView";
+import SubjectFileViewer from "@/dashboard/teacher/views/subjects/files/SubjectFileViewer";
 import TeacherStudentsView from "@/dashboard/teacher/views/StudentsView";
 import AssignmentsView from "@/dashboard/teacher/views/AssignmentsView";
 import AssignmentsCreateView from "@/dashboard/teacher/views/AssignmentsCreateView";
@@ -48,7 +52,6 @@ import TeacherScheduleView from "@/dashboard/teacher/views/ScheduleView";
 import TeacherSupportView from "@/dashboard/teacher/views/SupportView";
 import TeacherGeneralSettingsView from "@/dashboard/teacher/views/settings/GeneralSettingsView";
 import TeacherAccountSettingsView from "@/dashboard/teacher/views/settings/AccountSettingsView";
-import TeacherSubjectDetailsView from "@/dashboard/teacher/views/SubjectDetailsView";
 import SubjectModuleContentView from "@/dashboard/teacher/views/SubjectModuleContentView";
 import SubjectModulesView from "@/dashboard/teacher/views/SubjectModulesView";
 import SubjectModuleView from "@/dashboard/teacher/views/SubjectModuleView";
@@ -56,6 +59,8 @@ import SubjectUploadModuleView from "@/dashboard/teacher/views/SubjectUploadModu
 import TeacherAttendanceView from "@/dashboard/teacher/views/AttendanceView";
 import CreateAttendanceListView from "@/dashboard/teacher/views/CreateAttendanceListView";
 import AttendanceEditView from "@/dashboard/teacher/views/AttendanceEditView";
+import AttendanceSessionView from "@/dashboard/teacher/views/AttendanceSessionView";
+import AttendanceSessionEditView from "@/dashboard/teacher/views/AttendanceSessionEditView";
 import GradesView from "@/dashboard/teacher/views/GradesView";
 import CreateGradeListView from "@/dashboard/teacher/views/CreateGradeListView";
 import ExportGradesView from "@/dashboard/teacher/views/ExportGradesView";
@@ -150,7 +155,7 @@ export function AppRouter() {
         >
           <Route index element={<TeacherOverview />} />
           <Route path="overview" element={<TeacherOverview />} />
-          <Route path="subjects" element={<TeacherSubjectView />} />
+          <Route path="subjects" element={<SubjectsClassEntryView />} />
           <Route path="students" element={<TeacherStudentsView />} />
           <Route path="assignments">
             <Route index element={<AssignmentsView />} />
@@ -175,6 +180,8 @@ export function AppRouter() {
           <Route path="schedule" element={<TeacherScheduleView />} />
           <Route path="attendance" element={<TeacherAttendanceView />} />
           <Route path="attendance/create" element={<CreateAttendanceListView />} />
+          <Route path="attendance/sessions/:sessionId" element={<AttendanceSessionView />} />
+          <Route path="attendance/sessions/:sessionId/edit" element={<AttendanceSessionEditView />} />
           <Route path="attendance/:attendanceId/edit" element={<AttendanceEditView />} />
           <Route path="grades" element={<GradesView />} />
           <Route path="grades/workspace" element={<GradesView />} />
@@ -193,8 +200,12 @@ export function AppRouter() {
           <Route path="questions/edit/:itemId" element={<QuestionBuilderEditView />} />
           <Route path="support" element={<TeacherSupportView />} />
           <Route path="parents" element={<TeacherParentsView />} />
-          <Route path="subjects/:subjectId" element={<TeacherSubjectDetailsView />} />
+          <Route path="subjects/:subjectId" element={<TeacherSubjectView />} />
           <Route path="subjects/:subjectId/modules" element={<SubjectModulesView />} />
+          <Route path="subjects/:subjectId/files" element={<SubjectFilesView />} />
+          <Route path="subjects/:subjectId/files/folders/:folderId" element={<SubjectFilesView />} />
+          <Route path="subjects/:subjectId/upload-files" element={<SubjectUploadFilesView />} />
+          <Route path="subjects/:subjectId/files/:fileId" element={<SubjectFileViewer />} />
           <Route
             path="subjects/:subjectId/modules/:moduleId/submodules/:submoduleId"
             element={<SubjectModuleContentView />}
@@ -275,6 +286,7 @@ export function AppRouter() {
   );
 }
 
+export default AppRouter;
 
 
 

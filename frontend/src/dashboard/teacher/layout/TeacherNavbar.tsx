@@ -1,5 +1,6 @@
 // Orchestrates the teacher navbar using focused navbar subcomponents.
 import { useNavigate } from "react-router-dom";
+import { teacherDashboardTheme } from "@/dashboard/teacher/theme/teacherDashboardTheme";
 import { useAuth } from "@/context/AuthContext";
 import { useLogoutWithToast } from "@/hooks/useLogoutWithToast";
 import { TeacherNavbarAccountMenu } from "./navbar/TeacherNavbarAccountMenu";
@@ -15,8 +16,8 @@ export default function TeacherNavbar() {
   if (!user) return null;
 
   return (
-    <header className="w-full sticky top-0 z-50 bg-white/20 backdrop-blur-xl border-b border-white/25 shadow-[0_10px_30px_rgba(59,36,15,0.25)]">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <header className={teacherDashboardTheme.surfaces.navbar}>
+      <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <TeacherNavbarBrand />
           <TeacherNavbarContext />

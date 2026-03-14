@@ -44,7 +44,7 @@ export default function AssignmentsEditView() {
   const restoreSubjectId = assignment ? getRestoreSubjectId(location.state, assignment.subject) : null;
 
   const goBack = () => {
-    navigate("/dashboard/teacher/assignments", {
+    navigate({ pathname: "/dashboard/teacher/assignments", search: location.search }, {
       state: { restoreSubjectId: restoreSubjectId ?? undefined },
     });
   };
@@ -52,19 +52,19 @@ export default function AssignmentsEditView() {
   if (!assignment) {
     return (
       <div className="w-full p-4 sm:p-6">
-        <div className="max-w-3xl mx-auto bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center">
+        <div className="max-w-3xl mx-auto teacher-panel-surface rounded-2xl p-6 sm:p-8 text-center">
           <div className="mx-auto h-14 w-14 rounded-2xl bg-teal-500/20 border border-white/20 flex items-center justify-center">
             <ClipboardList className="h-6 w-6 text-teal-700" />
           </div>
-          <h1 className="text-[#3B240F] text-2xl font-semibold mt-4">Assignment not found</h1>
-          <p className="text-[#3B240F]/70 mt-3">
+          <h1 className="mt-4 text-2xl font-semibold text-white">Assignment not found</h1>
+          <p className="text-[var(--text-secondary)] mt-3">
             The assignment may have been deleted or the link is invalid.
           </p>
           <div className="mt-5">
             <Button
               type="button"
-              onClick={() => navigate("/dashboard/teacher/assignments")}
-              className="bg-white/20 hover:bg-white/30 text-[#3B240F] border border-white/20 rounded-2xl"
+              onClick={() => navigate({ pathname: "/dashboard/teacher/assignments", search: location.search })}
+              className="bg-white/20 hover:bg-white/30 text-white border border-white/20 rounded-2xl"
             >
               Back
             </Button>
@@ -92,5 +92,7 @@ export default function AssignmentsEditView() {
     </div>
   );
 }
+
+
 
 

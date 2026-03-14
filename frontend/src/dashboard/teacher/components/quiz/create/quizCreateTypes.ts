@@ -1,5 +1,6 @@
 // Defines the create-form data contracts shared across extracted quiz form sections.
 import type { QuizAttachment } from "@/dashboard/teacher/components/quiz";
+import type { SubmissionMethod } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
 
 export type TeacherQuizCreateFormProps = {
   subjectId: string;
@@ -15,8 +16,11 @@ export type FormValues = {
   dueAt: string;
   classId: string;
   classLabel: string;
+  accessCode: string;
   durationMinutes: string;
+  totalAttempts: string;
   totalQuestions: string;
+  submissionMethods: SubmissionMethod[];
   rubric: string;
   maxScore: string;
 };
@@ -38,6 +42,7 @@ export type QuizFieldProps = {
   touched: TouchedState;
   onFieldChange: (name: FieldName, value: string) => void;
   onFieldBlur: (name: FieldName) => void;
+  onSubmissionMethodsChange: (methods: SubmissionMethod[]) => void;
 };
 
 export type AttachmentSectionProps = {

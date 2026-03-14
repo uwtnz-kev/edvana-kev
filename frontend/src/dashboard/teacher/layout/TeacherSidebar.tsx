@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ensureMessagesSeeded, getUnreadMessagesCount, subscribeMessagesChanged } from "@/dashboard/teacher/components/messages/messagesStore";
+import { teacherDashboardTheme } from "@/dashboard/teacher/theme/teacherDashboardTheme";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/cn";
 import { SidebarCollapseToggle } from "./sidebar/SidebarCollapseToggle";
@@ -34,19 +35,19 @@ export default function TeacherSidebar() {
 
   return (
     <>
-      <Button variant="ghost" size="sm" onClick={sidebar.toggleMobile} className="fixed top-20 left-4 z-[100] rounded-lg border border-white/30 bg-white/25 text-[#3B240F] shadow-[0_10px_30px_rgba(59,36,15,0.25)] hover:border-white/45 hover:bg-white/35 lg:hidden">
-        {sidebar.isMobileOpen ? <X className="h-5 w-5 text-[#3B240F]" /> : <Menu className="h-5 w-5 text-[#3B240F]" />}
+      <Button variant="ghost" size="sm" onClick={sidebar.toggleMobile} className={cn("fixed top-20 left-4 z-[100]", teacherDashboardTheme.nav.mobileToggle, sidebar.isMobileOpen && "bg-[var(--sidebar-item-active)] text-[var(--accent-primary)]")}>
+        {sidebar.isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </Button>
 
-      {sidebar.isMobileOpen ? <div className="fixed inset-0 z-30 bg-black/30 backdrop-blur-sm lg:hidden" onClick={sidebar.closeMobile} /> : null}
+      {sidebar.isMobileOpen ? <div className="fixed inset-0 z-30 bg-black/40 lg:hidden" onClick={sidebar.closeMobile} /> : null}
 
-      <aside className={cn("fixed left-0 top-16 z-40 h-[calc(100vh-4rem)] overflow-hidden rounded-r-xl border-r border-white/25 bg-white/18 shadow-[0_18px_50px_rgba(59,36,15,0.25)] backdrop-blur-xl transition-all duration-300 lg:static lg:top-0 lg:h-full lg:rounded-none", sidebar.isCollapsed ? "lg:w-16" : "lg:w-64", sidebar.isMobileOpen ? "w-64 translate-x-0" : "-translate-x-full lg:translate-x-0")}>
-        <div className="flex h-full max-h-screen flex-col overflow-y-auto">
-          <div className="border-b border-white/25 p-4">
-            {!sidebar.isCollapsed ? <div className="flex items-center justify-between"><h2 className="text-lg font-semibold text-[#3B240F]">My Dashboard</h2><SidebarCollapseToggle isCollapsed={sidebar.isCollapsed} onToggle={sidebar.toggleCollapsed} /></div> : <SidebarCollapseToggle isCollapsed={sidebar.isCollapsed} onToggle={sidebar.toggleCollapsed} />}
+      <aside className={cn(teacherDashboardTheme.surfaces.sidebar, sidebar.isCollapsed ? "lg:w-16" : "lg:w-64", sidebar.isMobileOpen ? "w-64 translate-x-0" : "-translate-x-full lg:translate-x-0")}>
+        <div className="flex h-full min-h-0 flex-col">
+          <div className="shrink-0 border-b border-[var(--topbar-border)] p-4">
+            {!sidebar.isCollapsed ? <div className="flex items-center justify-between"><h2 className="text-lg font-semibold tracking-tight text-[var(--text-primary)]">My Dashboard</h2><SidebarCollapseToggle isCollapsed={sidebar.isCollapsed} onToggle={sidebar.toggleCollapsed} /></div> : <SidebarCollapseToggle isCollapsed={sidebar.isCollapsed} onToggle={sidebar.toggleCollapsed} />}
           </div>
 
-          <nav className="flex-1 space-y-2 overflow-y-auto p-4">
+          <nav className="flex-1 min-h-0 space-y-2 overflow-y-auto p-4">
             <SidebarSection
               items={teacherSidebarItems}
               expandedItems={sidebar.expandedItems}
@@ -59,16 +60,16 @@ export default function TeacherSidebar() {
             />
           </nav>
 
-          <div className="border-t border-white/25 p-4">
+          <div className="shrink-0 border-t border-[var(--topbar-border)] p-4">
             {!sidebar.isCollapsed ? (
               <div className="space-y-1 text-center">
-                <div className="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#7A5A3A] to-[#3B240F] shadow-[0_10px_25px_rgba(59,36,15,0.25)]"><span className="text-xs font-bold text-[#F8F4E1]">E</span></div>
-                <p className="text-xs font-medium text-[#6B4F3A]">Edvana Dashboard</p>
-                <p className="text-xs text-[#6B4F3A]">v1.0.0</p>
+                <div className={`mx-auto flex h-8 w-8 items-center justify-center rounded-full ${teacherDashboardTheme.accents.brand}`}><span className="text-xs font-bold">E</span></div>
+                <p className="text-xs font-medium text-[var(--text-primary)]">Edvana Dashboard</p>
+                <p className="text-xs text-[var(--text-secondary)]">v1.0.0</p>
               </div>
             ) : (
               <div className="flex justify-center">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#7A5A3A] to-[#3B240F] shadow-[0_10px_25px_rgba(59,36,15,0.25)]"><span className="text-xs font-bold text-[#F8F4E1]">E</span></div>
+                <div className={`flex h-8 w-8 items-center justify-center rounded-full ${teacherDashboardTheme.accents.brand}`}><span className="text-xs font-bold">E</span></div>
               </div>
             )}
           </div>

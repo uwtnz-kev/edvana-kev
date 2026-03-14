@@ -11,11 +11,11 @@ export function GradeSubmissionActionsPanel({ state }: Props) {
 
   return (
     <div className="rounded-2xl bg-white/10 border border-white/10 p-4 space-y-4">
-      <h2 className="text-lg font-semibold text-[#3B240F]">Grading Actions</h2>
+      <h2 className="text-lg font-semibold text-[var(--text-primary)]">Grading Actions</h2>
       <div className="flex flex-col sm:flex-row sm:items-center gap-3">
         <div className="flex items-center gap-2">
           <span className="text-sm text-white/80">Total score</span>
-          <Input type="number" min={0} max={state.submission.maxScore} value={state.manualTotal} onChange={(event) => state.setManualTotal(event.target.value)} placeholder={String(state.calculatedTotal)} className="w-24 bg-white/10 border-white/10 text-white placeholder:text-white/60" />
+          <Input type="number" min={0} max={state.submission.maxScore} value={state.manualTotal} onChange={(event) => state.setManualTotal(event.target.value)} placeholder={String(state.calculatedTotal)} className="w-24 bg-white/10 border-white/10 text-white placeholder:text-[var(--text-muted)]" />
           <span className="text-sm text-white/70">/ {state.submission.maxScore}</span>
         </div>
         <Button type="button" onClick={state.saveGrade} className="bg-white/15 hover:bg-white/30 hover:shadow-sm transition-all duration-200 text-white border border-white/20 rounded-2xl">
@@ -26,3 +26,5 @@ export function GradeSubmissionActionsPanel({ state }: Props) {
     </div>
   );
 }
+
+

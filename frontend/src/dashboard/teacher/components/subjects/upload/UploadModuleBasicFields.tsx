@@ -2,8 +2,8 @@
 import { Upload } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import type { SubjectIconTheme } from "@/dashboard/teacher/components/shared/subjectIconTheme";
+import { RichDescriptionTextarea } from "./RichDescriptionTextarea";
 
 type Props = {
   theme: SubjectIconTheme;
@@ -29,20 +29,27 @@ export function UploadModuleBasicFields(props: Props) {
         </div>
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#1EA896]">Subject Module Upload</p>
-          <h2 className="mt-2 text-lg font-semibold text-[#4B2E1F]">{props.subjectTitle}</h2>
-          <p className="mt-1 text-sm text-[#4B2E1F]/70">Add a new module for {props.subjectTitle} by filling out the details below.</p>
+          <h2 className="mt-2 text-lg font-semibold text-white">{props.subjectTitle}</h2>
+          <p className="mt-1 text-sm text-[var(--text-secondary)]">Add a new module for {props.subjectTitle} by filling out the details below.</p>
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="module-title" className="text-[#4B2E1F]">Module title</Label>
-        <Input id="module-title" value={props.moduleTitle} onChange={(event) => props.onTitleChange(event.target.value)} onBlur={props.onTitleBlur} placeholder="Enter module title" className="h-12 rounded-2xl border-white/20 bg-white/10 text-[#4B2E1F] placeholder:text-[#4B2E1F]/50" />
+        <Label htmlFor="module-title" className="text-white">Module title</Label>
+        <Input id="module-title" value={props.moduleTitle} onChange={(event) => props.onTitleChange(event.target.value)} onBlur={props.onTitleBlur} placeholder="Enter module title" className="h-12 rounded-2xl border-white/20 bg-white/10 text-white placeholder:text-white/70" />
         {props.titleTouched && props.titleError ? <p className="mt-1 text-sm font-medium text-red-600">{props.titleError}</p> : null}
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="module-description" className="text-[#4B2E1F]">Description</Label>
-        <Textarea id="module-description" value={props.description} onChange={(event) => props.onDescriptionChange(event.target.value)} onBlur={props.onDescriptionBlur} placeholder="Describe what this module covers" className="min-h-[140px] rounded-2xl border-white/20 bg-white/10 text-[#4B2E1F] placeholder:text-[#4B2E1F]/50" />
+        <Label htmlFor="module-description" className="text-white">Description</Label>
+        <RichDescriptionTextarea
+          id="module-description"
+          value={props.description}
+          onChange={props.onDescriptionChange}
+          onBlur={props.onDescriptionBlur}
+          placeholder="Describe what this module covers. text field supports:link, image URL and  simple HTML."
+          className="min-h-[140px] rounded-2xl border-white/20 bg-white/10 text-white placeholder:text-white/70"
+        />
         {props.descriptionTouched && props.descriptionError ? <p className="mt-1 text-sm font-medium text-red-600">{props.descriptionError}</p> : null}
       </div>
     </>

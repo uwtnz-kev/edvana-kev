@@ -32,7 +32,7 @@ export default function SegmentedTabs({ value, options, onChange }: Props) {
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
               active
                 ? "bg-teal-400/80 text-white shadow-md shadow-teal-400/30"
-                : "bg-transparent text-slate-800 hover:bg-red-200/50"
+                : "bg-transparent text-white/80 hover:bg-white/10 hover:text-white"
             )}
           >
             <span className="block w-full text-center">{option.label}</span>

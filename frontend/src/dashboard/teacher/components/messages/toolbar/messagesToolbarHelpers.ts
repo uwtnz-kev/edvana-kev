@@ -4,7 +4,7 @@ import type { MessageFolder } from "../messagesTypes";
 export type ToolbarOption = { value: string; label: string };
 
 export const iconButtonClass =
-  "h-12 w-12 rounded-xl border border-white/15 bg-white/10 backdrop-blur-md hover:bg-white/15 transition disabled:opacity-40 disabled:hover:bg-white/10";
+  "h-12 w-12 rounded-xl teacher-panel-surface hover:bg-white/15 transition disabled:opacity-40 disabled:hover:bg-white/10";
 
 export const folderItems: ToolbarOption[] = [
   { value: "inbox", label: "Inbox" },
@@ -18,3 +18,4 @@ export const folderItems: ToolbarOption[] = [
 export function toMessageFolder(value: string) {
   return value as MessageFolder;
 }
+

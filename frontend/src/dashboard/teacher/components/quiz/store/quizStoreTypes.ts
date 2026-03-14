@@ -5,6 +5,7 @@ export interface QuizStatsSummary {
   total: number;
   drafts: number;
   published: number;
+  closed: number;
   totalQuestions: number;
   dueSoon: number;
 }

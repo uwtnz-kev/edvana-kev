@@ -28,8 +28,8 @@ export default function TeacherSupportPage({ subjectId = "", subjectName = "" }:
             <HelpCircle className={`h-5 w-5 ${theme.iconClass}`} />
           </div>
           <div>
-            <h1 className="text-2xl font-semibold text-[#3B240F]">Support</h1>
-            <p className="text-[#3B240F]/70 mt-1">
+            <h1 className="text-2xl font-semibold text-white">Support</h1>
+            <p className="mt-1 text-[var(--text-secondary)]">
               Get help, request content, or report issues
               {subjectName ? ` for ${subjectName}` : ""}
             </p>

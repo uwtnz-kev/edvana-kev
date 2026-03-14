@@ -19,7 +19,7 @@ export function TeacherQuizSubjectSidebar({
   onSelectSubject,
 }: Props) {
   return (
-    <aside className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-3">
+    <aside className="teacher-panel-surface rounded-2xl p-3">
       <div className="px-2 pt-1 pb-3">
         <h2 className="text-white text-sm font-semibold">Subjects</h2>
       </div>
@@ -56,5 +56,6 @@ export function TeacherQuizSubjectSidebar({
     </aside>
   );
 }
+
 
 

@@ -1,22 +1,28 @@
 // Trigger button used to open the teacher date-time picker dialog.
+import * as React from "react";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-type Props = {
+type Props = React.ComponentPropsWithoutRef<typeof Button> & {
   disabled: boolean;
   hasValue: boolean;
   label: string;
 };
 
-export function DateTimeTrigger({ disabled, hasValue, label }: Props) {
+export const DateTimeTrigger = React.forwardRef<HTMLButtonElement, Props>(function DateTimeTrigger(
+  { className, disabled, hasValue, label, ...props },
+  ref,
+) {
   return (
     <Button
+      ref={ref}
       type="button"
       disabled={disabled}
-      className="w-full justify-start bg-white/20 hover:bg-white/30 text-[#3B240F] border border-white/20 rounded-2xl disabled:opacity-50"
+      className={["w-full justify-start rounded-2xl border border-white/20 bg-white/20 text-white hover:bg-white/30 disabled:opacity-50", className].filter(Boolean).join(" ")}
+      {...props}
     >
-      <CalendarIcon className="h-4 w-4 mr-2 text-amber-700" />
-      <span className={hasValue ? "text-[#3B240F]" : "text-[#3B240F]/70"}>{label}</span>
+      <CalendarIcon className="h-4 w-4 mr-2 text-[var(--text-secondary)]" />
+      <span className={hasValue ? "text-white" : "text-white/70"}>{label}</span>
     </Button>
   );
-}
+});

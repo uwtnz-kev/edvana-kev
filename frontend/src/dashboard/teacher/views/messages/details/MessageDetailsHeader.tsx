@@ -16,8 +16,8 @@ export function MessageDetailsHeader({ state }: Props) {
       </Button>
       <div className="mt-5 space-y-2">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#1EA896]">{state.thread.courseName}</p>
-        <h1 className="text-2xl font-semibold text-[#3B240F]">{state.thread.subject}</h1>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-[#6B4F3A]">
+        <h1 className="text-2xl font-semibold text-[var(--text-primary)]">{state.thread.subject}</h1>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-[var(--text-secondary)]">
           <span>From: {state.thread.fromName}</span>
           <span>Participants: {getParticipantsLabel(state.thread)}</span>
           <span>{state.thread.dateLabel}</span>
@@ -26,3 +26,4 @@ export function MessageDetailsHeader({ state }: Props) {
     </div>
   );
 }
+

@@ -28,7 +28,7 @@ export default function StudentsHeader({
   const shouldShowTeacherView = !showBack && !showCreate;
 
   return (
-    <header className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl px-6 py-5">
+    <header className="teacher-panel-surface rounded-2xl px-6 py-5">
       <div className={`flex flex-col sm:flex-row sm:items-center gap-4 ${shouldShowTeacherView ? "sm:justify-between" : "sm:justify-start"}`}>
         <div className="flex items-center gap-4">
           {showBack ? (
@@ -45,8 +45,8 @@ export default function StudentsHeader({
             <BookOpen className={`h-6 w-6 ${theme.iconClass}`} />
           </div>
           <div>
-            <h1 className="text-2xl font-semibold text-[#3B240F]">{title}</h1>
-            <p className="text-[#3B240F]/70 mt-1">{subtitle}</p>
+            <h1 className="text-2xl font-semibold text-white">{title}</h1>
+            <p className="mt-1 text-[var(--text-secondary)]">{subtitle}</p>
           </div>
         </div>
 
@@ -64,4 +64,5 @@ export default function StudentsHeader({
     </header>
   );
 }
+
 

@@ -22,7 +22,7 @@ export function attendanceRowsForClass(args: {
     .filter((student) => classOf(student) === args.classValue)
     .map((student) => {
       const id = idOf(student);
-      return { id, name: nameOf(student), className: args.classValue, status: args.statusById[id] ?? "Present" as Status };
+      return { id, name: nameOf(student), className: args.classValue, status: args.statusById[id] ?? "present" as Status };
     })
     .filter((row) => row.id);
 }

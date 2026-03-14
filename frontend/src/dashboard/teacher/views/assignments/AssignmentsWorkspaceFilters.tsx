@@ -11,10 +11,8 @@ export function AssignmentsWorkspaceFilters({ workspace }: Props) {
       <TeacherAssignmentsControls
         search={workspace.search}
         statusFilter={workspace.statusFilter}
-        sort={workspace.sort}
         onSearchChange={workspace.setSearch}
         onStatusFilterChange={workspace.setStatusFilter}
-        onSortChange={workspace.setSort}
         disabled={false}
       />
     </>

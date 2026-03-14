@@ -13,7 +13,7 @@ export function useAttendanceEditState() {
   const record = attendanceId ? getAttendanceById(attendanceId) : null;
   // Restores the subject context when returning to the attendance workspace.
   const restoreSubjectId = record ? resolveRestoreSubjectId(location.state, record.subjectName) : null;
-  const [status, setStatus] = useState<AttendanceStatus>(record?.status ?? "Present");
+  const [status, setStatus] = useState<AttendanceStatus>(record?.status ?? "present");
   const [note, setNote] = useState(record?.note ?? "");
 
   const goBackToAttendanceWorkspace = () => navigate("/dashboard/teacher/attendance", { state: { restoreSubjectId: restoreSubjectId ?? undefined } });

@@ -18,7 +18,7 @@ import {
 import { TEACHER_ROUTES } from "@/dashboard/teacher/routes";
 import { navigateToCreateGradeList } from "./gradesWorkspaceActions";
 import { buildClassOptions, buildWorkspaceStats } from "./gradesWorkspaceDerived";
-import { isGradesLanding, isGradesWorkspace, isSelectionType } from "./gradesViewHelpers";
+import { buildGradesTypeSelectionRoute, buildGradesWorkspaceRoute, isGradesLanding, isGradesWorkspace, isSelectionType } from "./gradesViewHelpers";
 export function useGradesWorkspaceState() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,7 +34,16 @@ export function useGradesWorkspaceState() {
   const previousSubjectId = useRef<string | null>(selectedSubjectId);
   const isLanding = isGradesLanding(location.pathname);
   const isWorkspace = isGradesWorkspace(location.pathname);
-  const selectedSubject = useMemo(() => subjects.find((subject) => subject.id === selectedSubjectId) ?? null, [subjects, selectedSubjectId]);
+  const query = useMemo(() => new URLSearchParams(location.search), [location.search]);
+  const querySubjectId = query.get("subjectId");
+  const queryType = query.get("type");
+  const routeSelectedGradeType = queryType && isSelectionType(queryType) ? queryType : null;
+  const routeSelectedSubjectId = useMemo(() => subjects.some((subject) => subject.id === querySubjectId) ? querySubjectId : null, [querySubjectId, subjects]);
+  const hasInvalidWorkspaceSubject = isWorkspace && !routeSelectedSubjectId;
+  const hasInvalidWorkspaceType = isWorkspace && Boolean(queryType) && !routeSelectedGradeType;
+  const activeSubjectId = isWorkspace ? routeSelectedSubjectId : selectedSubjectId;
+  const activeGradeType = isWorkspace ? routeSelectedGradeType : null;
+  const selectedSubject = useMemo(() => subjects.find((subject) => subject.id === activeSubjectId) ?? null, [activeSubjectId, subjects]);
   const selectedSubjectName = selectedSubject?.name ?? null;
 
   useEffect(() => {
@@ -45,8 +54,23 @@ export function useGradesWorkspaceState() {
   }, [isLanding]);
 
   useEffect(() => {
-    if (isWorkspace && !selectedGradeType) navigate(TEACHER_ROUTES.GRADES, { replace: true });
-  }, [isWorkspace, navigate, selectedGradeType]);
+    if (!isWorkspace) return;
+    if (!routeSelectedSubjectId) {
+      navigate(TEACHER_ROUTES.GRADES, { replace: true });
+      return;
+    }
+    if (queryType && !routeSelectedGradeType) {
+      navigate(buildGradesTypeSelectionRoute(routeSelectedSubjectId), { replace: true });
+      return;
+    }
+    if (selectedSubjectId !== routeSelectedSubjectId) {
+      setSelectedSubjectId(routeSelectedSubjectId);
+    }
+    if (selectedGradeType !== routeSelectedGradeType) {
+      setSelectedGradeType(routeSelectedGradeType);
+      setSelectedGradeTypeState(routeSelectedGradeType);
+    }
+  }, [buildGradesTypeSelectionRoute, isWorkspace, navigate, queryType, routeSelectedGradeType, routeSelectedSubjectId, selectedGradeType, selectedSubjectId]);
 
   useEffect(() => {
     const state = location.state as TeacherGradesRestoreState | null;
@@ -54,13 +78,25 @@ export function useGradesWorkspaceState() {
       setSelectedSubjectId(null);
       setSearch(defaultGradesFilters.search);
       setClassValue(defaultGradesFilters.classValue);
-      navigate(".", { replace: true, state: null });
+      navigate(
+        {
+          pathname: location.pathname,
+          search: location.search,
+        },
+        { replace: true, state: null },
+      );
       return;
     }
     if (!state?.restoreSubjectId) return;
     setSelectedSubjectId(subjects.some((subject) => subject.id === state.restoreSubjectId) ? state.restoreSubjectId : null);
-    navigate(".", { replace: true, state: null });
-  }, [location.state, navigate, subjects]);
+    navigate(
+      {
+        pathname: location.pathname,
+        search: location.search,
+      },
+      { replace: true, state: null },
+    );
+  }, [location.pathname, location.search, location.state, navigate, subjects]);
 
   useEffect(() => {
     if (previousSubjectId.current === selectedSubjectId) return;
@@ -70,12 +106,12 @@ export function useGradesWorkspaceState() {
   }, [selectedSubjectId]);
 
   useEffect(() => {
-    saveGradesWorkspace({ selectedSubjectId, selectedGradeType, filters: { search, assessmentType: selectedGradeType ?? "all", classValue, assessmentItemId: "all" } });
-  }, [classValue, search, selectedGradeType, selectedSubjectId]);
+    saveGradesWorkspace({ selectedSubjectId: activeSubjectId, selectedGradeType: activeGradeType, filters: { search, assessmentType: activeGradeType ?? "all", classValue, assessmentItemId: "all" } });
+  }, [activeGradeType, activeSubjectId, classValue, search]);
 
   const subjectClasses = useMemo(() => (selectedSubjectName ? SUBJECT_CLASS_MAP[selectedSubjectName] ?? [] : []), [selectedSubjectName]);
-  const allPublishedItemsForSubject = useMemo(() => getPublishedItems(selectedGradeType, selectedSubjectId, "all", ""), [selectedGradeType, selectedSubjectId, version]);
-  const publishedItems = useMemo(() => getPublishedItems(selectedGradeType, selectedSubjectId, classValue, search), [classValue, search, selectedGradeType, selectedSubjectId, version]);
+  const allPublishedItemsForSubject = useMemo(() => getPublishedItems(activeGradeType, activeSubjectId, "all", ""), [activeGradeType, activeSubjectId, version]);
+  const publishedItems = useMemo(() => getPublishedItems(activeGradeType, activeSubjectId, classValue, search), [activeGradeType, activeSubjectId, classValue, search, version]);
   const classOptions = useMemo(() => buildClassOptions(allPublishedItemsForSubject, subjectClasses), [allPublishedItemsForSubject, subjectClasses]);
   const stats = useMemo(() => buildWorkspaceStats(publishedItems), [publishedItems]);
   return {
@@ -93,27 +129,46 @@ export function useGradesWorkspaceState() {
       setVersion((current) => current + 1);
     },
     deleteConfirmOpen,
+    hasInvalidWorkspaceSubject,
+    hasInvalidWorkspaceType,
     isLanding,
-    onBack: () => { resetGradesFlow(); navigate(TEACHER_ROUTES.GRADES); },
-    onCreate: () => navigateToCreateGradeList(navigate, selectedSubjectId, selectedGradeType),
+    onBack: () => {
+      if (isWorkspace && activeGradeType) {
+        navigate(buildGradesTypeSelectionRoute(activeSubjectId));
+        return;
+      }
+      resetGradesFlow();
+      setSelectedSubjectId(null);
+      setSelectedGradeTypeState(null);
+      navigate(TEACHER_ROUTES.GRADES);
+    },
+    onCreate: () => navigateToCreateGradeList(navigate, activeSubjectId, activeGradeType),
     onDeletePublishedItem: (itemId: string) => {
       setPendingDeleteItemId(itemId);
       setDeleteConfirmOpen(true);
     },
     onPickType: (value: string) => {
-      if (!isSelectionType(value)) return;
+      if (!isSelectionType(value) || !activeSubjectId) return;
       setSelectedGradeType(value);
       setSelectedGradeTypeState(value);
-      navigate(TEACHER_ROUTES.GRADES_WORKSPACE);
+      navigate(buildGradesWorkspaceRoute(activeSubjectId, value));
     },
     publishedItems,
     search,
-    selectedGradeType,
+    selectedGradeType: activeGradeType,
     selectedSubject,
-    selectedSubjectId,
+    selectedSubjectId: activeSubjectId,
     setClassValue,
     setSearch,
-    setSelectedSubjectId,
+    setSelectedSubjectId: (value: string | null) => {
+      if (isLanding) {
+        setSelectedSubjectId(value);
+        setSelectedGradeTypeState(null);
+        navigate(buildGradesTypeSelectionRoute(value));
+        return;
+      }
+      setSelectedSubjectId(value);
+    },
     stats,
     subjects,
   };

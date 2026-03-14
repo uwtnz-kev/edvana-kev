@@ -30,12 +30,12 @@ export function TeacherQuizHeader({
 }: Props) {
   const theme =
     (subjectName ? SUBJECT_ICON_THEME[subjectName] : null) ?? {
-      bg: "bg-teal-500/20",
-      text: "text-teal-700",
+      bg: "bg-white/10",
+      text: "text-[var(--accent-primary)]",
     };
 
   return (
-    <header className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl px-6 py-5">
+    <header className="teacher-panel-surface rounded-2xl px-6 py-5">
       <div className={`flex flex-col sm:flex-row sm:items-center gap-4 ${showCreate ? "sm:justify-between" : "sm:justify-start"}`}>
         <div className="flex items-center gap-4">
           {showBack ? (
@@ -49,13 +49,13 @@ export function TeacherQuizHeader({
             </Button>
           ) : null}
 
-          <div className={`h-12 w-12 flex items-center justify-center rounded-2xl ${theme.bg}`}>
+          <div className={`h-12 w-12 rounded-xl p-3 flex items-center justify-center ${theme.bg}`}>
             <ClipboardList className={`h-6 w-6 ${theme.text}`} />
           </div>
 
           <div>
-            <h1 className="text-2xl font-semibold text-[#3B240F]">{title}</h1>
-            <p className="text-[#3B240F]/70 mt-1">{subtitle}</p>
+            <h1 className="text-2xl font-semibold text-white">{title}</h1>
+            <p className="mt-1 text-[var(--text-secondary)]">{subtitle}</p>
           </div>
         </div>
 
@@ -74,4 +74,5 @@ export function TeacherQuizHeader({
     </header>
   );
 }
+
 

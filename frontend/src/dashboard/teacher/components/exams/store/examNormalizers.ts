@@ -1,5 +1,6 @@
 // Normalizes persisted exam records and provides clone helpers.
 import type { ExamAttachment, TeacherExam } from "../ExamsTypes";
+import { cloneSubmissionMethodAssessment, normalizeSubmissionMethods } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === "object";
@@ -14,7 +15,7 @@ function isAttachmentArray(value: unknown): value is ExamAttachment[] {
 }
 
 export function cloneExam(item: TeacherExam): TeacherExam {
-  return { ...item, attachments: item.attachments?.map((attachment) => ({ ...attachment })) };
+  return { ...cloneSubmissionMethodAssessment(item), attachments: item.attachments?.map((attachment) => ({ ...attachment })) };
 }
 
 export function cloneExams(items: TeacherExam[]): TeacherExam[] {
@@ -23,10 +24,11 @@ export function cloneExams(items: TeacherExam[]): TeacherExam[] {
 
 export function normalizeExam(input: unknown): TeacherExam | null {
   // Legacy drafts may still use className instead of classLabel, so both are accepted.
-  if (!isRecord(input) || !["draft", "published"].includes(String(input.status))) return null;
+  if (!isRecord(input) || !["draft", "published", "archived", "closed"].includes(String(input.status))) return null;
   const classLabel = typeof input.classLabel === "string" ? input.classLabel : typeof input.className === "string" ? input.className : null;
   const classId = typeof input.classId === "string" ? input.classId : classLabel ? `legacy-${classLabel.toLowerCase().replace(/\s+/g, "-")}` : null;
   if (typeof input.id !== "string" || typeof input.title !== "string" || typeof input.subject !== "string" || typeof classId !== "string" || typeof classLabel !== "string" || typeof input.scheduledAt !== "string" || typeof input.durationMinutes !== "number" || typeof input.createdAt !== "string") return null;
-  if ((input.totalQuestions !== undefined && typeof input.totalQuestions !== "number") || (input.maxScore !== undefined && typeof input.maxScore !== "number") || (input.rubric !== undefined && typeof input.rubric !== "string") || (input.instructions !== undefined && typeof input.instructions !== "string") || (input.questionsText !== undefined && typeof input.questionsText !== "string") || (input.attachments !== undefined && !isAttachmentArray(input.attachments))) return null;
-  return { id: input.id, title: input.title, subject: input.subject, classId, classLabel, scheduledAt: input.scheduledAt, durationMinutes: input.durationMinutes, status: input.status as TeacherExam["status"], createdAt: input.createdAt, totalQuestions: typeof input.totalQuestions === "number" && Number.isFinite(input.totalQuestions) ? input.totalQuestions : 10, maxScore: input.maxScore, rubric: input.rubric, instructions: input.instructions, questionsText: input.questionsText, attachments: input.attachments };
+  if ((input.totalQuestions !== undefined && typeof input.totalQuestions !== "number") || (input.totalAttempts !== undefined && typeof input.totalAttempts !== "number") || (input.maxScore !== undefined && typeof input.maxScore !== "number") || (input.rubric !== undefined && typeof input.rubric !== "string") || (input.instructions !== undefined && typeof input.instructions !== "string") || (input.questionsText !== undefined && typeof input.questionsText !== "string") || (input.attachments !== undefined && !isAttachmentArray(input.attachments)) || (input.accessCode !== undefined && typeof input.accessCode !== "string")) return null;
+  const status = input.status === "archived" ? "closed" : (input.status as TeacherExam["status"]);
+  return { id: input.id, title: input.title, subject: input.subject, classId, classLabel, scheduledAt: input.scheduledAt, durationMinutes: input.durationMinutes, totalAttempts: typeof input.totalAttempts === "number" && Number.isFinite(input.totalAttempts) && input.totalAttempts >= 1 ? Math.trunc(input.totalAttempts) : 1, status, createdAt: input.createdAt, totalQuestions: typeof input.totalQuestions === "number" && Number.isFinite(input.totalQuestions) ? input.totalQuestions : 10, submissionMethods: normalizeSubmissionMethods(input.submissionMethods), maxScore: input.maxScore, rubric: input.rubric, instructions: input.instructions, questionsText: input.questionsText, attachments: input.attachments, accessCode: input.accessCode };
 }

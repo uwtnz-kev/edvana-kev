@@ -4,6 +4,7 @@
  * Implements the S um ma ry Ca rd s module for the teacher dashboard o ve rv ie w feature.
  */
 import type { LucideIcon } from "lucide-react";
+import { teacherDashboardTheme } from "@/dashboard/teacher/theme/teacherDashboardTheme";
 import type { SubjectIconTheme } from "../shared/subjectIconTheme";
 
 export interface SummaryCardItem {
@@ -26,15 +27,10 @@ function SummaryCard({ card }: SummaryCardProps) {
     <div
       className="
         group
-        bg-white/5
-        backdrop-blur-lg
-        border border-white/10
+        teacher-card-surface
         rounded-xl
-        shadow-lg
         p-4
         transition-all duration-300
-        hover:bg-white/10
-        hover:border-white/20
         hover:shadow-2xl
         hover:-translate-y-1
       "
@@ -57,7 +53,7 @@ function SummaryCard({ card }: SummaryCardProps) {
         <span
           className="
             ml-auto text-2xl font-bold
-            text-white
+            text-[var(--accent-primary)]
             transition-transform duration-300
             group-hover:scale-105
           "
@@ -66,11 +62,11 @@ function SummaryCard({ card }: SummaryCardProps) {
         </span>
       </div>
 
-      <h3 className="text-white font-semibold text-lg mb-1 transition-colors duration-300">
+      <h3 className={`mb-1 text-lg font-semibold transition-colors duration-300 ${teacherDashboardTheme.text.primary}`}>
         {card.title}
       </h3>
 
-      <p className="text-white/60 text-sm">{card.subtitle}</p>
+      <p className={`text-sm ${teacherDashboardTheme.text.secondary}`}>{card.subtitle}</p>
     </div>
   );
 }

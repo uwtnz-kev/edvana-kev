@@ -19,7 +19,7 @@ export default function ThreadsListCard(props: Props) {
   const threads = props.threads ?? [];
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md">
+    <div className="overflow-hidden rounded-2xl teacher-panel-surface">
       <div className="h-full overflow-y-auto">
         {threads.map((t) => (
           <ThreadRow
@@ -34,10 +34,11 @@ export default function ThreadsListCard(props: Props) {
         ))}
 
         {threads.length === 0 && (
-          <div className="p-6 text-sm text-[#6B4F3A]">No conversations found.</div>
+          <div className="p-6 text-sm text-[var(--text-secondary)]">No conversations found.</div>
         )}
       </div>
     </div>
   );
 }
+
 

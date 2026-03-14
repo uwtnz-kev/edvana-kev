@@ -24,6 +24,5 @@ export type SubjectSubmoduleDraft = {
 export type SubjectModulePayload = {
   title: string;
   description: string;
-  fileName?: string;
   submodules: SubjectSubmoduleDraft[];
 };

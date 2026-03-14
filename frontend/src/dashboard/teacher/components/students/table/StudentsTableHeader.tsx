@@ -5,12 +5,12 @@ export function StudentsTableHeader() {
   return (
     <TableHeader>
       <TableRow className="border-white/20 hover:bg-white/5">
-        <TableHead className="text-blue-900 font-semibold">Name</TableHead>
-        <TableHead className="text-blue-900 font-semibold">Email</TableHead>
-        <TableHead className="text-blue-900 font-semibold">Class</TableHead>
-        <TableHead className="text-blue-900 font-semibold">Status</TableHead>
-        <TableHead className="text-blue-900 font-semibold">Enrolled</TableHead>
-        <TableHead className="text-blue-900 font-semibold text-center">Actions</TableHead>
+        <TableHead className="font-semibold text-white">Name</TableHead>
+        <TableHead className="font-semibold text-white">Email</TableHead>
+        <TableHead className="font-semibold text-white">Class</TableHead>
+        <TableHead className="font-semibold text-white">Status</TableHead>
+        <TableHead className="font-semibold text-white">Enrolled</TableHead>
+        <TableHead className="text-center font-semibold text-white">Actions</TableHead>
       </TableRow>
     </TableHeader>
   );

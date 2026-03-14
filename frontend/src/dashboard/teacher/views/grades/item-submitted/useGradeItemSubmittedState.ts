@@ -8,6 +8,7 @@ import {
   type TeacherGradeSelectionType,
 } from "@/dashboard/teacher/components/grades";
 import { TEACHER_ROUTES } from "@/dashboard/teacher/routes";
+import { buildGradesWorkspaceRoute } from "../gradesViewHelpers";
 
 export function useGradeItemSubmittedState() {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ export function useGradeItemSubmittedState() {
     subjectName,
     submissions,
     type,
-    backToWorkspace: () => navigate(`${TEACHER_ROUTES.GRADES_WORKSPACE}/${itemId}${location.search}`),
+    backToWorkspace: () => navigate(buildGradesWorkspaceRoute(subjectId, type)),
     openNotSubmitted: () => navigate(`${TEACHER_ROUTES.GRADES_WORKSPACE}/${itemId}/not-submitted${location.search}`),
     openSubmission: (submissionId: string) =>
       navigate(`${TEACHER_ROUTES.GRADES_WORKSPACE}/${itemId}/submissions/${submissionId}${location.search}`),

@@ -14,7 +14,7 @@ export function SubjectModulesHeader({ state }: Props) {
         </Button>
         <div className="flex items-center gap-4">
           <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${state.theme.bgClass}`}><BookOpen className={`h-6 w-6 ${state.theme.iconClass}`} /></div>
-          <div><h1 className="text-2xl font-semibold text-[#3B240F]">Modules</h1><p className="mt-1 text-[#3B240F]/70">Subject: {state.subjectName}</p></div>
+          <div><h1 className="text-2xl font-semibold text-[var(--text-primary)]">Modules</h1><p className="mt-1 text-[var(--text-secondary)]">Subject: {state.subjectName}</p></div>
         </div>
       </div>
     </header>

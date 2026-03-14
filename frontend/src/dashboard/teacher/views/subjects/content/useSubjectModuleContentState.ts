@@ -1,6 +1,6 @@
 // Owns route parsing, module lookup, and derived labels for the content page.
 import { useEffect, useMemo } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { getSubjectThemeById } from "@/dashboard/teacher/components/shared";
 import { useSubjectModules } from "@/dashboard/teacher/components/subjects/subjectModulesStore";
 import {
@@ -8,13 +8,16 @@ import {
   getSubjectName,
   type SubjectModuleContentRouteState,
 } from "./subjectModuleContentHelpers";
+import { appendClassIdToPath, getClassIdFromSearchParams } from "../subjectClassRouting";
 
 type Params = { moduleId?: string; subjectId?: string; submoduleId?: string };
 
 export function useSubjectModuleContentState() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const { subjectId = "", moduleId = "", submoduleId = "" } = useParams<Params>();
+  const classId = getClassIdFromSearchParams(searchParams);
   const routeState = (location.state as SubjectModuleContentRouteState | null) ?? null;
   const theme = getSubjectThemeById(subjectId);
   const subjectName = useMemo(() => getSubjectName(subjectId, routeState), [routeState, subjectId]);
@@ -29,14 +32,14 @@ export function useSubjectModuleContentState() {
   useEffect(() => {
     if (!moduleId) return;
     if (!module) {
-      navigate(`/dashboard/teacher/subjects/${subjectId}/modules`, {
+      navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/modules`, classId), {
         replace: true,
         state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null },
       });
       return;
     }
     if (submoduleId && !submodule) {
-      navigate(`/dashboard/teacher/subjects/${subjectId}/modules/${moduleId}`, {
+      navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/modules/${moduleId}`, classId), {
         replace: true,
         state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null },
       });
@@ -54,7 +57,7 @@ export function useSubjectModuleContentState() {
     submodule,
     theme,
     goBack: () =>
-      navigate(`/dashboard/teacher/subjects/${subjectId}/modules`, {
+      navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/modules`, classId), {
         state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null },
       }),
   };

@@ -10,12 +10,12 @@ type Props = {
 export function MessagesToolbarSearch({ query, onQueryChange }: Props) {
   return (
     <div className="relative flex-1 min-w-0">
-      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6B4F3A]" />
+      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-secondary)]" />
       <Input
         value={query}
         onChange={(event) => onQueryChange(event.target.value)}
         placeholder="Search..."
-        className="pl-9 h-12 rounded-xl border-white/15 bg-white/10 backdrop-blur-md w-full"
+        className="h-12 w-full rounded-xl border-white/15 bg-white/10 pl-9 text-white placeholder:text-white/70 backdrop-blur-md"
       />
     </div>
   );

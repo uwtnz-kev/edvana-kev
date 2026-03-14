@@ -31,24 +31,24 @@ const CARD_THEMES: Record<
   }
 > = {
   technical: {
-    activeBg: "bg-amber-50/85",
-    activeBorder: "border-amber-300",
+    activeBg: "bg-amber-500/12",
+    activeBorder: "border-[var(--card-border)]",
   },
   content: {
-    activeBg: "bg-teal-50/85",
-    activeBorder: "border-teal-300",
+    activeBg: "bg-cyan-500/12",
+    activeBorder: "border-cyan-400/35",
   },
   assessment: {
-    activeBg: "bg-orange-50/85",
-    activeBorder: "border-orange-300",
+    activeBg: "bg-blue-500/12",
+    activeBorder: "border-blue-400/35",
   },
   schedule: {
-    activeBg: "bg-red-50/85",
-    activeBorder: "border-red-300",
+    activeBg: "bg-pink-500/12",
+    activeBorder: "border-pink-400/35",
   },
   account: {
-    activeBg: "bg-emerald-50/85",
-    activeBorder: "border-emerald-300",
+    activeBg: "bg-emerald-500/12",
+    activeBorder: "border-emerald-400/35",
   },
 };
 
@@ -68,15 +68,12 @@ export default function TeacherSupportCards({
         const active = type === c.key;
         const cardTheme = CARD_THEMES[c.key];
         const iconTheme = SUPPORT_CARD_ICON_THEMES[c.key];
-        const hoverClasses =
-          c.key === "assessment"
-            ? ""
-            : "hover:border-white/25 hover:bg-white/15 hover:shadow-md";
+        const hoverClasses = c.key === "assessment" ? "" : "teacher-panel-hover-lift";
         return (
           <button
             key={c.key}
             onClick={() => setType(c.key)}
-            className={`group text-left rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur-xl shadow-sm transition-all duration-200 ${hoverClasses} ${
+            className={`group teacher-panel-surface text-left rounded-2xl p-5 ${hoverClasses} ${
               active
                 ? `${cardTheme.activeBg} ${cardTheme.activeBorder}`
                 : ""
@@ -89,8 +86,8 @@ export default function TeacherSupportCards({
                 <Icon className={`h-6 w-6 transition-transform duration-200 group-hover:scale-105 ${iconTheme.iconClass}`} />
               </div>
               <div>
-                <p className="text-[#3B240F] font-semibold">{c.title}</p>
-                <p className="text-[#3B240F]/70 text-sm mt-1">{c.desc}</p>
+                <p className="font-semibold text-white">{c.title}</p>
+                <p className="mt-1 text-sm text-[var(--text-secondary)]">{c.desc}</p>
               </div>
             </div>
           </button>

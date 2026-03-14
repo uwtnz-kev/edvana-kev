@@ -4,6 +4,7 @@
  * Provides barrel exports for the teacher dashboard s ha re d module.
  */
 export { default as SegmentedTabs } from "./SegmentedTabs";
+export { StatusBadge } from "./StatusBadge";
 export { TeacherDatePicker, type TeacherDatePickerProps } from "./TeacherDatePicker";
 export { TeacherDateTimePicker, type TeacherDateTimePickerProps } from "./TeacherDateTimePicker";
 export {

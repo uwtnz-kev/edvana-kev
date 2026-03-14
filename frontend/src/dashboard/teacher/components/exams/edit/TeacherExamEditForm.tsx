@@ -19,7 +19,7 @@ export function TeacherExamEditForm({ exam, onCancel, onSaved }: Props) {
   const state = useTeacherExamEditForm({ exam, onSaved });
 
   return (
-    <section className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-4 sm:p-6 space-y-6">
+    <section className="teacher-panel-surface rounded-2xl p-4 sm:p-6 space-y-6">
       <ExamEditHeader subjectName={exam.subject} />
       <ExamEditScheduleSection state={state} />
       <ExamEditBasicFields state={state} />
@@ -27,9 +27,10 @@ export function TeacherExamEditForm({ exam, onCancel, onSaved }: Props) {
       <ExamEditAttachments state={state} />
       <QuestionsPreviewModal open={state.isQuestionsPreviewOpen} onClose={state.closeQuestionsPreview} content={state.values.questionsText} title="Questions Preview" />
       <div className="flex justify-end gap-3 border-t border-white/10 pt-4">
-        <Button type="button" onClick={onCancel} className="bg-white/20 hover:bg-white/30 text-[#3B240F] border border-white/20 rounded-2xl">Cancel</Button>
-        <Button type="button" onClick={state.onSave} className="px-6 py-3 rounded-2xl border border-white/25 bg-white/20 text-[#3B240F] font-semibold hover:bg-white/30 transition-colors duration-200 ring-1 ring-[#3B240F]/20">Save Exam</Button>
+        <Button type="button" onClick={onCancel} className="bg-white/20 hover:bg-white/30 text-white border border-white/20 rounded-2xl">Cancel</Button>
+        <Button type="button" onClick={state.onSave} className="px-6 py-3 rounded-2xl border border-white/25 bg-white/20 text-white font-semibold hover:bg-white/30 transition-colors duration-200 ring-1 ring-white/20">Save Exam</Button>
       </div>
     </section>
   );
 }
+

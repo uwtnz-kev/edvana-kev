@@ -14,15 +14,11 @@ import {
 } from "@/components/ui/select";
 import type { AssignmentStatusFilter } from "./AssignmentsTypes";
 
-export type AssignmentSort = "all" | "ongoing" | "already_closed";
-
 type Props = {
   search: string;
   statusFilter: AssignmentStatusFilter;
-  sort: AssignmentSort;
   onSearchChange: (value: string) => void;
   onStatusFilterChange: (value: AssignmentStatusFilter) => void;
-  onSortChange: (value: AssignmentSort) => void;
   disabled?: boolean;
 };
 
@@ -30,19 +26,19 @@ const statusOptions: Array<{ value: AssignmentStatusFilter; label: string }> = [
   { value: "all", label: "All status" },
   { value: "draft", label: "Draft" },
   { value: "published", label: "Published" },
+  { value: "ongoing", label: "Ongoing" },
+  { value: "closed", label: "Closed" },
 ];
 
 export function TeacherAssignmentsControls({
   search,
   statusFilter,
-  sort,
   onSearchChange,
   onStatusFilterChange,
-  onSortChange,
   disabled = false,
 }: Props) {
   return (
-    <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-4 transition-colors duration-200 hover:bg-white/20">
+    <div className="teacher-panel-surface rounded-2xl p-4 teacher-panel-hover">
       <div className="flex flex-col lg:flex-row lg:items-center gap-3">
         <div className="flex items-center gap-2 text-white/80">
           <SlidersHorizontal className="h-4 w-4 text-teal-600" />
@@ -77,23 +73,12 @@ export function TeacherAssignmentsControls({
               ))}
             </SelectContent>
           </Select>
-
-          <Select value={sort} onValueChange={(value) => onSortChange(value as AssignmentSort)} disabled={disabled}>
-            <SelectTrigger className="sm:w-40 bg-white/10 border-white/10 backdrop-blur-xl rounded-2xl text-white">
-              <SelectValue placeholder="Sort" />
-            </SelectTrigger>
-            <SelectContent className="bg-white/10 border-white/10 backdrop-blur-xl text-white rounded-2xl">
-              <SelectItem value="all" className="focus:bg-white/10">All</SelectItem>
-              <SelectItem value="ongoing" className="focus:bg-white/10">Ongoing Assignments</SelectItem>
-              <SelectItem value="already_closed" className="focus:bg-white/10">Already Closed</SelectItem>
-            </SelectContent>
-          </Select>
-
         </div>
       </div>
     </div>
   );
 }
+
 
 
 

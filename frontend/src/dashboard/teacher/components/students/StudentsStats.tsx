@@ -38,7 +38,7 @@ export default function StudentsStats({
       {cards.map((card, index) => (
         <div
           key={index}
-          className="group rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-4 transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:bg-white/20"
+          className="group rounded-2xl teacher-panel-surface p-4 teacher-panel-hover-lift"
         >
           <div className="flex items-center gap-3">
             <div
@@ -56,4 +56,5 @@ export default function StudentsStats({
     </div>
   );
 }
+
 

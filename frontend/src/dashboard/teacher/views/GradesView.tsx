@@ -1,5 +1,4 @@
 // Orchestrates the grades workspace by composing extracted state and content helpers.
-import { GradesWorkspaceHeader } from "@/dashboard/teacher/views/grades/GradesWorkspaceHeader";
 import { GradesWorkspaceContent } from "@/dashboard/teacher/views/grades/GradesWorkspaceContent";
 import { toPublishedTitle, toWorkspaceTitle } from "@/dashboard/teacher/views/grades/gradesViewHelpers";
 import { useGradesWorkspaceState } from "@/dashboard/teacher/views/grades/useGradesWorkspaceState";
@@ -13,10 +12,9 @@ export default function GradesView() {
     <div className="w-full overflow-x-hidden p-4 sm:p-6" style={{ overflowX: "hidden" }}>
       <div className="flex w-full gap-6 overflow-x-hidden">
         <section className="min-w-0 flex-1 space-y-4">
-          {workspace.isLanding ? (
-            <GradesWorkspaceHeader title="Grades" subtitle="Choose what you want to grade" subjectId={null} showBack={false} showCreate={false} canCreate={false} onBack={workspace.onBack} onCreate={workspace.onCreate} />
-          ) : null}
           <GradesWorkspaceContent
+            hasInvalidWorkspaceSubject={workspace.hasInvalidWorkspaceSubject}
+            hasInvalidWorkspaceType={workspace.hasInvalidWorkspaceType}
             isLanding={workspace.isLanding}
             selectedGradeType={workspace.selectedGradeType ?? ""}
             selectedSubject={workspace.selectedSubject}

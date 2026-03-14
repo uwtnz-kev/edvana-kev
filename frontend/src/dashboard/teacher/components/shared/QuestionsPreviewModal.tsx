@@ -54,7 +54,7 @@ export function QuestionsPreviewModal({
       />
 
       <div className="absolute inset-0 flex items-center justify-center p-4">
-        <div className="w-full max-w-6xl max-h-[85vh] overflow-hidden rounded-2xl border border-white/10 bg-white/10 backdrop-blur-xl shadow-2xl">
+        <div className="w-full max-w-6xl max-h-[85vh] overflow-hidden rounded-2xl teacher-panel-surface shadow-2xl">
           <div className="flex items-start justify-between px-7 py-6">
             <div className="min-w-0">
               <div className="text-white text-2xl font-semibold truncate">{title}</div>
@@ -93,4 +93,5 @@ export function QuestionsPreviewModal({
     document.body
   );
 }
+
 

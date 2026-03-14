@@ -44,15 +44,15 @@ export function TeacherSubjectsControls({
   }, [searchInput, searchQuery, onSearchChange]);
 
   return (
-    <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-3 transition-colors duration-200 hover:bg-white/20">
+    <div className="teacher-panel-surface rounded-2xl p-3 teacher-panel-hover">
       <div className="flex flex-col lg:flex-row lg:items-center gap-3">
         <div className="flex items-center gap-2 text-white/80">
-          <SlidersHorizontal className="h-4 w-4 text-teal-600" />
+          <SlidersHorizontal className="h-4 w-4 text-[var(--text-secondary)]" />
           <span className="text-sm font-medium">Filters</span>
         </div>
 
         <div className="relative sm:w-80 w-full">
-          <Search className="h-4 w-4 text-white/60 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="h-4 w-4 text-[var(--text-secondary)] absolute left-3 top-1/2 -translate-y-1/2" />
           <Input
             value={searchInput}
             onChange={(event) => setSearchInput(event.target.value)}
@@ -78,6 +78,7 @@ export function TeacherSubjectsControls({
     </div>
   );
 }
+
 
 
 

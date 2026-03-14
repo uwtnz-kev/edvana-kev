@@ -46,8 +46,8 @@ export function TeacherProfileFields({ profile }: Props) {
         })}
         <div className="mt-1 p-4 bg-gradient-to-r from-[#1EA896]/10 to-[#FF715B]/10 border border-[#1EA896]/20 rounded-xl">
           <div className="flex items-center space-x-3 mb-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-500/20">
-              <Calendar className="h-6 w-6 text-pink-700" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-500/15">
+              <Calendar className="h-6 w-6 text-violet-300" />
             </div>
             <div>
               <h3 className="text-white font-semibold">Academic Period</h3>

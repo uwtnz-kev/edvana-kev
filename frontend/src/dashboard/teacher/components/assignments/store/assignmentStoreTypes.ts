@@ -5,7 +5,7 @@ export interface AssignmentStatsSummary {
   total: number;
   drafts: number;
   published: number;
-  archived: number;
+  closed: number;
   pendingToGrade: number;
   totalSubmissions: number;
 }

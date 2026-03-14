@@ -1,4 +1,5 @@
 // Provides formatting and badge helpers for the teacher quiz card.
+import { getAssessmentStatusBadgeClass } from "@/dashboard/teacher/components/shared/assessment/assessmentVisualStyles";
 import type { TeacherQuiz } from "../QuizTypes";
 
 export function formatQuizDate(dateISO: string) {
@@ -8,11 +9,11 @@ export function formatQuizDate(dateISO: string) {
 }
 
 export function getQuizStatusLabel(status: TeacherQuiz["status"]) {
-  return status === "published" ? "Published" : "Draft";
+  if (status === "published") return "Published";
+  if (status === "closed") return "Closed";
+  return "Draft";
 }
 
 export function getQuizStatusClass(status: TeacherQuiz["status"]) {
-  return status === "published"
-    ? "bg-teal-500/20 border-teal-500/30 text-teal-700"
-    : "bg-amber-400/20 border-amber-400/30 text-amber-700";
+  return getAssessmentStatusBadgeClass(status);
 }

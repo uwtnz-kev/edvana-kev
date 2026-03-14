@@ -15,7 +15,7 @@ export function getAssignmentStats(): AssignmentStatsSummary {
     total: items.length,
     drafts: items.filter((item) => item.status === "draft").length,
     published: items.filter((item) => item.status === "published").length,
-    archived: items.filter((item) => item.status === "archived").length,
+    closed: items.filter((item) => item.status === "closed").length,
     pendingToGrade: items.reduce((sum, item) => sum + item.pendingToGrade, 0),
     totalSubmissions: items.reduce((sum, item) => sum + item.totalSubmissions, 0),
   };
@@ -23,6 +23,6 @@ export function getAssignmentStats(): AssignmentStatsSummary {
 
 export function getAssignmentStatusLabel(status: TeacherAssignment["status"]) {
   if (status === "published") return "Published";
-  if (status === "archived") return "Archived";
+  if (status === "closed") return "Closed";
   return "Draft";
 }

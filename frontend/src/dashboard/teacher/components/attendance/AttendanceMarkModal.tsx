@@ -35,6 +35,7 @@ type Props = {
 const STATUS_OPTIONS: Array<{ label: string; value: AttendanceStatus }> = [
   { label: "Present", value: "present" },
   { label: "Absent", value: "absent" },
+  { label: "Late", value: "late" },
 ];
 
 export default function AttendanceMarkModal({ open, onOpenChange, record, onSave }: Props) {
@@ -56,22 +57,24 @@ export default function AttendanceMarkModal({ open, onOpenChange, record, onSave
         <DialogOverlay className="bg-black/40" />
         <DialogContent className="sm:max-w-[520px] bg-white/20 backdrop-blur-2xl border border-white/30 shadow-2xl">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <ClipboardCheck className="h-5 w-5" />
+            <DialogTitle className="flex items-center gap-3 text-white">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/20">
+                <ClipboardCheck className="h-5 w-5 text-emerald-400" />
+              </div>
               {title}
             </DialogTitle>
           </DialogHeader>
 
           <div className="space-y-4">
             <div className="space-y-2">
-              <div className="text-sm text-muted-foreground">Status</div>
+              <div className="text-sm text-white/80">Status</div>
               <GlassSelect value={status} onValueChange={v => setStatus(v as AttendanceStatus)}>
-                <GlassSelectTrigger className="w-full">
+                <GlassSelectTrigger className="w-full bg-white/10 border border-white/10 text-white [&>span]:text-white [&_svg]:text-white [&_svg]:opacity-80">
                   <GlassSelectValue placeholder="Select status" />
                 </GlassSelectTrigger>
-                <GlassSelectContent>
+                <GlassSelectContent className="bg-[#1b2430]/95 border border-white/10 text-white backdrop-blur-xl">
                   {STATUS_OPTIONS.map((option) => (
-                    <GlassSelectItem key={option.value} value={option.value}>
+                    <GlassSelectItem key={option.value} value={option.value} className="text-white focus:bg-white/10 focus:text-white">
                       {option.label}
                     </GlassSelectItem>
                   ))}

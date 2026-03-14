@@ -21,7 +21,7 @@ export function StudentsPagination({
   if (totalPages <= 1) return null;
 
   return (
-    <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-3 flex flex-wrap items-center gap-2 transition-colors duration-200 hover:bg-white/20">
+    <div className="teacher-panel-surface rounded-2xl p-3 flex flex-wrap items-center gap-2 teacher-panel-hover">
       <div className="flex items-center justify-between gap-3 flex-wrap w-full">
         <p className="text-sm text-white/80">
           Showing {startIndex + 1} to {Math.min(startIndex + ITEMS_PER_PAGE, totalItems)} of{" "}
@@ -53,3 +53,4 @@ export function StudentsPagination({
     </div>
   );
 }
+

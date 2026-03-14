@@ -12,10 +12,11 @@ export function ScheduleHeader() {
           <CalendarDays className={`h-6 w-6 ${theme.iconClass}`} />
         </div>
         <div>
-          <h1 className="text-2xl font-semibold text-[#3B240F]">Teaching Schedule</h1>
-          <p className="mt-1 text-[#3B240F]/70">Your weekly timetable across classes</p>
+          <h1 className="text-2xl font-semibold text-[var(--text-primary)]">Teaching Schedule</h1>
+          <p className="mt-1 text-[var(--text-secondary)]">Your weekly timetable across classes</p>
         </div>
       </div>
     </header>
   );
 }
+

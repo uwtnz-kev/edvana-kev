@@ -5,9 +5,9 @@
  */
 import { useState } from "react";
 import { CalendarDays, Megaphone, Pencil, Send, Trash2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ConfirmDeleteModal } from "@/dashboard/teacher/components/assignments/ConfirmDeleteModal";
+import { StatusBadge } from "@/dashboard/teacher/components/shared";
 import { getSubjectIconTheme } from "@/dashboard/teacher/components/shared/subjectIconTheme";
 import type { TeacherAnnouncement } from "@/dashboard/teacher/types/announcementTypes";
 
@@ -21,10 +21,9 @@ type Props = {
 export function AnnouncementCard({ item, onEdit, onDelete, onPublish }: Props) {
   const [open, setOpen] = useState(false);
   const theme = getSubjectIconTheme(item.subject);
-  const tone = item.status === "published" ? "bg-teal-500/20 text-teal-700" : "bg-amber-400/20 text-amber-700";
 
   return (
-    <article className="rounded-2xl border border-white/10 bg-white/10 px-5 py-3 backdrop-blur-xl transition-all duration-300 hover:bg-white/20">
+    <article className="rounded-2xl border border-white/10 bg-white/10 px-5 py-3 backdrop-blur-xl teacher-panel-hover">
       <div className="flex items-stretch justify-between gap-3">
         <div className="flex min-w-0 flex-1 items-stretch gap-3">
           <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${theme.bgClass}`}>
@@ -34,7 +33,7 @@ export function AnnouncementCard({ item, onEdit, onDelete, onPublish }: Props) {
           <div className="flex min-w-0 flex-1 self-stretch flex-col">
             <div className="flex flex-wrap items-center gap-2">
               <h3 className="truncate text-base font-semibold text-white">{item.title}</h3>
-              <Badge className={`border-0 ${tone}`}>{item.status === "draft" ? "Draft" : "Published"}</Badge>
+              <StatusBadge status={item.status} label={item.status === "draft" ? "Draft" : "Published"} />
             </div>
 
             <p className="mt-1.5 line-clamp-2 text-sm text-white/75">{item.body}</p>
@@ -81,4 +80,5 @@ export function AnnouncementCard({ item, onEdit, onDelete, onPublish }: Props) {
     </article>
   );
 }
+
 

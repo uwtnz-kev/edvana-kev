@@ -1,21 +1,20 @@
 // Provides derived filtering, sorting, paging, and stats helpers for the quiz view.
 import type { TeacherQuizStatsData } from "@/dashboard/teacher/components/quiz/TeacherQuizStats";
 import type { TeacherQuiz } from "@/dashboard/teacher/components/quiz";
-import type { QuizSort, QuizStatusFilter } from "@/dashboard/teacher/components/quiz/TeacherQuizControls";
+import type { QuizStatusFilter } from "@/dashboard/teacher/components/quiz/TeacherQuizControls";
 
 export const DEFAULT_PAGE_SIZE = 6;
 
-export function sortQuizzes(items: TeacherQuiz[], sort: QuizSort) {
-  const next = [...items];
-  const now = Date.now();
-  if (sort === "all") return next.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-  if (sort === "ongoing") return next.filter((quiz) => new Date(quiz.dueAt).getTime() >= now).sort((a, b) => new Date(a.dueAt).getTime() - new Date(b.dueAt).getTime());
-  return next.filter((quiz) => new Date(quiz.dueAt).getTime() < now).sort((a, b) => new Date(b.dueAt).getTime() - new Date(a.dueAt).getTime());
+export function sortQuizzes(items: TeacherQuiz[]) {
+  return [...items].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 }
 
 export function filterQuizzes(items: TeacherQuiz[], search: string, statusFilter: QuizStatusFilter) {
   const query = search.toLowerCase().trim();
-  return items.filter((quiz) => (statusFilter === "all" || quiz.status === statusFilter) && (query.length === 0 || `${quiz.title} ${quiz.classLabel}`.toLowerCase().includes(query)));
+  return items.filter((quiz) => {
+    const matchesStatus = statusFilter === "all" || quiz.status === statusFilter;
+    return matchesStatus && (query.length === 0 || `${quiz.title} ${quiz.classLabel}`.toLowerCase().includes(query));
+  });
 }
 
 export function getQuizStats(items: TeacherQuiz[]): TeacherQuizStatsData {

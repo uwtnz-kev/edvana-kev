@@ -11,8 +11,8 @@ export type QuizSubjectIconTheme = {
 };
 
 export const DEFAULT_SUBJECT_ICON_THEME: QuizSubjectIconTheme = {
-  bg: "bg-slate-500/20",
-  text: "text-slate-700",
+  bg: "bg-white/10",
+  text: "text-[var(--accent-primary)]",
 };
 
 export const SUBJECT_ICON_THEME: Record<string, QuizSubjectIconTheme> = {

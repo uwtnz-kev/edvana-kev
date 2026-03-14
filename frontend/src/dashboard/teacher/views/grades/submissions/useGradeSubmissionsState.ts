@@ -13,6 +13,7 @@ import {
 import { getSubjectThemeById } from "@/dashboard/teacher/components/shared";
 import { TEACHER_ROUTES } from "@/dashboard/teacher/routes";
 import { isSelectionType } from "./gradeSubmissionsHelpers";
+import { buildGradesTypeSelectionRoute } from "../gradesViewHelpers";
 
 export function useGradeSubmissionsState() {
   const navigate = useNavigate(); const location = useLocation(); const workspace = useMemo(() => loadGradesWorkspace(), []); const [subjects] = useState(() => seedSubjects2);
@@ -25,7 +26,9 @@ export function useGradeSubmissionsState() {
   const classOptions = useMemo(() => { if (!selectedGradeType || !selectedSubjectId) return [{ value: "all", label: "All classes" }]; const subjectSubmissions = listGradeSubmissions({ selectedGradeType, subjectId: selectedSubjectId, classValue: "all", search: "", status: "all" }); const classes = Array.from(new Set(subjectSubmissions.map((item) => item.className))).sort(); return [{ value: "all", label: "All classes" }, ...classes.map((value) => ({ value, label: value }))]; }, [selectedGradeType, selectedSubjectId, version]);
   return {
     classOptions, classValue, editingError, editingScore, editingSubmissionId, search, selectedGradeType, selectedSubject, status, submissions, theme,
-    backToWorkspace: () => navigate(TEACHER_ROUTES.GRADES_WORKSPACE),
+    backToWorkspace: () => navigate(buildGradesTypeSelectionRoute(querySubjectId), {
+      state: querySubjectId ? { restoreSubjectId: querySubjectId } : null,
+    }),
     openDetails: (submissionId: string) => { const params = new URLSearchParams(location.search); const base = `${TEACHER_ROUTES.GRADES_SUBMISSIONS}/${submissionId}`; navigate(params.toString() ? `${base}?${params.toString()}` : base); },
     startEditing: (submission: TeacherGradeSubmission) => { setEditingSubmissionId(submission.id); setEditingScore(typeof submission.score === "number" ? String(submission.score) : ""); setEditingError(null); },
     stopEditing: () => { setEditingSubmissionId(null); setEditingScore(""); setEditingError(null); },

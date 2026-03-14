@@ -1,4 +1,5 @@
 // Provides derived labels and stat-card data for the exam preview modal.
+import { getAssessmentStatusBadgeClass } from "@/dashboard/teacher/components/shared/assessment/assessmentVisualStyles";
 import {
   BookOpen,
   Calendar,
@@ -10,6 +11,7 @@ import {
 import type { TeacherExam } from "../ExamsTypes";
 
 type ExamPreviewStat = { icon: LucideIcon; label: string; value: string | number };
+export type ExamPreviewBadge = { label: string; className: string };
 
 export function formatExamPreviewDate(dateString: string) {
   const date = new Date(dateString);
@@ -18,7 +20,9 @@ export function formatExamPreviewDate(dateString: string) {
 }
 
 export function getExamStatusLabel(status: TeacherExam["status"]) {
-  return status === "published" ? "Published" : "Draft";
+  if (status === "published") return "Published";
+  if (status === "closed") return "Closed";
+  return "Draft";
 }
 
 // Preserves the existing dash placeholder for missing scores.
@@ -36,7 +40,11 @@ export function getExamPreviewStats(exam: TeacherExam): ExamPreviewStat[] {
 }
 
 export function getExamPreviewBadges(exam: TeacherExam) {
-  return [exam.subject, exam.classLabel, getExamStatusLabel(exam.status)];
+  return [
+    { label: exam.subject, className: "bg-white/10 text-white border border-white/20" },
+    { label: exam.classLabel, className: "bg-white/10 text-white border border-white/20" },
+    { label: getExamStatusLabel(exam.status), className: getAssessmentStatusBadgeClass(exam.status) },
+  ] satisfies ExamPreviewBadge[];
 }
 
 export const examPreviewHeroIcon = BookOpen;

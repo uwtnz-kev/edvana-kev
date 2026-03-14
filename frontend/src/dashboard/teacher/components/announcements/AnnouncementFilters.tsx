@@ -28,7 +28,7 @@ export function AnnouncementFilters({
   disabled = false,
 }: Props) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-xl transition-colors duration-200 hover:bg-white/20">
+    <div className="rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-xl teacher-panel-hover">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
         <Select value={classValue} onValueChange={onClassChange} disabled={disabled}>
           <SelectTrigger className="sm:w-44 bg-white/10 border-white/10 backdrop-blur-xl rounded-2xl text-white">
@@ -70,6 +70,7 @@ export function AnnouncementFilters({
     </div>
   );
 }
+
 
 
 

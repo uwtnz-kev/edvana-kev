@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { getItemSubmission, getPublishedItemById, markSubmissionGraded, updateSubmissionScore, type TeacherGradeSubmission } from "@/dashboard/teacher/components/grades";
-import { TEACHER_ROUTES } from "@/dashboard/teacher/routes";
+import { buildGradesWorkspaceRoute } from "../gradesViewHelpers";
 import { getCalculatedTotal, getFinalScore, getNextSubmittedRoute, getSubmissionQuestions } from "./gradeSubmissionHelpers";
 
 export function useGradeSubmissionState() {
@@ -50,6 +50,6 @@ export function useGradeSubmissionState() {
     },
     setQuestionScore: (questionId: string, value: string) => setQuestionScores((current) => ({ ...current, [questionId]: value })),
     setTotalScore,
-    goBack: () => itemId ? navigate(`${TEACHER_ROUTES.GRADES_WORKSPACE}/${itemId}${location.search}`) : undefined,
+    goBack: () => navigate(buildGradesWorkspaceRoute(subjectId, type as "assignment" | "exam" | "quiz" | null)),
   };
 }

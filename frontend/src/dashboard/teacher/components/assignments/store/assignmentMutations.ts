@@ -49,4 +49,5 @@ export function duplicateAssignment(id: string): TeacherAssignment | null {
 }
 
 export function publishAssignment(id: string): TeacherAssignment | null { return updateAssignment(id, { status: "published" }); }
-export function archiveAssignment(id: string): TeacherAssignment | null { return updateAssignment(id, { status: "archived" }); }
+export function closeAssignment(id: string): TeacherAssignment | null { return updateAssignment(id, { status: "closed" }); }
+export const archiveAssignment = closeAssignment;

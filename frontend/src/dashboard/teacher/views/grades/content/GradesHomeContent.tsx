@@ -17,7 +17,7 @@ export function GradesHomeContent({ subjects, selectedSubjectId, onSelectSubject
         <TeacherGradesSubjectSidebar subjects={subjects} selectedSubjectId={selectedSubjectId} onSelectSubject={onSelectSubject} />
       </aside>
       <section className="min-w-0 flex-1 space-y-4">
-        <GradesWorkspaceHeader title={title} subtitle="Choose a subject from the sidebar to manage grades" subjectId={null} showBack canCreate={false} showCreate={false} onBack={onBack} onCreate={() => undefined} />
+        <GradesWorkspaceHeader title={title} subtitle="Choose a subject from the sidebar to manage grades" subjectId={null} showBack={false} canCreate={false} showCreate={false} onBack={onBack} onCreate={() => undefined} />
         <TeacherGradesHome />
       </section>
     </div>

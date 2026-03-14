@@ -21,7 +21,7 @@ export function ComposeRecipientsSection(props: Props) {
   return (
     <div className="grid grid-cols-1 gap-4">
       <div className="space-y-2">
-        <div className="text-sm text-white/70">Recipient Group</div>
+        <div className="text-sm text-white">Recipient Group</div>
         <GlassSelect value={props.recipientRole} onValueChange={props.setRecipientRole}>
           <GlassSelectTrigger className="h-12 rounded-xl border border-white/20 bg-white/10 text-white">
             <GlassSelectValue placeholder="Select recipient group" />

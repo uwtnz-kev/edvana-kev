@@ -1,5 +1,6 @@
 // Orchestrates the weekly progress card using extracted chart, summary, and helper modules.
 import { Clock, Target } from "lucide-react";
+import { teacherDashboardTheme } from "@/dashboard/teacher/theme/teacherDashboardTheme";
 import { WeeklyProgressChart } from "./WeeklyProgressChart";
 import { WeeklyProgressFooter } from "./WeeklyProgressFooter";
 import { WeeklyProgressLegend } from "./WeeklyProgressLegend";
@@ -13,25 +14,20 @@ export function WeeklyProgress() {
     <div
       className="
         group
-        bg-white/5
-        backdrop-blur-lg
-        border border-white/10
+        teacher-card-surface
         rounded-2xl
-        shadow-xl
         p-6
         transition-all duration-300
-        hover:bg-white/10
-        hover:border-white/20
         hover:shadow-2xl
         hover:-translate-y-1
       "
     >
       <div className="flex items-start justify-between gap-4 mb-6">
         <div>
-          <h2 className="text-xl font-bold text-white transition-colors duration-300">
+          <h2 className={`text-xl font-bold transition-colors duration-300 ${teacherDashboardTheme.text.primary}`}>
             Weekly Progress
           </h2>
-          <p className="text-white/60 text-sm mt-1">
+          <p className={`mt-1 text-sm ${teacherDashboardTheme.text.secondary}`}>
             Track weekly goals and completions.
           </p>
         </div>
@@ -46,10 +42,10 @@ export function WeeklyProgress() {
       <div className="space-y-6">
         <WeeklyProgressChart
           label="Lessons"
-          icon={<Clock className="h-5 w-5 text-[#FF715B]" />}
+          icon={<Clock className="h-5 w-5 text-[var(--accent-primary)]" />}
           completed={state.lessonsCompleted}
           goal={state.lessonsGoal}
-          barClassName="bg-gradient-to-r from-[#FF715B] to-[#FF715B]/80"
+          barClassName="bg-gradient-to-r from-[var(--accent-primary)] to-[#7ab8ff]"
           editable={expanded}
           onChangeCompleted={(n) => update({ lessonsCompleted: n })}
         />
@@ -69,10 +65,10 @@ export function WeeklyProgress() {
 
         <WeeklyProgressChart
           label="Grading"
-          icon={<Target className="h-5 w-5 text-[#1EA896]" />}
+          icon={<Target className="h-5 w-5 text-[var(--accent-green)]" />}
           completed={state.gradingCompleted}
           goal={state.gradingGoal}
-          barClassName="bg-gradient-to-r from-[#1EA896] to-[#1EA896]/80"
+          barClassName="bg-gradient-to-r from-[var(--accent-green)] to-[#74d47f]"
           editable={expanded}
           onChangeCompleted={(n) => update({ gradingCompleted: n })}
         />

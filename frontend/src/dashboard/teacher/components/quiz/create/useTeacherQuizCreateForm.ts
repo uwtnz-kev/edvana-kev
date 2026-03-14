@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState, type ChangeEvent, type Dispatch, 
 import { useLocation, useNavigate } from "react-router-dom";
 import { createQuiz, seedClasses2, type QuizAttachment } from "@/dashboard/teacher/components/quiz";
 import { clearCreateDraft as clearQuestionDraft, createQuestionBuilderDraftId } from "@/dashboard/teacher/components/questions/questionsStore";
+import { getQuestionBuilderPersistenceValues, requiresQuestionBuilder, type SubmissionMethod } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
 import { FIELD_IDS, allTouched, initialTouched, initialValues } from "./quizCreateConstants";
 import { buildAttachmentId, buildErrors, canSaveQuiz, resolveFormValues } from "./quizCreateUtils";
 import type { FieldName, QuizCreateLocationState, TeacherQuizCreateFormProps, TouchedState } from "./quizCreateTypes";
@@ -17,6 +18,7 @@ export function useTeacherQuizCreateForm({ onSaved, subjectId, subjectName }: Pi
   const [attachments, setAttachments] = useState<QuizAttachment[]>([]);
   const [isQuestionsPreviewOpen, setIsQuestionsPreviewOpen] = useState(false);
   const attachmentsInputRef = useRef<HTMLInputElement | null>(null);
+  const previousQuestionCountRef = useRef(initialValues.totalQuestions);
   const errors = useMemo(() => buildErrors(values), [values]);
 
   useEffect(() => {
@@ -29,6 +31,19 @@ export function useTeacherQuizCreateForm({ onSaved, subjectId, subjectName }: Pi
 
   const onFieldChange = (name: FieldName, value: string) => setValues((previous) => ({ ...previous, [name]: value }));
   const onFieldBlur = (name: FieldName) => setTouched((previous: TouchedState) => ({ ...previous, [name]: true }));
+  const onSubmissionMethodsChange = (methods: SubmissionMethod[]) => {
+    const nextRequiresBuilder = requiresQuestionBuilder(methods);
+    setValues((previous) => {
+      const currentRequiresBuilder = requiresQuestionBuilder(previous.submissionMethods);
+      if (currentRequiresBuilder && !nextRequiresBuilder && previous.totalQuestions !== "0") previousQuestionCountRef.current = previous.totalQuestions;
+      return {
+        ...previous,
+        submissionMethods: methods,
+        totalQuestions: nextRequiresBuilder ? (previous.totalQuestions === "0" ? previousQuestionCountRef.current : previous.totalQuestions) : "0",
+      };
+    });
+    setTouched((previous) => ({ ...previous, submissionMethods: true }));
+  };
 
   const onClassChange = (classId: string) => {
     const selectedClass = seedClasses2.find((item) => item.id === classId) ?? null;
@@ -47,13 +62,15 @@ export function useTeacherQuizCreateForm({ onSaved, subjectId, subjectName }: Pi
   const onSave = () => {
     if (!canSaveQuiz(errors)) return markInvalidFields(errors, setTouched);
     const dueDate = new Date(values.dueAt);
+    const accessCode = values.accessCode.trim() || undefined;
     const maxScore = values.maxScore.trim() ? Number(values.maxScore.trim()) : undefined;
-    createQuiz({ title: values.title.trim(), subject: subjectName, classId: values.classId, classLabel: values.classLabel, dueAt: Number.isNaN(dueDate.getTime()) ? new Date().toISOString() : dueDate.toISOString(), durationMinutes: Number(values.durationMinutes), totalQuestions: Number(values.totalQuestions), status: "draft", instructions: values.instructions.trim(), questionsText: values.questionsText.trim() || undefined, attachments: attachments.length ? attachments : undefined, rubric: values.rubric.trim() || undefined, maxScore: typeof maxScore === "number" && Number.isFinite(maxScore) ? maxScore : undefined });
+    const questionBuilderValues = getQuestionBuilderPersistenceValues(values.submissionMethods, values.questionsText, values.totalQuestions);
+    createQuiz({ title: values.title.trim(), subject: subjectName, classId: values.classId, classLabel: values.classLabel, dueAt: Number.isNaN(dueDate.getTime()) ? new Date().toISOString() : dueDate.toISOString(), durationMinutes: Number(values.durationMinutes), totalAttempts: Number(values.totalAttempts), totalQuestions: questionBuilderValues.totalQuestions, status: "draft", submissionMethods: values.submissionMethods, instructions: values.instructions.trim(), questionsText: questionBuilderValues.questionsText, attachments: attachments.length ? attachments : undefined, rubric: values.rubric.trim() || undefined, maxScore: typeof maxScore === "number" && Number.isFinite(maxScore) ? maxScore : undefined, accessCode });
     clearQuestionDraft("quiz", questionDraftId);
     onSaved(subjectId);
   };
 
-  return { attachments, attachmentsInputRef, errors, isQuestionsPreviewOpen, onClassChange, onFieldBlur, onFieldChange, onPickAttachments, onRemoveAttachment: (id: string) => setAttachments((previous) => previous.filter((item) => item.id !== id)), onClearAttachments: () => setAttachments([]), onOpenQuestionBuilder: () => navigate("/dashboard/teacher/questions/create?type=quiz", { state: { formDraft: values, originPath: `${location.pathname}${location.search}`, originState: location.state, parentType: "quiz", mode: "create", questionDraftId, subjectId } }), onSave, setIsQuestionsPreviewOpen, touched, values };
+  return { attachments, attachmentsInputRef, errors, isQuestionsPreviewOpen, onClassChange, onFieldBlur, onFieldChange, onPickAttachments, onRemoveAttachment: (id: string) => setAttachments((previous) => previous.filter((item) => item.id !== id)), onClearAttachments: () => setAttachments([]), onOpenQuestionBuilder: () => { if (!requiresQuestionBuilder(values.submissionMethods)) return; navigate("/dashboard/teacher/questions/create?type=quiz", { state: { formDraft: values, originPath: `${location.pathname}${location.search}`, originState: location.state, parentType: "quiz", mode: "create", questionDraftId, subjectId } }); }, onSave, onSubmissionMethodsChange, requiresQuestionBuilder: requiresQuestionBuilder(values.submissionMethods), setIsQuestionsPreviewOpen, touched, values };
 }
 
 // Marks every invalid field as touched and scrolls the first invalid control into view.

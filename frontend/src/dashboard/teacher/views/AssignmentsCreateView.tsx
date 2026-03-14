@@ -40,16 +40,16 @@ export default function AssignmentsCreateView() {
   if (!createState) {
     return (
       <div className="w-full p-4 sm:p-6">
-        <div className="max-w-3xl mx-auto bg-white/10 border border-white/10 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center">
-          <h1 className="text-[#3B240F] text-2xl font-semibold">Create Assignment</h1>
-          <p className="text-[#3B240F]/70 mt-3">
+        <div className="max-w-3xl mx-auto teacher-panel-surface rounded-2xl p-6 sm:p-8 text-center">
+          <h1 className="text-[var(--text-primary)] text-2xl font-semibold">Create Assignment</h1>
+          <p className="text-[var(--text-secondary)] mt-3">
             Missing subject context. Go back and choose a subject first.
           </p>
           <div className="mt-5">
             <Button
               type="button"
-              onClick={() => navigate("/dashboard/teacher/assignments")}
-              className="bg-white/20 hover:bg-white/30 text-[#3B240F] border border-white/20 rounded-2xl"
+              onClick={() => navigate({ pathname: "/dashboard/teacher/assignments", search: location.search })}
+              className="bg-white/20 hover:bg-white/30 text-[var(--text-primary)] border border-white/20 rounded-2xl"
             >
               Back
             </Button>
@@ -65,7 +65,7 @@ export default function AssignmentsCreateView() {
         <TeacherAssignmentCreateHeader
           subjectName={createState.subjectName}
           onBack={() =>
-            navigate("/dashboard/teacher/assignments", {
+            navigate({ pathname: "/dashboard/teacher/assignments", search: location.search }, {
               state: { restoreSubjectId: createState.subjectId },
             })
           }
@@ -75,12 +75,12 @@ export default function AssignmentsCreateView() {
           subjectId={createState.subjectId}
           subjectName={createState.subjectName}
           onCancel={() =>
-            navigate("/dashboard/teacher/assignments", {
+            navigate({ pathname: "/dashboard/teacher/assignments", search: location.search }, {
               state: { restoreSubjectId: createState.subjectId },
             })
           }
           onSaved={(subjectId) =>
-            navigate("/dashboard/teacher/assignments", {
+            navigate({ pathname: "/dashboard/teacher/assignments", search: location.search }, {
               state: { restoreSubjectId: subjectId },
             })
           }
@@ -89,5 +89,7 @@ export default function AssignmentsCreateView() {
     </div>
   );
 }
+
+
 
 

@@ -1,21 +1,35 @@
 // Provides derived filtering, sorting, paging, and stats helpers for the assignments view.
 import type { TeacherAssignmentsStatsData } from "@/dashboard/teacher/components/assignments/TeacherAssignmentsStats";
 import type { AssignmentStatusFilter, TeacherAssignment } from "@/dashboard/teacher/components/assignments";
-import type { AssignmentSort } from "@/dashboard/teacher/components/assignments/TeacherAssignmentsControls";
 
 export const ITEMS_PER_PAGE = 6;
 
-export function sortAssignments(items: TeacherAssignment[], sort: AssignmentSort) {
-  const next = [...items];
-  const now = new Date();
-  if (sort === "all") return next.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-  if (sort === "ongoing") return next.filter((assignment) => new Date(assignment.dueAt) >= now).sort((a, b) => new Date(a.dueAt).getTime() - new Date(b.dueAt).getTime());
-  return next.filter((assignment) => new Date(assignment.dueAt) < now).sort((a, b) => new Date(b.dueAt).getTime() - new Date(a.dueAt).getTime());
+function isAssignmentClosed(assignment: TeacherAssignment, now = Date.now()) {
+  if (assignment.status === "closed") return true;
+  if (assignment.status !== "published") return false;
+  const dueAt = new Date(assignment.dueAt).getTime();
+  return Number.isFinite(dueAt) && dueAt < now;
 }
 
-export function filterAssignments(items: TeacherAssignment[], search: string, statusFilter: AssignmentStatusFilter) {
+function isAssignmentOngoing(assignment: TeacherAssignment, now = Date.now()) {
+  if (assignment.status !== "published") return false;
+  const dueAt = new Date(assignment.dueAt).getTime();
+  return !Number.isFinite(dueAt) || dueAt >= now;
+}
+
+export function sortAssignments(items: TeacherAssignment[]) {
+  return [...items].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+}
+
+export function filterAssignments(items: TeacherAssignment[], search: string, statusFilter: AssignmentStatusFilter, now = Date.now()) {
   const query = search.toLowerCase().trim();
-  return items.filter((assignment) => (statusFilter === "all" || assignment.status === statusFilter) && (query.length === 0 || `${assignment.title} ${assignment.classLabel}`.toLowerCase().includes(query)));
+  return items.filter((assignment) => {
+    const matchesStatus =
+      statusFilter === "all"
+      || (statusFilter === "ongoing" ? isAssignmentOngoing(assignment, now) : false)
+      || (statusFilter === "closed" ? isAssignmentClosed(assignment, now) : assignment.status === statusFilter);
+    return matchesStatus && (query.length === 0 || `${assignment.title} ${assignment.classLabel}`.toLowerCase().includes(query));
+  });
 }
 
 export function getAssignmentsStats(items: TeacherAssignment[]): TeacherAssignmentsStatsData {
