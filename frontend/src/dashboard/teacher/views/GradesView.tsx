@@ -1,9 +1,34 @@
 // Orchestrates the grades workspace by composing extracted state and content helpers.
+import { BarChart3 } from "lucide-react";
+import { getSubjectThemeById } from "@/dashboard/teacher/components/shared";
 import { GradesWorkspaceContent } from "@/dashboard/teacher/views/grades/GradesWorkspaceContent";
 import { toPublishedTitle, toWorkspaceTitle } from "@/dashboard/teacher/views/grades/gradesViewHelpers";
 import { useGradesWorkspaceState } from "@/dashboard/teacher/views/grades/useGradesWorkspaceState";
+import { TeacherFeatureClassEntryGate } from "./shared/TeacherFeatureClassEntryGate";
 
 export default function GradesView() {
+  const entryTheme = getSubjectThemeById("");
+
+  return (
+    <TeacherFeatureClassEntryGate
+      entryPath="/dashboard/teacher/grades"
+      featureKey="grades"
+      title="Grades"
+      subtitle="Choose a class to open the grades workspace"
+      icon={BarChart3}
+      infoCardClassName="transition-all duration-200 hover:-translate-y-[2px] hover:bg-white/10 hover:shadow-lg"
+      renderHeaderIcon={({ Icon }) => (
+        <div className={`h-12 w-12 rounded-xl p-3 flex items-center justify-center ${entryTheme.bgClass}`}>
+          <Icon className={`h-6 w-6 ${entryTheme.iconClass}`} />
+        </div>
+      )}
+    >
+      {() => <GradesScopedWorkspace />}
+    </TeacherFeatureClassEntryGate>
+  );
+}
+
+function GradesScopedWorkspace() {
   const workspace = useGradesWorkspaceState();
   const workspaceTitle = toWorkspaceTitle(workspace.selectedGradeType);
   const publishedTitle = toPublishedTitle(workspace.selectedGradeType);
@@ -28,6 +53,7 @@ export default function GradesView() {
             search={workspace.search}
             stats={workspace.stats}
             publishedItems={workspace.publishedItems}
+            routeClassId={workspace.routeClassId}
             deleteConfirmOpen={workspace.deleteConfirmOpen}
             onBack={workspace.onBack}
             onCloseDeleteConfirm={workspace.closeDeleteConfirm}

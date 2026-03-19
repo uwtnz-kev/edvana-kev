@@ -17,11 +17,11 @@ export function buildSubmoduleId() {
 }
 
 export function createEmptySubmodule(): SubmoduleDraft {
-  return { id: buildSubmoduleId(), title: "", description: "" };
+  return { id: buildSubmoduleId(), title: "", description: "", content: "", attachedFileIds: [] };
 }
 
 export function isSubmoduleBlank(submodule: SubmoduleDraft) {
-  return submodule.title.trim().length === 0 && submodule.description.trim().length === 0;
+  return submodule.title.trim().length === 0 && submodule.description.trim().length === 0 && submodule.content.trim().length === 0 && submodule.attachedFileIds.length === 0;
 }
 
 // Creates the module in the store and returns the route payload used by the page redirect.
@@ -29,16 +29,21 @@ export function saveSubjectModule(
   subjectId: string,
   moduleTitle: string,
   description: string,
-  submodules: SubmoduleDraft[]
+  submodules: SubmoduleDraft[],
+  attachedFileIds: string[]
 ) {
   const nonBlankSubmodules = submodules.filter((submodule) => !isSubmoduleBlank(submodule));
   addSubjectModule(subjectId, {
     title: moduleTitle.trim(),
     description: description.trim(),
+    attachedFileIds,
     submodules: nonBlankSubmodules.map((submodule) => ({
       title: submodule.title.trim(),
       description: submodule.description.trim(),
+      content: submodule.content.trim(),
+      attachedFileIds: submodule.attachedFileIds,
     })),
   });
   return nonBlankSubmodules;
 }
+

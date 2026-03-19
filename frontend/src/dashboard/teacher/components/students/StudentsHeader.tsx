@@ -3,7 +3,7 @@
  * --------------
  * Renders the header for the teacher dashboard s tu de nt s feature.
  */
-import { ArrowLeft, Users, BookOpen } from "lucide-react";
+import { ArrowLeft, Users } from "lucide-react";
 import { getSubjectIconTheme } from "@/dashboard/teacher/components/shared/subjectIconTheme";
 import { Button } from "@/components/ui/button";
 
@@ -42,7 +42,7 @@ export default function StudentsHeader({
             </Button>
           ) : null}
           <div className={`h-12 w-12 rounded-2xl flex items-center justify-center ${theme.bgClass}`}>
-            <BookOpen className={`h-6 w-6 ${theme.iconClass}`} />
+            <Users className={`h-6 w-6 ${theme.iconClass}`} />
           </div>
           <div>
             <h1 className="text-2xl font-semibold text-white">{title}</h1>

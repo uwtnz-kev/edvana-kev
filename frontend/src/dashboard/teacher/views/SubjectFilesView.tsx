@@ -1,10 +1,11 @@
 import { useMemo, useState } from "react";
-import { ArrowLeft, FileText, Folder, Plus, Search } from "lucide-react";
+import { ArrowLeft, FileText, Folder, Plus, Search, Trash2 } from "lucide-react";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { ConfirmDeleteModal } from "@/dashboard/teacher/components/assignments/ConfirmDeleteModal";
 import { Input } from "@/components/ui/input";
 import { getSubjectThemeById } from "@/dashboard/teacher/components/shared";
-import { formatSubjectFileSize, useSubjectFiles, useSubjectFolder, useSubjectFolders } from "@/dashboard/teacher/components/subjects/files/subjectFilesStore";
+import { deleteSubjectFile, deleteSubjectFolder, formatSubjectFileSize, isSubjectFileVisibleInFiles, useSubjectFiles, useSubjectFolder, useSubjectFolders } from "@/dashboard/teacher/components/subjects/files/subjectFilesStore";
 import { getSubjectName } from "@/dashboard/teacher/components/subjects/upload/uploadModuleHelpers";
 import type { SubjectUploadRouteState } from "@/dashboard/teacher/components/subjects/upload/uploadModuleTypes";
 import { appendClassIdToPath, getClassIdFromSearchParams } from "./subjects/subjectClassRouting";
@@ -29,9 +30,12 @@ export default function SubjectFilesView() {
   const theme = getSubjectThemeById(subjectId);
   const subjectName = getSubjectName(subjectId, state);
   const files = useSubjectFiles(subjectId);
+  const visibleFiles = useMemo(() => files.filter(isSubjectFileVisibleInFiles), [files]);
   const folders = useSubjectFolders(subjectId);
   const currentFolder = useSubjectFolder(subjectId, folderId);
   const [query, setQuery] = useState("");
+  const [fileIdPendingDelete, setFileIdPendingDelete] = useState<string | null>(null);
+  const [folderIdPendingDelete, setFolderIdPendingDelete] = useState<string | null>(null);
   const topLevelRoute = appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/files`, classId);
   const scopedUploadRoute = currentFolder
     ? `/dashboard/teacher/subjects/${subjectId}/upload-files?${new URLSearchParams({
@@ -42,8 +46,8 @@ export default function SubjectFilesView() {
   const isFolderRoute = folderId.trim().length > 0;
   const folderMissing = isFolderRoute && !currentFolder;
   const backRoute = isFolderRoute ? topLevelRoute : appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}`, classId);
-  const folderFiles = useMemo(() => files.filter((file) => file.folderId === folderId), [files, folderId]);
-  const topLevelFiles = useMemo(() => files.filter((file) => file.folderId === null), [files]);
+  const folderFiles = useMemo(() => visibleFiles.filter((file) => file.folderId === folderId), [visibleFiles, folderId]);
+  const topLevelFiles = useMemo(() => visibleFiles.filter((file) => file.folderId === null), [visibleFiles]);
 
   const visibleRows = useMemo<VisibleRow[]>(() => {
     if (folderMissing) return [];
@@ -66,7 +70,7 @@ export default function SubjectFilesView() {
     const visibleFolders: VisibleRow[] = folders
       .filter((folder) => !normalizedQuery || folder.name.toLowerCase().includes(normalizedQuery))
       .map((folder) => ({ type: "folder", id: folder.id, name: folder.name, createdAt: folder.createdAt }));
-    const visibleFiles: VisibleRow[] = topLevelFiles
+    const visibleFileRows: VisibleRow[] = topLevelFiles
       .filter((file) => !normalizedQuery || [file.name, file.originalFileName, file.category, file.modifiedBy].some((value) => value.toLowerCase().includes(normalizedQuery)))
       .map((file) => ({
         type: "file",
@@ -78,8 +82,17 @@ export default function SubjectFilesView() {
         sizeBytes: file.sizeBytes,
       }));
 
-    return [...visibleFolders, ...visibleFiles];
+    return [...visibleFolders, ...visibleFileRows];
   }, [currentFolder, folderFiles, folderMissing, folders, query, topLevelFiles]);
+
+  const pendingFolder = useMemo(
+    () => folders.find((folder) => folder.id === folderIdPendingDelete) ?? null,
+    [folderIdPendingDelete, folders],
+  );
+  const pendingFolderHasFiles = useMemo(
+    () => (pendingFolder ? visibleFiles.some((file) => file.folderId === pendingFolder.id) : false),
+    [pendingFolder, visibleFiles],
+  );
 
   const handleRowOpen = (row: VisibleRow) => {
     if (row.type === "folder") {
@@ -94,6 +107,18 @@ export default function SubjectFilesView() {
     : currentFolder
       ? "No files match your search in this folder."
       : "No folders or files match your search.";
+
+  const confirmDeleteFile = () => {
+    if (!fileIdPendingDelete) return;
+    deleteSubjectFile(subjectId, fileIdPendingDelete);
+    setFileIdPendingDelete(null);
+  };
+
+  const confirmDeleteFolder = () => {
+    if (!folderIdPendingDelete) return;
+    deleteSubjectFolder(subjectId, folderIdPendingDelete);
+    setFolderIdPendingDelete(null);
+  };
 
   return (
     <div className="w-full overflow-x-hidden p-4 sm:p-6" style={{ overflowX: "hidden" }}>
@@ -144,41 +169,68 @@ export default function SubjectFilesView() {
                   <th className="w-[42%] px-4 py-3 font-medium">Name</th>
                   <th className="w-[22%] px-4 py-3 font-medium">Created</th>
                   <th className="w-[20%] px-4 py-3 font-medium">Last Modified</th>
-                  <th className="w-[16%] px-4 py-3 font-medium">Size</th>
+                  <th className="w-[14%] px-4 py-3 font-medium">Size</th>
+                  <th className="w-[8%] px-4 py-3 font-medium"></th>
                 </tr>
               </thead>
               <tbody>
                 {visibleRows.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="px-4 py-8 text-center text-sm text-[var(--text-primary)]/70">
+                    <td colSpan={5} className="px-4 py-8 text-center text-sm text-[var(--text-primary)]/70">
                       {emptyMessage}
                     </td>
                   </tr>
                 ) : null}
                 {visibleRows.map((row) => (
                   <tr key={`${row.type}-${row.id}`} className="border-b border-white/10 text-sm text-[var(--text-primary)]/80 last:border-b-0">
-                    <td className="px-4 py-4 align-top">
-                      <div className="min-w-0">
-                        <button
-                          type="button"
-                          onClick={() => handleRowOpen(row)}
-                          className="flex min-w-0 items-center gap-3 text-left"
-                        >
-                          <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl ${row.type === "folder" ? "bg-amber-400/15 text-amber-300" : `${theme.bgClass} ${theme.iconClass}`}`}>
-                            {row.type === "folder" ? <Folder className="h-5 w-5" /> : <FileText className="h-5 w-5" />}
-                          </span>
-                          <span className="min-w-0">
-                            <span className={`block truncate font-medium transition hover:underline ${row.type === "folder" ? "text-amber-200 hover:text-amber-100" : "text-sky-300 hover:text-sky-200"}`}>
-                              {row.name}
+                    <td className="min-w-0 w-[42%] max-w-0 px-4 py-4 align-top">
+                      <button
+                        type="button"
+                        onClick={() => handleRowOpen(row)}
+                        className="block min-w-0 w-full overflow-hidden text-left"
+                      >
+                        <div className="flex min-w-0 items-center gap-4">
+                          <div className="shrink-0">
+                            <span className={`flex h-10 w-10 items-center justify-center rounded-2xl ${row.type === "folder" ? "bg-amber-400/15 text-amber-300" : `${theme.bgClass} ${theme.iconClass}`}`}>
+                              {row.type === "folder" ? <Folder className="h-5 w-5" /> : <FileText className="h-5 w-5" />}
                             </span>
-                            {row.type === "folder" ? <span className="mt-1 block text-xs text-[var(--text-secondary)]">Folder</span> : <span className="mt-1 block truncate text-xs text-[var(--text-secondary)]">{row.originalFileName}</span>}
-                          </span>
-                        </button>
-                      </div>
+                          </div>
+
+                          <div className="min-w-0 flex-1 overflow-hidden">
+                            <div
+                              className={`truncate text-sm font-semibold hover:underline underline-offset-2 ${row.type === "folder" ? "text-amber-200" : "text-cyan-300"}`}
+                              title={row.name}
+                            >
+                              {row.name}
+                            </div>
+
+                            {row.type === "folder" ? (
+                              <div className="truncate text-xs text-white/65" title="Folder">
+                                Folder
+                              </div>
+                            ) : (
+                              <div className="truncate text-xs text-white/65" title={row.originalFileName}>
+                                {row.originalFileName}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </button>
                     </td>
                     <td className="px-4 py-4 align-top text-xs text-[var(--text-primary)]/70">{formatTimestamp(row.createdAt)}</td>
                     <td className="px-4 py-4 align-top text-xs text-[var(--text-primary)]/70">{row.type === "folder" ? "-" : formatTimestamp(row.updatedAt)}</td>
                     <td className="px-4 py-4 align-top text-xs text-[var(--text-primary)]/70">{row.type === "folder" ? "-" : formatSubjectFileSize(row.sizeBytes)}</td>
+                    <td className="px-4 py-4 align-top">
+                      <button
+                        type="button"
+                        onClick={() => row.type === "folder" ? setFolderIdPendingDelete(row.id) : setFileIdPendingDelete(row.id)}
+                        className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-red-400/20 bg-red-500/10 text-red-300 transition-all duration-200 hover:bg-red-500/20 hover:border-red-400/30"
+                        aria-label={row.type === "folder" ? `Delete ${row.name}` : `Delete ${row.name}`}
+                        title={row.type === "folder" ? "Delete folder" : "Delete file"}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -186,6 +238,28 @@ export default function SubjectFilesView() {
           </div>
         </section>
       </div>
+      <ConfirmDeleteModal
+        open={fileIdPendingDelete !== null}
+        onOpenChange={(open) => {
+          if (!open) setFileIdPendingDelete(null);
+        }}
+        title="Delete file?"
+        description="This file will be removed immediately."
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        onConfirm={confirmDeleteFile}
+      />
+      <ConfirmDeleteModal
+        open={folderIdPendingDelete !== null}
+        onOpenChange={(open) => {
+          if (!open) setFolderIdPendingDelete(null);
+        }}
+        title="Delete folder?"
+        description={pendingFolderHasFiles ? "Are you sure you want to delete this folder and its contents?" : "Are you sure you want to delete this folder?"}
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        onConfirm={confirmDeleteFolder}
+      />
     </div>
   );
 }

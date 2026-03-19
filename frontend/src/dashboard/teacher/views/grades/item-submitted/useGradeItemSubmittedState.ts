@@ -9,6 +9,7 @@ import {
 } from "@/dashboard/teacher/components/grades";
 import { TEACHER_ROUTES } from "@/dashboard/teacher/routes";
 import { buildGradesWorkspaceRoute } from "../gradesViewHelpers";
+import { getClassIdFromSearchParams } from "../../subjects/subjectClassRouting";
 
 export function useGradeItemSubmittedState() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ export function useGradeItemSubmittedState() {
   const query = useMemo(() => new URLSearchParams(location.search), [location.search]);
   const type = query.get("type") as TeacherGradeSelectionType | null;
   const subjectId = query.get("subjectId");
+  const routeClassId = getClassIdFromSearchParams(query);
   const [search, setSearch] = useState("");
   const item = useMemo(() => (itemId ? getPublishedItemById(itemId) : null), [itemId]);
   const subjectName = useMemo(
@@ -36,7 +38,7 @@ export function useGradeItemSubmittedState() {
     subjectName,
     submissions,
     type,
-    backToWorkspace: () => navigate(buildGradesWorkspaceRoute(subjectId, type)),
+    backToWorkspace: () => navigate(buildGradesWorkspaceRoute(subjectId, type, routeClassId)),
     openNotSubmitted: () => navigate(`${TEACHER_ROUTES.GRADES_WORKSPACE}/${itemId}/not-submitted${location.search}`),
     openSubmission: (submissionId: string) =>
       navigate(`${TEACHER_ROUTES.GRADES_WORKSPACE}/${itemId}/submissions/${submissionId}${location.search}`),

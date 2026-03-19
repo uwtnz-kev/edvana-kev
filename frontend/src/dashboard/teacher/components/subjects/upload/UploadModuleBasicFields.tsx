@@ -1,23 +1,20 @@
-// Renders the module overview card and basic title/description inputs.
+// Renders the module overview card and basic title input.
 import { Upload } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { SubjectIconTheme } from "@/dashboard/teacher/components/shared/subjectIconTheme";
-import { RichDescriptionTextarea } from "./RichDescriptionTextarea";
 
 type Props = {
+  description: string;
   theme: SubjectIconTheme;
   subjectTitle: string;
   moduleTitle: string;
-  description: string;
   titleError: string | null;
-  descriptionError: string | null;
   titleTouched: boolean;
-  descriptionTouched: boolean;
-  onTitleChange: (value: string) => void;
   onDescriptionChange: (value: string) => void;
+  onTitleChange: (value: string) => void;
   onTitleBlur: () => void;
-  onDescriptionBlur: () => void;
+  showDescriptionField?: boolean;
 };
 
 export function UploadModuleBasicFields(props: Props) {
@@ -40,18 +37,18 @@ export function UploadModuleBasicFields(props: Props) {
         {props.titleTouched && props.titleError ? <p className="mt-1 text-sm font-medium text-red-600">{props.titleError}</p> : null}
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="module-description" className="text-white">Description</Label>
-        <RichDescriptionTextarea
-          id="module-description"
-          value={props.description}
-          onChange={props.onDescriptionChange}
-          onBlur={props.onDescriptionBlur}
-          placeholder="Describe what this module covers. text field supports:link, image URL and  simple HTML."
-          className="min-h-[140px] rounded-2xl border-white/20 bg-white/10 text-white placeholder:text-white/70"
-        />
-        {props.descriptionTouched && props.descriptionError ? <p className="mt-1 text-sm font-medium text-red-600">{props.descriptionError}</p> : null}
-      </div>
+      {props.showDescriptionField !== false ? (
+        <div className="space-y-2">
+          <Label htmlFor="module-description" className="text-white">Module Description (optional)</Label>
+          <textarea
+            id="module-description"
+            value={props.description}
+            onChange={(event) => props.onDescriptionChange(event.target.value)}
+            placeholder="Describe what this module covers. Supports links, image URLs, and simple HTML."
+            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-primary/40"
+          />
+        </div>
+      ) : null}
     </>
   );
 }

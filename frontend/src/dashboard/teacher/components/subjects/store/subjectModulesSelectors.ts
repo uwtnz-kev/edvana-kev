@@ -4,6 +4,7 @@ import {
   getSubjectModulesSnapshot,
   subscribeToSubjectModules,
 } from "./subjectModulesPersistence";
+import { sortModulesByOrder, sortSubmodulesByOrder } from "./subjectModulesFactories";
 
 export function useSubjectModules(subjectId: string) {
   const snapshot = useSyncExternalStore(
@@ -11,5 +12,9 @@ export function useSubjectModules(subjectId: string) {
     getSubjectModulesSnapshot,
     getSubjectModulesSnapshot
   );
-  return snapshot[subjectId] ?? [];
+
+  return sortModulesByOrder(snapshot[subjectId] ?? []).map((module) => ({
+    ...module,
+    submodules: sortSubmodulesByOrder(module.submodules),
+  }));
 }

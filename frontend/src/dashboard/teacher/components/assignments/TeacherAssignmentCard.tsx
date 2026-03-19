@@ -28,7 +28,7 @@ export function TeacherAssignmentCard({ assignment, onDelete, onDuplicate, onEdi
   };
 
   return (
-    <article className="group teacher-panel-surface rounded-2xl p-4 space-y-4 teacher-panel-hover-lift">
+    <article className="group w-full max-w-[580px] teacher-panel-surface rounded-xl p-3 space-y-1.5 teacher-panel-hover-lift">
       <AssignmentCardHeader assignment={assignment} />
       <AssignmentCardMeta assignment={assignment} />
       <AssignmentCardActions assignment={assignment} onDelete={() => setConfirmOpen(true)} onDuplicate={onDuplicate} onEdit={onEdit} onPreview={onPreview} onPublish={onPublish} onRepublish={() => setRepublishOpen(true)} />
@@ -37,4 +37,3 @@ export function TeacherAssignmentCard({ assignment, onDelete, onDuplicate, onEdi
     </article>
   );
 }
-

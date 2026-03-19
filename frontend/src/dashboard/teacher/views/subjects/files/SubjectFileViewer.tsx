@@ -8,6 +8,11 @@ import type { SubjectUploadRouteState } from "@/dashboard/teacher/components/sub
 import { appendClassIdToPath, getClassIdFromSearchParams } from "../subjectClassRouting";
 
 type Params = { subjectId?: string; fileId?: string };
+type SubjectFileViewerRouteState = Pick<SubjectUploadRouteState, "restoreSubjectId" | "subject"> & {
+  from?: "files" | "module";
+  moduleId?: string;
+  submoduleId?: string;
+};
 
 function formatTimestamp(value: string) {
   return new Date(value).toLocaleString([], { year: "numeric", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
@@ -19,7 +24,7 @@ export default function SubjectFileViewer() {
   const [searchParams] = useSearchParams();
   const { subjectId = "", fileId = "" } = useParams<Params>();
   const classId = getClassIdFromSearchParams(searchParams);
-  const state = (location.state as SubjectUploadRouteState | null) ?? null;
+  const state = (location.state as SubjectFileViewerRouteState | null) ?? null;
   const theme = getSubjectThemeById(subjectId);
   const subjectName = getSubjectName(subjectId, state);
   const file = useSubjectFile(subjectId, fileId);
@@ -27,6 +32,10 @@ export default function SubjectFileViewer() {
   const filesRoute = file?.folderId
     ? appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/files/folders/${file.folderId}`, classId)
     : appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/files`, classId);
+  const moduleRoute = state?.submoduleId && state.moduleId
+    ? appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/modules/${state.moduleId}/submodules/${state.submoduleId}`, classId)
+    : appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/modules`, classId);
+  const backRoute = state?.from === "module" ? moduleRoute : filesRoute;
   const isImage = file?.mimeType.startsWith("image/") ?? false;
 
   return (
@@ -34,7 +43,7 @@ export default function SubjectFileViewer() {
       <div className="mx-auto w-full max-w-6xl space-y-4">
         <header className="rounded-2xl border border-white/10 bg-white/10 px-6 py-5 backdrop-blur-xl">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <Button type="button" onClick={() => navigate(filesRoute, { state: { restoreSubjectId: subjectId, subject: state?.subject ?? null } })} className="w-fit rounded-2xl border border-white/20 bg-white/10 text-white transition-all duration-200 hover:bg-white/30 hover:shadow-sm">
+            <Button type="button" onClick={() => navigate(backRoute, { state: { restoreSubjectId: subjectId, subject: state?.subject ?? null } })} className="w-fit rounded-2xl border border-white/20 bg-white/10 text-white transition-all duration-200 hover:bg-white/30 hover:shadow-sm">
               <ArrowLeft className="mr-2 h-4 w-4" />Back
             </Button>
             <div className="flex items-center gap-4">

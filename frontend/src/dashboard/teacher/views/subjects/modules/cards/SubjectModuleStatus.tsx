@@ -1,6 +1,4 @@
-// Status badge and publish action for a subject module row.
-import { Button } from "@/components/ui/button";
-import { StatusBadge } from "@/dashboard/teacher/components/shared";
+// Status badge and publish/delete actions for a subject module row.
 import { Trash2, Upload } from "lucide-react";
 import type { SubjectModuleItem } from "@/dashboard/teacher/components/subjects/store/subjectModulesTypes";
 
@@ -10,26 +8,36 @@ type Props = {
   onPublish: (moduleId: string) => void;
 };
 
+const moduleActionButton =
+  "flex items-center justify-center h-8 min-w-[90px] px-2.5 text-xs gap-1.5 rounded-md";
+
 export function SubjectModuleStatus({ module, onDelete, onPublish }: Props) {
   return (
-    <div className="flex w-full shrink-0 flex-wrap items-center justify-end gap-2 lg:w-auto lg:flex-col lg:items-end lg:text-right">
-      <StatusBadge status={module.status} label={module.status === "draft" ? "Draft" : "Published"} className="px-3" />
+    <div className="flex items-center gap-2">
       {module.status === "draft" ? (
-        <button type="button" onClick={(event) => { event.stopPropagation(); onPublish(module.id); }} className="flex shrink-0 items-center gap-1.5 rounded-full bg-emerald-600 px-3 py-1 text-xs font-medium text-white transition hover:bg-emerald-700">
-          <Upload className="h-3.5 w-3.5" />Publish
+        <button
+          type="button"
+          onClick={(event) => {
+            event.stopPropagation();
+            onPublish(module.id);
+          }}
+          className={`${moduleActionButton} bg-emerald-500 text-white transition hover:bg-emerald-600`}
+        >
+          <Upload className="h-3.5 w-3.5" />
+          Publish
         </button>
       ) : null}
-      <Button
+      <button
         type="button"
         onClick={(event) => {
           event.stopPropagation();
           onDelete(module.id);
         }}
-        className="h-6 shrink-0 rounded-2xl border border-white/10 bg-white/10 px-2 text-[11px] text-white hover:bg-white/20"
+        className={`${moduleActionButton} bg-white/10 text-white hover:bg-white/20`}
       >
-        <Trash2 className="mr-1.5 h-3.5 w-3.5" />
+        <Trash2 className="h-3.5 w-3.5 text-red-400" />
         Delete
-      </Button>
+      </button>
     </div>
   );
 }

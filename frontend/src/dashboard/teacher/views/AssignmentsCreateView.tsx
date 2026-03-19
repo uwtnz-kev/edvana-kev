@@ -36,6 +36,11 @@ export default function AssignmentsCreateView() {
   const location = useLocation();
 
   const createState = getCreateState(location.state);
+  const goToAssignmentsWorkspace = (restoreSubjectId?: string) =>
+    navigate(
+      { pathname: "/dashboard/teacher/assignments", search: location.search },
+      restoreSubjectId ? { state: { restoreSubjectId } } : undefined,
+    );
 
   if (!createState) {
     return (
@@ -48,7 +53,7 @@ export default function AssignmentsCreateView() {
           <div className="mt-5">
             <Button
               type="button"
-              onClick={() => navigate({ pathname: "/dashboard/teacher/assignments", search: location.search })}
+              onClick={() => goToAssignmentsWorkspace()}
               className="bg-white/20 hover:bg-white/30 text-[var(--text-primary)] border border-white/20 rounded-2xl"
             >
               Back
@@ -64,26 +69,14 @@ export default function AssignmentsCreateView() {
       <div className="max-w-5xl mx-auto space-y-4">
         <TeacherAssignmentCreateHeader
           subjectName={createState.subjectName}
-          onBack={() =>
-            navigate({ pathname: "/dashboard/teacher/assignments", search: location.search }, {
-              state: { restoreSubjectId: createState.subjectId },
-            })
-          }
+          onBack={() => goToAssignmentsWorkspace(createState.subjectId)}
         />
 
         <TeacherAssignmentCreateForm
           subjectId={createState.subjectId}
           subjectName={createState.subjectName}
-          onCancel={() =>
-            navigate({ pathname: "/dashboard/teacher/assignments", search: location.search }, {
-              state: { restoreSubjectId: createState.subjectId },
-            })
-          }
-          onSaved={(subjectId) =>
-            navigate({ pathname: "/dashboard/teacher/assignments", search: location.search }, {
-              state: { restoreSubjectId: subjectId },
-            })
-          }
+          onCancel={() => goToAssignmentsWorkspace(createState.subjectId)}
+          onSaved={(subjectId) => goToAssignmentsWorkspace(subjectId)}
         />
       </div>
     </div>

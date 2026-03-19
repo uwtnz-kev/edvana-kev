@@ -2,12 +2,17 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { getSubjectThemeById } from "@/dashboard/teacher/components/shared";
+import { useSubjectFiles } from "@/dashboard/teacher/components/subjects/files/subjectFilesStore";
 import {
   deleteSubjectModule,
   deleteSubjectSubmodule,
+  reorderSubjectModules,
+  reorderSubjectSubmodules,
+  updateSubjectModule,
   updateSubjectModuleStatus,
   useSubjectModules,
 } from "@/dashboard/teacher/components/subjects/subjectModulesStore";
+import type { SubjectModulePayload } from "@/dashboard/teacher/components/subjects/store/subjectModulesTypes";
 import { appendClassIdToPath, getClassIdFromSearchParams } from "../subjectClassRouting";
 import { getSubjectName, getSubjectTitle, type SubjectModulesRouteState } from "./subjectModulesViewHelpers";
 
@@ -28,15 +33,16 @@ export function useSubjectModulesViewState() {
   const subjectName = useMemo(() => getSubjectName(subjectId, routeState), [routeState, subjectId]);
   const subjectTitle = useMemo(() => getSubjectTitle(subjectId, routeState), [routeState, subjectId]);
   const modules = useSubjectModules(subjectId);
+  const subjectFiles = useSubjectFiles(subjectId);
   const visibleModules = useMemo(() => modules, [modules]);
-  const [expandedModuleId, setExpandedModuleId] = useState<string | null>(visibleModules[0]?.id ?? null);
+  const [expandedModuleId, setExpandedModuleId] = useState<string | null>(null);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [pendingDeleteTarget, setPendingDeleteTarget] = useState<PendingDeleteTarget>(null);
 
   useEffect(() => {
     setExpandedModuleId((current) => {
-      if (!current) return visibleModules[0]?.id ?? null;
-      return visibleModules.some((module) => module.id === current) ? current : visibleModules[0]?.id ?? null;
+      if (!current) return null;
+      return visibleModules.some((module) => module.id === current) ? current : null;
     });
   }, [visibleModules]);
 
@@ -44,8 +50,10 @@ export function useSubjectModulesViewState() {
     expandedModuleId,
     routeState,
     subjectId,
+    classId,
     subjectName,
     subjectTitle,
+    subjectFiles,
     theme,
     visibleModules,
     closeDeleteConfirm: () => {
@@ -71,12 +79,24 @@ export function useSubjectModulesViewState() {
       pendingDeleteTarget?.type === "module" ? "Delete module?" : "Delete submodule?",
     goBack: () => navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}`, classId)),
     goToSubjectsSelection: () => navigate(appendClassIdToPath("/dashboard/teacher/subjects", classId)),
+    openAttachedFile: (fileId: string, moduleId?: string, submoduleId?: string) =>
+      navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/files/${fileId}`, classId), {
+        state: {
+          from: "module",
+          moduleId,
+          restoreSubjectId: subjectId,
+          subject: routeState?.subject ?? null,
+          submoduleId,
+        },
+      }),
     openModule: (moduleId: string) =>
       navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/modules/${moduleId}`, classId), {
         state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null },
       }),
     openSubmodule: (moduleId: string, submoduleId: string) => navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/modules/${moduleId}/submodules/${submoduleId}`, classId), { state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null } }),
     publishModule: (moduleId: string) => updateSubjectModuleStatus(subjectId, moduleId, "published"),
+    reorderModules: (orderedModuleIds: string[]) => reorderSubjectModules(subjectId, orderedModuleIds),
+    reorderSubmodules: (moduleId: string, orderedSubmoduleIds: string[]) => reorderSubjectSubmodules(subjectId, moduleId, orderedSubmoduleIds),
     requestDeleteModule: (moduleId: string) => {
       setPendingDeleteTarget({ type: "module", moduleId });
       setDeleteConfirmOpen(true);
@@ -86,5 +106,6 @@ export function useSubjectModulesViewState() {
       setDeleteConfirmOpen(true);
     },
     toggleModule: (moduleId: string) => setExpandedModuleId((current) => (current === moduleId ? null : moduleId)),
+    updateModule: (moduleId: string, payload: SubjectModulePayload) => updateSubjectModule(subjectId, moduleId, payload),
   };
 }

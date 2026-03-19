@@ -1,4 +1,5 @@
 // Orchestrates the teacher students workspace using extracted view modules.
+import { Users } from "lucide-react";
 import {
   StudentsStats,
   StudentsHome,
@@ -14,8 +15,24 @@ import {
   StudentsTable,
   useStudentsViewState,
 } from "./students";
+import { TeacherFeatureClassEntryGate } from "./shared/TeacherFeatureClassEntryGate";
 
 export default function StudentsView() {
+  return (
+    <TeacherFeatureClassEntryGate
+      entryPath="/dashboard/teacher/students"
+      featureKey="students"
+      title="Students"
+      subtitle="Choose a class to open the students workspace"
+      icon={Users}
+      infoCardClassName="transition-all duration-200 hover:-translate-y-[2px] hover:bg-white/10 hover:shadow-lg"
+    >
+      {({ onBackToEntry }) => <StudentsScopedView onBackToEntry={onBackToEntry} />}
+    </TeacherFeatureClassEntryGate>
+  );
+}
+
+function StudentsScopedView({ onBackToEntry }: { onBackToEntry: () => void }) {
   const state = useStudentsViewState();
 
   if (!state.selectedSubject) {
@@ -30,7 +47,7 @@ export default function StudentsView() {
             />
           </aside>
           <section className="flex-1 min-w-0 space-y-4">
-            <StudentsHeader />
+            <StudentsHeader showBack onBack={onBackToEntry} />
             <StudentsHome />
           </section>
         </div>

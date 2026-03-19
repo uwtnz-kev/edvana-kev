@@ -16,10 +16,25 @@ function parseAssignments(raw: string | null): TeacherAssignment[] | null {
   }
 }
 
+const TEMP_SEED_ASSIGNMENT_IDS = new Set([
+  "assignment-1",
+  "assignment-2",
+  "assignment-3",
+  "assignment-4",
+  "assignment-5",
+  "assignment-6",
+]);
+
 function mergeSeedAssignments(items: TeacherAssignment[]) {
+  const seededById = new Map(seedAssignments.map((item) => [item.id, item]));
   const existingIds = new Set(items.map((item) => item.id));
+  const mergedItems = items.map((item) => {
+    if (!TEMP_SEED_ASSIGNMENT_IDS.has(item.id)) return item;
+    const seeded = seededById.get(item.id);
+    return seeded ? cloneAssignments([seeded])[0] : item;
+  });
   const missingSeedAssignments = seedAssignments.filter((item) => !existingIds.has(item.id));
-  return missingSeedAssignments.length > 0 ? [...items, ...cloneAssignments(missingSeedAssignments)] : items;
+  return missingSeedAssignments.length > 0 ? [...mergedItems, ...cloneAssignments(missingSeedAssignments)] : mergedItems;
 }
 
 export function saveAssignments(items: TeacherAssignment[]): TeacherAssignment[] {
@@ -42,3 +57,4 @@ export function loadAssignments(): TeacherAssignment[] {
   saveAssignments(seeded);
   return seeded;
 }
+

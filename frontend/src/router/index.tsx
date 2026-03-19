@@ -56,6 +56,7 @@ import SubjectModuleContentView from "@/dashboard/teacher/views/SubjectModuleCon
 import SubjectModulesView from "@/dashboard/teacher/views/SubjectModulesView";
 import SubjectModuleView from "@/dashboard/teacher/views/SubjectModuleView";
 import SubjectUploadModuleView from "@/dashboard/teacher/views/SubjectUploadModuleView";
+import SubjectUploadModuleFileView from "@/dashboard/teacher/views/SubjectUploadModuleFileView";
 import TeacherAttendanceView from "@/dashboard/teacher/views/AttendanceView";
 import CreateAttendanceListView from "@/dashboard/teacher/views/CreateAttendanceListView";
 import AttendanceEditView from "@/dashboard/teacher/views/AttendanceEditView";
@@ -211,6 +212,7 @@ export function AppRouter() {
             element={<SubjectModuleContentView />}
           />
           <Route path="subjects/:subjectId/upload-module" element={<SubjectUploadModuleView />} />
+          <Route path="subjects/:subjectId/upload-module-file" element={<SubjectUploadModuleFileView />} />
           <Route path="messages" element={<MessagesView />} />
           <Route path="messages/:messageId" element={<MessageDetailsView />} />
           <Route path="subjects/:subjectId/modules/:moduleId" element={<SubjectModuleView />} />

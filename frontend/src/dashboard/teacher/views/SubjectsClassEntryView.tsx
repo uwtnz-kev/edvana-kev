@@ -77,7 +77,7 @@ export default function SubjectsClassEntryView() {
               />
 
               <div className="grid gap-4 lg:grid-cols-2">
-                <section className="teacher-panel-surface rounded-2xl p-6">
+                <section className="teacher-panel-surface rounded-2xl p-6 transition-all duration-200 hover:-translate-y-[2px] hover:bg-white/10 hover:shadow-lg">
                   <div className="flex items-start gap-4">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-blue-500/20 text-blue-400 backdrop-blur">
                       <LayoutPanelLeft className="h-5 w-5" />
@@ -96,7 +96,7 @@ export default function SubjectsClassEntryView() {
                   </div>
                 </section>
 
-                <section className="teacher-panel-surface rounded-2xl p-5">
+                <section className="teacher-panel-surface rounded-2xl p-5 transition-all duration-200 hover:-translate-y-[2px] hover:bg-white/10 hover:shadow-lg">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-purple-500/20 text-purple-400 backdrop-blur">
                       <Sparkles className="h-4 w-4" />
@@ -108,7 +108,7 @@ export default function SubjectsClassEntryView() {
                   </p>
                 </section>
 
-                <section className="teacher-panel-surface rounded-2xl p-5">
+                <section className="teacher-panel-surface rounded-2xl p-5 transition-all duration-200 hover:-translate-y-[2px] hover:bg-white/10 hover:shadow-lg">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-amber-500/20 text-amber-300 backdrop-blur">
                       <GraduationCap className="h-4 w-4" />
@@ -162,7 +162,7 @@ export default function SubjectsClassEntryView() {
                     <h3 className="text-white font-semibold">Quick Actions</h3>
                   </div>
                   <p className="mt-2 text-sm text-white/60">
-                    Review the subjects assigned to {selectedClass.classLabel}, then open one to continue into Modules or Upload Module.
+                    Review the subjects assigned to {selectedClass.classLabel}, then open one to continue into Modules, Create Module, or Upload Module.
                   </p>
                 </section>
 
@@ -185,3 +185,4 @@ export default function SubjectsClassEntryView() {
     </div>
   );
 }
+

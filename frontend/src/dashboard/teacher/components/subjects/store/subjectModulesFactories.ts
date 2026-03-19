@@ -15,13 +15,39 @@ function buildId(prefix: string) {
   return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
-export function createSubjectSubmodule(submodule: SubjectSubmoduleDraft): SubjectSubmoduleItem {
-  return { id: buildId("submodule"), title: submodule.title, description: submodule.description, summary: submodule.description };
+export function sortSubmodulesByOrder<T extends { order: number }>(submodules: T[]) {
+  return [...submodules].sort((left, right) => left.order - right.order);
 }
 
-export function createSubjectModule(payload: SubjectModulePayload): SubjectModuleItem {
-  const submodules = payload.submodules.map(createSubjectSubmodule);
-  return { id: buildId("module"), title: payload.title, description: payload.description, status: "draft", lessons: submodules.length || 0, duration: "1 week", submodules };
+export function sortModulesByOrder<T extends { order: number }>(modules: T[]) {
+  return [...modules].sort((left, right) => left.order - right.order);
+}
+
+export function createSubjectSubmodule(submodule: SubjectSubmoduleDraft, order: number): SubjectSubmoduleItem {
+  return {
+    id: buildId("submodule"),
+    title: submodule.title,
+    description: submodule.description,
+    content: submodule.content,
+    attachedFileIds: submodule.attachedFileIds ?? [],
+    summary: submodule.description,
+    order,
+  };
+}
+
+export function createSubjectModule(payload: SubjectModulePayload, order: number): SubjectModuleItem {
+  const submodules = payload.submodules.map((submodule, index) => createSubjectSubmodule(submodule, index));
+  return {
+    id: buildId("module"),
+    title: payload.title,
+    description: payload.description,
+    status: "draft",
+    lessons: submodules.length || 0,
+    duration: "1 week",
+    order,
+    attachedFileIds: payload.attachedFileIds ?? [],
+    submodules,
+  };
 }
 
 export function cloneSubjectModules(modules: Record<string, SubjectModuleItem[]>) {

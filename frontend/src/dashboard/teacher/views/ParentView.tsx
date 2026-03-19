@@ -1,4 +1,5 @@
 // Orchestrates the teacher parents workspace using extracted view modules.
+import { Users } from "lucide-react";
 import TeacherParentDetailsModal from "@/dashboard/teacher/components/parents/TeacherParentDetailsModal";
 import ParentStatsCards from "@/dashboard/teacher/components/parents/ParentStatsCards";
 import ParentsHome from "@/dashboard/teacher/components/parents/ParentsHome";
@@ -6,8 +7,24 @@ import {
   TeacherAssignmentsSubjectSidebar,
 } from "@/dashboard/teacher/components/assignments";
 import { ParentsFilters, ParentsHeader, ParentsTable, useParentsViewState } from "./parents";
+import { TeacherFeatureClassEntryGate } from "./shared/TeacherFeatureClassEntryGate";
 
 export default function TeacherParentsView() {
+  return (
+    <TeacherFeatureClassEntryGate
+      entryPath="/dashboard/teacher/parents"
+      featureKey="parents"
+      title="Parents"
+      subtitle="Choose a class to open the parents workspace"
+      icon={Users}
+      infoCardClassName="transition-all duration-200 hover:-translate-y-[2px] hover:bg-white/10 hover:shadow-lg"
+    >
+      {({ onBackToEntry }) => <ParentsScopedView onBackToEntry={onBackToEntry} />}
+    </TeacherFeatureClassEntryGate>
+  );
+}
+
+function ParentsScopedView({ onBackToEntry }: { onBackToEntry: () => void }) {
   const state = useParentsViewState();
 
   if (!state.selectedSubject) {
@@ -23,7 +40,7 @@ export default function TeacherParentsView() {
           </aside>
 
           <section className="flex-1 min-w-0 space-y-4">
-            <ParentsHeader />
+            <ParentsHeader showBack onBack={onBackToEntry} />
             <ParentsHome />
           </section>
         </div>

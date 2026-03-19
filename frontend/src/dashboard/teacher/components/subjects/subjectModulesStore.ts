@@ -10,7 +10,10 @@ export {
   deleteSubjectModule,
   deleteSubjectSubmodule,
   getSubjectModulesSnapshot,
+  reorderSubjectModules,
+  reorderSubjectSubmodules,
   subscribeToSubjectModules,
+  updateSubjectModule,
   updateSubjectModuleStatus,
   useSubjectModules,
 } from "./store";

@@ -2,9 +2,12 @@
 import { TeacherQuizHeader, TeacherQuizHome, TeacherQuizSubjectSidebar } from "@/dashboard/teacher/components/quiz";
 import type { useQuizWorkspaceState } from "./useQuizWorkspaceState";
 
-type Props = { workspace: ReturnType<typeof useQuizWorkspaceState> };
+type Props = {
+  workspace: ReturnType<typeof useQuizWorkspaceState>;
+  onBackToClassEntry: () => void;
+};
 
-export function QuizWorkspaceHeader({ workspace }: Props) {
+export function QuizWorkspaceHeader({ workspace, onBackToClassEntry }: Props) {
   return (
     <div className="flex w-full gap-6 overflow-x-hidden">
       {!workspace.selectedSubject ? (
@@ -13,7 +16,7 @@ export function QuizWorkspaceHeader({ workspace }: Props) {
             <TeacherQuizSubjectSidebar subjects={workspace.subjects} selectedSubjectId={workspace.selectedSubjectId} onSelectSubject={workspace.setSelectedSubjectId} />
           </aside>
           <section className="flex-1 min-w-0 space-y-4">
-            <TeacherQuizHeader title="Quiz" subtitle="Choose a subject from the sidebar to manage quizzes" subjectName={null} showBack={false} showCreate={false} onBack={workspace.onBack} canCreate={false} onCreate={workspace.onCreate} />
+            <TeacherQuizHeader title="Quiz" subtitle="Choose a subject from the sidebar to manage quizzes" subjectName={null} showBack showCreate={false} onBack={onBackToClassEntry} canCreate={false} onCreate={workspace.onCreate} />
             <TeacherQuizHome />
           </section>
         </>

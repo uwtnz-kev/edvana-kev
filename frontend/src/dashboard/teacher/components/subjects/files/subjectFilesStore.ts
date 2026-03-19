@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from "react";
 import { getBrowserStorage, writeStoredJson } from "@/dashboard/teacher/components/shared/storage/storageJson";
 import { subjectFilesSeedData } from "./subjectFilesSeedData";
-import type { SubjectFileDraft, SubjectFileItem, SubjectFilesSubjectState, SubjectFolderItem } from "./subjectFilesTypes";
+import type { SubjectFileDraft, SubjectFileItem, SubjectFilesSubjectState, SubjectFileVisibility, SubjectFolderItem } from "./subjectFilesTypes";
 
 const STORAGE_KEY = "teacher.subjectFiles.v2";
 const LEGACY_STORAGE_KEY = "teacher.subjectFiles.v1";
@@ -31,6 +31,10 @@ function inferMimeType(fileName: string) {
   if (normalized.endsWith(".webp")) return "image/webp";
   if (normalized.endsWith(".svg")) return "image/svg+xml";
   return "application/octet-stream";
+}
+
+function normalizeVisibility(value: unknown): SubjectFileVisibility {
+  return value === "module-only" ? "module-only" : "both";
 }
 
 function normalizeFolder(input: unknown, subjectId: string): SubjectFolderItem | null {
@@ -64,6 +68,7 @@ function normalizeFile(input: unknown, subjectId: string): SubjectFileItem | nul
     modifiedBy: typeof source.modifiedBy === "string" && source.modifiedBy.trim().length > 0 ? source.modifiedBy : "Teacher",
     sizeBytes: typeof source.sizeBytes === "number" && Number.isFinite(source.sizeBytes) && source.sizeBytes >= 0 ? source.sizeBytes : 0,
     folderId: typeof source.folderId === "string" && source.folderId.trim().length > 0 ? source.folderId : null,
+    visibility: normalizeVisibility(source.visibility),
   };
 }
 
@@ -201,6 +206,10 @@ export function useSubjectFolder(subjectId: string, folderId: string) {
   return folders.find((folder) => folder.id === folderId) ?? null;
 }
 
+export function isSubjectFileVisibleInFiles(file: SubjectFileItem) {
+  return file.visibility !== "module-only";
+}
+
 export function addSubjectFile(subjectId: string, draft: SubjectFileDraft & { folderId?: string | null }) {
   const timestamp = new Date().toISOString();
   const nextFileBase: Omit<SubjectFileItem, "id" | "folderId"> = {
@@ -215,6 +224,7 @@ export function addSubjectFile(subjectId: string, draft: SubjectFileDraft & { fo
     updatedAt: timestamp,
     modifiedBy: "You",
     sizeBytes: draft.sizeBytes,
+    visibility: normalizeVisibility(draft.visibility),
   };
 
   let createdFile: SubjectFileItem | null = null;
@@ -249,8 +259,106 @@ export function addSubjectFile(subjectId: string, draft: SubjectFileDraft & { fo
   return createdFile;
 }
 
+export function replaceSubjectFile(subjectId: string, fileId: string, draft: SubjectFileDraft & { folderId?: string | null }) {
+  const timestamp = new Date().toISOString();
+  let replacedFile: SubjectFileItem | null = null;
+
+  updateState((current) => {
+    const subjectState = getSubjectState(current, subjectId);
+    const existingFile = subjectState.files.find((file) => file.id === fileId);
+    if (!existingFile) return current;
+
+    const existingFolderId = typeof draft.folderId === "string" && draft.folderId.trim().length > 0
+      ? draft.folderId
+      : null;
+    const hasExistingFolder = existingFolderId ? subjectState.folders.some((folder) => folder.id === existingFolderId) : false;
+    const folderResult = hasExistingFolder
+      ? { subjectState, folderId: existingFolderId }
+      : typeof draft.folderName === "string" && draft.folderName.trim().length > 0
+        ? ensureFolder(subjectState, subjectId, draft.folderName)
+        : { subjectState, folderId: null as string | null };
+
+    const nextFile: SubjectFileItem = {
+      ...existingFile,
+      name: draft.title.trim(),
+      description: draft.description.trim(),
+      category: draft.category.trim() || "General",
+      originalFileName: draft.fileName.trim(),
+      mimeType: draft.mimeType.trim() || inferMimeType(draft.fileName),
+      previewUrl: draft.previewUrl,
+      updatedAt: timestamp,
+      modifiedBy: "You",
+      sizeBytes: draft.sizeBytes,
+      folderId: folderResult.folderId,
+      visibility: normalizeVisibility(draft.visibility),
+    };
+    replacedFile = nextFile;
+
+    return {
+      ...current,
+      [subjectId]: {
+        folders: folderResult.subjectState.folders,
+        files: folderResult.subjectState.files.map((file) => (file.id === fileId ? nextFile : file)),
+      },
+    };
+  });
+
+  return replacedFile;
+}
+
+export function deleteSubjectFile(subjectId: string, fileId: string) {
+  let removed = false;
+
+  updateState((current) => {
+    const subjectState = getSubjectState(current, subjectId);
+    const nextFiles = subjectState.files.filter((file) => file.id !== fileId);
+
+    if (nextFiles.length === subjectState.files.length) {
+      return current;
+    }
+
+    removed = true;
+
+    return {
+      ...current,
+      [subjectId]: {
+        ...subjectState,
+        files: nextFiles,
+      },
+    };
+  });
+
+  return removed;
+}
+
+export function deleteSubjectFolder(subjectId: string, folderId: string) {
+  let removed = false;
+
+  updateState((current) => {
+    const subjectState = getSubjectState(current, subjectId);
+    const nextFolders = subjectState.folders.filter((folder) => folder.id !== folderId);
+
+    if (nextFolders.length === subjectState.folders.length) {
+      return current;
+    }
+
+    removed = true;
+
+    return {
+      ...current,
+      [subjectId]: {
+        folders: nextFolders,
+        files: subjectState.files.filter((file) => file.folderId !== folderId),
+      },
+    };
+  });
+
+  return removed;
+}
+
 export function formatSubjectFileSize(sizeBytes: number) {
   if (sizeBytes >= 1024 * 1024) return `${(sizeBytes / (1024 * 1024)).toFixed(1)} MB`;
   if (sizeBytes >= 1024) return `${Math.round(sizeBytes / 1024)} KB`;
   return `${sizeBytes} B`;
 }
+

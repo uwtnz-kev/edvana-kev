@@ -1,3 +1,5 @@
+export type SubjectFileVisibility = "both" | "module-only";
+
 export type SubjectFileItem = {
   id: string;
   subjectId: string;
@@ -12,6 +14,7 @@ export type SubjectFileItem = {
   modifiedBy: string;
   sizeBytes: number;
   folderId: string | null;
+  visibility?: SubjectFileVisibility;
 };
 
 export type SubjectFolderItem = {
@@ -35,4 +38,5 @@ export type SubjectFileDraft = {
   previewUrl: string;
   sizeBytes: number;
   folderName?: string | null;
+  visibility?: SubjectFileVisibility;
 };

@@ -25,6 +25,9 @@ export function getFallbackModules(modules: SubjectModuleItem[]) {
     status: "draft" as const,
     lessons: 1,
     duration: "1 week",
-    submodules: [{ id: "overview", title: "Overview", description: "Initial module overview and lesson goals.", summary: "A starter content block for this subject module." }],
+    order: 0,
+    attachedFileIds: [],
+    submodules: [{ id: "overview", title: "Overview", description: "Initial module overview and lesson goals.", content: "A starter content block for this subject module.", attachedFileIds: [], summary: "A starter content block for this subject module.", order: 0 }],
   }];
 }
+

@@ -15,6 +15,7 @@ import {
 } from "@/dashboard/teacher/components/grades";
 import { TEACHER_ROUTES } from "@/dashboard/teacher/routes";
 import { buildGradesWorkspaceRoute } from "../gradesViewHelpers";
+import { getClassIdFromSearchParams } from "../../subjects/subjectClassRouting";
 
 export function useGradeItemSubmissionsState() {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ export function useGradeItemSubmissionsState() {
   const query = useMemo(() => new URLSearchParams(location.search), [location.search]);
   const type = query.get("type") as TeacherGradeSelectionType | null;
   const subjectId = query.get("subjectId");
+  const routeClassId = getClassIdFromSearchParams(query);
   const item = useMemo(() => (itemId ? getPublishedItemById(itemId) : null), [itemId]);
   const subjectName = useMemo(() => seedSubjects2.find((subject) => subject.id === subjectId)?.name ?? "Unknown subject", [subjectId]);
   const subjectTheme = useMemo(() => getSubjectTheme(subjectId ?? ""), [subjectId]);
@@ -34,7 +36,7 @@ export function useGradeItemSubmissionsState() {
   const classRoster = useMemo(() => !lockedClass ? [] : getClassRosterByClass(lockedClass), [lockedClass]);
   return {
     activeTab, editingError, editingScore, editingSubmissionId, item, itemId, notSubmittedRows, search, subjectName, subjectTheme, submittedCount: allSubmissions.filter((s) => s.status === "submitted" || s.status === "graded").length, submittedRows, type, notSubmittedCount: Math.max(classRoster.length - allSubmissions.length, 0),
-    backToWorkspace: () => navigate(buildGradesWorkspaceRoute(subjectId, type)),
+    backToWorkspace: () => navigate(buildGradesWorkspaceRoute(subjectId, type, routeClassId)),
     openDetails: (submissionId: string) => navigate(`${TEACHER_ROUTES.GRADES_WORKSPACE}/${itemId}/submissions/${submissionId}${location.search}`),
     setActiveTab,
     setEditingError,

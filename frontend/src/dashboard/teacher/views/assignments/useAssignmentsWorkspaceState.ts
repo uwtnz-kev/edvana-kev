@@ -6,14 +6,22 @@ import { filterAssignments, getAssignmentsStats, getPagedAssignments, sortAssign
 
 type AssignmentsRestoreState = { restoreSubjectId?: string; resetToHome?: boolean };
 
+function getRestoreState(value: unknown): AssignmentsRestoreState | null {
+  return (value as AssignmentsRestoreState | null) ?? null;
+}
+
+function getInitialSelectedSubjectId(routeState: unknown, subjects: TeacherSubject2[]) {
+  const restoreSubjectId = getRestoreState(routeState)?.restoreSubjectId;
+  if (!restoreSubjectId) return null;
+  return subjects.some((subject) => subject.id === restoreSubjectId) ? restoreSubjectId : null;
+}
+
 export function useAssignmentsWorkspaceState(classId: string) {
   const navigate = useNavigate();
   const location = useLocation();
   const [assignments, setAssignments] = useState<TeacherAssignment[]>(() => loadAssignments());
   const [subjects] = useState<TeacherSubject2[]>(() => seedSubjects2);
-  const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(null);
   const [search, setSearch] = useState(""); const [statusFilter, setStatusFilter] = useState<AssignmentStatusFilter>("all"); const [page, setPage] = useState(1); const [previewId, setPreviewId] = useState<string | null>(null);
-  const previousSubjectId = useRef<string | null>(selectedSubjectId);
   const normalizedClassId = classId.trim().toLowerCase();
   const classAssignments = useMemo(
     () => assignments.filter((assignment) => assignment.classLabel.trim().toLowerCase() === normalizedClassId),
@@ -24,6 +32,9 @@ export function useAssignmentsWorkspaceState(classId: string) {
     const matchingSubjects = subjects.filter((subject) => subjectNames.has(subject.name));
     return matchingSubjects.length > 0 ? matchingSubjects : subjects;
   }, [classAssignments, subjects]);
+  const [selectedSubjectId, setSelectedSubjectId] = useState<string | null>(() => getInitialSelectedSubjectId(location.state, scopedSubjects));
+  const previousSubjectId = useRef<string | null>(selectedSubjectId);
+  const processedLocationKeyRef = useRef<string | null>(null);
   const selectedSubject = useMemo(() => scopedSubjects.find((subject) => subject.id === selectedSubjectId) ?? null, [scopedSubjects, selectedSubjectId]);
   const selectedSubjectName = selectedSubject?.name ?? null;
   const previewAssignment = useMemo(() => classAssignments.find((assignment) => assignment.id === previewId) ?? null, [classAssignments, previewId]);
@@ -31,32 +42,23 @@ export function useAssignmentsWorkspaceState(classId: string) {
   const refreshAssignments = () => setAssignments(loadAssignments());
 
   useEffect(() => {
-    const state = location.state as AssignmentsRestoreState | null;
+    if (processedLocationKeyRef.current === location.key) return;
+    processedLocationKeyRef.current = location.key;
+
+    const state = getRestoreState(location.state);
     if (state?.resetToHome) {
       setSelectedSubjectId(null);
       resetFilters();
       refreshAssignments();
-      navigate(
-        {
-          pathname: location.pathname,
-          search: location.search,
-        },
-        { replace: true, state: null },
-      );
       return;
     }
+
     if (!state?.restoreSubjectId) return;
+
     setSelectedSubjectId(scopedSubjects.some((subject) => subject.id === state.restoreSubjectId) ? state.restoreSubjectId : null);
     setPreviewId(null);
     refreshAssignments();
-    navigate(
-      {
-        pathname: location.pathname,
-        search: location.search,
-      },
-      { replace: true, state: null },
-    );
-  }, [location.pathname, location.search, location.state, navigate, scopedSubjects]);
+  }, [location.key, location.state, scopedSubjects]);
 
   useEffect(() => { if (previousSubjectId.current !== selectedSubjectId) { resetFilters(); previousSubjectId.current = selectedSubjectId; } }, [selectedSubjectId]);
   const subjectAssignments = selectedSubjectName ? classAssignments.filter((assignment) => assignment.subject === selectedSubjectName) : [];

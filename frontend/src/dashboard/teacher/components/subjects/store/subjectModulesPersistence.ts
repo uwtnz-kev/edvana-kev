@@ -1,7 +1,7 @@
 // Manages the persisted subject modules snapshot and subscription lifecycle.
 import { getBrowserStorage, writeStoredJson } from "@/dashboard/teacher/components/shared/storage/storageJson";
 import { subjectModulesSeedData } from "./subjectModulesSeedData";
-import { cloneSubjectModules } from "./subjectModulesFactories";
+import { cloneSubjectModules, sortModulesByOrder, sortSubmodulesByOrder } from "./subjectModulesFactories";
 import type { SubjectModuleItem, SubjectSubmoduleItem } from "./subjectModulesTypes";
 
 const SUBJECT_MODULES_STORAGE_KEY = "teacher.subjectModules.v1";
@@ -10,7 +10,7 @@ function cloneModuleList(modules: SubjectModuleItem[]) {
   return structuredClone(modules);
 }
 
-function normalizeSubmodule(input: unknown): SubjectSubmoduleItem | null {
+function normalizeSubmodule(input: unknown, index: number): SubjectSubmoduleItem | null {
   if (!input || typeof input !== "object") return null;
   const source = input as Partial<SubjectSubmoduleItem>;
   if (typeof source.title !== "string" || typeof source.description !== "string") return null;
@@ -18,16 +18,21 @@ function normalizeSubmodule(input: unknown): SubjectSubmoduleItem | null {
     id: typeof source.id === "string" && source.id.trim().length > 0 ? source.id : `submodule-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
     title: source.title,
     description: source.description,
+    content: typeof source.content === "string" ? source.content : "",
+    attachedFileIds: Array.isArray(source.attachedFileIds)
+      ? source.attachedFileIds.filter((item): item is string => typeof item === "string" && item.trim().length > 0)
+      : [],
     summary: typeof source.summary === "string" ? source.summary : source.description,
+    order: typeof source.order === "number" && Number.isFinite(source.order) ? source.order : index,
   };
 }
 
-function normalizeModule(input: unknown): SubjectModuleItem | null {
+function normalizeModule(input: unknown, index: number): SubjectModuleItem | null {
   if (!input || typeof input !== "object") return null;
   const source = input as Partial<SubjectModuleItem>;
   if (typeof source.title !== "string" || typeof source.description !== "string") return null;
   const submodules = Array.isArray(source.submodules)
-    ? source.submodules.map((item) => normalizeSubmodule(item)).filter((item): item is SubjectSubmoduleItem => item !== null)
+    ? sortSubmodulesByOrder(source.submodules.map((item, submoduleIndex) => normalizeSubmodule(item, submoduleIndex)).filter((item): item is SubjectSubmoduleItem => item !== null))
     : [];
 
   return {
@@ -37,6 +42,10 @@ function normalizeModule(input: unknown): SubjectModuleItem | null {
     status: source.status === "published" ? "published" : "draft",
     lessons: typeof source.lessons === "number" && Number.isFinite(source.lessons) && source.lessons >= 0 ? source.lessons : submodules.length,
     duration: typeof source.duration === "string" && source.duration.trim().length > 0 ? source.duration : "1 week",
+    order: typeof source.order === "number" && Number.isFinite(source.order) ? source.order : index,
+    attachedFileIds: Array.isArray(source.attachedFileIds)
+      ? source.attachedFileIds.filter((item): item is string => typeof item === "string" && item.trim().length > 0)
+      : [],
     submodules,
   };
 }
@@ -49,7 +58,7 @@ function parseStoredModules(raw: string | null): Record<string, SubjectModuleIte
     const entries = Object.entries(parsed as Record<string, unknown>).map(([subjectId, modules]) => [
       subjectId,
       Array.isArray(modules)
-        ? modules.map((item) => normalizeModule(item)).filter((item): item is SubjectModuleItem => item !== null)
+        ? sortModulesByOrder(modules.map((item, moduleIndex) => normalizeModule(item, moduleIndex)).filter((item): item is SubjectModuleItem => item !== null))
         : [],
     ]);
     return Object.fromEntries(entries);
@@ -65,9 +74,11 @@ function mergeSeedModules(current: Record<string, SubjectModuleItem[]>) {
     const existingModules = merged[subjectId] ?? [];
     const existingIds = new Set(existingModules.map((module) => module.id));
     const missingSeedModules = seededModules.filter((module) => !existingIds.has(module.id));
-    merged[subjectId] = missingSeedModules.length > 0
-      ? [...existingModules, ...cloneModuleList(missingSeedModules)]
-      : existingModules;
+    merged[subjectId] = sortModulesByOrder(
+      missingSeedModules.length > 0
+        ? [...existingModules, ...cloneModuleList(missingSeedModules)]
+        : existingModules
+    );
   }
 
   return merged;

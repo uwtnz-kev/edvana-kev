@@ -17,10 +17,11 @@ export function getFinalScore(totalScore: string, calculatedTotal: number) {
   return totalScore.trim() ? Number(totalScore) : calculatedTotal;
 }
 
-export function getNextSubmittedRoute(itemId: string, type: string | null, subjectId: string | null) {
+export function getNextSubmittedRoute(itemId: string, type: string | null, subjectId: string | null, classId?: string | null) {
   const nextParams = new URLSearchParams();
   if (type) nextParams.set("type", type);
   if (subjectId) nextParams.set("subjectId", subjectId);
+  if (classId) nextParams.set("classId", classId);
   const nextQuery = nextParams.toString();
   return `${TEACHER_ROUTES.GRADES_WORKSPACE}/${itemId}/submitted${nextQuery ? `?${nextQuery}` : ""}`;
 }

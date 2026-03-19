@@ -10,6 +10,7 @@ import { TEACHER_ROUTES } from "@/dashboard/teacher/routes";
 type Props = {
   title: string;
   items: TeacherPublishedItem[];
+  routeClassId: string | null;
   deleteConfirmOpen: boolean;
   onCloseDeleteConfirm: () => void;
   onConfirmDelete: () => void;
@@ -19,6 +20,7 @@ type Props = {
 export function GradeSubmissionsContent({
   title,
   items,
+  routeClassId,
   deleteConfirmOpen,
   onCloseDeleteConfirm,
   onConfirmDelete,
@@ -54,6 +56,7 @@ export function GradeSubmissionsContent({
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {items.map((item) => {
               const params = new URLSearchParams({ type: item.type, subjectId: item.subjectId });
+              if (routeClassId) params.set("classId", routeClassId);
               const stats = getCardStats(item);
               return (
                 <article key={item.id} className="group teacher-panel-surface rounded-2xl border border-white/10 p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/20">

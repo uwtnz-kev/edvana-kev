@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { getItemSubmission, getPublishedItemById, markSubmissionGraded, updateSubmissionScore, type TeacherGradeSubmission } from "@/dashboard/teacher/components/grades";
 import { buildGradesWorkspaceRoute } from "../gradesViewHelpers";
+import { getClassIdFromSearchParams } from "../../subjects/subjectClassRouting";
 import { getCalculatedTotal, getFinalScore, getNextSubmittedRoute, getSubmissionQuestions } from "./gradeSubmissionHelpers";
 
 export function useGradeSubmissionState() {
@@ -12,6 +13,7 @@ export function useGradeSubmissionState() {
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type");
   const subjectId = searchParams.get("subjectId");
+  const routeClassId = getClassIdFromSearchParams(searchParams);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [submission, setSubmission] = useState<TeacherGradeSubmission | null>(() => itemId && submissionId ? getItemSubmission(itemId, submissionId) : null);
   const item = useMemo(() => (itemId ? getPublishedItemById(itemId) : null), [itemId]);
@@ -46,10 +48,10 @@ export function useGradeSubmissionState() {
       const updated = updateSubmissionScore(submission.id, final);
       if (!updated) return void setFeedback("Unable to save score.");
       markSubmissionGraded(submission.id);
-      navigate(getNextSubmittedRoute(itemId, type, subjectId));
+      navigate(getNextSubmittedRoute(itemId, type, subjectId, routeClassId));
     },
     setQuestionScore: (questionId: string, value: string) => setQuestionScores((current) => ({ ...current, [questionId]: value })),
     setTotalScore,
-    goBack: () => navigate(buildGradesWorkspaceRoute(subjectId, type as "assignment" | "exam" | "quiz" | null)),
+    goBack: () => navigate(buildGradesWorkspaceRoute(subjectId, type as "assignment" | "exam" | "quiz" | null, routeClassId)),
   };
 }

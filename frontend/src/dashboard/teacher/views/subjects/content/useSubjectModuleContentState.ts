@@ -2,9 +2,10 @@
 import { useEffect, useMemo } from "react";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { getSubjectThemeById } from "@/dashboard/teacher/components/shared";
+import { useSubjectFiles } from "@/dashboard/teacher/components/subjects/files/subjectFilesStore";
+import type { SubjectFileItem } from "@/dashboard/teacher/components/subjects/files/subjectFilesTypes";
 import { useSubjectModules } from "@/dashboard/teacher/components/subjects/subjectModulesStore";
 import {
-  getContentSections,
   getSubjectName,
   type SubjectModuleContentRouteState,
 } from "./subjectModuleContentHelpers";
@@ -22,12 +23,19 @@ export function useSubjectModuleContentState() {
   const theme = getSubjectThemeById(subjectId);
   const subjectName = useMemo(() => getSubjectName(subjectId, routeState), [routeState, subjectId]);
   const modules = useSubjectModules(subjectId);
+  const subjectFiles = useSubjectFiles(subjectId);
   const module = useMemo(() => modules.find((item) => item.id === moduleId) ?? null, [moduleId, modules]);
   const submodule = useMemo(() => module?.submodules.find((item) => item.id === submoduleId) ?? null, [module, submoduleId]);
-  const contentTitle = submodule?.title ?? module?.title ?? "Content";
-  const pageTitle = submodule?.title ?? module?.title ?? "Module Content";
+  const attachedFiles = useMemo(
+    () => (submodule?.attachedFileIds ?? [])
+      .map((fileId) => subjectFiles.find((file) => file.id === fileId) ?? null)
+      .filter((file): file is SubjectFileItem => file !== null),
+    [subjectFiles, submodule?.attachedFileIds],
+  );
+  const contentTitle = module?.title ?? submodule?.title ?? "Content";
+  const pageTitle = module?.title ?? submodule?.title ?? "Module Content";
   const contentDescription = submodule?.description ?? module?.description ?? "Detailed module content will appear here.";
-  const sections = useMemo(() => getContentSections(submodule?.summary), [submodule?.summary]);
+  const contentBody = submodule?.content ?? module?.description ?? "";
 
   useEffect(() => {
     if (!moduleId) return;
@@ -44,14 +52,15 @@ export function useSubjectModuleContentState() {
         state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null },
       });
     }
-  }, [module, moduleId, navigate, routeState?.subject, subjectId, submodule, submoduleId]);
+  }, [module, moduleId, navigate, routeState?.subject, subjectId, submodule, submoduleId, classId]);
 
   return {
+    attachedFiles,
+    contentBody,
     contentDescription,
     contentTitle,
     module,
     pageTitle,
-    sections,
     subjectId,
     subjectName,
     submodule,
@@ -59,6 +68,16 @@ export function useSubjectModuleContentState() {
     goBack: () =>
       navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/modules`, classId), {
         state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null },
+      }),
+    openAttachedFile: (fileId: string) =>
+      navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/files/${fileId}`, classId), {
+        state: {
+          from: "module",
+          moduleId,
+          restoreSubjectId: subjectId,
+          subject: routeState?.subject ?? null,
+          submoduleId: submoduleId || undefined,
+        },
       }),
   };
 }

@@ -20,10 +20,11 @@ export function SubjectContentShell({ selectedSubjectData, selectedSubjectTheme 
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#1EA896]">Subject Workspace</p>
           <h2 className="mt-2 text-lg font-semibold text-[var(--text-primary)]">{selectedSubjectData.title}</h2>
-          <p className="mt-1 text-sm text-[var(--text-primary)]/70">Choose Modules or Upload Module from the left to open the dedicated subject page.</p>
+          <p className="mt-1 text-sm text-[var(--text-primary)]/70">Choose Modules, Create Module, or Upload Module from the left to open the dedicated subject page.</p>
         </div>
       </div>
     </section>
   );
 }
+
 

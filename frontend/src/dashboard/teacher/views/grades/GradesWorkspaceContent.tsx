@@ -22,6 +22,7 @@ type Props = {
   search: string;
   stats: { total: number; graded: number; missing: number; average: number };
   publishedItems: TeacherPublishedItem[];
+  routeClassId: string | null;
   deleteConfirmOpen: boolean;
   onBack: () => void;
   onCloseDeleteConfirm: () => void;
@@ -88,6 +89,7 @@ export function GradesWorkspaceContent(props: Props) {
       <GradeSubmissionsContent
         title={props.publishedTitle}
         items={props.publishedItems}
+        routeClassId={props.routeClassId}
         deleteConfirmOpen={props.deleteConfirmOpen}
         onCloseDeleteConfirm={props.onCloseDeleteConfirm}
         onConfirmDelete={props.onConfirmDeletePublishedItem}

@@ -4,8 +4,12 @@ import type { Student } from "@/dashboard/teacher/components/students";
 import type { GradeRowDraft } from "./gradeListTypes";
 import { buildGradesWorkspaceRoute } from "../gradesViewHelpers";
 
-export function getBackRoute(subjectId: string, assessmentType: Exclude<TeacherGradeAssessmentType, "all"> | null) {
-  return buildGradesWorkspaceRoute(subjectId, assessmentType);
+export function getBackRoute(
+  subjectId: string,
+  assessmentType: Exclude<TeacherGradeAssessmentType, "all"> | null,
+  classId?: string | null,
+) {
+  return buildGradesWorkspaceRoute(subjectId, assessmentType, classId);
 }
 
 export function saveGradeListRecord(payload: {

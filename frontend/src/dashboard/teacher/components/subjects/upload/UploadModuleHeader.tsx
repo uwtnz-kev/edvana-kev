@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button";
 import type { SubjectIconTheme } from "@/dashboard/teacher/components/shared/subjectIconTheme";
 
 type Props = {
+  title?: string;
   subjectName: string;
   theme: SubjectIconTheme;
   onBack: () => void;
 };
 
-export function UploadModuleHeader({ subjectName, theme, onBack }: Props) {
+export function UploadModuleHeader({ title, subjectName, theme, onBack }: Props) {
   return (
     <header className="rounded-2xl border border-white/10 bg-white/10 px-6 py-5 backdrop-blur-xl">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -23,7 +24,7 @@ export function UploadModuleHeader({ subjectName, theme, onBack }: Props) {
             <BookOpen className={`h-6 w-6 ${theme.iconClass}`} />
           </div>
           <div>
-            <h1 className="text-2xl font-semibold text-white">Upload Module</h1>
+            <h1 className="text-2xl font-semibold text-white">{title ?? "Create Module"}</h1>
             <p className="mt-1 text-[var(--text-secondary)]">Subject: {subjectName}</p>
           </div>
         </div>
@@ -31,3 +32,4 @@ export function UploadModuleHeader({ subjectName, theme, onBack }: Props) {
     </header>
   );
 }
+

@@ -8,5 +8,8 @@ export {
   addSubjectModule,
   deleteSubjectModule,
   deleteSubjectSubmodule,
+  reorderSubjectModules,
+  reorderSubjectSubmodules,
+  updateSubjectModule,
   updateSubjectModuleStatus,
 } from "./subjectModulesMutations";

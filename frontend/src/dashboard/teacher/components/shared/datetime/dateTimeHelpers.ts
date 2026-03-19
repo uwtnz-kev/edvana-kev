@@ -29,12 +29,20 @@ export function snapMinute(minute: string, minuteOptions: string[]) {
   }, minuteOptions[0]);
 }
 
+function to24Hour(hour: string, meridiem: Meridiem) {
+  const parsedHour = Number(hour);
+  if (!Number.isFinite(parsedHour)) return null;
+  const normalizedHour = parsedHour % 12;
+  if (meridiem === "AM") return normalizedHour;
+  return normalizedHour + 12;
+}
+
 export function buildDateWithTime(baseDate: Date, hour: string, minute: string, meridiem: Meridiem) {
-  const hourNumber = Number(hour);
+  const hour24 = to24Hour(hour, meridiem);
   const minuteNumber = Number(minute);
-  if (!Number.isFinite(hourNumber) || !Number.isFinite(minuteNumber)) return baseDate;
+  if (hour24 === null || !Number.isFinite(minuteNumber)) return baseDate;
   const next = new Date(baseDate);
-  next.setHours(hourNumber % 12 + (meridiem === "PM" ? 12 : 0), minuteNumber, 0, 0);
+  next.setHours(hour24, minuteNumber, 0, 0);
   return next;
 }
 

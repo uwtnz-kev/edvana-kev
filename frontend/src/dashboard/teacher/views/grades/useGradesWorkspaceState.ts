@@ -16,6 +16,7 @@ import {
   type TeacherGradesSubject,
 } from "@/dashboard/teacher/components/grades";
 import { TEACHER_ROUTES } from "@/dashboard/teacher/routes";
+import { getClassIdFromSearchParams } from "../subjects/subjectClassRouting";
 import { navigateToCreateGradeList } from "./gradesWorkspaceActions";
 import { buildClassOptions, buildWorkspaceStats } from "./gradesWorkspaceDerived";
 import { buildGradesTypeSelectionRoute, buildGradesWorkspaceRoute, isGradesLanding, isGradesWorkspace, isSelectionType } from "./gradesViewHelpers";
@@ -37,6 +38,7 @@ export function useGradesWorkspaceState() {
   const query = useMemo(() => new URLSearchParams(location.search), [location.search]);
   const querySubjectId = query.get("subjectId");
   const queryType = query.get("type");
+  const routeClassId = getClassIdFromSearchParams(query);
   const routeSelectedGradeType = queryType && isSelectionType(queryType) ? queryType : null;
   const routeSelectedSubjectId = useMemo(() => subjects.some((subject) => subject.id === querySubjectId) ? querySubjectId : null, [querySubjectId, subjects]);
   const hasInvalidWorkspaceSubject = isWorkspace && !routeSelectedSubjectId;
@@ -56,11 +58,11 @@ export function useGradesWorkspaceState() {
   useEffect(() => {
     if (!isWorkspace) return;
     if (!routeSelectedSubjectId) {
-      navigate(TEACHER_ROUTES.GRADES, { replace: true });
+      navigate(routeClassId ? `${TEACHER_ROUTES.GRADES}?classId=${encodeURIComponent(routeClassId)}` : TEACHER_ROUTES.GRADES, { replace: true });
       return;
     }
     if (queryType && !routeSelectedGradeType) {
-      navigate(buildGradesTypeSelectionRoute(routeSelectedSubjectId), { replace: true });
+      navigate(buildGradesTypeSelectionRoute(routeSelectedSubjectId, routeClassId), { replace: true });
       return;
     }
     if (selectedSubjectId !== routeSelectedSubjectId) {
@@ -70,7 +72,7 @@ export function useGradesWorkspaceState() {
       setSelectedGradeType(routeSelectedGradeType);
       setSelectedGradeTypeState(routeSelectedGradeType);
     }
-  }, [buildGradesTypeSelectionRoute, isWorkspace, navigate, queryType, routeSelectedGradeType, routeSelectedSubjectId, selectedGradeType, selectedSubjectId]);
+  }, [isWorkspace, navigate, queryType, routeClassId, routeSelectedGradeType, routeSelectedSubjectId, selectedGradeType, selectedSubjectId]);
 
   useEffect(() => {
     const state = location.state as TeacherGradesRestoreState | null;
@@ -134,7 +136,7 @@ export function useGradesWorkspaceState() {
     isLanding,
     onBack: () => {
       if (isWorkspace && activeGradeType) {
-        navigate(buildGradesTypeSelectionRoute(activeSubjectId));
+        navigate(buildGradesTypeSelectionRoute(activeSubjectId, routeClassId));
         return;
       }
       resetGradesFlow();
@@ -142,7 +144,7 @@ export function useGradesWorkspaceState() {
       setSelectedGradeTypeState(null);
       navigate(TEACHER_ROUTES.GRADES);
     },
-    onCreate: () => navigateToCreateGradeList(navigate, activeSubjectId, activeGradeType),
+    onCreate: () => navigateToCreateGradeList(navigate, activeSubjectId, activeGradeType, routeClassId),
     onDeletePublishedItem: (itemId: string) => {
       setPendingDeleteItemId(itemId);
       setDeleteConfirmOpen(true);
@@ -151,7 +153,7 @@ export function useGradesWorkspaceState() {
       if (!isSelectionType(value) || !activeSubjectId) return;
       setSelectedGradeType(value);
       setSelectedGradeTypeState(value);
-      navigate(buildGradesWorkspaceRoute(activeSubjectId, value));
+      navigate(buildGradesWorkspaceRoute(activeSubjectId, value, routeClassId));
     },
     publishedItems,
     search,
@@ -164,11 +166,12 @@ export function useGradesWorkspaceState() {
       if (isLanding) {
         setSelectedSubjectId(value);
         setSelectedGradeTypeState(null);
-        navigate(buildGradesTypeSelectionRoute(value));
+        navigate(buildGradesTypeSelectionRoute(value, routeClassId));
         return;
       }
       setSelectedSubjectId(value);
     },
+    routeClassId,
     stats,
     subjects,
   };
