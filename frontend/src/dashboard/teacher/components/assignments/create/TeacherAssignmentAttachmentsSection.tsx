@@ -11,13 +11,7 @@ export function TeacherAssignmentAttachmentsSection({
   onRemoveAttachment,
   onClearAttachments,
 }: AssignmentAttachmentSectionProps) {
-  if (!allowFileUpload) {
-    return (
-      <div className="rounded-2xl border border-dashed border-white/20 bg-white/10 px-4 py-5 text-sm text-white/75">
-        Attachments are only available when Submission Method includes File Upload.
-      </div>
-    );
-  }
+  void allowFileUpload;
 
   return (
     <AssessmentAttachmentsSection
@@ -28,6 +22,8 @@ export function TeacherAssignmentAttachmentsSection({
       onRemoveAttachment={onRemoveAttachment}
       onClearAttachments={onClearAttachments}
       showActionIcons
+      showHeader={false}
+      addAttachmentsLabel="Add attachments (Optional)"
     />
   );
 }

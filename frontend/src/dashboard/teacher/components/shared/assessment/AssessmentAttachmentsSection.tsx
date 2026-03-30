@@ -18,6 +18,8 @@ type Props = {
   onRemoveAttachment: (id: string) => void;
   onClearAttachments: () => void;
   showActionIcons?: boolean;
+  showHeader?: boolean;
+  addAttachmentsLabel?: string;
 };
 
 export function AssessmentAttachmentsSection({
@@ -28,18 +30,22 @@ export function AssessmentAttachmentsSection({
   onRemoveAttachment,
   onClearAttachments,
   showActionIcons = false,
+  showHeader = true,
+  addAttachmentsLabel = "Add attachments",
 }: Props) {
   return (
     <div className="space-y-2">
-      <div className={attachmentChipStyles.container}>
-        <span className={attachmentChipStyles.icon}>
-          <Paperclip className="h-4 w-4" />
-        </span>
-        <span className={attachmentChipStyles.text}>Attachments (Optional)</span>
-      </div>
+      {showHeader ? (
+        <div className={attachmentChipStyles.container}>
+          <span className={attachmentChipStyles.icon}>
+            <Paperclip className="h-4 w-4" />
+          </span>
+          <span className={attachmentChipStyles.text}>Attachments (Optional)</span>
+        </div>
+      ) : null}
       <input ref={attachmentsInputRef} type="file" multiple onChange={onPickAttachments} className="hidden" />
       <div className="flex flex-wrap gap-2">
-        <Button type="button" onClick={() => attachmentsInputRef.current?.click()} className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] text-white hover:bg-[var(--card-hover)]">{showActionIcons ? <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-xl border border-amber-400/30 bg-amber-500/15 text-amber-300"><Upload className="h-4 w-4" /></span> : null}Add attachments</Button>
+        <Button type="button" onClick={() => attachmentsInputRef.current?.click()} className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] text-white hover:bg-[var(--card-hover)]">{showActionIcons ? <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-xl border border-amber-400/30 bg-amber-500/15 text-amber-300"><Upload className="h-4 w-4" /></span> : null}{addAttachmentsLabel}</Button>
         {attachments.length > 1 ? <Button type="button" onClick={onClearAttachments} className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] text-white hover:bg-[var(--card-hover)]">{showActionIcons ? <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-xl border border-slate-400/30 bg-slate-500/15 text-slate-300"><X className="h-4 w-4" /></span> : null}Clear all</Button> : null}
       </div>
       {attachmentsError ? <p className="text-sm font-medium text-red-600">{attachmentsError}</p> : null}
