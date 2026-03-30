@@ -1,7 +1,7 @@
 import type { SubjectFileItem, SubjectFolderItem } from "@/dashboard/teacher/components/subjects/files/subjectFilesTypes";
 import type { SubjectModuleItem } from "@/dashboard/teacher/components/subjects/subjectModulesStore";
 
-export type DuplicateDecision = "replace" | "keep-both" | "cancel";
+export type DuplicateDecision = "proceed" | "cancel";
 
 export type PendingDuplicateUpload = {
   duplicateFileId: string | null;

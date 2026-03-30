@@ -42,17 +42,27 @@ export function useSubjectModuleContentState() {
     if (!module) {
       navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/modules`, classId), {
         replace: true,
-        state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null },
+        state: {
+          restoreSubjectId: subjectId,
+          returnModuleId: moduleId || undefined,
+          returnScrollTop: routeState?.returnScrollTop,
+          subject: routeState?.subject ?? null,
+        },
       });
       return;
     }
     if (submoduleId && !submodule) {
       navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/modules/${moduleId}`, classId), {
         replace: true,
-        state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null },
+        state: {
+          restoreSubjectId: subjectId,
+          returnModuleId: moduleId,
+          returnScrollTop: routeState?.returnScrollTop,
+          subject: routeState?.subject ?? null,
+        },
       });
     }
-  }, [module, moduleId, navigate, routeState?.subject, subjectId, submodule, submoduleId, classId]);
+  }, [module, moduleId, navigate, routeState?.returnScrollTop, routeState?.subject, subjectId, submodule, submoduleId, classId]);
 
   return {
     attachedFiles,
@@ -67,7 +77,12 @@ export function useSubjectModuleContentState() {
     theme,
     goBack: () =>
       navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/modules`, classId), {
-        state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null },
+        state: {
+          restoreSubjectId: subjectId,
+          returnModuleId: moduleId || undefined,
+          returnScrollTop: routeState?.returnScrollTop,
+          subject: routeState?.subject ?? null,
+        },
       }),
     openAttachedFile: (fileId: string) =>
       navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/files/${fileId}`, classId), {

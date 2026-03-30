@@ -21,10 +21,9 @@ export function readStoredJson<T>(key: string, fallback: T): T {
 
 export function writeStoredJson<T>(key: string, value: T) {
   const storage = getBrowserStorage();
-  if (!storage) return;
-  try {
-    storage.setItem(key, JSON.stringify(value));
-  } catch {
-    // Ignore unavailable storage writes.
+  if (!storage) {
+    throw new Error(`Browser storage is unavailable for key "${key}".`);
   }
+
+  storage.setItem(key, JSON.stringify(value));
 }

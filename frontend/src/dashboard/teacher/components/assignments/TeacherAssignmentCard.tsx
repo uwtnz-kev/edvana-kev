@@ -28,12 +28,20 @@ export function TeacherAssignmentCard({ assignment, onDelete, onDuplicate, onEdi
   };
 
   return (
-    <article className="group w-full max-w-[580px] teacher-panel-surface rounded-xl p-3 space-y-1.5 teacher-panel-hover-lift">
-      <AssignmentCardHeader assignment={assignment} />
-      <AssignmentCardMeta assignment={assignment} />
-      <AssignmentCardActions assignment={assignment} onDelete={() => setConfirmOpen(true)} onDuplicate={onDuplicate} onEdit={onEdit} onPreview={onPreview} onPublish={onPublish} onRepublish={() => setRepublishOpen(true)} />
+    <article className="group flex h-full w-full flex-col overflow-hidden rounded-2xl teacher-panel-surface teacher-panel-hover-lift">
+      <div className="rounded-t-2xl border-b border-white/10 bg-white/5 p-3.5">
+        <AssignmentCardHeader assignment={assignment} />
+      </div>
+      <div className="flex flex-1 flex-col gap-3 p-3.5">
+        <AssignmentCardMeta assignment={assignment} />
+        <div className="mt-auto border-t border-white/10 pt-2.5">
+          <AssignmentCardActions assignment={assignment} onDelete={() => setConfirmOpen(true)} onDuplicate={onDuplicate} onEdit={onEdit} onPreview={onPreview} onPublish={onPublish} onRepublish={() => setRepublishOpen(true)} />
+        </div>
+      </div>
       <ConfirmDeleteModal open={confirmOpen} onOpenChange={setConfirmOpen} onConfirm={() => onDelete(assignment.id)} />
       <RepublishAssignmentModal open={republishOpen} assignmentTitle={assignment.title} classLabel={assignment.classLabel} eligibleStudents={eligibleStudents} onClose={() => setRepublishOpen(false)} onConfirm={handleRepublishConfirm} />
     </article>
   );
 }
+
+

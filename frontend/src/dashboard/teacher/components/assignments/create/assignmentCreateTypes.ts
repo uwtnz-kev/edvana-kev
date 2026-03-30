@@ -5,8 +5,10 @@ import type { SubmissionMethod } from "@/dashboard/teacher/components/shared/ass
 export type TeacherAssignmentCreateFormProps = {
   subjectId: string;
   subjectName: string;
+  lockedClassId?: string;
+  lockedClassLabel?: string;
   onCancel: () => void;
-  onSaved: (subjectId: string) => void;
+  onSaved: (subjectId: string, classRouteId?: string) => void;
 };
 
 export type FormValues = {
@@ -21,7 +23,6 @@ export type FormValues = {
   totalAttempts: string;
   totalQuestions: string;
   submissionMethods: SubmissionMethod[];
-  rubric: string;
   maxScore: string;
 };
 
@@ -46,7 +47,9 @@ export type AssignmentFieldProps = {
 };
 
 export type AssignmentAttachmentSectionProps = {
+  allowFileUpload: boolean;
   attachments: AssignmentAttachment[];
+  attachmentsError: string | null;
   attachmentsInputRef: React.RefObject<HTMLInputElement | null>;
   onPickAttachments: React.ChangeEventHandler<HTMLInputElement>;
   onRemoveAttachment: (id: string) => void;

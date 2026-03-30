@@ -9,6 +9,12 @@ export function buildMinuteOptions(step: number) {
   return options;
 }
 
+export function clampMinuteInput(minute: string) {
+  const digitsOnly = minute.replace(/\D/g, "").slice(0, 2);
+  if (!digitsOnly) return "";
+  return String(Math.min(Number(digitsOnly), 59));
+}
+
 export function toTimeParts(date: Date) {
   const hours24 = date.getHours();
   return {

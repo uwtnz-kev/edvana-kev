@@ -1,18 +1,11 @@
-// Card row for a single subject module with expand/collapse behavior.
 import { useEffect, useMemo, useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { BookOpen, ChevronDown, ChevronRight, GripVertical } from "lucide-react";
-import { StatusBadge } from "@/dashboard/teacher/components/shared";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { buildModuleErrors } from "@/dashboard/teacher/components/subjects/upload/uploadModuleValidation";
-import { RichDescriptionTextarea } from "@/dashboard/teacher/components/subjects/upload/RichDescriptionTextarea";
 import type { SubjectFileItem } from "@/dashboard/teacher/components/subjects/files/subjectFilesTypes";
 import type { SubjectModuleItem, SubjectModulePayload } from "@/dashboard/teacher/components/subjects/store/subjectModulesTypes";
-import { SubjectModuleMeta } from "./SubjectModuleMeta";
-import { SubjectModuleStatus } from "./SubjectModuleStatus";
+import { SubjectModuleEditForm } from "./SubjectModuleEditForm";
+import { SubjectModuleRowHeader } from "./SubjectModuleRowHeader";
 import { SubjectSubmoduleList } from "./SubjectSubmoduleList";
 
 function getModuleDescriptionPreview(content: string) {
@@ -118,87 +111,30 @@ export function SubjectModuleRow({
       style={{ transform: CSS.Transform.toString(transform), transition }}
       className={`overflow-hidden rounded-2xl border border-white/15 bg-white/10 shadow-sm transition hover:bg-white/15 hover:shadow-md ${isDragging ? "z-10 opacity-90 ring-1 ring-cyan-300/50" : ""}`}
     >
-      <div
-        role="button"
-        tabIndex={0}
-        onClick={() => onToggle(module.id)}
-        onKeyDown={(event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            onToggle(module.id);
-          }
-        }}
-        className="flex w-full cursor-pointer flex-col gap-3 px-5 py-4 text-left"
-      >
-        <div className="flex min-w-0 items-start justify-between gap-4">
-          <div className="flex min-w-0 flex-1 items-start gap-4 overflow-hidden">
-            <button
-              type="button"
-              className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/10 text-white/65 transition hover:bg-white/20 hover:text-white"
-              aria-label={`Reorder ${module.title}`}
-              onClick={(event) => event.stopPropagation()}
-              {...attributes}
-              {...listeners}
-            >
-              <GripVertical className="h-4 w-4" />
-            </button>
-            <div className={`mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${theme.bgClass}`}><BookOpen className={`h-5 w-5 ${theme.iconClass}`} /></div>
-            <div className="min-w-0 max-w-[55%] flex-1 overflow-hidden">
-              <div className="flex min-w-0 items-center gap-2">
-                <button
-                  type="button"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    onToggle(module.id);
-                  }}
-                  className="rounded-full p-1 text-[var(--text-primary)]/60 transition hover:bg-white/20 hover:text-[var(--text-primary)]"
-                  aria-label={isExpanded ? `Collapse ${module.title}` : `Expand ${module.title}`}
-                >
-                  {isExpanded ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-                </button>
-                <h3 className="min-w-0 flex-1 truncate whitespace-nowrap overflow-hidden text-ellipsis text-base font-semibold text-[var(--text-primary)]" title={module.title}>{module.title}</h3>
-              </div>
-              {descriptionPreview ? (
-                <p className="mt-1 truncate whitespace-nowrap overflow-hidden text-ellipsis text-sm text-[var(--text-primary)]/70" title={descriptionPreview}>
-                  {descriptionPreview}
-                </p>
-              ) : null}
-            </div>
-          </div>
-          <div className="shrink-0">
-            <StatusBadge status={module.status} label={module.status === "draft" ? "Draft" : "Published"} className="px-3" />
-          </div>
-        </div>
-        <div className="flex min-w-0 items-center justify-between gap-4">
-          <SubjectModuleMeta module={module} className="mt-0 min-w-0 flex-1 flex-wrap gap-6 text-sm text-white/70" />
-          <SubjectModuleStatus module={module} onDelete={onDeleteModule} onPublish={onPublish} />
-        </div>
-      </div>
+      <SubjectModuleRowHeader
+        attributes={attributes}
+        descriptionPreview={descriptionPreview}
+        isExpanded={isExpanded}
+        listeners={listeners}
+        module={module}
+        onDeleteModule={onDeleteModule}
+        onPublish={onPublish}
+        onToggle={onToggle}
+        theme={theme}
+      />
       {isEditing ? (
-        <div className="border-t border-white/10 bg-white/5 px-5 py-4">
-          <div className="space-y-4 pl-0 sm:pl-[3.75rem]">
-            <div className="space-y-2">
-              <Label htmlFor={`module-title-${module.id}`} className="text-white">Module title</Label>
-              <Input id={`module-title-${module.id}`} value={moduleTitle} onChange={(event) => setModuleTitle(event.target.value)} className="h-12 rounded-2xl border-white/20 bg-white/10 text-white placeholder:text-white/70" />
-              {submitted && errors.moduleTitle ? <p className="text-sm font-medium text-red-600">{errors.moduleTitle}</p> : null}
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor={`module-description-${module.id}`} className="text-white">Description</Label>
-              <RichDescriptionTextarea
-                id={`module-description-${module.id}`}
-                value={description}
-                onChange={setDescription}
-                placeholder="Describe what this module covers."
-                className="min-h-[120px] rounded-2xl border-white/20 bg-white/10 text-white placeholder:text-white/70"
-              />
-              {submitted && errors.description ? <p className="text-sm font-medium text-red-600">{errors.description}</p> : null}
-            </div>
-            <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-              <Button type="button" onClick={handleCancel} className="rounded-2xl border border-white/15 bg-white/10 px-5 py-2.5 text-white hover:bg-white/15">Cancel</Button>
-              <Button type="button" onClick={handleSave} className="rounded-2xl border border-white/25 bg-white/20 px-5 py-2.5 font-semibold text-white hover:bg-white/30">Save</Button>
-            </div>
-          </div>
-        </div>
+        <SubjectModuleEditForm
+          description={description}
+          descriptionError={errors.description}
+          moduleId={module.id}
+          moduleTitle={moduleTitle}
+          onCancel={handleCancel}
+          onDescriptionChange={setDescription}
+          onSave={handleSave}
+          onTitleChange={setModuleTitle}
+          submitted={submitted}
+          titleError={errors.moduleTitle}
+        />
       ) : null}
       {isExpanded ? (
         <SubjectSubmoduleList
@@ -213,8 +149,3 @@ export function SubjectModuleRow({
     </div>
   );
 }
-
-
-
-
-

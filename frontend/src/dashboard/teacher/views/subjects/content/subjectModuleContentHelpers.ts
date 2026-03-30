@@ -4,6 +4,8 @@ import { seedSubjects2 } from "@/dashboard/teacher/components/assignments";
 import type { TeacherSubjectNavData } from "@/dashboard/teacher/components/subjects/TeacherSubjectCard";
 
 export type SubjectModuleContentRouteState = {
+  returnModuleId?: string;
+  returnScrollTop?: number;
   subject?: TeacherSubjectNavData | null;
   restoreSubjectId?: string;
 };

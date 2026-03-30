@@ -1,5 +1,5 @@
 // Renders editable submodule rows and add/remove actions for the module form.
-import { Paperclip, Trash2 } from "lucide-react";
+import { Paperclip, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -56,8 +56,8 @@ export function UploadModuleSubmodulesSection({
             <div key={submodule.id} className="rounded-2xl border border-white/15 bg-white/10 p-4">
               {canRemove ? (
                 <div className="flex items-start justify-end gap-4">
-                  <Button type="button" variant="ghost" onClick={() => onRemove(submodule.id)} className="h-12 rounded-2xl border border-white/15 bg-white/10 px-4 text-white hover:bg-white/20">
-                    <Trash2 className="mr-2 h-4 w-4" />
+                  <Button type="button" variant="outline" onClick={() => onRemove(submodule.id)} className="h-12 rounded-2xl border-red-400/20 bg-red-500/10 px-4 text-white transition-all duration-200 hover:bg-red-500/20 hover:border-red-400/30 hover:text-white">
+                    <Trash2 className="mr-2 h-4 w-4 text-red-300" />
                     Remove Submodule
                   </Button>
                 </div>
@@ -73,7 +73,7 @@ export function UploadModuleSubmodulesSection({
                     value={submodule.description}
                     onChange={(value) => onUpdate(submodule.id, "description", value)}
                     onBlur={() => onTouched(submodule.id, "description")}
-                    placeholder="Describe what this submodule covers. Supports links, image URLs, and simple HTML."
+                    placeholder="Describe what this submodule covers."
                     className="min-h-[80px] rounded-2xl border-white/20 bg-white/10 text-white placeholder:text-white/70"
                   />
                   {showError(submodule.id, "description") ? <p className="mt-1 text-sm font-medium text-red-600">{errors.submodules[submodule.id]?.description}</p> : null}
@@ -92,7 +92,7 @@ export function UploadModuleSubmodulesSection({
                 </div>
                 <div className="pt-2">
                   <Button type="button" onClick={() => onToggleAttachments(submodule.id)} className="rounded-2xl border border-white/20 bg-white/10 text-white hover:bg-white/20">
-                    <Paperclip className="mr-2 h-4 w-4" />
+                    <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-xl border border-cyan-400/30 bg-cyan-500/15 text-cyan-300"><Paperclip className="h-4 w-4" /></span>
                     Attach Files
                   </Button>
                 </div>
@@ -113,9 +113,16 @@ export function UploadModuleSubmodulesSection({
         })}
       </div>
       <div>
-        <Button type="button" onClick={onAdd} className="rounded-2xl border border-white/20 bg-white/10 text-white hover:bg-white/20">+ Add Submodule</Button>
+        <Button type="button" onClick={onAdd} className="rounded-2xl border border-white/20 bg-white/10 text-white hover:bg-white/20"><span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-xl border border-violet-400/30 bg-violet-500/15 text-violet-300"><Plus className="h-4 w-4" /></span>Add Submodule</Button>
       </div>
     </div>
   );
 }
+
+
+
+
+
+
+
 

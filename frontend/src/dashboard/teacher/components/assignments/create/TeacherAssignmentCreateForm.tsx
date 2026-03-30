@@ -1,13 +1,23 @@
 // Orchestrates the extracted assignment create sections without owning detailed UI logic.
 import { QuestionsPreviewModal } from "@/dashboard/teacher/components/shared/QuestionsPreviewModal";
+import { SubjectFileDuplicateDialog } from "@/dashboard/teacher/components/subjects/upload/SubjectFileDuplicateDialog";
 import { TeacherAssignmentAttachmentsSection } from "./TeacherAssignmentAttachmentsSection";
 import { TeacherAssignmentBasicFieldsSection } from "./TeacherAssignmentBasicFieldsSection";
 import { TeacherAssignmentCreateActions } from "./TeacherAssignmentCreateActions";
-import { TeacherAssignmentRubricSection } from "./TeacherAssignmentRubricSection";
+import { TeacherAssignmentInstructionsSection } from "./TeacherAssignmentInstructionsSection";
 import { TeacherAssignmentSchedulingFieldsSection } from "./TeacherAssignmentSchedulingFieldsSection";
 import { TeacherAssignmentSubmissionSection } from "./TeacherAssignmentSubmissionSection";
 import type { TeacherAssignmentCreateFormProps } from "./assignmentCreateTypes";
 import { useTeacherAssignmentCreateForm } from "./useTeacherAssignmentCreateForm";
+import type { DuplicateAssignmentFileMatch, DuplicateAssignmentTitleMatch } from "@/dashboard/teacher/components/shared";
+
+function buildDuplicateAssignmentLocations(match: DuplicateAssignmentFileMatch) {
+  return [[match.classLabel, match.subject, `Assignment: ${match.assignmentTitle}`].filter(Boolean).join(" -> ")];
+}
+
+function buildDuplicateAssignmentTitleLocations(match: DuplicateAssignmentTitleMatch) {
+  return [[match.classLabel, match.subject, `Assignment: ${match.assignmentTitle}`].filter(Boolean).join(" -> ")];
+}
 
 export function TeacherAssignmentCreateForm(props: TeacherAssignmentCreateFormProps) {
   const form = useTeacherAssignmentCreateForm(props);
@@ -22,6 +32,8 @@ export function TeacherAssignmentCreateForm(props: TeacherAssignmentCreateFormPr
         onFieldChange={form.onFieldChange}
         onFieldBlur={form.onFieldBlur}
         onSubmissionMethodsChange={form.onSubmissionMethodsChange}
+        onClassChange={form.onClassChange}
+        isClassLocked={form.isClassLocked}
       />
 
       <TeacherAssignmentSchedulingFieldsSection
@@ -31,10 +43,9 @@ export function TeacherAssignmentCreateForm(props: TeacherAssignmentCreateFormPr
         onFieldChange={form.onFieldChange}
         onFieldBlur={form.onFieldBlur}
         onSubmissionMethodsChange={form.onSubmissionMethodsChange}
-        onClassChange={form.onClassChange}
       />
 
-      <TeacherAssignmentRubricSection
+      <TeacherAssignmentInstructionsSection
         values={form.values}
         errors={form.errors}
         touched={form.touched}
@@ -56,7 +67,9 @@ export function TeacherAssignmentCreateForm(props: TeacherAssignmentCreateFormPr
       />
 
       <TeacherAssignmentAttachmentsSection
+        allowFileUpload={form.allowsFileUpload}
         attachments={form.attachments}
+        attachmentsError={form.attachmentsError}
         attachmentsInputRef={form.attachmentsInputRef}
         onPickAttachments={form.onPickAttachments}
         onRemoveAttachment={form.onRemoveAttachment}
@@ -71,6 +84,39 @@ export function TeacherAssignmentCreateForm(props: TeacherAssignmentCreateFormPr
       />
 
       <TeacherAssignmentCreateActions onCancel={props.onCancel} onSave={form.onSave} />
+
+      <SubjectFileDuplicateDialog
+        open={form.duplicateDialogOpen}
+        duplicateFileName={form.pendingDuplicateMatch?.attachmentName ?? null}
+        existingLocations={form.pendingDuplicateMatch ? buildDuplicateAssignmentLocations(form.pendingDuplicateMatch) : []}
+        busy={form.duplicateDecisionBusy}
+        onDecision={form.handleDuplicateDecision}
+        onOpenChange={(open) => {
+          if (!open) {
+            void form.handleDuplicateDecision("cancel");
+            return;
+          }
+          form.setDuplicateDialogOpen(true);
+        }}
+      />
+
+      <SubjectFileDuplicateDialog
+        open={form.titleDuplicateDialogOpen}
+        duplicateFileName={form.pendingTitleDuplicateMatch?.assignmentTitle ?? null}
+        existingLocations={form.pendingTitleDuplicateMatch ? buildDuplicateAssignmentTitleLocations(form.pendingTitleDuplicateMatch) : []}
+        busy={form.titleDuplicateDecisionBusy}
+        dialogTitle="Duplicate assignment title found"
+        description="An assignment with this title already exists in the same class and subject."
+        duplicateItemLabel="Existing assignment title"
+        onDecision={form.handleTitleDuplicateDecision}
+        onOpenChange={(open) => {
+          if (!open) {
+            void form.handleTitleDuplicateDecision("cancel");
+            return;
+          }
+          form.setTitleDuplicateDialogOpen(true);
+        }}
+      />
     </section>
   );
 }

@@ -1,5 +1,6 @@
 // Orchestrates the upload module page by composing extracted form sections and helpers.
 import { useMemo, useState } from "react";
+import { Save } from "lucide-react";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { getSubjectThemeById } from "@/dashboard/teacher/components/shared";
@@ -33,35 +34,11 @@ export default function SubjectUploadModuleView() {
   const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
 
-  const scopedErrors = useMemo<ModuleErrors>(() => {
-    const firstSubmodule = form.submodules[0];
-    if (!firstSubmodule) return form.errors;
-
-    const baseFirstSubmoduleErrors = form.errors.submodules[firstSubmodule.id] ?? { title: null, description: null, content: null };
-    const firstSubmoduleTitleError = firstSubmodule.title.trim().length === 0 ? "Submodule title is required" : null;
-    const firstSubmoduleContentError = firstSubmodule.content.trim().length === 0 ? "Submodule content is required" : null;
-
-    return {
-      ...form.errors,
-      submodules: {
-        ...form.errors.submodules,
-        [firstSubmodule.id]: {
-          ...baseFirstSubmoduleErrors,
-          title: baseFirstSubmoduleErrors.title ?? firstSubmoduleTitleError,
-          content: baseFirstSubmoduleErrors.content ?? firstSubmoduleContentError,
-        },
-      },
-    };
-  }, [form.errors, form.submodules]);
+  const scopedErrors = useMemo<ModuleErrors>(() => form.errors, [form.errors]);
 
   const handleSaveModule = async () => {
     if (saveStatus === "saving") return;
-    const firstSubmodule = form.submodules[0];
-    const isFirstSubmoduleInvalid = !firstSubmodule
-      || firstSubmodule.title.trim().length === 0
-      || firstSubmodule.content.trim().length === 0;
-
-    if (isFirstSubmoduleInvalid || hasModuleErrors(scopedErrors, form.submodules)) {
+    if (hasModuleErrors(scopedErrors, form.submodules)) {
       setSaveStatus("error");
       setSaveMessage("Please fix the highlighted errors before saving.");
       form.setTouched({ moduleTitle: true, description: false, submodules: Object.fromEntries(form.submodules.map((submodule) => [submodule.id, { title: true, description: true, content: true }])) });
@@ -135,6 +112,9 @@ export default function SubjectUploadModuleView() {
                 </p>
               ) : null}
               <Button type="button" onClick={handleSaveModule} disabled={saveStatus === "saving"} className="rounded-2xl border border-white/25 bg-white/20 px-6 py-3 font-semibold text-white ring-1 ring-[#3B240F]/20 transition-colors duration-200 hover:bg-white/30 disabled:cursor-not-allowed disabled:opacity-60">
+                <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-xl border border-emerald-400/30 bg-emerald-500/15 text-emerald-300">
+                  <Save className="h-4 w-4" />
+                </span>
                 {saveStatus === "saving" ? "Saving..." : "Save Module"}
               </Button>
             </div>
@@ -144,3 +124,5 @@ export default function SubjectUploadModuleView() {
     </div>
   );
 }
+
+

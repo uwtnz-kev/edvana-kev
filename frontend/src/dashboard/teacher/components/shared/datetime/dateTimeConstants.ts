@@ -11,4 +11,5 @@ export type TeacherDateTimePickerProps = {
   minDate?: Date;
   maxDate?: Date;
   timeStepMinutes?: number;
+  showActionIcons?: boolean;
 };

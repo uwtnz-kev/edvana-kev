@@ -9,6 +9,14 @@ function normalizeValue(value: string) {
   return value.trim().toLowerCase();
 }
 
+function isContentBlank(value: string) {
+  return value
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim().length === 0;
+}
+
 export function buildModuleErrors(moduleTitle: string, _description: string, submodules: SubmoduleDraft[], existingModuleTitles: string[] = []): ModuleErrors {
   const normalizedExistingModuleTitles = new Set(existingModuleTitles.map((title) => normalizeValue(title)));
   const seenSubmoduleTitles = new Set<string>();
@@ -23,13 +31,11 @@ export function buildModuleErrors(moduleTitle: string, _description: string, sub
     submodules: Object.fromEntries(
       submodules.map((submodule) => {
         const title = submodule.title.trim();
-        const submoduleDescription = submodule.description.trim();
-        const submoduleContent = submodule.content.trim();
         let titleError: string | null = null;
 
-        if (title.length === 0 && (submoduleDescription.length > 0 || submoduleContent.length > 0 || submodule.attachedFileIds.length > 0)) {
-          titleError = "Submodule title cannot be empty.";
-        } else if (title.length > 0) {
+        if (title.length === 0) {
+          titleError = "Submodule title is required";
+        } else {
           const normalizedTitle = normalizeValue(title);
           if (seenSubmoduleTitles.has(normalizedTitle)) {
             titleError = "A submodule with this title already exists in this module.";
@@ -40,7 +46,9 @@ export function buildModuleErrors(moduleTitle: string, _description: string, sub
         return [submodule.id, {
           title: titleError,
           description: null,
-          content: null,
+          content: isContentBlank(submodule.content)
+            ? "Please add written submodule content. Attached files do not replace the content field."
+            : null,
         }];
       })
     ),
@@ -66,3 +74,5 @@ export function getFirstInvalidField(errors: ModuleErrors, submodules: Submodule
   if (errors.submodules[firstInvalidSubmodule.id]?.description) return `${firstInvalidSubmodule.id}-description`;
   return `${firstInvalidSubmodule.id}-content`;
 }
+
+

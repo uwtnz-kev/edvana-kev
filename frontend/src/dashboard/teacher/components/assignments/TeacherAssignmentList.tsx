@@ -48,10 +48,12 @@ export function TeacherAssignmentList({
   }
 
   return (
-    <div className="space-y-1.5 transition-all duration-300">
-      <p className="text-sm text-white/60">Showing {assignments.length} assignment records</p>
+    <div className="space-y-4 transition-all duration-300">
+      <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/60">
+        Showing {assignments.length} assignment records
+      </div>
 
-      <div className="grid max-w-[580px] grid-cols-1 gap-1.5">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {assignments.map((assignment) => (
           <TeacherAssignmentCard
             key={assignment.id}

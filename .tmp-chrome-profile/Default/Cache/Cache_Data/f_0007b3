@@ -1,0 +1,171 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=a95dedd6"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import { Input } from "/src/components/ui/input.tsx";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "/src/components/ui/select.tsx";
+import { seedClasses2 } from "/src/dashboard/teacher/components/assignments/index.ts";
+import { SubmissionMethodsField } from "/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx";
+import { requiresQuestionBuilder, toggleSubmissionMethod } from "/src/dashboard/teacher/components/shared/assessment/submissionMethods.ts";
+import { TeacherAssignmentDueDatePicker } from "/src/dashboard/teacher/components/assignments/create/TeacherAssignmentDueDatePicker.tsx";
+export function TeacherAssignmentSchedulingFieldsSection({
+  values,
+  errors,
+  touched,
+  onFieldChange,
+  onFieldBlur,
+  onSubmissionMethodsChange,
+  onClassChange
+}) {
+  const show = (name) => touched[name] && errors[name];
+  const questionBuilderActive = requiresQuestionBuilder(values.submissionMethods);
+  return /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 gap-6 lg:grid-cols-2", children: [
+    /* @__PURE__ */ jsxDEV(Field, { label: "Estimated Minutes", id: "assignment-estimated", error: show("estimatedMinutes"), children: /* @__PURE__ */ jsxDEV(Input, { id: "assignment-estimated", type: "number", min: 1, value: values.estimatedMinutes, onChange: (event) => onFieldChange("estimatedMinutes", event.target.value), onBlur: () => onFieldBlur("estimatedMinutes"), placeholder: "45", className: "h-12 w-full rounded-2xl border-white/20 bg-white/20 text-white placeholder:text-white/70" }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 47,
+      columnNumber: 9
+    }, this) }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 46,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(Field, { label: "Due At", id: "assignment-due-picker", error: show("dueAt"), children: /* @__PURE__ */ jsxDEV("div", { id: "assignment-due-picker", className: "w-full [&_button]:h-12 [&_button]:w-full [&_button]:rounded-2xl", children: /* @__PURE__ */ jsxDEV(TeacherAssignmentDueDatePicker, { value: values.dueAt, onChange: (nextValue) => onFieldChange("dueAt", nextValue), onBlur: () => onFieldBlur("dueAt") }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 52,
+      columnNumber: 11
+    }, this) }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 51,
+      columnNumber: 9
+    }, this) }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 50,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(Field, { label: "Class", id: "assignment-class-trigger", error: show("classId"), children: /* @__PURE__ */ jsxDEV(Select, { value: values.classId, onValueChange: onClassChange, children: [
+      /* @__PURE__ */ jsxDEV(SelectTrigger, { id: "assignment-class-trigger", className: "h-12 w-full rounded-2xl border border-white/20 bg-white/20 text-white data-[placeholder]:text-white [&>svg]:text-white", children: /* @__PURE__ */ jsxDEV(SelectValue, { placeholder: "Select class" }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+        lineNumber: 59,
+        columnNumber: 13
+      }, this) }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+        lineNumber: 58,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV(SelectContent, { className: "rounded-2xl border border-white/25 bg-white/25 text-white backdrop-blur-xl", children: seedClasses2.map((item) => /* @__PURE__ */ jsxDEV(SelectItem, { value: item.id, className: "text-white focus:bg-white/30 focus:text-white", children: item.label }, item.id, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+        lineNumber: 62,
+        columnNumber: 41
+      }, this)) }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+        lineNumber: 61,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 57,
+      columnNumber: 9
+    }, this) }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 56,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(Field, { label: "Max Score", id: "assignment-max-score", error: show("maxScore"), children: /* @__PURE__ */ jsxDEV(Input, { id: "assignment-max-score", type: "number", min: 1, value: values.maxScore, onChange: (event) => onFieldChange("maxScore", event.target.value), onBlur: () => onFieldBlur("maxScore"), placeholder: "100", className: "h-12 w-full rounded-2xl border border-white/25 bg-white/20 text-white placeholder:text-white/70" }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 68,
+      columnNumber: 9
+    }, this) }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 67,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(Field, { label: "Access Code (Optional)", id: "assignment-access-code", error: show("accessCode"), children: /* @__PURE__ */ jsxDEV(Input, { id: "assignment-access-code", type: "text", value: values.accessCode, onChange: (event) => onFieldChange("accessCode", event.target.value), onBlur: () => onFieldBlur("accessCode"), placeholder: "Optional access code", className: "h-12 w-full rounded-2xl border border-white/25 bg-white/20 text-white placeholder:text-white/70" }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 72,
+      columnNumber: 9
+    }, this) }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 71,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(Field, { label: "Total Attempts", id: "assignment-total-attempts", error: show("totalAttempts"), children: /* @__PURE__ */ jsxDEV(Input, { id: "assignment-total-attempts", type: "number", min: 1, step: 1, value: values.totalAttempts, onChange: (event) => onFieldChange("totalAttempts", event.target.value), onBlur: () => onFieldBlur("totalAttempts"), placeholder: "Enter total attempts", className: "h-12 w-full rounded-2xl border border-white/25 bg-white/20 text-white placeholder:text-white/70" }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 76,
+      columnNumber: 9
+    }, this) }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 75,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(Field, { label: "Total Questions", id: "assignment-total-questions", error: show("totalQuestions"), children: /* @__PURE__ */ jsxDEV(Input, { id: "assignment-total-questions", type: "number", min: questionBuilderActive ? 1 : 0, disabled: !questionBuilderActive, value: values.totalQuestions, onChange: (event) => onFieldChange("totalQuestions", event.target.value), onBlur: () => onFieldBlur("totalQuestions"), className: "h-12 w-full rounded-2xl border border-white/25 bg-white/20 text-white placeholder:text-white/70 disabled:cursor-not-allowed disabled:opacity-70" }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 80,
+      columnNumber: 9
+    }, this) }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 79,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(SubmissionMethodsField, { id: "assignment-submission-methods", error: show("submissionMethods"), selected: values.submissionMethods, onToggle: (method) => onSubmissionMethodsChange(toggleSubmissionMethod(values.submissionMethods, method)) }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 83,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+    lineNumber: 45,
+    columnNumber: 5
+  }, this);
+}
+_c = TeacherAssignmentSchedulingFieldsSection;
+function Field({ label, id, error, children }) {
+  return /* @__PURE__ */ jsxDEV("div", { className: "w-full", children: [
+    /* @__PURE__ */ jsxDEV("label", { htmlFor: id, className: "mb-2 block text-sm text-white", children: label }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 92,
+      columnNumber: 7
+    }, this),
+    children,
+    error ? /* @__PURE__ */ jsxDEV("p", { className: "mt-1 text-sm font-medium text-red-600", children: error }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+      lineNumber: 94,
+      columnNumber: 16
+    }, this) : null
+  ] }, void 0, true, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx",
+    lineNumber: 90,
+    columnNumber: 5
+  }, this);
+}
+_c2 = Field;
+var _c, _c2;
+$RefreshReg$(_c, "TeacherAssignmentSchedulingFieldsSection");
+$RefreshReg$(_c2, "Field");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/edvana/frontend/src/dashboard/teacher/components/assignments/create/TeacherAssignmentSchedulingFieldsSection.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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LEdBQUcsVUFBVVAsT0FBT1UsbUJBQW1CLFVBQVUsQ0FBQ2dCLFdBQVdyQiwwQkFBMEJSLHVCQUF1QkcsT0FBT1UsbUJBQW1CZ0IsTUFBTSxDQUFDLEtBQXpPO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0FBMk87QUFBQSxPQXRDN087QUFBQTtBQUFBO0FBQUE7QUFBQSxTQXVDQTtBQUVKO0FBQUNDLEtBdERlNUI7QUF3RGhCLFNBQVM2QixNQUFNLEVBQUVQLE9BQU9ELElBQUlTLE9BQU9DLFNBQW1GLEdBQUc7QUFDdkgsU0FDRSx1QkFBQyxTQUFJLFdBQVUsVUFFYjtBQUFBLDJCQUFDLFdBQU0sU0FBU1YsSUFBSSxXQUFVLGlDQUFpQ0MsbUJBQS9EO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0FBcUU7QUFBQSxJQUNwRVM7QUFBQUEsSUFDQUQsUUFBUSx1QkFBQyxPQUFFLFdBQVUseUNBQXlDQSxtQkFBdEQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQUE0RCxJQUFPO0FBQUEsT0FKOUU7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQUtBO0FBRUo7QUFBQ0UsTUFUUUg7QUFBSyxJQUFBRCxJQUFBSTtBQUFBQyxhQUFBTCxJQUFBO0FBQUFLLGFBQUFELEtBQUEiLCJuYW1lcyI6WyJJbnB1dCIsIlNlbGVjdCIsIlNlbGVjdENvbnRlbnQiLCJTZWxlY3RJdGVtIiwiU2VsZWN0VHJpZ2dlciIsIlNlbGVjdFZhbHVlIiwic2VlZENsYXNzZXMyIiwiU3VibWlzc2lvbk1ldGhvZHNGaWVsZCIsInJlcXVpcmVzUXVlc3Rpb25CdWlsZGVyIiwidG9nZ2xlU3VibWlzc2lvbk1ldGhvZCIsIlRlYWNoZXJBc3NpZ25tZW50RHVlRGF0ZVBpY2tlciIsIlRlYWNoZXJBc3NpZ25tZW50U2NoZWR1bGluZ0ZpZWxkc1NlY3Rpb24iLCJ2YWx1ZXMiLCJlcnJvcnMiLCJ0b3VjaGVkIiwib25GaWVsZENoYW5nZSIsIm9uRmllbGRCbHVyIiwib25TdWJtaXNzaW9uTWV0aG9kc0NoYW5nZSIsIm9uQ2xhc3NDaGFuZ2UiLCJzaG93IiwibmFtZSIsInF1ZXN0aW9uQnVpbGRlckFjdGl2ZSIsInN1Ym1pc3Npb25NZXRob2RzIiwiZXN0aW1hdGVkTWludXRlcyIsImV2ZW50IiwidGFyZ2V0IiwidmFsdWUiLCJkdWVBdCIsIm5leHRWYWx1ZSIsImNsYXNzSWQiLCJtYXAiLCJpdGVtIiwiaWQiLCJsYWJlbCIsIm1heFNjb3JlIiwiYWNjZXNzQ29kZSIsInRvdGFsQXR0ZW1wdHMiLCJ0b3RhbFF1ZXN0aW9ucyIsIm1ldGhvZCIsIl9jIiwiRmllbGQiLCJlcnJvciIsImNoaWxkcmVuIiwiX2MyIiwiJFJlZnJlc2hSZWckIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbIlRlYWNoZXJBc3NpZ25tZW50U2NoZWR1bGluZ0ZpZWxkc1NlY3Rpb24udHN4Il0sInNvdXJjZXNDb250ZW50IjpbIi8vIFJlbmRlcnMgZHVlIGRhdGUsIGNsYXNzLCBhbmQgZ3JhZGluZyBpbnB1dHMgdXNlZCB0byBzY2hlZHVsZSB0aGUgYXNzaWdubWVudC5cbmltcG9ydCB0eXBlIHsgUmVhY3ROb2RlIH0gZnJvbSBcInJlYWN0XCI7XG5pbXBvcnQgeyBJbnB1dCB9IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvaW5wdXRcIjtcbmltcG9ydCB7IFNlbGVjdCwgU2VsZWN0Q29udGVudCwgU2VsZWN0SXRlbSwgU2VsZWN0VHJpZ2dlciwgU2VsZWN0VmFsdWUgfSBmcm9tIFwiQC9jb21wb25lbnRzL3VpL3NlbGVjdFwiO1xuaW1wb3J0IHsgc2VlZENsYXNzZXMyIH0gZnJvbSBcIkAvZGFzaGJvYXJkL3RlYWNoZXIvY29tcG9uZW50cy9hc3NpZ25tZW50c1wiO1xuaW1wb3J0IHsgU3VibWlzc2lvbk1ldGhvZHNGaWVsZCB9IGZyb20gXCJAL2Rhc2hib2FyZC90ZWFjaGVyL2NvbXBvbmVudHMvc2hhcmVkL2Fzc2Vzc21lbnQvU3VibWlzc2lvbk1ldGhvZHNGaWVsZFwiO1xuaW1wb3J0IHsgcmVxdWlyZXNRdWVzdGlvbkJ1aWxkZXIsIHRvZ2dsZVN1Ym1pc3Npb25NZXRob2QgfSBmcm9tIFwiQC9kYXNoYm9hcmQvdGVhY2hlci9jb21wb25lbnRzL3NoYXJlZC9hc3Nlc3NtZW50L3N1Ym1pc3Npb25NZXRob2RzXCI7XG5pbXBvcnQgeyBUZWFjaGVyQXNzaWdubWVudER1ZURhdGVQaWNrZXIgfSBmcm9tIFwiLi9UZWFjaGVyQXNzaWdubWVudER1ZURhdGVQaWNrZXJcIjtcbmltcG9ydCB0eXBlIHsgQXNzaWdubWVudEZpZWxkUHJvcHMgfSBmcm9tIFwiLi9hc3NpZ25tZW50Q3JlYXRlVHlwZXNcIjtcblxudHlwZSBQcm9wcyA9IEFzc2lnbm1lbnRGaWVsZFByb3BzICYgeyBvbkNsYXNzQ2hhbmdlOiAodmFsdWU6IHN0cmluZykgPT4gdm9pZCB9O1xuXG5leHBvcnQgZnVuY3Rpb24gVGVhY2hlckFzc2lnbm1lbnRTY2hlZHVsaW5nRmllbGRzU2VjdGlvbih7XG4gIHZhbHVlcyxcbiAgZXJyb3JzLFxuICB0b3VjaGVkLFxuICBvbkZpZWxkQ2hhbmdlLFxuICBvbkZpZWxkQmx1cixcbiAgb25TdWJtaXNzaW9uTWV0aG9kc0NoYW5nZSxcbiAgb25DbGFzc0NoYW5nZSxcbn06IFByb3BzKSB7XG4gIGNvbnN0IHNob3cgPSAobmFtZToga2V5b2YgdHlwZW9mIGVycm9ycykgPT4gdG91Y2hlZFtuYW1lXSAmJiBlcnJvcnNbbmFtZV07XG4gIGNvbnN0IHF1ZXN0aW9uQnVpbGRlckFjdGl2ZSA9IHJlcXVpcmVzUXVlc3Rpb25CdWlsZGVyKHZhbHVlcy5zdWJtaXNzaW9uTWV0aG9kcyk7XG5cbiAgcmV0dXJuIChcbiAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQgZ3JpZC1jb2xzLTEgZ2FwLTYgbGc6Z3JpZC1jb2xzLTJcIj5cbiAgICAgIDxGaWVsZCBsYWJlbD1cIkVzdGltYXRlZCBNaW51dGVzXCIgaWQ9XCJhc3NpZ25tZW50LWVzdGltYXRlZFwiIGVycm9yPXtzaG93KFwiZXN0aW1hdGVkTWludXRlc1wiKX0+XG4gICAgICAgIDxJbnB1dCBpZD1cImFzc2lnbm1lbnQtZXN0aW1hdGVkXCIgdHlwZT1cIm51bWJlclwiIG1pbj17MX0gdmFsdWU9e3ZhbHVlcy5lc3RpbWF0ZWRNaW51dGVzfSBvbkNoYW5nZT17KGV2ZW50KSA9PiBvbkZpZWxkQ2hhbmdlKFwiZXN0aW1hdGVkTWludXRlc1wiLCBldmVudC50YXJnZXQudmFsdWUpfSBvbkJsdXI9eygpID0+IG9uRmllbGRCbHVyKFwiZXN0aW1hdGVkTWludXRlc1wiKX0gcGxhY2Vob2xkZXI9XCI0NVwiIGNsYXNzTmFtZT1cImgtMTIgdy1mdWxsIHJvdW5kZWQtMnhsIGJvcmRlci13aGl0ZS8yMCBiZy13aGl0ZS8yMCB0ZXh0LXdoaXRlIHBsYWNlaG9sZGVyOnRleHQtd2hpdGUvNzBcIiAvPlxuICAgICAgPC9GaWVsZD5cblxuICAgICAgPEZpZWxkIGxhYmVsPVwiRHVlIEF0XCIgaWQ9XCJhc3NpZ25tZW50LWR1ZS1waWNrZXJcIiBlcnJvcj17c2hvdyhcImR1ZUF0XCIpfT5cbiAgICAgICAgPGRpdiBpZD1cImFzc2lnbm1lbnQtZHVlLXBpY2tlclwiIGNsYXNzTmFtZT1cInctZnVsbCBbJl9idXR0b25dOmgtMTIgWyZfYnV0dG9uXTp3LWZ1bGwgWyZfYnV0dG9uXTpyb3VuZGVkLTJ4bFwiPlxuICAgICAgICAgIDxUZWFjaGVyQXNzaWdubWVudER1ZURhdGVQaWNrZXIgdmFsdWU9e3ZhbHVlcy5kdWVBdH0gb25DaGFuZ2U9eyhuZXh0VmFsdWUpID0+IG9uRmllbGRDaGFuZ2UoXCJkdWVBdFwiLCBuZXh0VmFsdWUpfSBvbkJsdXI9eygpID0+IG9uRmllbGRCbHVyKFwiZHVlQXRcIil9IC8+XG4gICAgICAgIDwvZGl2PlxuICAgICAgPC9GaWVsZD5cblxuICAgICAgPEZpZWxkIGxhYmVsPVwiQ2xhc3NcIiBpZD1cImFzc2lnbm1lbnQtY2xhc3MtdHJpZ2dlclwiIGVycm9yPXtzaG93KFwiY2xhc3NJZFwiKX0+XG4gICAgICAgIDxTZWxlY3QgdmFsdWU9e3ZhbHVlcy5jbGFzc0lkfSBvblZhbHVlQ2hhbmdlPXtvbkNsYXNzQ2hhbmdlfT5cbiAgICAgICAgICA8U2VsZWN0VHJpZ2dlciBpZD1cImFzc2lnbm1lbnQtY2xhc3MtdHJpZ2dlclwiIGNsYXNzTmFtZT1cImgtMTIgdy1mdWxsIHJvdW5kZWQtMnhsIGJvcmRlciBib3JkZXItd2hpdGUvMjAgYmctd2hpdGUvMjAgdGV4dC13aGl0ZSBkYXRhLVtwbGFjZWhvbGRlcl06dGV4dC13aGl0ZSBbJj5zdmddOnRleHQtd2hpdGVcIj5cbiAgICAgICAgICAgIDxTZWxlY3RWYWx1ZSBwbGFjZWhvbGRlcj1cIlNlbGVjdCBjbGFzc1wiIC8+XG4gICAgICAgICAgPC9TZWxlY3RUcmlnZ2VyPlxuICAgICAgICAgIDxTZWxlY3RDb250ZW50IGNsYXNzTmFtZT1cInJvdW5kZWQtMnhsIGJvcmRlciBib3JkZXItd2hpdGUvMjUgYmctd2hpdGUvMjUgdGV4dC13aGl0ZSBiYWNrZHJvcC1ibHVyLXhsXCI+XG4gICAgICAgICAgICB7c2VlZENsYXNzZXMyLm1hcCgoaXRlbSkgPT4gPFNlbGVjdEl0ZW0ga2V5PXtpdGVtLmlkfSB2YWx1ZT17aXRlbS5pZH0gY2xhc3NOYW1lPVwidGV4dC13aGl0ZSBmb2N1czpiZy13aGl0ZS8zMCBmb2N1czp0ZXh0LXdoaXRlXCI+e2l0ZW0ubGFiZWx9PC9TZWxlY3RJdGVtPil9XG4gICAgICAgICAgPC9TZWxlY3RDb250ZW50PlxuICAgICAgICA8L1NlbGVjdD5cbiAgICAgIDwvRmllbGQ+XG5cbiAgICAgIDxGaWVsZCBsYWJlbD1cIk1heCBTY29yZVwiIGlkPVwiYXNzaWdubWVudC1tYXgtc2NvcmVcIiBlcnJvcj17c2hvdyhcIm1heFNjb3JlXCIpfT5cbiAgICAgICAgPElucHV0IGlkPVwiYXNzaWdubWVudC1tYXgtc2NvcmVcIiB0eXBlPVwibnVtYmVyXCIgbWluPXsxfSB2YWx1ZT17dmFsdWVzLm1heFNjb3JlfSBvbkNoYW5nZT17KGV2ZW50KSA9PiBvbkZpZWxkQ2hhbmdlKFwibWF4U2NvcmVcIiwgZXZlbnQudGFyZ2V0LnZhbHVlKX0gb25CbHVyPXsoKSA9PiBvbkZpZWxkQmx1cihcIm1heFNjb3JlXCIpfSBwbGFjZWhvbGRlcj1cIjEwMFwiIGNsYXNzTmFtZT1cImgtMTIgdy1mdWxsIHJvdW5kZWQtMnhsIGJvcmRlciBib3JkZXItd2hpdGUvMjUgYmctd2hpdGUvMjAgdGV4dC13aGl0ZSBwbGFjZWhvbGRlcjp0ZXh0LXdoaXRlLzcwXCIgLz5cbiAgICAgIDwvRmllbGQ+XG5cbiAgICAgIDxGaWVsZCBsYWJlbD1cIkFjY2VzcyBDb2RlIChPcHRpb25hbClcIiBpZD1cImFzc2lnbm1lbnQtYWNjZXNzLWNvZGVcIiBlcnJvcj17c2hvdyhcImFjY2Vzc0NvZGVcIil9PlxuICAgICAgICA8SW5wdXQgaWQ9XCJhc3NpZ25tZW50LWFjY2Vzcy1jb2RlXCIgdHlwZT1cInRleHRcIiB2YWx1ZT17dmFsdWVzLmFjY2Vzc0NvZGV9IG9uQ2hhbmdlPXsoZXZlbnQpID0+IG9uRmllbGRDaGFuZ2UoXCJhY2Nlc3NDb2RlXCIsIGV2ZW50LnRhcmdldC52YWx1ZSl9IG9uQmx1cj17KCkgPT4gb25GaWVsZEJsdXIoXCJhY2Nlc3NDb2RlXCIpfSBwbGFjZWhvbGRlcj1cIk9wdGlvbmFsIGFjY2VzcyBjb2RlXCIgY2xhc3NOYW1lPVwiaC0xMiB3LWZ1bGwgcm91bmRlZC0yeGwgYm9yZGVyIGJvcmRlci13aGl0ZS8yNSBiZy13aGl0ZS8yMCB0ZXh0LXdoaXRlIHBsYWNlaG9sZGVyOnRleHQtd2hpdGUvNzBcIiAvPlxuICAgICAgPC9GaWVsZD5cblxuICAgICAgPEZpZWxkIGxhYmVsPVwiVG90YWwgQXR0ZW1wdHNcIiBpZD1cImFzc2lnbm1lbnQtdG90YWwtYXR0ZW1wdHNcIiBlcnJvcj17c2hvdyhcInRvdGFsQXR0ZW1wdHNcIil9PlxuICAgICAgICA8SW5wdXQgaWQ9XCJhc3NpZ25tZW50LXRvdGFsLWF0dGVtcHRzXCIgdHlwZT1cIm51bWJlclwiIG1pbj17MX0gc3RlcD17MX0gdmFsdWU9e3ZhbHVlcy50b3RhbEF0dGVtcHRzfSBvbkNoYW5nZT17KGV2ZW50KSA9PiBvbkZpZWxkQ2hhbmdlKFwidG90YWxBdHRlbXB0c1wiLCBldmVudC50YXJnZXQudmFsdWUpfSBvbkJsdXI9eygpID0+IG9uRmllbGRCbHVyKFwidG90YWxBdHRlbXB0c1wiKX0gcGxhY2Vob2xkZXI9XCJFbnRlciB0b3RhbCBhdHRlbXB0c1wiIGNsYXNzTmFtZT1cImgtMTIgdy1mdWxsIHJvdW5kZWQtMnhsIGJvcmRlciBib3JkZXItd2hpdGUvMjUgYmctd2hpdGUvMjAgdGV4dC13aGl0ZSBwbGFjZWhvbGRlcjp0ZXh0LXdoaXRlLzcwXCIgLz5cbiAgICAgIDwvRmllbGQ+XG5cbiAgICAgIDxGaWVsZCBsYWJlbD1cIlRvdGFsIFF1ZXN0aW9uc1wiIGlkPVwiYXNzaWdubWVudC10b3RhbC1xdWVzdGlvbnNcIiBlcnJvcj17c2hvdyhcInRvdGFsUXVlc3Rpb25zXCIpfT5cbiAgICAgICAgPElucHV0IGlkPVwiYXNzaWdubWVudC10b3RhbC1xdWVzdGlvbnNcIiB0eXBlPVwibnVtYmVyXCIgbWluPXtxdWVzdGlvbkJ1aWxkZXJBY3RpdmUgPyAxIDogMH0gZGlzYWJsZWQ9eyFxdWVzdGlvbkJ1aWxkZXJBY3RpdmV9IHZhbHVlPXt2YWx1ZXMudG90YWxRdWVzdGlvbnN9IG9uQ2hhbmdlPXsoZXZlbnQpID0+IG9uRmllbGRDaGFuZ2UoXCJ0b3RhbFF1ZXN0aW9uc1wiLCBldmVudC50YXJnZXQudmFsdWUpfSBvbkJsdXI9eygpID0+IG9uRmllbGRCbHVyKFwidG90YWxRdWVzdGlvbnNcIil9IGNsYXNzTmFtZT1cImgtMTIgdy1mdWxsIHJvdW5kZWQtMnhsIGJvcmRlciBib3JkZXItd2hpdGUvMjUgYmctd2hpdGUvMjAgdGV4dC13aGl0ZSBwbGFjZWhvbGRlcjp0ZXh0LXdoaXRlLzcwIGRpc2FibGVkOmN1cnNvci1ub3QtYWxsb3dlZCBkaXNhYmxlZDpvcGFjaXR5LTcwXCIgLz5cbiAgICAgIDwvRmllbGQ+XG5cbiAgICAgIDxTdWJtaXNzaW9uTWV0aG9kc0ZpZWxkIGlkPVwiYXNzaWdubWVudC1zdWJtaXNzaW9uLW1ldGhvZHNcIiBlcnJvcj17c2hvdyhcInN1Ym1pc3Npb25NZXRob2RzXCIpfSBzZWxlY3RlZD17dmFsdWVzLnN1Ym1pc3Npb25NZXRob2RzfSBvblRvZ2dsZT17KG1ldGhvZCkgPT4gb25TdWJtaXNzaW9uTWV0aG9kc0NoYW5nZSh0b2dnbGVTdWJtaXNzaW9uTWV0aG9kKHZhbHVlcy5zdWJtaXNzaW9uTWV0aG9kcywgbWV0aG9kKSl9IC8+XG4gICAgPC9kaXY+XG4gICk7XG59XG5cbmZ1bmN0aW9uIEZpZWxkKHsgbGFiZWwsIGlkLCBlcnJvciwgY2hpbGRyZW4gfTogeyBsYWJlbDogc3RyaW5nOyBpZDogc3RyaW5nOyBlcnJvcjogc3RyaW5nIHwgbnVsbDsgY2hpbGRyZW46IFJlYWN0Tm9kZSB9KSB7XG4gIHJldHVybiAoXG4gICAgPGRpdiBjbGFzc05hbWU9XCJ3LWZ1bGxcIj5cbiAgICAgIHsvKiBLZWVwcyByZXBlYXRlZCBzY2hlZHVsZSBmaWVsZCBmcmFtaW5nIGFuZCBlcnJvciBwbGFjZW1lbnQgY29uc2lzdGVudC4gKi99XG4gICAgICA8bGFiZWwgaHRtbEZvcj17aWR9IGNsYXNzTmFtZT1cIm1iLTIgYmxvY2sgdGV4dC1zbSB0ZXh0LXdoaXRlXCI+e2xhYmVsfTwvbGFiZWw+XG4gICAgICB7Y2hpbGRyZW59XG4gICAgICB7ZXJyb3IgPyA8cCBjbGFzc05hbWU9XCJtdC0xIHRleHQtc20gZm9udC1tZWRpdW0gdGV4dC1yZWQtNjAwXCI+e2Vycm9yfTwvcD4gOiBudWxsfVxuICAgIDwvZGl2PlxuICApO1xufVxuXHJcblxyXG5cclxuXHJcbiJdLCJmaWxlIjoiQzovZWR2YW5hL2Zyb250ZW5kL3NyYy9kYXNoYm9hcmQvdGVhY2hlci9jb21wb25lbnRzL2Fzc2lnbm1lbnRzL2NyZWF0ZS9UZWFjaGVyQXNzaWdubWVudFNjaGVkdWxpbmdGaWVsZHNTZWN0aW9uLnRzeCJ9

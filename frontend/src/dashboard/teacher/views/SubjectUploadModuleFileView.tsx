@@ -1,6 +1,6 @@
 // Orchestrates the minimal upload-module-from-PC flow using existing module and subject-file stores.
 import { useMemo, useState } from "react";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, X } from "lucide-react";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -138,8 +138,8 @@ export default function SubjectUploadModuleFileView() {
                     <div className="flex items-start justify-between gap-4">
                       <div />
                       {submodules.length > 1 ? (
-                        <Button type="button" onClick={() => removeSubmodule(submodule.id)} className="rounded-2xl border border-white/15 bg-white/10 px-4 py-2 text-white transition-colors duration-200 hover:bg-white/15">
-                          <Trash2 className="mr-2 h-4 w-4" />
+                        <Button type="button" variant="outline" onClick={() => removeSubmodule(submodule.id)} className="rounded-2xl border-red-400/20 bg-red-500/10 px-4 py-2 text-white transition-all duration-200 hover:bg-red-500/20 hover:border-red-400/30 hover:text-white">
+                          <Trash2 className="mr-2 h-4 w-4 text-red-300" />
                           Remove Submodule
                         </Button>
                       ) : null}
@@ -177,7 +177,7 @@ export default function SubjectUploadModuleFileView() {
 
               <div>
                 <Button type="button" onClick={addSubmodule} className="rounded-2xl border border-white/20 bg-white/10 px-4 py-2 text-white transition-colors duration-200 hover:bg-white/20">
-                  <Plus className="mr-2 h-4 w-4" />
+                  <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-xl border border-violet-400/30 bg-violet-500/15 text-violet-300"><Plus className="h-4 w-4" /></span>
                   Add Submodule
                 </Button>
               </div>
@@ -198,9 +198,13 @@ export default function SubjectUploadModuleFileView() {
                 </p>
               ) : null}
               <Button type="button" onClick={() => navigate(subjectRoute, { state: { restoreSubjectId: subjectId, subject: state?.subject ?? null } })} className="rounded-2xl border border-white/15 bg-white/10 px-6 py-3 text-white transition-colors duration-200 hover:bg-white/15">
+                <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-xl border border-slate-400/30 bg-slate-500/15 text-slate-300">
+                  <X className="h-4 w-4" />
+                </span>
                 Cancel
               </Button>
               <Button type="button" onClick={handleSave} disabled={saveStatus === "saving"} className="rounded-2xl border border-white/25 bg-white/20 px-6 py-3 font-semibold text-white ring-1 ring-[#3B240F]/20 transition-colors duration-200 hover:bg-white/30 disabled:cursor-not-allowed disabled:opacity-60">
+                <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-xl border border-emerald-400/30 bg-emerald-500/15 text-emerald-300"><Plus className="h-4 w-4" /></span>
                 {saveStatus === "saving" ? "Saving..." : "Create Module"}
               </Button>
             </div>
@@ -210,5 +214,16 @@ export default function SubjectUploadModuleFileView() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
 
 

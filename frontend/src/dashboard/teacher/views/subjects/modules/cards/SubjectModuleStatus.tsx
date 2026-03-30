@@ -1,5 +1,6 @@
 // Status badge and publish/delete actions for a subject module row.
 import { Trash2, Upload } from "lucide-react";
+import { destructiveActionButtonClass, destructiveActionIconClass } from "@/dashboard/teacher/components/shared/destructiveActionStyles";
 import type { SubjectModuleItem } from "@/dashboard/teacher/components/subjects/store/subjectModulesTypes";
 
 type Props = {
@@ -33,9 +34,9 @@ export function SubjectModuleStatus({ module, onDelete, onPublish }: Props) {
           event.stopPropagation();
           onDelete(module.id);
         }}
-        className={`${moduleActionButton} bg-white/10 text-white hover:bg-white/20`}
+        className={`${moduleActionButton} ${destructiveActionButtonClass}`}
       >
-        <Trash2 className="h-3.5 w-3.5 text-red-400" />
+        <Trash2 className={`h-3.5 w-3.5 ${destructiveActionIconClass}`} />
         Delete
       </button>
     </div>

@@ -1,0 +1,157 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=a95dedd6"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=a95dedd6"; const useEffect = __vite__cjsImport3_react["useEffect"]; const useMemo = __vite__cjsImport3_react["useMemo"]; const useState = __vite__cjsImport3_react["useState"];
+import * as DialogPrimitive from "/node_modules/.vite/deps/@radix-ui_react-dialog.js?v=a95dedd6";
+import { X } from "/node_modules/.vite/deps/lucide-react.js?v=a95dedd6";
+import {
+  Dialog,
+  DialogDescription,
+  DialogHeader,
+  DialogOverlay,
+  DialogPortal,
+  DialogTitle,
+  DialogTrigger
+} from "/src/components/ui/dialog.tsx";
+import { buildDateWithTime, buildMinuteOptions, formatTriggerLabel, snapMinute, toTimeParts } from "/src/dashboard/teacher/components/shared/datetime/dateTimeHelpers.ts";
+import { DateTimeCalendarPanel } from "/src/dashboard/teacher/components/shared/datetime/DateTimeCalendarPanel.tsx";
+import { DateTimeTimePanel } from "/src/dashboard/teacher/components/shared/datetime/DateTimeTimePanel.tsx";
+import { DateTimeTrigger } from "/src/dashboard/teacher/components/shared/datetime/DateTimeTrigger.tsx";
+export function TeacherDateTimePicker({ value, onChange, placeholder = "Pick date and time", disabled = false, minDate, maxDate, timeStepMinutes = 15 }) {
+  _s();
+  const [open, setOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(void 0);
+  const [selectedHour, setSelectedHour] = useState("12");
+  const [selectedMinute, setSelectedMinute] = useState("00");
+  const [selectedMeridiem, setSelectedMeridiem] = useState("PM");
+  const hasValue = useMemo(() => Boolean(value), [value]);
+  const minuteOptions = useMemo(() => buildMinuteOptions(timeStepMinutes), [timeStepMinutes]);
+  useEffect(() => {
+    if (!open) return;
+    const source = value ?? /* @__PURE__ */ new Date();
+    const parts = toTimeParts(source);
+    setSelectedDate(source);
+    setSelectedHour(parts.hour);
+    setSelectedMinute(snapMinute(parts.minute, minuteOptions));
+    setSelectedMeridiem(parts.meridiem);
+  }, [minuteOptions, open, value]);
+  const onApply = () => {
+    if (!selectedDate) return;
+    onChange(buildDateWithTime(selectedDate, selectedHour, selectedMinute, selectedMeridiem));
+    setOpen(false);
+  };
+  return /* @__PURE__ */ jsxDEV(Dialog, { open, onOpenChange: setOpen, children: [
+    /* @__PURE__ */ jsxDEV(DialogTrigger, { asChild: true, children: /* @__PURE__ */ jsxDEV(DateTimeTrigger, { disabled, hasValue, label: formatTriggerLabel(value, placeholder) }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx",
+      lineNumber: 67,
+      columnNumber: 30
+    }, this) }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx",
+      lineNumber: 67,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(DialogPortal, { children: [
+      /* @__PURE__ */ jsxDEV(DialogOverlay, { className: "fixed inset-0 z-[1200] bg-black/25 backdrop-blur-[2px] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx",
+        lineNumber: 69,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(DialogPrimitive.Content, { className: "fixed left-1/2 top-1/2 z-[1201] w-[calc(100vw-2rem)] max-w-xl -translate-x-1/2 -translate-y-1/2 max-h-[80vh] overflow-hidden rounded-3xl border border-white/20 bg-[#161b22]/95 p-0 text-white shadow-lg backdrop-blur-2xl pointer-events-auto", children: [
+        /* @__PURE__ */ jsxDEV(DialogHeader, { className: "sr-only", children: [
+          /* @__PURE__ */ jsxDEV(DialogTitle, { children: "Select date and time" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx",
+            lineNumber: 71,
+            columnNumber: 45
+          }, this),
+          /* @__PURE__ */ jsxDEV(DialogDescription, { children: "Choose date and time, then apply changes." }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx",
+            lineNumber: 71,
+            columnNumber: 92
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx",
+          lineNumber: 71,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "p-4 sm:p-5 flex flex-col gap-5 max-h-[80vh] overflow-y-auto overscroll-contain", children: [
+          /* @__PURE__ */ jsxDEV(DateTimeCalendarPanel, { selectedDate, onSelectDate: setSelectedDate, minDate, maxDate }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx",
+            lineNumber: 73,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(DateTimeTimePanel, { selectedDate, selectedHour, selectedMinute, selectedMeridiem, minuteOptions, onHourChange: setSelectedHour, onMinuteChange: setSelectedMinute, onMeridiemChange: setSelectedMeridiem, onClose: () => setOpen(false), onApply }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx",
+            lineNumber: 74,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx",
+          lineNumber: 72,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(DialogPrimitive.Close, { className: "absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-white/40 disabled:pointer-events-none", children: [
+          /* @__PURE__ */ jsxDEV(X, { className: "h-4 w-4" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx",
+            lineNumber: 76,
+            columnNumber: 209
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { className: "sr-only", children: "Close" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx",
+            lineNumber: 76,
+            columnNumber: 234
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx",
+          lineNumber: 76,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx",
+        lineNumber: 70,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx",
+      lineNumber: 68,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx",
+    lineNumber: 66,
+    columnNumber: 5
+  }, this);
+}
+_s(TeacherDateTimePicker, "o1Pb79h4vF5iFSfWKdsZ5R4J7Uc=");
+_c = TeacherDateTimePicker;
+var _c;
+$RefreshReg$(_c, "TeacherDateTimePicker");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/edvana/frontend/src/dashboard/teacher/components/shared/datetime/TeacherDateTimePicker.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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LGNBQTRCLGNBQTRCLGdCQUFnQyxrQkFBb0MsZUFBOEIsY0FBY0csaUJBQWlCLGdCQUFnQkUsbUJBQW1CLGtCQUFrQkUscUJBQXFCLFNBQVMsTUFBTVQsUUFBUSxLQUFLLEdBQUcsV0FBclQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFBc1U7QUFBQSxhQUZ4VTtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBR0E7QUFBQSxRQUNBLHVCQUFDLGdCQUFnQixPQUFoQixFQUFzQixXQUFVLHNLQUFxSztBQUFBLGlDQUFDLEtBQUUsV0FBVSxhQUFiO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBQXNCO0FBQUEsVUFBRyx1QkFBQyxVQUFLLFdBQVUsV0FBVSxxQkFBMUI7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFBK0I7QUFBQSxhQUE5UDtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBQXFRO0FBQUEsV0FOdlE7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQU9BO0FBQUEsU0FURjtBQUFBO0FBQUE7QUFBQTtBQUFBLFdBVUE7QUFBQSxPQVpGO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0FhQTtBQUVKO0FBQUNGLEdBekNlUix1QkFBcUI7QUFBQThCLEtBQXJCOUI7QUFBcUIsSUFBQThCO0FBQUFDLGFBQUFELElBQUEiLCJuYW1lcyI6WyJ1c2VFZmZlY3QiLCJ1c2VNZW1vIiwidXNlU3RhdGUiLCJEaWFsb2dQcmltaXRpdmUiLCJYIiwiRGlhbG9nIiwiRGlhbG9nRGVzY3JpcHRpb24iLCJEaWFsb2dIZWFkZXIiLCJEaWFsb2dPdmVybGF5IiwiRGlhbG9nUG9ydGFsIiwiRGlhbG9nVGl0bGUiLCJEaWFsb2dUcmlnZ2VyIiwiYnVpbGREYXRlV2l0aFRpbWUiLCJidWlsZE1pbnV0ZU9wdGlvbnMiLCJmb3JtYXRUcmlnZ2VyTGFiZWwiLCJzbmFwTWludXRlIiwidG9UaW1lUGFydHMiLCJEYXRlVGltZUNhbGVuZGFyUGFuZWwiLCJEYXRlVGltZVRpbWVQYW5lbCIsIkRhdGVUaW1lVHJpZ2dlciIsIlRlYWNoZXJEYXRlVGltZVBpY2tlciIsInZhbHVlIiwib25DaGFuZ2UiLCJwbGFjZWhvbGRlciIsImRpc2FibGVkIiwibWluRGF0ZSIsIm1heERhdGUiLCJ0aW1lU3RlcE1pbnV0ZXMiLCJfcyIsIm9wZW4iLCJzZXRPcGVuIiwic2VsZWN0ZWREYXRlIiwic2V0U2VsZWN0ZWREYXRlIiwidW5kZWZpbmVkIiwic2VsZWN0ZWRIb3VyIiwic2V0U2VsZWN0ZWRIb3VyIiwic2VsZWN0ZWRNaW51dGUiLCJzZXRTZWxlY3RlZE1pbnV0ZSIsInNlbGVjdGVkTWVyaWRpZW0iLCJzZXRTZWxlY3RlZE1lcmlkaWVtIiwiaGFzVmFsdWUiLCJCb29sZWFuIiwibWludXRlT3B0aW9ucyIsInNvdXJjZSIsIkRhdGUiLCJwYXJ0cyIsImhvdXIiLCJtaW51dGUiLCJtZXJpZGllbSIsIm9uQXBwbHkiLCJfYyIsIiRSZWZyZXNoUmVnJCJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJUZWFjaGVyRGF0ZVRpbWVQaWNrZXIudHN4Il0sInNvdXJjZXNDb250ZW50IjpbIi8vIE9yY2hlc3RyYXRlcyB0aGUgc2hhcmVkIHRlYWNoZXIgZGF0ZS10aW1lIHBpY2tlciBmcm9tIGV4dHJhY3RlZCBkaWFsb2cgcGFydHMuXG5pbXBvcnQgeyB1c2VFZmZlY3QsIHVzZU1lbW8sIHVzZVN0YXRlIH0gZnJvbSBcInJlYWN0XCI7XG5pbXBvcnQgKiBhcyBEaWFsb2dQcmltaXRpdmUgZnJvbSBcIkByYWRpeC11aS9yZWFjdC1kaWFsb2dcIjtcbmltcG9ydCB7IFggfSBmcm9tIFwibHVjaWRlLXJlYWN0XCI7XG5pbXBvcnQge1xuICBEaWFsb2csXG4gIERpYWxvZ0Rlc2NyaXB0aW9uLFxuICBEaWFsb2dIZWFkZXIsXG4gIERpYWxvZ092ZXJsYXksXG4gIERpYWxvZ1BvcnRhbCxcbiAgRGlhbG9nVGl0bGUsXG4gIERpYWxvZ1RyaWdnZXIsXG59IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvZGlhbG9nXCI7XG5pbXBvcnQgeyB0eXBlIE1lcmlkaWVtLCB0eXBlIFRlYWNoZXJEYXRlVGltZVBpY2tlclByb3BzIH0gZnJvbSBcIi4vZGF0ZVRpbWVDb25zdGFudHNcIjtcbmltcG9ydCB7IGJ1aWxkRGF0ZVdpdGhUaW1lLCBidWlsZE1pbnV0ZU9wdGlvbnMsIGZvcm1hdFRyaWdnZXJMYWJlbCwgc25hcE1pbnV0ZSwgdG9UaW1lUGFydHMgfSBmcm9tIFwiLi9kYXRlVGltZUhlbHBlcnNcIjtcbmltcG9ydCB7IERhdGVUaW1lQ2FsZW5kYXJQYW5lbCB9IGZyb20gXCIuL0RhdGVUaW1lQ2FsZW5kYXJQYW5lbFwiO1xuaW1wb3J0IHsgRGF0ZVRpbWVUaW1lUGFuZWwgfSBmcm9tIFwiLi9EYXRlVGltZVRpbWVQYW5lbFwiO1xuaW1wb3J0IHsgRGF0ZVRpbWVUcmlnZ2VyIH0gZnJvbSBcIi4vRGF0ZVRpbWVUcmlnZ2VyXCI7XG5leHBvcnQgdHlwZSB7IFRlYWNoZXJEYXRlVGltZVBpY2tlclByb3BzIH0gZnJvbSBcIi4vZGF0ZVRpbWVDb25zdGFudHNcIjtcblxuZXhwb3J0IGZ1bmN0aW9uIFRlYWNoZXJEYXRlVGltZVBpY2tlcih7IHZhbHVlLCBvbkNoYW5nZSwgcGxhY2Vob2xkZXIgPSBcIlBpY2sgZGF0ZSBhbmQgdGltZVwiLCBkaXNhYmxlZCA9IGZhbHNlLCBtaW5EYXRlLCBtYXhEYXRlLCB0aW1lU3RlcE1pbnV0ZXMgPSAxNSB9OiBUZWFjaGVyRGF0ZVRpbWVQaWNrZXJQcm9wcykge1xuICBjb25zdCBbb3Blbiwgc2V0T3Blbl0gPSB1c2VTdGF0ZShmYWxzZSk7XG4gIGNvbnN0IFtzZWxlY3RlZERhdGUsIHNldFNlbGVjdGVkRGF0ZV0gPSB1c2VTdGF0ZTxEYXRlIHwgdW5kZWZpbmVkPih1bmRlZmluZWQpO1xuICBjb25zdCBbc2VsZWN0ZWRIb3VyLCBzZXRTZWxlY3RlZEhvdXJdID0gdXNlU3RhdGUoXCIxMlwiKTtcbiAgY29uc3QgW3NlbGVjdGVkTWludXRlLCBzZXRTZWxlY3RlZE1pbnV0ZV0gPSB1c2VTdGF0ZShcIjAwXCIpO1xuICBjb25zdCBbc2VsZWN0ZWRNZXJpZGllbSwgc2V0U2VsZWN0ZWRNZXJpZGllbV0gPSB1c2VTdGF0ZTxNZXJpZGllbT4oXCJQTVwiKTtcbiAgY29uc3QgaGFzVmFsdWUgPSB1c2VNZW1vKCgpID0+IEJvb2xlYW4odmFsdWUpLCBbdmFsdWVdKTtcbiAgY29uc3QgbWludXRlT3B0aW9ucyA9IHVzZU1lbW8oKCkgPT4gYnVpbGRNaW51dGVPcHRpb25zKHRpbWVTdGVwTWludXRlcyksIFt0aW1lU3RlcE1pbnV0ZXNdKTtcblxuICB1c2VFZmZlY3QoKCkgPT4ge1xuICAgIGlmICghb3BlbikgcmV0dXJuO1xuICAgIGNvbnN0IHNvdXJjZSA9IHZhbHVlID8/IG5ldyBEYXRlKCk7XG4gICAgY29uc3QgcGFydHMgPSB0b1RpbWVQYXJ0cyhzb3VyY2UpO1xuICAgIHNldFNlbGVjdGVkRGF0ZShzb3VyY2UpO1xuICAgIHNldFNlbGVjdGVkSG91cihwYXJ0cy5ob3VyKTtcbiAgICBzZXRTZWxlY3RlZE1pbnV0ZShzbmFwTWludXRlKHBhcnRzLm1pbnV0ZSwgbWludXRlT3B0aW9ucykpO1xuICAgIHNldFNlbGVjdGVkTWVyaWRpZW0ocGFydHMubWVyaWRpZW0pO1xuICB9LCBbbWludXRlT3B0aW9ucywgb3BlbiwgdmFsdWVdKTtcblxuICBjb25zdCBvbkFwcGx5ID0gKCkgPT4ge1xuICAgIGlmICghc2VsZWN0ZWREYXRlKSByZXR1cm47XG4gICAgb25DaGFuZ2UoYnVpbGREYXRlV2l0aFRpbWUoc2VsZWN0ZWREYXRlLCBzZWxlY3RlZEhvdXIsIHNlbGVjdGVkTWludXRlLCBzZWxlY3RlZE1lcmlkaWVtKSk7XG4gICAgc2V0T3BlbihmYWxzZSk7XG4gIH07XG5cbiAgcmV0dXJuIChcbiAgICA8RGlhbG9nIG9wZW49e29wZW59IG9uT3BlbkNoYW5nZT17c2V0T3Blbn0+XG4gICAgICA8RGlhbG9nVHJpZ2dlciBhc0NoaWxkPjxEYXRlVGltZVRyaWdnZXIgZGlzYWJsZWQ9e2Rpc2FibGVkfSBoYXNWYWx1ZT17aGFzVmFsdWV9IGxhYmVsPXtmb3JtYXRUcmlnZ2VyTGFiZWwodmFsdWUsIHBsYWNlaG9sZGVyKX0gLz48L0RpYWxvZ1RyaWdnZXI+XG4gICAgICA8RGlhbG9nUG9ydGFsPlxuICAgICAgICA8RGlhbG9nT3ZlcmxheSBjbGFzc05hbWU9XCJmaXhlZCBpbnNldC0wIHotWzEyMDBdIGJnLWJsYWNrLzI1IGJhY2tkcm9wLWJsdXItWzJweF0gZGF0YS1bc3RhdGU9b3Blbl06YW5pbWF0ZS1pbiBkYXRhLVtzdGF0ZT1jbG9zZWRdOmFuaW1hdGUtb3V0IGRhdGEtW3N0YXRlPWNsb3NlZF06ZmFkZS1vdXQtMCBkYXRhLVtzdGF0ZT1vcGVuXTpmYWRlLWluLTBcIiAvPlxuICAgICAgICA8RGlhbG9nUHJpbWl0aXZlLkNvbnRlbnQgY2xhc3NOYW1lPVwiZml4ZWQgbGVmdC0xLzIgdG9wLTEvMiB6LVsxMjAxXSB3LVtjYWxjKDEwMHZ3LTJyZW0pXSBtYXgtdy14bCAtdHJhbnNsYXRlLXgtMS8yIC10cmFuc2xhdGUteS0xLzIgbWF4LWgtWzgwdmhdIG92ZXJmbG93LWhpZGRlbiByb3VuZGVkLTN4bCBib3JkZXIgYm9yZGVyLXdoaXRlLzIwIGJnLVsjMTYxYjIyXS85NSBwLTAgdGV4dC13aGl0ZSBzaGFkb3ctbGcgYmFja2Ryb3AtYmx1ci0yeGwgcG9pbnRlci1ldmVudHMtYXV0b1wiPlxuICAgICAgICAgIDxEaWFsb2dIZWFkZXIgY2xhc3NOYW1lPVwic3Itb25seVwiPjxEaWFsb2dUaXRsZT5TZWxlY3QgZGF0ZSBhbmQgdGltZTwvRGlhbG9nVGl0bGU+PERpYWxvZ0Rlc2NyaXB0aW9uPkNob29zZSBkYXRlIGFuZCB0aW1lLCB0aGVuIGFwcGx5IGNoYW5nZXMuPC9EaWFsb2dEZXNjcmlwdGlvbj48L0RpYWxvZ0hlYWRlcj5cbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInAtNCBzbTpwLTUgZmxleCBmbGV4LWNvbCBnYXAtNSBtYXgtaC1bODB2aF0gb3ZlcmZsb3cteS1hdXRvIG92ZXJzY3JvbGwtY29udGFpblwiPlxuICAgICAgICAgICAgPERhdGVUaW1lQ2FsZW5kYXJQYW5lbCBzZWxlY3RlZERhdGU9e3NlbGVjdGVkRGF0ZX0gb25TZWxlY3REYXRlPXtzZXRTZWxlY3RlZERhdGV9IG1pbkRhdGU9e21pbkRhdGV9IG1heERhdGU9e21heERhdGV9IC8+XG4gICAgICAgICAgICA8RGF0ZVRpbWVUaW1lUGFuZWwgc2VsZWN0ZWREYXRlPXtzZWxlY3RlZERhdGV9IHNlbGVjdGVkSG91cj17c2VsZWN0ZWRIb3VyfSBzZWxlY3RlZE1pbnV0ZT17c2VsZWN0ZWRNaW51dGV9IHNlbGVjdGVkTWVyaWRpZW09e3NlbGVjdGVkTWVyaWRpZW19IG1pbnV0ZU9wdGlvbnM9e21pbnV0ZU9wdGlvbnN9IG9uSG91ckNoYW5nZT17c2V0U2VsZWN0ZWRIb3VyfSBvbk1pbnV0ZUNoYW5nZT17c2V0U2VsZWN0ZWRNaW51dGV9IG9uTWVyaWRpZW1DaGFuZ2U9e3NldFNlbGVjdGVkTWVyaWRpZW19IG9uQ2xvc2U9eygpID0+IHNldE9wZW4oZmFsc2UpfSBvbkFwcGx5PXtvbkFwcGx5fSAvPlxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgIDxEaWFsb2dQcmltaXRpdmUuQ2xvc2UgY2xhc3NOYW1lPVwiYWJzb2x1dGUgcmlnaHQtNCB0b3AtNCByb3VuZGVkLXNtIG9wYWNpdHktNzAgdHJhbnNpdGlvbi1vcGFjaXR5IGhvdmVyOm9wYWNpdHktMTAwIGZvY3VzOm91dGxpbmUtbm9uZSBmb2N1czpyaW5nLTIgZm9jdXM6cmluZy13aGl0ZS80MCBkaXNhYmxlZDpwb2ludGVyLWV2ZW50cy1ub25lXCI+PFggY2xhc3NOYW1lPVwiaC00IHctNFwiIC8+PHNwYW4gY2xhc3NOYW1lPVwic3Itb25seVwiPkNsb3NlPC9zcGFuPjwvRGlhbG9nUHJpbWl0aXZlLkNsb3NlPlxuICAgICAgICA8L0RpYWxvZ1ByaW1pdGl2ZS5Db250ZW50PlxuICAgICAgPC9EaWFsb2dQb3J0YWw+XG4gICAgPC9EaWFsb2c+XG4gICk7XG59XG4iXSwiZmlsZSI6IkM6L2VkdmFuYS9mcm9udGVuZC9zcmMvZGFzaGJvYXJkL3RlYWNoZXIvY29tcG9uZW50cy9zaGFyZWQvZGF0ZXRpbWUvVGVhY2hlckRhdGVUaW1lUGlja2VyLnRzeCJ9

@@ -1,0 +1,228 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=a95dedd6"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle
+} from "/src/components/ui/dialog.tsx";
+import { Button } from "/src/components/ui/button.tsx";
+import { AlertTriangle, Trash2, X } from "/node_modules/.vite/deps/lucide-react.js?v=a95dedd6";
+export default function ConfirmDeleteModal({
+  resource,
+  open,
+  onOpenChange,
+  onConfirm
+}) {
+  if (!resource) return null;
+  const handleConfirm = () => {
+    if (onConfirm) {
+      onConfirm(resource);
+    }
+    onOpenChange(false);
+  };
+  const handleCancel = () => {
+    onOpenChange(false);
+  };
+  return /* @__PURE__ */ jsxDEV(Dialog, { open, onOpenChange, children: /* @__PURE__ */ jsxDEV(DialogContent, { className: "bg-white/15 backdrop-blur-xl border-white/25 text-white rounded-2xl max-w-md", children: [
+    /* @__PURE__ */ jsxDEV(DialogHeader, { children: [
+      /* @__PURE__ */ jsxDEV(DialogTitle, { className: "text-xl font-semibold text-white flex items-center gap-3", children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "p-2 bg-red-500/20 rounded-lg", children: /* @__PURE__ */ jsxDEV(AlertTriangle, { className: "w-5 h-5 text-red-400" }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+          lineNumber: 65,
+          columnNumber: 15
+        }, this) }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+          lineNumber: 64,
+          columnNumber: 13
+        }, this),
+        "Delete Resource"
+      ] }, void 0, true, {
+        fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+        lineNumber: 63,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV(DialogDescription, { className: "text-white/70 pt-2", children: "This action cannot be undone. The resource will be permanently deleted from the system." }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+        lineNumber: 69,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+      lineNumber: 62,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "py-4", children: /* @__PURE__ */ jsxDEV("div", { className: "bg-red-500/10 border border-red-500/30 rounded-xl p-4", children: [
+      /* @__PURE__ */ jsxDEV("h4", { className: "text-white font-medium mb-2", children: "Resource to be deleted:" }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+        lineNumber: 76,
+        columnNumber: 13
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "space-y-1 text-sm", children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "text-white", children: [
+          /* @__PURE__ */ jsxDEV("span", { className: "text-white/70", children: "Name:" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+            lineNumber: 79,
+            columnNumber: 17
+          }, this),
+          " ",
+          resource.name
+        ] }, void 0, true, {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+          lineNumber: 78,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "text-white", children: [
+          /* @__PURE__ */ jsxDEV("span", { className: "text-white/70", children: "Subject:" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+            lineNumber: 82,
+            columnNumber: 17
+          }, this),
+          " ",
+          resource.subjectName
+        ] }, void 0, true, {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+          lineNumber: 81,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "text-white", children: [
+          /* @__PURE__ */ jsxDEV("span", { className: "text-white/70", children: "Type:" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+            lineNumber: 85,
+            columnNumber: 17
+          }, this),
+          " ",
+          resource.type
+        ] }, void 0, true, {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+          lineNumber: 84,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "text-white", children: [
+          /* @__PURE__ */ jsxDEV("span", { className: "text-white/70", children: "Downloads:" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+            lineNumber: 88,
+            columnNumber: 17
+          }, this),
+          " ",
+          resource.downloads || 0
+        ] }, void 0, true, {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+          lineNumber: 87,
+          columnNumber: 15
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+        lineNumber: 77,
+        columnNumber: 13
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+      lineNumber: 75,
+      columnNumber: 11
+    }, this) }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+      lineNumber: 74,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ jsxDEV(DialogFooter, { className: "flex gap-3", children: [
+      /* @__PURE__ */ jsxDEV(
+        Button,
+        {
+          type: "button",
+          variant: "destructiveOutline",
+          onClick: handleCancel,
+          className: "flex-1",
+          children: [
+            /* @__PURE__ */ jsxDEV(X, { className: "w-4 h-4 mr-2" }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+              lineNumber: 101,
+              columnNumber: 13
+            }, this),
+            "Cancel"
+          ]
+        },
+        void 0,
+        true,
+        {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+          lineNumber: 95,
+          columnNumber: 11
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV(
+        Button,
+        {
+          type: "button",
+          variant: "destructive",
+          onClick: handleConfirm,
+          className: "flex-1",
+          children: [
+            /* @__PURE__ */ jsxDEV(Trash2, { className: "w-4 h-4 mr-2" }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+              lineNumber: 110,
+              columnNumber: 13
+            }, this),
+            "Delete Resource"
+          ]
+        },
+        void 0,
+        true,
+        {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+          lineNumber: 104,
+          columnNumber: 11
+        },
+        this
+      )
+    ] }, void 0, true, {
+      fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+      lineNumber: 94,
+      columnNumber: 9
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+    lineNumber: 61,
+    columnNumber: 7
+  }, this) }, void 0, false, {
+    fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx",
+    lineNumber: 60,
+    columnNumber: 5
+  }, this);
+}
+_c = ConfirmDeleteModal;
+var _c;
+$RefreshReg$(_c, "ConfirmDeleteModal");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/edvana/frontend/src/dashboard/schooladmin/components/resources/ConfirmDeleteModal.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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Q0FBQyxLQUFFLFdBQVUsa0JBQWI7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFBMkI7QUFBQTtBQUFBO0FBQUE7QUFBQSxRQU43QjtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsTUFRQTtBQUFBLE1BQ0E7QUFBQSxRQUFDO0FBQUE7QUFBQSxVQUNDLE1BQUs7QUFBQSxVQUNMLFNBQVE7QUFBQSxVQUNSLFNBQVNEO0FBQUFBLFVBQ1QsV0FBVTtBQUFBLFVBRVY7QUFBQSxtQ0FBQyxVQUFPLFdBQVUsa0JBQWxCO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQWdDO0FBQUE7QUFBQTtBQUFBO0FBQUEsUUFObEM7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLE1BUUE7QUFBQSxTQWxCRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFdBbUJBO0FBQUEsT0FwREY7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQXFEQSxLQXRERjtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBdURBO0FBRUo7QUFBQ00sS0E3RXVCWDtBQUFrQixJQUFBVztBQUFBQyxhQUFBRCxJQUFBIiwibmFtZXMiOlsiRGlhbG9nIiwiRGlhbG9nQ29udGVudCIsIkRpYWxvZ0Rlc2NyaXB0aW9uIiwiRGlhbG9nRm9vdGVyIiwiRGlhbG9nSGVhZGVyIiwiRGlhbG9nVGl0bGUiLCJCdXR0b24iLCJBbGVydFRyaWFuZ2xlIiwiVHJhc2gyIiwiWCIsIkNvbmZpcm1EZWxldGVNb2RhbCIsInJlc291cmNlIiwib3BlbiIsIm9uT3BlbkNoYW5nZSIsIm9uQ29uZmlybSIsImhhbmRsZUNvbmZpcm0iLCJoYW5kbGVDYW5jZWwiLCJuYW1lIiwic3ViamVjdE5hbWUiLCJ0eXBlIiwiZG93bmxvYWRzIiwiX2MiLCIkUmVmcmVzaFJlZyQiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiQ29uZmlybURlbGV0ZU1vZGFsLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QgZnJvbSAncmVhY3QnO1xuaW1wb3J0IHtcbiAgRGlhbG9nLFxuICBEaWFsb2dDb250ZW50LFxuICBEaWFsb2dEZXNjcmlwdGlvbixcbiAgRGlhbG9nRm9vdGVyLFxuICBEaWFsb2dIZWFkZXIsXG4gIERpYWxvZ1RpdGxlLFxufSBmcm9tICdAL2NvbXBvbmVudHMvdWkvZGlhbG9nJztcbmltcG9ydCB7IEJ1dHRvbiB9IGZyb20gJ0AvY29tcG9uZW50cy91aS9idXR0b24nO1xuaW1wb3J0IHsgQWxlcnRUcmlhbmdsZSwgVHJhc2gyLCBYIH0gZnJvbSAnbHVjaWRlLXJlYWN0JztcbmltcG9ydCB7IFJlc291cmNlIH0gZnJvbSAnQC9zaGFyZWQvbW9ja3Mvc2Nob29sYWRtaW4vbW9ja0RhdGEnO1xuXG5pbnRlcmZhY2UgQ29uZmlybURlbGV0ZU1vZGFsUHJvcHMge1xuICByZXNvdXJjZTogUmVzb3VyY2UgfCBudWxsO1xuICBvcGVuOiBib29sZWFuO1xuICBvbk9wZW5DaGFuZ2U6IChvcGVuOiBib29sZWFuKSA9PiB2b2lkO1xuICBvbkNvbmZpcm0/OiAocmVzb3VyY2U6IFJlc291cmNlKSA9PiB2b2lkO1xufVxuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBDb25maXJtRGVsZXRlTW9kYWwoe1xuICByZXNvdXJjZSxcbiAgb3BlbixcbiAgb25PcGVuQ2hhbmdlLFxuICBvbkNvbmZpcm1cbn06IENvbmZpcm1EZWxldGVNb2RhbFByb3BzKSB7XG4gIGlmICghcmVzb3VyY2UpIHJldHVybiBudWxsO1xuXG4gIGNvbnN0IGhhbmRsZUNvbmZpcm0gPSAoKSA9PiB7XG4gICAgaWYgKG9uQ29uZmlybSkge1xuICAgICAgb25Db25maXJtKHJlc291cmNlKTtcbiAgICB9XG4gICAgb25PcGVuQ2hhbmdlKGZhbHNlKTtcbiAgfTtcblxuICBjb25zdCBoYW5kbGVDYW5jZWwgPSAoKSA9PiB7XG4gICAgb25PcGVuQ2hhbmdlKGZhbHNlKTtcbiAgfTtcblxuICByZXR1cm4gKFxuICAgIDxEaWFsb2cgb3Blbj17b3Blbn0gb25PcGVuQ2hhbmdlPXtvbk9wZW5DaGFuZ2V9PlxuICAgICAgPERpYWxvZ0NvbnRlbnQgY2xhc3NOYW1lPVwiYmctd2hpdGUvMTUgYmFja2Ryb3AtYmx1ci14bCBib3JkZXItd2hpdGUvMjUgdGV4dC13aGl0ZSByb3VuZGVkLTJ4bCBtYXgtdy1tZFwiPlxuICAgICAgICA8RGlhbG9nSGVhZGVyPlxuICAgICAgICAgIDxEaWFsb2dUaXRsZSBjbGFzc05hbWU9XCJ0ZXh0LXhsIGZvbnQtc2VtaWJvbGQgdGV4dC13aGl0ZSBmbGV4IGl0ZW1zLWNlbnRlciBnYXAtM1wiPlxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJwLTIgYmctcmVkLTUwMC8yMCByb3VuZGVkLWxnXCI+XG4gICAgICAgICAgICAgIDxBbGVydFRyaWFuZ2xlIGNsYXNzTmFtZT1cInctNSBoLTUgdGV4dC1yZWQtNDAwXCIgLz5cbiAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgRGVsZXRlIFJlc291cmNlXG4gICAgICAgICAgPC9EaWFsb2dUaXRsZT5cbiAgICAgICAgICA8RGlhbG9nRGVzY3JpcHRpb24gY2xhc3NOYW1lPVwidGV4dC13aGl0ZS83MCBwdC0yXCI+XG4gICAgICAgICAgICBUaGlzIGFjdGlvbiBjYW5ub3QgYmUgdW5kb25lLiBUaGUgcmVzb3VyY2Ugd2lsbCBiZSBwZXJtYW5lbnRseSBkZWxldGVkIGZyb20gdGhlIHN5c3RlbS5cbiAgICAgICAgICA8L0RpYWxvZ0Rlc2NyaXB0aW9uPlxuICAgICAgICA8L0RpYWxvZ0hlYWRlcj5cblxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInB5LTRcIj5cbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImJnLXJlZC01MDAvMTAgYm9yZGVyIGJvcmRlci1yZWQtNTAwLzMwIHJvdW5kZWQteGwgcC00XCI+XG4gICAgICAgICAgICA8aDQgY2xhc3NOYW1lPVwidGV4dC13aGl0ZSBmb250LW1lZGl1bSBtYi0yXCI+UmVzb3VyY2UgdG8gYmUgZGVsZXRlZDo8L2g0PlxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJzcGFjZS15LTEgdGV4dC1zbVwiPlxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInRleHQtd2hpdGVcIj5cbiAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJ0ZXh0LXdoaXRlLzcwXCI+TmFtZTo8L3NwYW4+IHtyZXNvdXJjZS5uYW1lfVxuICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ0ZXh0LXdoaXRlXCI+XG4gICAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwidGV4dC13aGl0ZS83MFwiPlN1YmplY3Q6PC9zcGFuPiB7cmVzb3VyY2Uuc3ViamVjdE5hbWV9XG4gICAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInRleHQtd2hpdGVcIj5cbiAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJ0ZXh0LXdoaXRlLzcwXCI+VHlwZTo8L3NwYW4+IHtyZXNvdXJjZS50eXBlfVxuICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ0ZXh0LXdoaXRlXCI+XG4gICAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwidGV4dC13aGl0ZS83MFwiPkRvd25sb2Fkczo8L3NwYW4+IHtyZXNvdXJjZS5kb3dubG9hZHMgfHwgMH1cbiAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgPC9kaXY+XG5cbiAgICAgICAgPERpYWxvZ0Zvb3RlciBjbGFzc05hbWU9XCJmbGV4IGdhcC0zXCI+XG4gICAgICAgICAgPEJ1dHRvblxuICAgICAgICAgICAgdHlwZT1cImJ1dHRvblwiXG4gICAgICAgICAgICB2YXJpYW50PVwiZGVzdHJ1Y3RpdmVPdXRsaW5lXCJcbiAgICAgICAgICAgIG9uQ2xpY2s9e2hhbmRsZUNhbmNlbH1cbiAgICAgICAgICAgIGNsYXNzTmFtZT1cImZsZXgtMVwiXG4gICAgICAgICAgPlxuICAgICAgICAgICAgPFggY2xhc3NOYW1lPVwidy00IGgtNCBtci0yXCIgLz5cbiAgICAgICAgICAgIENhbmNlbFxuICAgICAgICAgIDwvQnV0dG9uPlxuICAgICAgICAgIDxCdXR0b25cbiAgICAgICAgICAgIHR5cGU9XCJidXR0b25cIlxuICAgICAgICAgICAgdmFyaWFudD1cImRlc3RydWN0aXZlXCJcbiAgICAgICAgICAgIG9uQ2xpY2s9e2hhbmRsZUNvbmZpcm19XG4gICAgICAgICAgICBjbGFzc05hbWU9XCJmbGV4LTFcIlxuICAgICAgICAgID5cbiAgICAgICAgICAgIDxUcmFzaDIgY2xhc3NOYW1lPVwidy00IGgtNCBtci0yXCIgLz5cbiAgICAgICAgICAgIERlbGV0ZSBSZXNvdXJjZVxuICAgICAgICAgIDwvQnV0dG9uPlxuICAgICAgICA8L0RpYWxvZ0Zvb3Rlcj5cbiAgICAgIDwvRGlhbG9nQ29udGVudD5cbiAgICA8L0RpYWxvZz5cbiAgKTtcbn0iXSwiZmlsZSI6IkM6L2VkdmFuYS9mcm9udGVuZC9zcmMvZGFzaGJvYXJkL3NjaG9vbGFkbWluL2NvbXBvbmVudHMvcmVzb3VyY2VzL0NvbmZpcm1EZWxldGVNb2RhbC50c3gifQ==

@@ -1,0 +1,305 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=a95dedd6"; const Fragment = __vite__cjsImport0_react_jsxDevRuntime["Fragment"]; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import { Archive, RotateCcw, AlertTriangle } from "/node_modules/.vite/deps/lucide-react.js?v=a95dedd6";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle
+} from "/src/components/ui/dialog.tsx";
+import { Button } from "/src/components/ui/button.tsx";
+import { Badge } from "/src/components/ui/badge.tsx";
+import { mockStudents } from "/src/shared/mocks/schooladmin/mockData.ts";
+export default function ConfirmArchiveModal({
+  parent,
+  open,
+  onOpenChange,
+  onConfirm
+}) {
+  if (!parent) return null;
+  const isArchiving = parent.status === "Active";
+  const linkedStudents = mockStudents.filter((student) => parent.studentIds.includes(student.id));
+  const handleConfirm = () => {
+    onConfirm(parent);
+    onOpenChange(false);
+  };
+  const handleKeyDown = (e) => {
+    if (e.key === "Escape") onOpenChange(false);
+    if (e.key === "Enter") handleConfirm();
+  };
+  return /* @__PURE__ */ jsxDEV(Dialog, { open, onOpenChange, children: /* @__PURE__ */ jsxDEV(
+    DialogContent,
+    {
+      onKeyDown: handleKeyDown,
+      className: [
+        "fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
+        "w-[calc(100vw-2rem)] sm:w-full max-w-4xl",
+        "max-h-[85vh] overflow-hidden",
+        "bg-white/15 backdrop-blur-xl border border-white/20 text-white",
+        "p-0"
+      ].join(" "),
+      children: /* @__PURE__ */ jsxDEV("div", { className: "flex flex-col max-h-[85vh]", children: [
+        /* @__PURE__ */ jsxDEV(DialogHeader, { className: "px-6 py-4 border-b border-white/20", children: /* @__PURE__ */ jsxDEV(DialogTitle, { className: "text-white text-xl font-semibold flex items-center gap-3", children: [
+          /* @__PURE__ */ jsxDEV("div", { className: `w-12 h-12 rounded-xl flex items-center justify-center ${isArchiving ? "bg-amber-500/20" : "bg-green-500/20"}`, children: isArchiving ? /* @__PURE__ */ jsxDEV(Archive, { className: "w-6 h-6 text-amber-400" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+            lineNumber: 80,
+            columnNumber: 17
+          }, this) : /* @__PURE__ */ jsxDEV(RotateCcw, { className: "w-6 h-6 text-green-400" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+            lineNumber: 82,
+            columnNumber: 17
+          }, this) }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+            lineNumber: 76,
+            columnNumber: 15
+          }, this),
+          isArchiving ? "Archive Parent" : "Unarchive Parent"
+        ] }, void 0, true, {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+          lineNumber: 75,
+          columnNumber: 13
+        }, this) }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+          lineNumber: 74,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "px-6 py-6 overflow-y-auto overscroll-contain max-h-[calc(85vh-72px)]", children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-6", children: [
+          /* @__PURE__ */ jsxDEV("div", { className: "bg-white/10 rounded-xl p-4 border border-white/20", children: [
+            /* @__PURE__ */ jsxDEV("div", { className: "font-medium text-white mb-2", children: [
+              parent.firstName,
+              " ",
+              parent.lastName
+            ] }, void 0, true, {
+              fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+              lineNumber: 93,
+              columnNumber: 17
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "text-sm text-white/70", children: parent.email }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+              lineNumber: 96,
+              columnNumber: 17
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "text-sm text-white/70", children: parent.phone }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+              lineNumber: 97,
+              columnNumber: 17
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+            lineNumber: 92,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: `flex items-start gap-3 p-4 rounded-xl border ${isArchiving ? "bg-amber-500/10 border-amber-500/30" : "bg-green-500/10 border-green-500/30"}`, children: [
+            /* @__PURE__ */ jsxDEV(AlertTriangle, { className: `w-5 h-5 mt-0.5 ${isArchiving ? "text-amber-400" : "text-green-400"}` }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+              lineNumber: 105,
+              columnNumber: 17
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "text-sm", children: isArchiving ? /* @__PURE__ */ jsxDEV(Fragment, { children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "text-white font-medium mb-1", children: "Are you sure you want to archive this parent?" }, void 0, false, {
+                fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+                lineNumber: 111,
+                columnNumber: 23
+              }, this),
+              /* @__PURE__ */ jsxDEV("div", { className: "text-white/70", children: "Archived parents will no longer receive notifications and will be hidden from the active parents list. Student links will remain intact and can be restored by unarchiving." }, void 0, false, {
+                fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+                lineNumber: 114,
+                columnNumber: 23
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+              lineNumber: 110,
+              columnNumber: 19
+            }, this) : /* @__PURE__ */ jsxDEV(Fragment, { children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "text-white font-medium mb-1", children: "Are you sure you want to unarchive this parent?" }, void 0, false, {
+                fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+                lineNumber: 121,
+                columnNumber: 23
+              }, this),
+              /* @__PURE__ */ jsxDEV("div", { className: "text-white/70", children: "This parent will be restored to active status and will start receiving notifications again." }, void 0, false, {
+                fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+                lineNumber: 124,
+                columnNumber: 23
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+              lineNumber: 120,
+              columnNumber: 19
+            }, this) }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+              lineNumber: 108,
+              columnNumber: 17
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+            lineNumber: 100,
+            columnNumber: 15
+          }, this),
+          linkedStudents.length > 0 && /* @__PURE__ */ jsxDEV("div", { className: "space-y-3", children: [
+            /* @__PURE__ */ jsxDEV("div", { className: "text-sm font-medium text-white", children: [
+              "Linked Students (",
+              linkedStudents.length,
+              ")"
+            ] }, void 0, true, {
+              fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+              lineNumber: 134,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "flex flex-wrap gap-2", children: linkedStudents.map(
+              (student) => /* @__PURE__ */ jsxDEV(
+                Badge,
+                {
+                  variant: "secondary",
+                  className: "bg-brand-accent/20 text-brand-accent border border-brand-accent/40",
+                  children: [
+                    student.firstName,
+                    " ",
+                    student.lastName,
+                    " (",
+                    student.grade,
+                    ")"
+                  ]
+                },
+                student.id,
+                true,
+                {
+                  fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+                  lineNumber: 139,
+                  columnNumber: 19
+                },
+                this
+              )
+            ) }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+              lineNumber: 137,
+              columnNumber: 19
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+            lineNumber: 133,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "flex justify-end gap-3 pt-6 border-t border-white/20", children: [
+            /* @__PURE__ */ jsxDEV(
+              Button,
+              {
+                type: "button",
+                variant: "destructiveOutline",
+                onClick: () => onOpenChange(false),
+                className: "rounded-xl",
+                children: "Cancel"
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+                lineNumber: 152,
+                columnNumber: 17
+              },
+              this
+            ),
+            /* @__PURE__ */ jsxDEV(
+              Button,
+              {
+                onClick: handleConfirm,
+                className: `text-white rounded-xl ${isArchiving ? "bg-amber-500 hover:bg-amber-600" : "bg-green-600 hover:bg-green-700"}`,
+                children: isArchiving ? /* @__PURE__ */ jsxDEV(Fragment, { children: [
+                  /* @__PURE__ */ jsxDEV(Archive, { className: "w-4 h-4 mr-2" }, void 0, false, {
+                    fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+                    lineNumber: 170,
+                    columnNumber: 23
+                  }, this),
+                  "Archive Parent"
+                ] }, void 0, true, {
+                  fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+                  lineNumber: 169,
+                  columnNumber: 19
+                }, this) : /* @__PURE__ */ jsxDEV(Fragment, { children: [
+                  /* @__PURE__ */ jsxDEV(RotateCcw, { className: "w-4 h-4 mr-2" }, void 0, false, {
+                    fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+                    lineNumber: 175,
+                    columnNumber: 23
+                  }, this),
+                  "Unarchive Parent"
+                ] }, void 0, true, {
+                  fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+                  lineNumber: 174,
+                  columnNumber: 19
+                }, this)
+              },
+              void 0,
+              false,
+              {
+                fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+                lineNumber: 160,
+                columnNumber: 17
+              },
+              this
+            )
+          ] }, void 0, true, {
+            fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+            lineNumber: 151,
+            columnNumber: 15
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+          lineNumber: 90,
+          columnNumber: 13
+        }, this) }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+          lineNumber: 89,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+        lineNumber: 72,
+        columnNumber: 9
+      }, this)
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+      lineNumber: 62,
+      columnNumber: 7
+    },
+    this
+  ) }, void 0, false, {
+    fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx",
+    lineNumber: 61,
+    columnNumber: 5
+  }, this);
+}
+_c = ConfirmArchiveModal;
+var _c;
+$RefreshReg$(_c, "ConfirmArchiveModal");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/edvana/frontend/src/dashboard/schooladmin/components/parents/ConfirmArchiveModal.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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LFNBQVE7QUFBQSxnQkFDUixTQUFTLE1BQU1ULGFBQWEsS0FBSztBQUFBLGdCQUNqQyxXQUFVO0FBQUEsZ0JBQVk7QUFBQTtBQUFBLGNBSnhCO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSxZQU9BO0FBQUEsWUFDQTtBQUFBLGNBQUM7QUFBQTtBQUFBLGdCQUNDLFNBQVNVO0FBQUFBLGdCQUNULFdBQVcseUJBQ1RSLGNBQ0ksb0NBQ0EsaUNBQWlDO0FBQUEsZ0JBR3RDQSx3QkFDQyxtQ0FDRTtBQUFBLHlDQUFDLFdBQVEsV0FBVSxrQkFBbkI7QUFBQTtBQUFBO0FBQUE7QUFBQSx5QkFBaUM7QUFBQTtBQUFBLHFCQURuQztBQUFBO0FBQUE7QUFBQTtBQUFBLHVCQUdBLElBRUEsbUNBQ0U7QUFBQSx5Q0FBQyxhQUFVLFdBQVUsa0JBQXJCO0FBQUE7QUFBQTtBQUFBO0FBQUEseUJBQW1DO0FBQUE7QUFBQSxxQkFEckM7QUFBQTtBQUFBO0FBQUE7QUFBQSx1QkFHQTtBQUFBO0FBQUEsY0FqQko7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLFlBbUJBO0FBQUEsZUE1QkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkE2QkE7QUFBQSxhQTFGRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBNEZBLEtBN0ZGO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUE4RkE7QUFBQSxXQS9HRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBaUhBO0FBQUE7QUFBQSxJQTNIRjtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsRUE0SEEsS0E3SEY7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQThIQTtBQUVKO0FBQUNvQixLQXRKdUJ6QjtBQUFtQixJQUFBeUI7QUFBQUMsYUFBQUQsSUFBQSIsIm5hbWVzIjpbIkFyY2hpdmUiLCJSb3RhdGVDY3ciLCJBbGVydFRyaWFuZ2xlIiwiRGlhbG9nIiwiRGlhbG9nQ29udGVudCIsIkRpYWxvZ0hlYWRlciIsIkRpYWxvZ1RpdGxlIiwiQnV0dG9uIiwiQmFkZ2UiLCJtb2NrU3R1ZGVudHMiLCJDb25maXJtQXJjaGl2ZU1vZGFsIiwicGFyZW50Iiwib3BlbiIsIm9uT3BlbkNoYW5nZSIsIm9uQ29uZmlybSIsImlzQXJjaGl2aW5nIiwic3RhdHVzIiwibGlua2VkU3R1ZGVudHMiLCJmaWx0ZXIiLCJzdHVkZW50Iiwic3R1ZGVudElkcyIsImluY2x1ZGVzIiwiaWQiLCJoYW5kbGVDb25maXJtIiwiaGFuZGxlS2V5RG93biIsImUiLCJrZXkiLCJqb2luIiwiZmlyc3ROYW1lIiwibGFzdE5hbWUiLCJlbWFpbCIsInBob25lIiwibGVuZ3RoIiwibWFwIiwiZ3JhZGUiLCJfYyIsIiRSZWZyZXNoUmVnJCJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJDb25maXJtQXJjaGl2ZU1vZGFsLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QgZnJvbSAncmVhY3QnO1xuaW1wb3J0IHsgQXJjaGl2ZSwgUm90YXRlQ2N3LCBBbGVydFRyaWFuZ2xlIH0gZnJvbSAnbHVjaWRlLXJlYWN0JztcbmltcG9ydCB7XG4gIERpYWxvZyxcbiAgRGlhbG9nQ29udGVudCxcbiAgRGlhbG9nSGVhZGVyLFxuICBEaWFsb2dUaXRsZSxcbn0gZnJvbSAnQC9jb21wb25lbnRzL3VpL2RpYWxvZyc7XG5pbXBvcnQgeyBCdXR0b24gfSBmcm9tICdAL2NvbXBvbmVudHMvdWkvYnV0dG9uJztcbmltcG9ydCB7IEJhZGdlIH0gZnJvbSAnQC9jb21wb25lbnRzL3VpL2JhZGdlJztcbmltcG9ydCB7IFBhcmVudCwgbW9ja1N0dWRlbnRzIH0gZnJvbSAnQC9zaGFyZWQvbW9ja3Mvc2Nob29sYWRtaW4vbW9ja0RhdGEnO1xuXG5pbnRlcmZhY2UgQ29uZmlybUFyY2hpdmVNb2RhbFByb3BzIHtcbiAgcGFyZW50OiBQYXJlbnQgfCBudWxsO1xuICBvcGVuOiBib29sZWFuO1xuICBvbk9wZW5DaGFuZ2U6IChvcGVuOiBib29sZWFuKSA9PiB2b2lkO1xuICBvbkNvbmZpcm06IChwYXJlbnQ6IFBhcmVudCkgPT4gdm9pZDtcbn1cblxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gQ29uZmlybUFyY2hpdmVNb2RhbCh7XG4gIHBhcmVudCxcbiAgb3BlbixcbiAgb25PcGVuQ2hhbmdlLFxuICBvbkNvbmZpcm1cbn06IENvbmZpcm1BcmNoaXZlTW9kYWxQcm9wcykge1xuICBpZiAoIXBhcmVudCkgcmV0dXJuIG51bGw7XG5cbiAgY29uc3QgaXNBcmNoaXZpbmcgPSBwYXJlbnQuc3RhdHVzID09PSAnQWN0aXZlJztcbiAgY29uc3QgbGlua2VkU3R1ZGVudHMgPSBtb2NrU3R1ZGVudHMuZmlsdGVyKHN0dWRlbnQgPT4gcGFyZW50LnN0dWRlbnRJZHMuaW5jbHVkZXMoc3R1ZGVudC5pZCkpO1xuXG4gIGNvbnN0IGhhbmRsZUNvbmZpcm0gPSAoKSA9PiB7XG4gICAgb25Db25maXJtKHBhcmVudCk7XG4gICAgb25PcGVuQ2hhbmdlKGZhbHNlKTtcbiAgfTtcblxuICBjb25zdCBoYW5kbGVLZXlEb3duID0gKGU6IFJlYWN0LktleWJvYXJkRXZlbnQpID0+IHtcbiAgICBpZiAoZS5rZXkgPT09ICdFc2NhcGUnKSBvbk9wZW5DaGFuZ2UoZmFsc2UpO1xuICAgIGlmIChlLmtleSA9PT0gJ0VudGVyJykgaGFuZGxlQ29uZmlybSgpO1xuICB9O1xuXG4gIHJldHVybiAoXG4gICAgPERpYWxvZyBvcGVuPXtvcGVufSBvbk9wZW5DaGFuZ2U9e29uT3BlbkNoYW5nZX0+XG4gICAgICA8RGlhbG9nQ29udGVudFxuICAgICAgICBvbktleURvd249e2hhbmRsZUtleURvd259XG4gICAgICAgIGNsYXNzTmFtZT17W1xuICAgICAgICAgIFwiZml4ZWQgbGVmdC0xLzIgdG9wLTEvMiAtdHJhbnNsYXRlLXgtMS8yIC10cmFuc2xhdGUteS0xLzJcIixcbiAgICAgICAgICBcInctW2NhbGMoMTAwdnctMnJlbSldIHNtOnctZnVsbCBtYXgtdy00eGxcIixcbiAgICAgICAgICBcIm1heC1oLVs4NXZoXSBvdmVyZmxvdy1oaWRkZW5cIixcbiAgICAgICAgICBcImJnLXdoaXRlLzE1IGJhY2tkcm9wLWJsdXIteGwgYm9yZGVyIGJvcmRlci13aGl0ZS8yMCB0ZXh0LXdoaXRlXCIsXG4gICAgICAgICAgXCJwLTBcIixcbiAgICAgICAgXS5qb2luKFwiIFwiKX1cbiAgICAgID5cbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGZsZXgtY29sIG1heC1oLVs4NXZoXVwiPlxuXG4gICAgICAgICAgPERpYWxvZ0hlYWRlciBjbGFzc05hbWU9XCJweC02IHB5LTQgYm9yZGVyLWIgYm9yZGVyLXdoaXRlLzIwXCI+XG4gICAgICAgICAgICA8RGlhbG9nVGl0bGUgY2xhc3NOYW1lPVwidGV4dC13aGl0ZSB0ZXh0LXhsIGZvbnQtc2VtaWJvbGQgZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTNcIj5cbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9e2B3LTEyIGgtMTIgcm91bmRlZC14bCBmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciAke1xuICAgICAgICAgICAgICAgIGlzQXJjaGl2aW5nID8gJ2JnLWFtYmVyLTUwMC8yMCcgOiAnYmctZ3JlZW4tNTAwLzIwJ1xuICAgICAgICAgICAgICB9YH0+XG4gICAgICAgICAgICAgICAge2lzQXJjaGl2aW5nID8gKFxuICAgICAgICAgICAgICAgICAgPEFyY2hpdmUgY2xhc3NOYW1lPVwidy02IGgtNiB0ZXh0LWFtYmVyLTQwMFwiIC8+XG4gICAgICAgICAgICAgICAgKSA6IChcbiAgICAgICAgICAgICAgICAgIDxSb3RhdGVDY3cgY2xhc3NOYW1lPVwidy02IGgtNiB0ZXh0LWdyZWVuLTQwMFwiIC8+XG4gICAgICAgICAgICAgICAgKX1cbiAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICAgIHtpc0FyY2hpdmluZyA/ICdBcmNoaXZlIFBhcmVudCcgOiAnVW5hcmNoaXZlIFBhcmVudCd9XG4gICAgICAgICAgICA8L0RpYWxvZ1RpdGxlPlxuICAgICAgICAgIDwvRGlhbG9nSGVhZGVyPlxuXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJweC02IHB5LTYgb3ZlcmZsb3cteS1hdXRvIG92ZXJzY3JvbGwtY29udGFpbiBtYXgtaC1bY2FsYyg4NXZoLTcycHgpXVwiPlxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJzcGFjZS15LTZcIj5cblxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImJnLXdoaXRlLzEwIHJvdW5kZWQteGwgcC00IGJvcmRlciBib3JkZXItd2hpdGUvMjBcIj5cbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZvbnQtbWVkaXVtIHRleHQtd2hpdGUgbWItMlwiPlxuICAgICAgICAgICAgICAgICAge3BhcmVudC5maXJzdE5hbWV9IHtwYXJlbnQubGFzdE5hbWV9XG4gICAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ0ZXh0LXNtIHRleHQtd2hpdGUvNzBcIj57cGFyZW50LmVtYWlsfTwvZGl2PlxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwidGV4dC1zbSB0ZXh0LXdoaXRlLzcwXCI+e3BhcmVudC5waG9uZX08L2Rpdj5cbiAgICAgICAgICAgICAgPC9kaXY+XG5cbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9e2BmbGV4IGl0ZW1zLXN0YXJ0IGdhcC0zIHAtNCByb3VuZGVkLXhsIGJvcmRlciAke1xuICAgICAgICAgICAgICAgIGlzQXJjaGl2aW5nXG4gICAgICAgICAgICAgICAgICA/ICdiZy1hbWJlci01MDAvMTAgYm9yZGVyLWFtYmVyLTUwMC8zMCdcbiAgICAgICAgICAgICAgICAgIDogJ2JnLWdyZWVuLTUwMC8xMCBib3JkZXItZ3JlZW4tNTAwLzMwJ1xuICAgICAgICAgICAgICB9YH0+XG4gICAgICAgICAgICAgICAgPEFsZXJ0VHJpYW5nbGUgY2xhc3NOYW1lPXtgdy01IGgtNSBtdC0wLjUgJHtcbiAgICAgICAgICAgICAgICAgIGlzQXJjaGl2aW5nID8gJ3RleHQtYW1iZXItNDAwJyA6ICd0ZXh0LWdyZWVuLTQwMCdcbiAgICAgICAgICAgICAgICB9YH0gLz5cbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInRleHQtc21cIj5cbiAgICAgICAgICAgICAgICAgIHtpc0FyY2hpdmluZyA/IChcbiAgICAgICAgICAgICAgICAgICAgPD5cbiAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInRleHQtd2hpdGUgZm9udC1tZWRpdW0gbWItMVwiPlxuICAgICAgICAgICAgICAgICAgICAgICAgQXJlIHlvdSBzdXJlIHlvdSB3YW50IHRvIGFyY2hpdmUgdGhpcyBwYXJlbnQ/XG4gICAgICAgICAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ0ZXh0LXdoaXRlLzcwXCI+XG4gICAgICAgICAgICAgICAgICAgICAgICBBcmNoaXZlZCBwYXJlbnRzIHdpbGwgbm8gbG9uZ2VyIHJlY2VpdmUgbm90aWZpY2F0aW9ucyBhbmQgd2lsbCBiZSBoaWRkZW4gZnJvbSB0aGUgYWN0aXZlIHBhcmVudHMgbGlzdC5cbiAgICAgICAgICAgICAgICAgICAgICAgIFN0dWRlbnQgbGlua3Mgd2lsbCByZW1haW4gaW50YWN0IGFuZCBjYW4gYmUgcmVzdG9yZWQgYnkgdW5hcmNoaXZpbmcuXG4gICAgICAgICAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICAgICAgICAgIDwvPlxuICAgICAgICAgICAgICAgICAgKSA6IChcbiAgICAgICAgICAgICAgICAgICAgPD5cbiAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInRleHQtd2hpdGUgZm9udC1tZWRpdW0gbWItMVwiPlxuICAgICAgICAgICAgICAgICAgICAgICAgQXJlIHlvdSBzdXJlIHlvdSB3YW50IHRvIHVuYXJjaGl2ZSB0aGlzIHBhcmVudD9cbiAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInRleHQtd2hpdGUvNzBcIj5cbiAgICAgICAgICAgICAgICAgICAgICAgIFRoaXMgcGFyZW50IHdpbGwgYmUgcmVzdG9yZWQgdG8gYWN0aXZlIHN0YXR1cyBhbmQgd2lsbCBzdGFydCByZWNlaXZpbmcgbm90aWZpY2F0aW9ucyBhZ2Fpbi5cbiAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgICAgICAgPC8+XG4gICAgICAgICAgICAgICAgICApfVxuICAgICAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgICA8L2Rpdj5cblxuICAgICAgICAgICAgICB7bGlua2VkU3R1ZGVudHMubGVuZ3RoID4gMCAmJiAoXG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJzcGFjZS15LTNcIj5cbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwidGV4dC1zbSBmb250LW1lZGl1bSB0ZXh0LXdoaXRlXCI+XG4gICAgICAgICAgICAgICAgICAgIExpbmtlZCBTdHVkZW50cyAoe2xpbmtlZFN0dWRlbnRzLmxlbmd0aH0pXG4gICAgICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBmbGV4LXdyYXAgZ2FwLTJcIj5cbiAgICAgICAgICAgICAgICAgICAge2xpbmtlZFN0dWRlbnRzLm1hcCgoc3R1ZGVudCkgPT4gKFxuICAgICAgICAgICAgICAgICAgICAgIDxCYWRnZVxuICAgICAgICAgICAgICAgICAgICAgICAga2V5PXtzdHVkZW50LmlkfVxuICAgICAgICAgICAgICAgICAgICAgICAgdmFyaWFudD1cInNlY29uZGFyeVwiXG4gICAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJiZy1icmFuZC1hY2NlbnQvMjAgdGV4dC1icmFuZC1hY2NlbnQgYm9yZGVyIGJvcmRlci1icmFuZC1hY2NlbnQvNDBcIlxuICAgICAgICAgICAgICAgICAgICAgID5cbiAgICAgICAgICAgICAgICAgICAgICAgIHtzdHVkZW50LmZpcnN0TmFtZX0ge3N0dWRlbnQubGFzdE5hbWV9ICh7c3R1ZGVudC5ncmFkZX0pXG4gICAgICAgICAgICAgICAgICAgICAgPC9CYWRnZT5cbiAgICAgICAgICAgICAgICAgICAgKSl9XG4gICAgICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgKX1cblxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXgganVzdGlmeS1lbmQgZ2FwLTMgcHQtNiBib3JkZXItdCBib3JkZXItd2hpdGUvMjBcIj5cbiAgICAgICAgICAgICAgICA8QnV0dG9uXG4gICAgICAgICAgICAgICAgICB0eXBlPVwiYnV0dG9uXCJcbiAgICAgICAgICAgICAgICAgIHZhcmlhbnQ9XCJkZXN0cnVjdGl2ZU91dGxpbmVcIlxuICAgICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gb25PcGVuQ2hhbmdlKGZhbHNlKX1cbiAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cInJvdW5kZWQteGxcIlxuICAgICAgICAgICAgICAgID5cbiAgICAgICAgICAgICAgICAgIENhbmNlbFxuICAgICAgICAgICAgICAgIDwvQnV0dG9uPlxuICAgICAgICAgICAgICAgIDxCdXR0b25cbiAgICAgICAgICAgICAgICAgIG9uQ2xpY2s9e2hhbmRsZUNvbmZpcm19XG4gICAgICAgICAgICAgICAgICBjbGFzc05hbWU9e2B0ZXh0LXdoaXRlIHJvdW5kZWQteGwgJHtcbiAgICAgICAgICAgICAgICAgICAgaXNBcmNoaXZpbmdcbiAgICAgICAgICAgICAgICAgICAgICA/ICdiZy1hbWJlci01MDAgaG92ZXI6YmctYW1iZXItNjAwJ1xuICAgICAgICAgICAgICAgICAgICAgIDogJ2JnLWdyZWVuLTYwMCBob3ZlcjpiZy1ncmVlbi03MDAnXG4gICAgICAgICAgICAgICAgICB9YH1cbiAgICAgICAgICAgICAgICA+XG4gICAgICAgICAgICAgICAgICB7aXNBcmNoaXZpbmcgPyAoXG4gICAgICAgICAgICAgICAgICAgIDw+XG4gICAgICAgICAgICAgICAgICAgICAgPEFyY2hpdmUgY2xhc3NOYW1lPVwidy00IGgtNCBtci0yXCIgLz5cbiAgICAgICAgICAgICAgICAgICAgICBBcmNoaXZlIFBhcmVudFxuICAgICAgICAgICAgICAgICAgICA8Lz5cbiAgICAgICAgICAgICAgICAgICkgOiAoXG4gICAgICAgICAgICAgICAgICAgIDw+XG4gICAgICAgICAgICAgICAgICAgICAgPFJvdGF0ZUNjdyBjbGFzc05hbWU9XCJ3LTQgaC00IG1yLTJcIiAvPlxuICAgICAgICAgICAgICAgICAgICAgIFVuYXJjaGl2ZSBQYXJlbnRcbiAgICAgICAgICAgICAgICAgICAgPC8+XG4gICAgICAgICAgICAgICAgICApfVxuICAgICAgICAgICAgICAgIDwvQnV0dG9uPlxuICAgICAgICAgICAgICA8L2Rpdj5cblxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgPC9kaXY+XG5cbiAgICAgICAgPC9kaXY+XG4gICAgICA8L0RpYWxvZ0NvbnRlbnQ+XG4gICAgPC9EaWFsb2c+XG4gICk7XG59Il0sImZpbGUiOiJDOi9lZHZhbmEvZnJvbnRlbmQvc3JjL2Rhc2hib2FyZC9zY2hvb2xhZG1pbi9jb21wb25lbnRzL3BhcmVudHMvQ29uZmlybUFyY2hpdmVNb2RhbC50c3gifQ==

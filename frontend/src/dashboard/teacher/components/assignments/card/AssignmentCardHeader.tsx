@@ -21,7 +21,7 @@ export function AssignmentCardHeader({ assignment }: Props) {
       <div className="min-w-0 flex-1 overflow-hidden">
         <div className="flex items-start justify-between gap-1.5">
           <h3 className="min-w-0 flex-1 truncate text-xs font-semibold leading-tight text-white">{assignment.title}</h3>
-          <StatusChip label={getAssignmentStatusChipLabel(assignment.status)} className={getAssignmentStatusClass(assignment.status)} />
+          <StatusChip label={getAssignmentStatusChipLabel(assignment)} className={getAssignmentStatusClass(assignment)} />
         </div>
       </div>
     </div>

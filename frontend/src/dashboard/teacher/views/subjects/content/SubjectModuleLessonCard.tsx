@@ -39,9 +39,8 @@ export function SubjectModuleLessonCard({ state }: Props) {
           <FileText className={`h-6 w-6 ${state.theme.iconClass}`} />
         </div>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#1EA896]">Module Content</p>
           {state.submodule?.title ? (
-            <p className="mt-2 text-base font-semibold text-[var(--text-primary)]/90 break-words [overflow-wrap:anywhere] whitespace-normal">
+            <p className="text-base font-semibold text-[var(--text-primary)]/90 break-words [overflow-wrap:anywhere] whitespace-normal">
               {state.submodule.title}
             </p>
           ) : null}
@@ -60,7 +59,11 @@ export function SubjectModuleLessonCard({ state }: Props) {
             className="max-w-3xl text-left text-sm leading-7 text-white/85 whitespace-pre-wrap break-words [overflow-wrap:anywhere] [&_a]:break-all [&_a]:text-[#1EA896] [&_a]:underline [&_p]:mb-4 [&_p:last-child]:mb-0 [&_li]:ml-5 [&_li]:mb-2 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:pl-5 [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_pre]:whitespace-pre-wrap [&_pre]:break-words [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-5 [&_img]:mt-3 [&_img]:max-h-72 [&_img]:w-full [&_img]:rounded-xl [&_img]:object-contain"
           />
         ) : (
-          <p className="text-sm text-[var(--text-primary)]/70">No submodule content has been added yet.</p>
+          <p className="text-sm text-[var(--text-primary)]/70">
+            {(state.submodule?.attachedFileIds?.length ?? 0) > 0
+              ? "No written content. This submodule contains uploaded files below."
+              : "No content or files have been added yet."}
+          </p>
         )}
 
         {state.attachedFiles.length > 0 ? (
@@ -85,3 +88,7 @@ export function SubjectModuleLessonCard({ state }: Props) {
     </section>
   );
 }
+
+
+
+

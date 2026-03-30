@@ -1,0 +1,220 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/ui/confirmation-modal.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=a95dedd6"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/edvana/frontend/src/components/ui/confirmation-modal.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle
+} from "/src/components/ui/alert-dialog.tsx";
+import { Button } from "/src/components/ui/button.tsx";
+import { AlertTriangle, Trash2, Edit, Save, X } from "/node_modules/.vite/deps/lucide-react.js?v=a95dedd6";
+import { cn } from "/src/utils/cn.ts";
+export function ConfirmationModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  title,
+  description,
+  type = "general",
+  confirmText,
+  cancelText = "Cancel",
+  isLoading = false,
+  icon
+}) {
+  const getTypeConfig = () => {
+    switch (type) {
+      case "delete":
+        return {
+          icon: icon || /* @__PURE__ */ jsxDEV(Trash2, { className: "h-5 w-5" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+            lineNumber: 64,
+            columnNumber: 25
+          }, this),
+          confirmClass: "bg-red-600 hover:bg-red-700 text-white border-0",
+          confirmText: confirmText || "Delete",
+          iconColor: "text-red-500"
+        };
+      case "update":
+        return {
+          icon: icon || /* @__PURE__ */ jsxDEV(Edit, { className: "h-5 w-5" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+            lineNumber: 71,
+            columnNumber: 25
+          }, this),
+          confirmClass: "glass-brand-accent border-0",
+          confirmText: confirmText || "Update",
+          iconColor: "text-brand-accent"
+        };
+      case "save":
+        return {
+          icon: icon || /* @__PURE__ */ jsxDEV(Save, { className: "h-5 w-5" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+            lineNumber: 78,
+            columnNumber: 25
+          }, this),
+          confirmClass: "glass-brand-teal border-0",
+          confirmText: confirmText || "Save",
+          iconColor: "text-brand-teal"
+        };
+      default:
+        return {
+          icon: icon || /* @__PURE__ */ jsxDEV(AlertTriangle, { className: "h-5 w-5" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+            lineNumber: 85,
+            columnNumber: 25
+          }, this),
+          confirmClass: "glass-brand-accent border-0",
+          confirmText: confirmText || "Confirm",
+          iconColor: "text-brand-accent"
+        };
+    }
+  };
+  const config = getTypeConfig();
+  return /* @__PURE__ */ jsxDEV(AlertDialog, { open: isOpen, onOpenChange: onClose, children: /* @__PURE__ */ jsxDEV(AlertDialogContent, { className: "glass-card border-white/20 max-w-md", children: [
+    /* @__PURE__ */ jsxDEV(AlertDialogHeader, { children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "flex items-center gap-3 mb-2", children: [
+        /* @__PURE__ */ jsxDEV("div", { className: cn("rounded-full p-2 glass-effect", config.iconColor), children: config.icon }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+          lineNumber: 100,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(AlertDialogTitle, { className: "text-white text-xl", children: title }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+          lineNumber: 103,
+          columnNumber: 13
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+        lineNumber: 99,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV(AlertDialogDescription, { className: "text-white/80 text-base", children: description }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+        lineNumber: 107,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+      lineNumber: 98,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ jsxDEV(AlertDialogFooter, { className: "gap-3", children: [
+      /* @__PURE__ */ jsxDEV(AlertDialogCancel, { asChild: true, children: /* @__PURE__ */ jsxDEV(
+        Button,
+        {
+          variant: "outline",
+          className: "bg-transparent border-red-500 text-red-400 hover:bg-red-500/10 hover:text-red-300 glass-transition",
+          disabled: isLoading,
+          children: [
+            /* @__PURE__ */ jsxDEV(X, { className: "h-4 w-4 mr-2" }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+              lineNumber: 118,
+              columnNumber: 15
+            }, this),
+            cancelText
+          ]
+        },
+        void 0,
+        true,
+        {
+          fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+          lineNumber: 113,
+          columnNumber: 13
+        },
+        this
+      ) }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+        lineNumber: 112,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV(AlertDialogAction, { asChild: true, children: /* @__PURE__ */ jsxDEV(
+        Button,
+        {
+          className: cn(config.confirmClass, "glass-transition"),
+          onClick: onConfirm,
+          disabled: isLoading,
+          children: isLoading ? /* @__PURE__ */ jsxDEV("div", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsxDEV("div", { className: "animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+              lineNumber: 130,
+              columnNumber: 19
+            }, this),
+            "Processing..."
+          ] }, void 0, true, {
+            fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+            lineNumber: 129,
+            columnNumber: 15
+          }, this) : /* @__PURE__ */ jsxDEV("div", { className: "flex items-center gap-2", children: [
+            config.icon,
+            config.confirmText
+          ] }, void 0, true, {
+            fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+            lineNumber: 134,
+            columnNumber: 15
+          }, this)
+        },
+        void 0,
+        false,
+        {
+          fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+          lineNumber: 123,
+          columnNumber: 13
+        },
+        this
+      ) }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+        lineNumber: 122,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+      lineNumber: 111,
+      columnNumber: 9
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+    lineNumber: 97,
+    columnNumber: 7
+  }, this) }, void 0, false, {
+    fileName: "C:/edvana/frontend/src/components/ui/confirmation-modal.tsx",
+    lineNumber: 96,
+    columnNumber: 5
+  }, this);
+}
+_c = ConfirmationModal;
+var _c;
+$RefreshReg$(_c, "ConfirmationModal");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/edvana/frontend/src/components/ui/confirmation-modal.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/edvana/frontend/src/components/ui/confirmation-modal.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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LEtBUkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQVNBO0FBQUEsTUFDQSx1QkFBQyxxQkFBa0IsU0FBTyxNQUN4QjtBQUFBLFFBQUM7QUFBQTtBQUFBLFVBQ0MsV0FBV1QsR0FBR2UsT0FBT0YsY0FBYyxrQkFBa0I7QUFBQSxVQUNyRCxTQUFTVDtBQUFBQSxVQUNULFVBQVVNO0FBQUFBLFVBRVRBLHNCQUNDLHVCQUFDLFNBQUksV0FBVSwyQkFDYjtBQUFBLG1DQUFDLFNBQUksV0FBVSxrRkFBZjtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUE2RjtBQUFBO0FBQUEsZUFEL0Y7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFHQSxJQUVBLHVCQUFDLFNBQUksV0FBVSwyQkFDWks7QUFBQUEsbUJBQU9KO0FBQUFBLFlBQ1BJLE9BQU9QO0FBQUFBLGVBRlY7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFHQTtBQUFBO0FBQUEsUUFkSjtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsTUFnQkEsS0FqQkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQWtCQTtBQUFBLFNBN0JGO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0E4QkE7QUFBQSxPQTVDRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBNkNBLEtBOUNGO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0ErQ0E7QUFFSjtBQUFDUSxLQWpHZWY7QUFBaUIsSUFBQWU7QUFBQUMsYUFBQUQsSUFBQSIsIm5hbWVzIjpbIkFsZXJ0RGlhbG9nIiwiQWxlcnREaWFsb2dBY3Rpb24iLCJBbGVydERpYWxvZ0NhbmNlbCIsIkFsZXJ0RGlhbG9nQ29udGVudCIsIkFsZXJ0RGlhbG9nRGVzY3JpcHRpb24iLCJBbGVydERpYWxvZ0Zvb3RlciIsIkFsZXJ0RGlhbG9nSGVhZGVyIiwiQWxlcnREaWFsb2dUaXRsZSIsIkJ1dHRvbiIsIkFsZXJ0VHJpYW5nbGUiLCJUcmFzaDIiLCJFZGl0IiwiU2F2ZSIsIlgiLCJjbiIsIkNvbmZpcm1hdGlvbk1vZGFsIiwiaXNPcGVuIiwib25DbG9zZSIsIm9uQ29uZmlybSIsInRpdGxlIiwiZGVzY3JpcHRpb24iLCJ0eXBlIiwiY29uZmlybVRleHQiLCJjYW5jZWxUZXh0IiwiaXNMb2FkaW5nIiwiaWNvbiIsImdldFR5cGVDb25maWciLCJjb25maXJtQ2xhc3MiLCJpY29uQ29sb3IiLCJjb25maWciLCJfYyIsIiRSZWZyZXNoUmVnJCJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJjb25maXJtYXRpb24tbW9kYWwudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IFJlYWN0Tm9kZSB9IGZyb20gJ3JlYWN0JztcbmltcG9ydCB7XG4gIEFsZXJ0RGlhbG9nLFxuICBBbGVydERpYWxvZ0FjdGlvbixcbiAgQWxlcnREaWFsb2dDYW5jZWwsXG4gIEFsZXJ0RGlhbG9nQ29udGVudCxcbiAgQWxlcnREaWFsb2dEZXNjcmlwdGlvbixcbiAgQWxlcnREaWFsb2dGb290ZXIsXG4gIEFsZXJ0RGlhbG9nSGVhZGVyLFxuICBBbGVydERpYWxvZ1RpdGxlLFxufSBmcm9tICdAL2NvbXBvbmVudHMvdWkvYWxlcnQtZGlhbG9nJztcbmltcG9ydCB7IEJ1dHRvbiB9IGZyb20gJ0AvY29tcG9uZW50cy91aS9idXR0b24nO1xuaW1wb3J0IHsgQWxlcnRUcmlhbmdsZSwgVHJhc2gyLCBFZGl0LCBTYXZlLCBYIH0gZnJvbSAnbHVjaWRlLXJlYWN0JztcbmltcG9ydCB7IGNuIH0gZnJvbSAnQC91dGlscy9jbic7XG5cbmludGVyZmFjZSBDb25maXJtYXRpb25Nb2RhbFByb3BzIHtcbiAgaXNPcGVuOiBib29sZWFuO1xuICBvbkNsb3NlOiAoKSA9PiB2b2lkO1xuICBvbkNvbmZpcm06ICgpID0+IHZvaWQ7XG4gIHRpdGxlOiBzdHJpbmc7XG4gIGRlc2NyaXB0aW9uOiBzdHJpbmc7XG4gIHR5cGU/OiAnZGVsZXRlJyB8ICd1cGRhdGUnIHwgJ3NhdmUnIHwgJ2dlbmVyYWwnO1xuICBjb25maXJtVGV4dD86IHN0cmluZztcbiAgY2FuY2VsVGV4dD86IHN0cmluZztcbiAgaXNMb2FkaW5nPzogYm9vbGVhbjtcbiAgaWNvbj86IFJlYWN0Tm9kZTtcbn1cblxuZXhwb3J0IGZ1bmN0aW9uIENvbmZpcm1hdGlvbk1vZGFsKHtcbiAgaXNPcGVuLFxuICBvbkNsb3NlLFxuICBvbkNvbmZpcm0sXG4gIHRpdGxlLFxuICBkZXNjcmlwdGlvbixcbiAgdHlwZSA9ICdnZW5lcmFsJyxcbiAgY29uZmlybVRleHQsXG4gIGNhbmNlbFRleHQgPSAnQ2FuY2VsJyxcbiAgaXNMb2FkaW5nID0gZmFsc2UsXG4gIGljb25cbn06IENvbmZpcm1hdGlvbk1vZGFsUHJvcHMpIHtcbiAgY29uc3QgZ2V0VHlwZUNvbmZpZyA9ICgpID0+IHtcbiAgICBzd2l0Y2ggKHR5cGUpIHtcbiAgICAgIGNhc2UgJ2RlbGV0ZSc6XG4gICAgICAgIHJldHVybiB7XG4gICAgICAgICAgaWNvbjogaWNvbiB8fCA8VHJhc2gyIGNsYXNzTmFtZT1cImgtNSB3LTVcIiAvPixcbiAgICAgICAgICBjb25maXJtQ2xhc3M6ICdiZy1yZWQtNjAwIGhvdmVyOmJnLXJlZC03MDAgdGV4dC13aGl0ZSBib3JkZXItMCcsXG4gICAgICAgICAgY29uZmlybVRleHQ6IGNvbmZpcm1UZXh0IHx8ICdEZWxldGUnLFxuICAgICAgICAgIGljb25Db2xvcjogJ3RleHQtcmVkLTUwMCdcbiAgICAgICAgfTtcbiAgICAgIGNhc2UgJ3VwZGF0ZSc6XG4gICAgICAgIHJldHVybiB7XG4gICAgICAgICAgaWNvbjogaWNvbiB8fCA8RWRpdCBjbGFzc05hbWU9XCJoLTUgdy01XCIgLz4sXG4gICAgICAgICAgY29uZmlybUNsYXNzOiAnZ2xhc3MtYnJhbmQtYWNjZW50IGJvcmRlci0wJyxcbiAgICAgICAgICBjb25maXJtVGV4dDogY29uZmlybVRleHQgfHwgJ1VwZGF0ZScsXG4gICAgICAgICAgaWNvbkNvbG9yOiAndGV4dC1icmFuZC1hY2NlbnQnXG4gICAgICAgIH07XG4gICAgICBjYXNlICdzYXZlJzpcbiAgICAgICAgcmV0dXJuIHtcbiAgICAgICAgICBpY29uOiBpY29uIHx8IDxTYXZlIGNsYXNzTmFtZT1cImgtNSB3LTVcIiAvPixcbiAgICAgICAgICBjb25maXJtQ2xhc3M6ICdnbGFzcy1icmFuZC10ZWFsIGJvcmRlci0wJyxcbiAgICAgICAgICBjb25maXJtVGV4dDogY29uZmlybVRleHQgfHwgJ1NhdmUnLFxuICAgICAgICAgIGljb25Db2xvcjogJ3RleHQtYnJhbmQtdGVhbCdcbiAgICAgICAgfTtcbiAgICAgIGRlZmF1bHQ6XG4gICAgICAgIHJldHVybiB7XG4gICAgICAgICAgaWNvbjogaWNvbiB8fCA8QWxlcnRUcmlhbmdsZSBjbGFzc05hbWU9XCJoLTUgdy01XCIgLz4sXG4gICAgICAgICAgY29uZmlybUNsYXNzOiAnZ2xhc3MtYnJhbmQtYWNjZW50IGJvcmRlci0wJyxcbiAgICAgICAgICBjb25maXJtVGV4dDogY29uZmlybVRleHQgfHwgJ0NvbmZpcm0nLFxuICAgICAgICAgIGljb25Db2xvcjogJ3RleHQtYnJhbmQtYWNjZW50J1xuICAgICAgICB9O1xuICAgIH1cbiAgfTtcblxuICBjb25zdCBjb25maWcgPSBnZXRUeXBlQ29uZmlnKCk7XG5cbiAgcmV0dXJuIChcbiAgICA8QWxlcnREaWFsb2cgb3Blbj17aXNPcGVufSBvbk9wZW5DaGFuZ2U9e29uQ2xvc2V9PlxuICAgICAgPEFsZXJ0RGlhbG9nQ29udGVudCBjbGFzc05hbWU9XCJnbGFzcy1jYXJkIGJvcmRlci13aGl0ZS8yMCBtYXgtdy1tZFwiPlxuICAgICAgICA8QWxlcnREaWFsb2dIZWFkZXI+XG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMyBtYi0yXCI+XG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT17Y24oXCJyb3VuZGVkLWZ1bGwgcC0yIGdsYXNzLWVmZmVjdFwiLCBjb25maWcuaWNvbkNvbG9yKX0+XG4gICAgICAgICAgICAgIHtjb25maWcuaWNvbn1cbiAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgPEFsZXJ0RGlhbG9nVGl0bGUgY2xhc3NOYW1lPVwidGV4dC13aGl0ZSB0ZXh0LXhsXCI+XG4gICAgICAgICAgICAgIHt0aXRsZX1cbiAgICAgICAgICAgIDwvQWxlcnREaWFsb2dUaXRsZT5cbiAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICA8QWxlcnREaWFsb2dEZXNjcmlwdGlvbiBjbGFzc05hbWU9XCJ0ZXh0LXdoaXRlLzgwIHRleHQtYmFzZVwiPlxuICAgICAgICAgICAge2Rlc2NyaXB0aW9ufVxuICAgICAgICAgIDwvQWxlcnREaWFsb2dEZXNjcmlwdGlvbj5cbiAgICAgICAgPC9BbGVydERpYWxvZ0hlYWRlcj5cbiAgICAgICAgPEFsZXJ0RGlhbG9nRm9vdGVyIGNsYXNzTmFtZT1cImdhcC0zXCI+XG4gICAgICAgICAgPEFsZXJ0RGlhbG9nQ2FuY2VsIGFzQ2hpbGQ+XG4gICAgICAgICAgICA8QnV0dG9uXG4gICAgICAgICAgICAgIHZhcmlhbnQ9XCJvdXRsaW5lXCJcbiAgICAgICAgICAgICAgY2xhc3NOYW1lPVwiYmctdHJhbnNwYXJlbnQgYm9yZGVyLXJlZC01MDAgdGV4dC1yZWQtNDAwIGhvdmVyOmJnLXJlZC01MDAvMTAgaG92ZXI6dGV4dC1yZWQtMzAwIGdsYXNzLXRyYW5zaXRpb25cIlxuICAgICAgICAgICAgICBkaXNhYmxlZD17aXNMb2FkaW5nfVxuICAgICAgICAgICAgPlxuICAgICAgICAgICAgICA8WCBjbGFzc05hbWU9XCJoLTQgdy00IG1yLTJcIiAvPlxuICAgICAgICAgICAgICB7Y2FuY2VsVGV4dH1cbiAgICAgICAgICAgIDwvQnV0dG9uPlxuICAgICAgICAgIDwvQWxlcnREaWFsb2dDYW5jZWw+XG4gICAgICAgICAgPEFsZXJ0RGlhbG9nQWN0aW9uIGFzQ2hpbGQ+XG4gICAgICAgICAgICA8QnV0dG9uXG4gICAgICAgICAgICAgIGNsYXNzTmFtZT17Y24oY29uZmlnLmNvbmZpcm1DbGFzcywgJ2dsYXNzLXRyYW5zaXRpb24nKX1cbiAgICAgICAgICAgICAgb25DbGljaz17b25Db25maXJtfVxuICAgICAgICAgICAgICBkaXNhYmxlZD17aXNMb2FkaW5nfVxuICAgICAgICAgICAgPlxuICAgICAgICAgICAgICB7aXNMb2FkaW5nID8gKFxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTJcIj5cbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiYW5pbWF0ZS1zcGluIHJvdW5kZWQtZnVsbCBoLTQgdy00IGJvcmRlci0yIGJvcmRlci13aGl0ZSBib3JkZXItdC10cmFuc3BhcmVudFwiIC8+XG4gICAgICAgICAgICAgICAgICBQcm9jZXNzaW5nLi4uXG4gICAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICAgICkgOiAoXG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMlwiPlxuICAgICAgICAgICAgICAgICAge2NvbmZpZy5pY29ufVxuICAgICAgICAgICAgICAgICAge2NvbmZpZy5jb25maXJtVGV4dH1cbiAgICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgKX1cbiAgICAgICAgICAgIDwvQnV0dG9uPlxuICAgICAgICAgIDwvQWxlcnREaWFsb2dBY3Rpb24+XG4gICAgICAgIDwvQWxlcnREaWFsb2dGb290ZXI+XG4gICAgICA8L0FsZXJ0RGlhbG9nQ29udGVudD5cbiAgICA8L0FsZXJ0RGlhbG9nPlxuICApO1xufSJdLCJmaWxlIjoiQzovZWR2YW5hL2Zyb250ZW5kL3NyYy9jb21wb25lbnRzL3VpL2NvbmZpcm1hdGlvbi1tb2RhbC50c3gifQ==

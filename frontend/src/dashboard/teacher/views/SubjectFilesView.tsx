@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { ArrowLeft, FileText, Folder, Plus, Search, Trash2 } from "lucide-react";
+import { ArrowLeft, FileText, Folder, Plus, Search, Trash2, X } from "lucide-react";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ConfirmDeleteModal } from "@/dashboard/teacher/components/assignments/ConfirmDeleteModal";
@@ -142,10 +142,26 @@ export default function SubjectFilesView() {
         <section className="rounded-2xl border border-white/15 bg-white/10 p-6 backdrop-blur-xl">
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
+              {currentFolder ? (
+                <div className="mb-2 flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-white/60">
+                  <span>Files</span>
+                  <span>/</span>
+                  <span className="text-amber-200">{currentFolder.name}</span>
+                </div>
+              ) : null}
               <h2 className="text-lg font-semibold text-white">{currentFolder ? currentFolder.name : "Subject Files"}</h2>
               <p className="mt-1 text-sm text-[var(--text-secondary)]">{currentFolder ? "Review files stored inside this folder." : "Search and review uploaded files for this subject."}</p>
             </div>
             <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
+              {currentFolder ? (
+                <Button
+                  type="button"
+                  onClick={() => navigate(topLevelRoute, { state: { restoreSubjectId: subjectId, subject: state?.subject ?? null } })}
+                  className="rounded-2xl border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white transition-all duration-200 hover:bg-white/20"
+                >
+                  <ArrowLeft className="mr-2 h-4 w-4" />Back to Files
+                </Button>
+              ) : null}
               {currentFolder ? (
                 <Button
                   type="button"
@@ -248,6 +264,7 @@ export default function SubjectFilesView() {
         confirmLabel="Delete"
         cancelLabel="Cancel"
         onConfirm={confirmDeleteFile}
+        cancelIcon={X}
       />
       <ConfirmDeleteModal
         open={folderIdPendingDelete !== null}
@@ -259,6 +276,7 @@ export default function SubjectFilesView() {
         confirmLabel="Delete"
         cancelLabel="Cancel"
         onConfirm={confirmDeleteFolder}
+        cancelIcon={X}
       />
     </div>
   );

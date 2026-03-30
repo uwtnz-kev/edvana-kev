@@ -6,8 +6,7 @@ type Props = { workspace: ReturnType<typeof useAssignmentsWorkspaceState> };
 
 export function AssignmentsWorkspaceFilters({ workspace }: Props) {
   return (
-    <>
-      <TeacherAssignmentsStats stats={workspace.stats} />
+    <div className="space-y-4">
       <TeacherAssignmentsControls
         search={workspace.search}
         statusFilter={workspace.statusFilter}
@@ -15,6 +14,7 @@ export function AssignmentsWorkspaceFilters({ workspace }: Props) {
         onStatusFilterChange={workspace.setStatusFilter}
         disabled={false}
       />
-    </>
+      <TeacherAssignmentsStats stats={workspace.stats} />
+    </div>
   );
 }

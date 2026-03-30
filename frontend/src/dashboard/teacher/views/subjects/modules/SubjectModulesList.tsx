@@ -1,5 +1,6 @@
 // Renders the list of subject modules and expanded module state.
 import { DndContext, closestCenter, type DragEndEvent } from "@dnd-kit/core";
+import { X } from "lucide-react";
 import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { ConfirmDeleteModal } from "@/dashboard/teacher/components/assignments/ConfirmDeleteModal";
 import { SubjectModuleRow } from "./cards/SubjectModuleRow";
@@ -9,6 +10,7 @@ type Props = { state: ReturnType<typeof useSubjectModulesViewState> };
 
 export function SubjectModulesList({ state }: Props) {
   const handleDragEnd = ({ active, over }: DragEndEvent) => {
+    if (state.isSearchActive) return;
     if (!over || active.id === over.id) return;
     const currentIds = state.visibleModules.map((module) => module.id);
     const activeIndex = currentIds.indexOf(String(active.id));
@@ -24,7 +26,7 @@ export function SubjectModulesList({ state }: Props) {
           <div className="mt-6 flex flex-col gap-6">
             {state.visibleModules.length === 0 ? (
               <div className="rounded-2xl border border-white/15 bg-white/10 px-5 py-6 text-sm text-[var(--text-primary)]/70">
-                No modules available for this subject.
+                No modules match your search.
               </div>
             ) : null}
             {state.visibleModules.map((module) => (
@@ -32,8 +34,8 @@ export function SubjectModulesList({ state }: Props) {
                 key={module.id}
                 module={module}
                 availableFiles={state.subjectFiles}
-                existingModuleTitles={state.visibleModules.map((item) => item.title)}
-                isExpanded={state.expandedModuleId === module.id}
+                existingModuleTitles={state.allModuleTitles}
+                isExpanded={state.isModuleExpanded(module.id)}
                 onDeleteModule={state.requestDeleteModule}
                 onDeleteSubmodule={state.requestDeleteSubmodule}
                 onOpenAttachedFile={state.openAttachedFile}
@@ -58,7 +60,9 @@ export function SubjectModulesList({ state }: Props) {
         confirmLabel="Delete"
         cancelLabel="Cancel"
         onConfirm={state.confirmDelete}
+        cancelIcon={X}
       />
     </>
   );
 }
+

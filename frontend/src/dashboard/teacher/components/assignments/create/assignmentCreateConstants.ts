@@ -16,7 +16,6 @@ export const initialValues: FormValues = {
   totalAttempts: "",
   totalQuestions: String(DEFAULT_TOTAL_QUESTIONS),
   submissionMethods: DEFAULT_SUBMISSION_METHODS,
-  rubric: "",
   maxScore: "",
 };
 
@@ -32,7 +31,6 @@ export const initialTouched: TouchedState = {
   totalAttempts: false,
   totalQuestions: false,
   submissionMethods: false,
-  rubric: false,
   maxScore: false,
 };
 
@@ -53,6 +51,5 @@ export const FIELD_IDS: Record<FieldName, string> = {
   totalAttempts: "assignment-total-attempts",
   totalQuestions: "assignment-total-questions",
   submissionMethods: "assignment-submission-methods",
-  rubric: "assignment-rubric",
   maxScore: "assignment-max-score",
 };

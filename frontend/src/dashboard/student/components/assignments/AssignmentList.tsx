@@ -2,6 +2,7 @@ import { AssignmentCard } from "./AssignmentCard";
 import { DataControls, PaginationControls } from "../shared";
 import { FileText } from "lucide-react";
 import { useState, useMemo, useEffect } from "react";
+import type { SubmissionMethod } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
 
 interface Assignment {
   id: number;
@@ -14,13 +15,18 @@ interface Assignment {
   submittedDate?: string;
   grade?: number;
   type: "essay" | "quiz" | "project" | "homework";
+  accessCode?: string;
+  totalAttempts?: number;
+  attemptCount?: number;
+  submissionMethods?: SubmissionMethod[];
+  classId?: string;
+  classLabel?: string;
 }
 
 interface AssignmentListProps {
   filter?: "all" | "pending" | "completed" | "overdue" | "draft";
 }
 
-// Extended mock data for pagination testing
 const mockAssignments: Assignment[] = [
   {
     id: 1,
@@ -30,7 +36,12 @@ const mockAssignments: Assignment[] = [
     status: "pending",
     description: "Write a 1500-word essay analyzing the application of mathematical reasoning in real-world problem solving, focusing on algebraic thinking.",
     points: 100,
-    type: "essay"
+    type: "essay",
+    totalAttempts: 3,
+    attemptCount: 1,
+    submissionMethods: ["text_entry"],
+    classId: "math-a",
+    classLabel: "Math A"
   },
   {
     id: 2,
@@ -42,7 +53,10 @@ const mockAssignments: Assignment[] = [
     points: 50,
     submittedDate: "2025-01-28",
     grade: 47,
-    type: "quiz"
+    type: "quiz",
+    submissionMethods: ["quiz_form"],
+    classId: "fr-2",
+    classLabel: "French 2"
   },
   {
     id: 3,
@@ -52,7 +66,11 @@ const mockAssignments: Assignment[] = [
     status: "draft",
     description: "Research and present a comprehensive project on Rwanda's independence movement and its impact on modern society.",
     points: 200,
-    type: "project"
+    type: "project",
+    accessCode: "HIST-2025",
+    submissionMethods: ["link_submission"],
+    classId: "hist-b",
+    classLabel: "History B"
   },
   {
     id: 4,
@@ -62,7 +80,10 @@ const mockAssignments: Assignment[] = [
     status: "overdue",
     description: "Submit detailed observations and analysis from the cell division microscopy lab session conducted last week.",
     points: 75,
-    type: "homework"
+    type: "homework",
+    submissionMethods: ["file_upload"],
+    classId: "bio-1",
+    classLabel: "Biology 1"
   },
   {
     id: 5,
@@ -72,7 +93,12 @@ const mockAssignments: Assignment[] = [
     status: "pending",
     description: "Solve problems related to thermodynamics, heat transfer, and energy conservation principles.",
     points: 80,
-    type: "homework"
+    type: "homework",
+    totalAttempts: 2,
+    attemptCount: 0,
+    submissionMethods: ["text_entry", "file_upload"],
+    classId: "phy-1",
+    classLabel: "Physics 1"
   },
   {
     id: 6,
@@ -84,7 +110,12 @@ const mockAssignments: Assignment[] = [
     points: 120,
     submittedDate: "2025-01-18",
     grade: 108,
-    type: "essay"
+    type: "essay",
+    totalAttempts: 1,
+    attemptCount: 1,
+    submissionMethods: ["text_entry"],
+    classId: "eng-3",
+    classLabel: "English 3"
   },
   {
     id: 7,
@@ -94,7 +125,11 @@ const mockAssignments: Assignment[] = [
     status: "pending",
     description: "Complete practice problems on ionic, covalent, and metallic bonding structures.",
     points: 60,
-    type: "homework"
+    type: "homework",
+    accessCode: "CHEM-LOCK",
+    submissionMethods: ["text_entry"],
+    classId: "chem-1",
+    classLabel: "Chemistry 1"
   },
   {
     id: 8,
@@ -104,7 +139,10 @@ const mockAssignments: Assignment[] = [
     status: "draft",
     description: "Analyze the structure, themes, and literary devices in three Shakespearean sonnets.",
     points: 90,
-    type: "essay"
+    type: "essay",
+    submissionMethods: ["text_entry"],
+    classId: "eng-3",
+    classLabel: "English 3"
   },
   {
     id: 9,
@@ -114,7 +152,12 @@ const mockAssignments: Assignment[] = [
     status: "pending",
     description: "Timed quiz covering integration techniques including substitution and integration by parts.",
     points: 75,
-    type: "quiz"
+    type: "quiz",
+    totalAttempts: 2,
+    attemptCount: 2,
+    submissionMethods: ["quiz_form"],
+    classId: "math-a",
+    classLabel: "Math A"
   },
   {
     id: 10,
@@ -124,7 +167,10 @@ const mockAssignments: Assignment[] = [
     status: "draft",
     description: "Create a detailed food web diagram for a local ecosystem and analyze energy flow.",
     points: 150,
-    type: "project"
+    type: "project",
+    submissionMethods: ["link_submission"],
+    classId: "bio-1",
+    classLabel: "Biology 1"
   },
   {
     id: 11,
@@ -134,7 +180,10 @@ const mockAssignments: Assignment[] = [
     status: "pending",
     description: "Record a 5-minute conversation in French about daily activities and future plans.",
     points: 40,
-    type: "homework"
+    type: "homework",
+    submissionMethods: ["file_upload"],
+    classId: "fr-2",
+    classLabel: "French 2"
   },
   {
     id: 12,
@@ -146,12 +195,14 @@ const mockAssignments: Assignment[] = [
     points: 30,
     submittedDate: "2025-01-26",
     grade: 28,
-    type: "quiz"
+    type: "quiz",
+    submissionMethods: ["quiz_form"],
+    classId: "hist-b",
+    classLabel: "History B"
   }
 ];
 
 export function AssignmentList({ filter = "all" }: AssignmentListProps) {
-  // Data handling state
   const [searchValue, setSearchValue] = useState("");
   const [courseFilter, setCourseFilter] = useState("all");
   const [dueDateFilter, setDueDateFilter] = useState("all");
@@ -161,39 +212,33 @@ export function AssignmentList({ filter = "all" }: AssignmentListProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
 
-  // Update status filter when prop changes
   useEffect(() => {
     setStatusFilter(filter);
   }, [filter]);
 
-  // Get unique courses for filter options
   const courseOptions = useMemo(() => {
-    const courses = [...new Set(mockAssignments.map(a => a.courseName))];
+    const courses = [...new Set(mockAssignments.map((a) => a.courseName))];
     return [
       { value: "all", label: "All Courses" },
-      ...courses.map(course => ({ value: course, label: course }))
+      ...courses.map((course) => ({ value: course, label: course }))
     ];
   }, []);
 
-  // Filter and sort assignments
   const processedAssignments = useMemo(() => {
-    let filtered = mockAssignments.filter(assignment => {
-      // Search filter
+    let filtered = mockAssignments.filter((assignment) => {
       if (searchValue) {
         const searchLower = searchValue.toLowerCase();
-        const matchesSearch = 
+        const matchesSearch =
           assignment.title.toLowerCase().includes(searchLower) ||
           assignment.description.toLowerCase().includes(searchLower) ||
           assignment.courseName.toLowerCase().includes(searchLower);
         if (!matchesSearch) return false;
       }
 
-      // Course filter
       if (courseFilter !== "all" && assignment.courseName !== courseFilter) {
         return false;
       }
 
-      // Status filter
       if (statusFilter !== "all") {
         if (statusFilter === "overdue") {
           const isOverdue = assignment.status === "pending" && new Date(assignment.dueDate) < new Date();
@@ -203,7 +248,6 @@ export function AssignmentList({ filter = "all" }: AssignmentListProps) {
         }
       }
 
-      // Due date filter
       if (dueDateFilter !== "all") {
         const today = new Date();
         const dueDate = new Date(assignment.dueDate);
@@ -229,9 +273,9 @@ export function AssignmentList({ filter = "all" }: AssignmentListProps) {
       return true;
     });
 
-    // Sort assignments
     filtered.sort((a, b) => {
-      let aValue: any, bValue: any;
+      let aValue: string | number;
+      let bValue: string | number;
 
       switch (sortField) {
         case "title":
@@ -257,22 +301,19 @@ export function AssignmentList({ filter = "all" }: AssignmentListProps) {
 
       if (sortDirection === "asc") {
         return aValue > bValue ? 1 : -1;
-      } else {
-        return aValue < bValue ? 1 : -1;
       }
+      return aValue < bValue ? 1 : -1;
     });
 
     return filtered;
   }, [searchValue, courseFilter, dueDateFilter, statusFilter, sortField, sortDirection]);
 
-  // Pagination
   const totalPages = Math.ceil(processedAssignments.length / itemsPerPage);
   const paginatedAssignments = processedAssignments.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  // Reset page when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [searchValue, courseFilter, dueDateFilter, statusFilter]);
@@ -290,7 +331,6 @@ export function AssignmentList({ filter = "all" }: AssignmentListProps) {
   if (processedAssignments.length === 0) {
     return (
       <div className="space-y-6">
-        {/* Data Controls */}
         <DataControls
           searchValue={searchValue}
           onSearchChange={setSearchValue}
@@ -341,7 +381,6 @@ export function AssignmentList({ filter = "all" }: AssignmentListProps) {
           onSortChange={handleSortChange}
         />
 
-        {/* No Results */}
         <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-12 text-center">
           <div className="w-16 h-16 mx-auto bg-gradient-to-br from-[#4C5454]/20 to-[#523F38]/10 rounded-full flex items-center justify-center mb-4">
             <FileText className="h-8 w-8 text-white/60" />
@@ -357,7 +396,6 @@ export function AssignmentList({ filter = "all" }: AssignmentListProps) {
 
   return (
     <div className="space-y-6">
-      {/* Data Controls */}
       <DataControls
         searchValue={searchValue}
         onSearchChange={setSearchValue}
@@ -408,14 +446,12 @@ export function AssignmentList({ filter = "all" }: AssignmentListProps) {
         onSortChange={handleSortChange}
       />
 
-      {/* Assignment Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
         {paginatedAssignments.map((assignment) => (
           <AssignmentCard key={assignment.id} {...assignment} />
         ))}
       </div>
 
-      {/* Pagination */}
       <PaginationControls
         currentPage={currentPage}
         totalPages={totalPages}

@@ -39,6 +39,7 @@ import TeacherStudentsView from "@/dashboard/teacher/views/StudentsView";
 import AssignmentsView from "@/dashboard/teacher/views/AssignmentsView";
 import AssignmentsCreateView from "@/dashboard/teacher/views/AssignmentsCreateView";
 import AssignmentsEditView from "@/dashboard/teacher/views/AssignmentsEditView";
+import AssignmentsUploadView from "@/dashboard/teacher/views/AssignmentsUploadView";
 import AnnouncementsView from "@/dashboard/teacher/views/AnnouncementsView";
 import AnnouncementCreateView from "@/dashboard/teacher/views/AnnouncementCreateView";
 import AnnouncementEditView from "@/dashboard/teacher/views/AnnouncementEditView";
@@ -161,6 +162,7 @@ export function AppRouter() {
           <Route path="assignments">
             <Route index element={<AssignmentsView />} />
             <Route path="create" element={<AssignmentsCreateView />} />
+            <Route path="upload" element={<AssignmentsUploadView />} />
             <Route path=":assignmentId/edit" element={<AssignmentsEditView />} />
           </Route>
           <Route path="announcements">
@@ -211,7 +213,7 @@ export function AppRouter() {
             path="subjects/:subjectId/modules/:moduleId/submodules/:submoduleId"
             element={<SubjectModuleContentView />}
           />
-          <Route path="subjects/:subjectId/upload-module" element={<SubjectUploadModuleView />} />
+          <Route path="subjects/:subjectId/create-module" element={<SubjectUploadModuleView />} />
           <Route path="subjects/:subjectId/upload-module-file" element={<SubjectUploadModuleFileView />} />
           <Route path="messages" element={<MessagesView />} />
           <Route path="messages/:messageId" element={<MessageDetailsView />} />
@@ -289,6 +291,7 @@ export function AppRouter() {
 }
 
 export default AppRouter;
+
 
 
 

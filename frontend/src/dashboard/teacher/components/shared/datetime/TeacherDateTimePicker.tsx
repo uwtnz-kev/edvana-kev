@@ -12,20 +12,20 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { type Meridiem, type TeacherDateTimePickerProps } from "./dateTimeConstants";
-import { buildDateWithTime, buildMinuteOptions, formatTriggerLabel, snapMinute, toTimeParts } from "./dateTimeHelpers";
+import { buildDateWithTime, formatTriggerLabel, toTimeParts } from "./dateTimeHelpers";
 import { DateTimeCalendarPanel } from "./DateTimeCalendarPanel";
 import { DateTimeTimePanel } from "./DateTimeTimePanel";
 import { DateTimeTrigger } from "./DateTimeTrigger";
 export type { TeacherDateTimePickerProps } from "./dateTimeConstants";
 
-export function TeacherDateTimePicker({ value, onChange, placeholder = "Pick date and time", disabled = false, minDate, maxDate, timeStepMinutes = 15 }: TeacherDateTimePickerProps) {
+export function TeacherDateTimePicker({ value, onChange, placeholder = "Pick date and time", disabled = false, minDate, maxDate, timeStepMinutes = 15, showActionIcons = false }: TeacherDateTimePickerProps) {
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedHour, setSelectedHour] = useState("12");
   const [selectedMinute, setSelectedMinute] = useState("00");
   const [selectedMeridiem, setSelectedMeridiem] = useState<Meridiem>("PM");
   const hasValue = useMemo(() => Boolean(value), [value]);
-  const minuteOptions = useMemo(() => buildMinuteOptions(timeStepMinutes), [timeStepMinutes]);
+  void timeStepMinutes;
 
   useEffect(() => {
     if (!open) return;
@@ -33,9 +33,9 @@ export function TeacherDateTimePicker({ value, onChange, placeholder = "Pick dat
     const parts = toTimeParts(source);
     setSelectedDate(source);
     setSelectedHour(parts.hour);
-    setSelectedMinute(snapMinute(parts.minute, minuteOptions));
+    setSelectedMinute(parts.minute);
     setSelectedMeridiem(parts.meridiem);
-  }, [minuteOptions, open, value]);
+  }, [open, value]);
 
   const onApply = () => {
     if (!selectedDate) return;
@@ -52,7 +52,7 @@ export function TeacherDateTimePicker({ value, onChange, placeholder = "Pick dat
           <DialogHeader className="sr-only"><DialogTitle>Select date and time</DialogTitle><DialogDescription>Choose date and time, then apply changes.</DialogDescription></DialogHeader>
           <div className="p-4 sm:p-5 flex flex-col gap-5 max-h-[80vh] overflow-y-auto overscroll-contain">
             <DateTimeCalendarPanel selectedDate={selectedDate} onSelectDate={setSelectedDate} minDate={minDate} maxDate={maxDate} />
-            <DateTimeTimePanel selectedDate={selectedDate} selectedHour={selectedHour} selectedMinute={selectedMinute} selectedMeridiem={selectedMeridiem} minuteOptions={minuteOptions} onHourChange={setSelectedHour} onMinuteChange={setSelectedMinute} onMeridiemChange={setSelectedMeridiem} onClose={() => setOpen(false)} onApply={onApply} />
+            <DateTimeTimePanel selectedDate={selectedDate} selectedHour={selectedHour} selectedMinute={selectedMinute} selectedMeridiem={selectedMeridiem} onHourChange={setSelectedHour} onMinuteChange={setSelectedMinute} onMeridiemChange={setSelectedMeridiem} onClose={() => setOpen(false)} onApply={onApply} showActionIcons={showActionIcons} />
           </div>
           <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-white/40 disabled:pointer-events-none"><X className="h-4 w-4" /><span className="sr-only">Close</span></DialogPrimitive.Close>
         </DialogPrimitive.Content>

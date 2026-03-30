@@ -1,0 +1,236 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=a95dedd6"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=a95dedd6"; const React = __vite__cjsImport3_react.__esModule ? __vite__cjsImport3_react.default : __vite__cjsImport3_react;
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "/node_modules/.vite/deps/lucide-react.js?v=a95dedd6";
+import { Button } from "/src/components/ui/button.tsx";
+export function EdvanaBankPagination({
+  currentPage,
+  totalPages,
+  totalItems,
+  itemsPerPage,
+  onPageChange
+}) {
+  const startItem = (currentPage - 1) * itemsPerPage + 1;
+  const endItem = Math.min(currentPage * itemsPerPage, totalItems);
+  const getVisiblePages = () => {
+    const delta = 2;
+    const range = [];
+    const rangeWithDots = [];
+    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
+      range.push(i);
+    }
+    if (currentPage - delta > 2) {
+      rangeWithDots.push(1, "...");
+    } else {
+      rangeWithDots.push(1);
+    }
+    rangeWithDots.push(...range);
+    if (currentPage + delta < totalPages - 1) {
+      rangeWithDots.push("...", totalPages);
+    } else {
+      rangeWithDots.push(totalPages);
+    }
+    return rangeWithDots;
+  };
+  if (totalPages <= 1) return null;
+  return /* @__PURE__ */ jsxDEV("div", { className: "bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-4", children: /* @__PURE__ */ jsxDEV("div", { className: "flex flex-col sm:flex-row items-center justify-between gap-4", children: [
+    /* @__PURE__ */ jsxDEV("div", { className: "text-sm text-blue-900/70", children: [
+      "Showing ",
+      /* @__PURE__ */ jsxDEV("span", { className: "font-medium text-blue-900", children: startItem }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+        lineNumber: 76,
+        columnNumber: 19
+      }, this),
+      " to",
+      " ",
+      /* @__PURE__ */ jsxDEV("span", { className: "font-medium text-blue-900", children: endItem }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+        lineNumber: 77,
+        columnNumber: 11
+      }, this),
+      " of",
+      " ",
+      /* @__PURE__ */ jsxDEV("span", { className: "font-medium text-blue-900", children: totalItems }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+        lineNumber: 78,
+        columnNumber: 11
+      }, this),
+      " results"
+    ] }, void 0, true, {
+      fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+      lineNumber: 75,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "flex items-center gap-2", children: [
+      /* @__PURE__ */ jsxDEV(
+        Button,
+        {
+          variant: "outline",
+          size: "sm",
+          onClick: () => onPageChange(1),
+          disabled: currentPage === 1,
+          className: "bg-white/10 border-white/20 text-blue-900 hover:bg-white/20 disabled:opacity-50",
+          children: /* @__PURE__ */ jsxDEV(ChevronsLeft, { className: "h-4 w-4" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+            lineNumber: 91,
+            columnNumber: 13
+          }, this)
+        },
+        void 0,
+        false,
+        {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+          lineNumber: 84,
+          columnNumber: 11
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV(
+        Button,
+        {
+          variant: "outline",
+          size: "sm",
+          onClick: () => onPageChange(currentPage - 1),
+          disabled: currentPage === 1,
+          className: "bg-white/10 border-white/20 text-blue-900 hover:bg-white/20 disabled:opacity-50",
+          children: /* @__PURE__ */ jsxDEV(ChevronLeft, { className: "h-4 w-4" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+            lineNumber: 102,
+            columnNumber: 13
+          }, this)
+        },
+        void 0,
+        false,
+        {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+          lineNumber: 95,
+          columnNumber: 11
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV("div", { className: "flex items-center gap-1", children: getVisiblePages().map(
+        (page, index) => /* @__PURE__ */ jsxDEV(React.Fragment, { children: page === "..." ? /* @__PURE__ */ jsxDEV("span", { className: "px-3 py-1 text-blue-900/50", children: "..." }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+          lineNumber: 110,
+          columnNumber: 15
+        }, this) : /* @__PURE__ */ jsxDEV(
+          Button,
+          {
+            variant: currentPage === page ? "default" : "outline",
+            size: "sm",
+            onClick: () => onPageChange(page),
+            className: currentPage === page ? "bg-brand-accent text-white hover:bg-brand-accent/80" : "bg-white/10 border-white/20 text-blue-900 hover:bg-white/20",
+            children: page
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+            lineNumber: 112,
+            columnNumber: 15
+          },
+          this
+        ) }, index, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+          lineNumber: 108,
+          columnNumber: 13
+        }, this)
+      ) }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+        lineNumber: 106,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        Button,
+        {
+          variant: "outline",
+          size: "sm",
+          onClick: () => onPageChange(currentPage + 1),
+          disabled: currentPage === totalPages,
+          className: "bg-white/10 border-white/20 text-blue-900 hover:bg-white/20 disabled:opacity-50",
+          children: /* @__PURE__ */ jsxDEV(ChevronRight, { className: "h-4 w-4" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+            lineNumber: 137,
+            columnNumber: 13
+          }, this)
+        },
+        void 0,
+        false,
+        {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+          lineNumber: 130,
+          columnNumber: 11
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV(
+        Button,
+        {
+          variant: "outline",
+          size: "sm",
+          onClick: () => onPageChange(totalPages),
+          disabled: currentPage === totalPages,
+          className: "bg-white/10 border-white/20 text-blue-900 hover:bg-white/20 disabled:opacity-50",
+          children: /* @__PURE__ */ jsxDEV(ChevronsRight, { className: "h-4 w-4" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+            lineNumber: 148,
+            columnNumber: 13
+          }, this)
+        },
+        void 0,
+        false,
+        {
+          fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+          lineNumber: 141,
+          columnNumber: 11
+        },
+        this
+      )
+    ] }, void 0, true, {
+      fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+      lineNumber: 82,
+      columnNumber: 9
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+    lineNumber: 73,
+    columnNumber: 7
+  }, this) }, void 0, false, {
+    fileName: "C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx",
+    lineNumber: 72,
+    columnNumber: 5
+  }, this);
+}
+_c = EdvanaBankPagination;
+var _c;
+$RefreshReg$(_c, "EdvanaBankPagination");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/edvana/frontend/src/dashboard/schooladmin/components/edvana-bank/EdvanaBankPagination.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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QUFBLFdBb0VBO0FBQUEsT0E3RUY7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQThFQSxLQS9FRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBZ0ZBO0FBRUo7QUFBQ2tCLEtBMUhlcEI7QUFBb0IsSUFBQW9CO0FBQUFDLGFBQUFELElBQUEiLCJuYW1lcyI6WyJSZWFjdCIsIkNoZXZyb25MZWZ0IiwiQ2hldnJvblJpZ2h0IiwiQ2hldnJvbnNMZWZ0IiwiQ2hldnJvbnNSaWdodCIsIkJ1dHRvbiIsIkVkdmFuYUJhbmtQYWdpbmF0aW9uIiwiY3VycmVudFBhZ2UiLCJ0b3RhbFBhZ2VzIiwidG90YWxJdGVtcyIsIml0ZW1zUGVyUGFnZSIsIm9uUGFnZUNoYW5nZSIsInN0YXJ0SXRlbSIsImVuZEl0ZW0iLCJNYXRoIiwibWluIiwiZ2V0VmlzaWJsZVBhZ2VzIiwiZGVsdGEiLCJyYW5nZSIsInJhbmdlV2l0aERvdHMiLCJpIiwibWF4IiwicHVzaCIsIm1hcCIsInBhZ2UiLCJpbmRleCIsIl9jIiwiJFJlZnJlc2hSZWckIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbIkVkdmFuYUJhbmtQYWdpbmF0aW9uLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QgZnJvbSAncmVhY3QnO1xuaW1wb3J0IHsgQ2hldnJvbkxlZnQsIENoZXZyb25SaWdodCwgQ2hldnJvbnNMZWZ0LCBDaGV2cm9uc1JpZ2h0IH0gZnJvbSAnbHVjaWRlLXJlYWN0JztcbmltcG9ydCB7IEJ1dHRvbiB9IGZyb20gJ0AvY29tcG9uZW50cy91aS9idXR0b24nO1xuXG5pbnRlcmZhY2UgRWR2YW5hQmFua1BhZ2luYXRpb25Qcm9wcyB7XG4gIGN1cnJlbnRQYWdlOiBudW1iZXI7XG4gIHRvdGFsUGFnZXM6IG51bWJlcjtcbiAgdG90YWxJdGVtczogbnVtYmVyO1xuICBpdGVtc1BlclBhZ2U6IG51bWJlcjtcbiAgb25QYWdlQ2hhbmdlOiAocGFnZTogbnVtYmVyKSA9PiB2b2lkO1xufVxuXG5leHBvcnQgZnVuY3Rpb24gRWR2YW5hQmFua1BhZ2luYXRpb24oe1xuICBjdXJyZW50UGFnZSxcbiAgdG90YWxQYWdlcyxcbiAgdG90YWxJdGVtcyxcbiAgaXRlbXNQZXJQYWdlLFxuICBvblBhZ2VDaGFuZ2Vcbn06IEVkdmFuYUJhbmtQYWdpbmF0aW9uUHJvcHMpIHtcbiAgY29uc3Qgc3RhcnRJdGVtID0gKChjdXJyZW50UGFnZSAtIDEpICogaXRlbXNQZXJQYWdlKSArIDE7XG4gIGNvbnN0IGVuZEl0ZW0gPSBNYXRoLm1pbihjdXJyZW50UGFnZSAqIGl0ZW1zUGVyUGFnZSwgdG90YWxJdGVtcyk7XG5cbiAgLy8gR2VuZXJhdGUgcGFnZSBudW1iZXJzIHRvIHNob3dcbiAgY29uc3QgZ2V0VmlzaWJsZVBhZ2VzID0gKCkgPT4ge1xuICAgIGNvbnN0IGRlbHRhID0gMjtcbiAgICBjb25zdCByYW5nZSA9IFtdO1xuICAgIGNvbnN0IHJhbmdlV2l0aERvdHMgPSBbXTtcblxuICAgIGZvciAobGV0IGkgPSBNYXRoLm1heCgyLCBjdXJyZW50UGFnZSAtIGRlbHRhKTsgaSA8PSBNYXRoLm1pbih0b3RhbFBhZ2VzIC0gMSwgY3VycmVudFBhZ2UgKyBkZWx0YSk7IGkrKykge1xuICAgICAgcmFuZ2UucHVzaChpKTtcbiAgICB9XG5cbiAgICBpZiAoY3VycmVudFBhZ2UgLSBkZWx0YSA+IDIpIHtcbiAgICAgIHJhbmdlV2l0aERvdHMucHVzaCgxLCAnLi4uJyk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHJhbmdlV2l0aERvdHMucHVzaCgxKTtcbiAgICB9XG5cbiAgICByYW5nZVdpdGhEb3RzLnB1c2goLi4ucmFuZ2UpO1xuXG4gICAgaWYgKGN1cnJlbnRQYWdlICsgZGVsdGEgPCB0b3RhbFBhZ2VzIC0gMSkge1xuICAgICAgcmFuZ2VXaXRoRG90cy5wdXNoKCcuLi4nLCB0b3RhbFBhZ2VzKTtcbiAgICB9IGVsc2Uge1xuICAgICAgcmFuZ2VXaXRoRG90cy5wdXNoKHRvdGFsUGFnZXMpO1xuICAgIH1cblxuICAgIHJldHVybiByYW5nZVdpdGhEb3RzO1xuICB9O1xuXG4gIGlmICh0b3RhbFBhZ2VzIDw9IDEpIHJldHVybiBudWxsO1xuXG4gIHJldHVybiAoXG4gICAgPGRpdiBjbGFzc05hbWU9XCJiZy13aGl0ZS8xMCBiYWNrZHJvcC1ibHVyLXhsIHJvdW5kZWQtMnhsIGJvcmRlciBib3JkZXItd2hpdGUvMjAgcC00XCI+XG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggZmxleC1jb2wgc206ZmxleC1yb3cgaXRlbXMtY2VudGVyIGp1c3RpZnktYmV0d2VlbiBnYXAtNFwiPlxuICAgICAgICB7LyogUmVzdWx0cyBJbmZvICovfVxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInRleHQtc20gdGV4dC1ibHVlLTkwMC83MFwiPlxuICAgICAgICAgIFNob3dpbmcgPHNwYW4gY2xhc3NOYW1lPVwiZm9udC1tZWRpdW0gdGV4dC1ibHVlLTkwMFwiPntzdGFydEl0ZW19PC9zcGFuPiB0b3snICd9XG4gICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwiZm9udC1tZWRpdW0gdGV4dC1ibHVlLTkwMFwiPntlbmRJdGVtfTwvc3Bhbj4gb2Z7JyAnfVxuICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cImZvbnQtbWVkaXVtIHRleHQtYmx1ZS05MDBcIj57dG90YWxJdGVtc308L3NwYW4+IHJlc3VsdHNcbiAgICAgICAgPC9kaXY+XG5cbiAgICAgICAgey8qIFBhZ2luYXRpb24gQ29udHJvbHMgKi99XG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTJcIj5cbiAgICAgICAgICB7LyogRmlyc3QgUGFnZSAqL31cbiAgICAgICAgICA8QnV0dG9uXG4gICAgICAgICAgICB2YXJpYW50PVwib3V0bGluZVwiXG4gICAgICAgICAgICBzaXplPVwic21cIlxuICAgICAgICAgICAgb25DbGljaz17KCkgPT4gb25QYWdlQ2hhbmdlKDEpfVxuICAgICAgICAgICAgZGlzYWJsZWQ9e2N1cnJlbnRQYWdlID09PSAxfVxuICAgICAgICAgICAgY2xhc3NOYW1lPVwiYmctd2hpdGUvMTAgYm9yZGVyLXdoaXRlLzIwIHRleHQtYmx1ZS05MDAgaG92ZXI6Ymctd2hpdGUvMjAgZGlzYWJsZWQ6b3BhY2l0eS01MFwiXG4gICAgICAgICAgPlxuICAgICAgICAgICAgPENoZXZyb25zTGVmdCBjbGFzc05hbWU9XCJoLTQgdy00XCIgLz5cbiAgICAgICAgICA8L0J1dHRvbj5cblxuICAgICAgICAgIHsvKiBQcmV2aW91cyBQYWdlICovfVxuICAgICAgICAgIDxCdXR0b25cbiAgICAgICAgICAgIHZhcmlhbnQ9XCJvdXRsaW5lXCJcbiAgICAgICAgICAgIHNpemU9XCJzbVwiXG4gICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBvblBhZ2VDaGFuZ2UoY3VycmVudFBhZ2UgLSAxKX1cbiAgICAgICAgICAgIGRpc2FibGVkPXtjdXJyZW50UGFnZSA9PT0gMX1cbiAgICAgICAgICAgIGNsYXNzTmFtZT1cImJnLXdoaXRlLzEwIGJvcmRlci13aGl0ZS8yMCB0ZXh0LWJsdWUtOTAwIGhvdmVyOmJnLXdoaXRlLzIwIGRpc2FibGVkOm9wYWNpdHktNTBcIlxuICAgICAgICAgID5cbiAgICAgICAgICAgIDxDaGV2cm9uTGVmdCBjbGFzc05hbWU9XCJoLTQgdy00XCIgLz5cbiAgICAgICAgICA8L0J1dHRvbj5cblxuICAgICAgICAgIHsvKiBQYWdlIE51bWJlcnMgKi99XG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMVwiPlxuICAgICAgICAgICAge2dldFZpc2libGVQYWdlcygpLm1hcCgocGFnZSwgaW5kZXgpID0+IChcbiAgICAgICAgICAgICAgPFJlYWN0LkZyYWdtZW50IGtleT17aW5kZXh9PlxuICAgICAgICAgICAgICAgIHtwYWdlID09PSAnLi4uJyA/IChcbiAgICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cInB4LTMgcHktMSB0ZXh0LWJsdWUtOTAwLzUwXCI+Li4uPC9zcGFuPlxuICAgICAgICAgICAgICAgICkgOiAoXG4gICAgICAgICAgICAgICAgICA8QnV0dG9uXG4gICAgICAgICAgICAgICAgICAgIHZhcmlhbnQ9e2N1cnJlbnRQYWdlID09PSBwYWdlID8gJ2RlZmF1bHQnIDogJ291dGxpbmUnfVxuICAgICAgICAgICAgICAgICAgICBzaXplPVwic21cIlxuICAgICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBvblBhZ2VDaGFuZ2UocGFnZSBhcyBudW1iZXIpfVxuICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9e1xuICAgICAgICAgICAgICAgICAgICAgIGN1cnJlbnRQYWdlID09PSBwYWdlXG4gICAgICAgICAgICAgICAgICAgICAgICA/ICdiZy1icmFuZC1hY2NlbnQgdGV4dC13aGl0ZSBob3ZlcjpiZy1icmFuZC1hY2NlbnQvODAnXG4gICAgICAgICAgICAgICAgICAgICAgICA6ICdiZy13aGl0ZS8xMCBib3JkZXItd2hpdGUvMjAgdGV4dC1ibHVlLTkwMCBob3ZlcjpiZy13aGl0ZS8yMCdcbiAgICAgICAgICAgICAgICAgICAgfVxuICAgICAgICAgICAgICAgICAgPlxuICAgICAgICAgICAgICAgICAgICB7cGFnZX1cbiAgICAgICAgICAgICAgICAgIDwvQnV0dG9uPlxuICAgICAgICAgICAgICAgICl9XG4gICAgICAgICAgICAgIDwvUmVhY3QuRnJhZ21lbnQ+XG4gICAgICAgICAgICApKX1cbiAgICAgICAgICA8L2Rpdj5cblxuICAgICAgICAgIHsvKiBOZXh0IFBhZ2UgKi99XG4gICAgICAgICAgPEJ1dHRvblxuICAgICAgICAgICAgdmFyaWFudD1cIm91dGxpbmVcIlxuICAgICAgICAgICAgc2l6ZT1cInNtXCJcbiAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IG9uUGFnZUNoYW5nZShjdXJyZW50UGFnZSArIDEpfVxuICAgICAgICAgICAgZGlzYWJsZWQ9e2N1cnJlbnRQYWdlID09PSB0b3RhbFBhZ2VzfVxuICAgICAgICAgICAgY2xhc3NOYW1lPVwiYmctd2hpdGUvMTAgYm9yZGVyLXdoaXRlLzIwIHRleHQtYmx1ZS05MDAgaG92ZXI6Ymctd2hpdGUvMjAgZGlzYWJsZWQ6b3BhY2l0eS01MFwiXG4gICAgICAgICAgPlxuICAgICAgICAgICAgPENoZXZyb25SaWdodCBjbGFzc05hbWU9XCJoLTQgdy00XCIgLz5cbiAgICAgICAgICA8L0J1dHRvbj5cblxuICAgICAgICAgIHsvKiBMYXN0IFBhZ2UgKi99XG4gICAgICAgICAgPEJ1dHRvblxuICAgICAgICAgICAgdmFyaWFudD1cIm91dGxpbmVcIlxuICAgICAgICAgICAgc2l6ZT1cInNtXCJcbiAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IG9uUGFnZUNoYW5nZSh0b3RhbFBhZ2VzKX1cbiAgICAgICAgICAgIGRpc2FibGVkPXtjdXJyZW50UGFnZSA9PT0gdG90YWxQYWdlc31cbiAgICAgICAgICAgIGNsYXNzTmFtZT1cImJnLXdoaXRlLzEwIGJvcmRlci13aGl0ZS8yMCB0ZXh0LWJsdWUtOTAwIGhvdmVyOmJnLXdoaXRlLzIwIGRpc2FibGVkOm9wYWNpdHktNTBcIlxuICAgICAgICAgID5cbiAgICAgICAgICAgIDxDaGV2cm9uc1JpZ2h0IGNsYXNzTmFtZT1cImgtNCB3LTRcIiAvPlxuICAgICAgICAgIDwvQnV0dG9uPlxuICAgICAgICA8L2Rpdj5cbiAgICAgIDwvZGl2PlxuICAgIDwvZGl2PlxuICApO1xufSJdLCJmaWxlIjoiQzovZWR2YW5hL2Zyb250ZW5kL3NyYy9kYXNoYm9hcmQvc2Nob29sYWRtaW4vY29tcG9uZW50cy9lZHZhbmEtYmFuay9FZHZhbmFCYW5rUGFnaW5hdGlvbi50c3gifQ==

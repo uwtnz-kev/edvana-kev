@@ -14,6 +14,7 @@ export type SubjectFileItem = {
   modifiedBy: string;
   sizeBytes: number;
   folderId: string | null;
+  blobKey?: string | null;
   visibility?: SubjectFileVisibility;
 };
 
@@ -37,6 +38,7 @@ export type SubjectFileDraft = {
   mimeType: string;
   previewUrl: string;
   sizeBytes: number;
+  blobKey?: string | null;
   folderName?: string | null;
   visibility?: SubjectFileVisibility;
 };

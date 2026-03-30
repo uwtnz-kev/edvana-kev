@@ -1,0 +1,192 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=a95dedd6"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import { ChevronDown } from "/node_modules/.vite/deps/lucide-react.js?v=a95dedd6";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "/src/components/ui/dropdown-menu.tsx";
+import { cn } from "/src/utils/cn.ts";
+import {
+  SUBMISSION_METHOD_OPTIONS
+} from "/src/dashboard/teacher/components/shared/assessment/submissionMethods.ts";
+export function SubmissionMethodsField({ id, error, selected, onToggle }) {
+  const triggerLabel = getTriggerLabel(selected);
+  return /* @__PURE__ */ jsxDEV("div", { className: "w-full", children: [
+    /* @__PURE__ */ jsxDEV("label", { htmlFor: id, className: "mb-2 block text-sm text-white", children: "Submission Method" }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx",
+      lineNumber: 47,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(DropdownMenu, { modal: false, children: [
+      /* @__PURE__ */ jsxDEV(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ jsxDEV(
+        "button",
+        {
+          id,
+          type: "button",
+          className: cn(
+            "flex h-12 w-full items-center justify-between gap-3 rounded-2xl border px-4 text-left transition",
+            "border-white/20 bg-white/20 text-white hover:bg-white/25",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-0",
+            error && "border-red-500/70"
+          ),
+          children: [
+            /* @__PURE__ */ jsxDEV("span", { className: cn("min-w-0 truncate text-sm", selected.length === 0 && "text-white/60"), children: triggerLabel }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx",
+              lineNumber: 60,
+              columnNumber: 13
+            }, this),
+            /* @__PURE__ */ jsxDEV(ChevronDown, { className: "h-4 w-4 shrink-0 text-white/70" }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx",
+              lineNumber: 63,
+              columnNumber: 13
+            }, this)
+          ]
+        },
+        void 0,
+        true,
+        {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx",
+          lineNumber: 50,
+          columnNumber: 11
+        },
+        this
+      ) }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx",
+        lineNumber: 49,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        DropdownMenuContent,
+        {
+          align: "start",
+          sideOffset: 8,
+          className: "w-[min(22rem,var(--radix-dropdown-menu-trigger-width))] rounded-2xl border border-white/20 bg-[#1b2430]/95 p-1 text-white shadow-2xl backdrop-blur-xl",
+          children: [
+            /* @__PURE__ */ jsxDEV(DropdownMenuLabel, { className: "px-3 py-2 text-xs font-medium uppercase tracking-[0.18em] text-white/50", children: "Submission Method" }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx",
+              lineNumber: 72,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV(DropdownMenuSeparator, { className: "mx-2 bg-white/10" }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx",
+              lineNumber: 75,
+              columnNumber: 11
+            }, this),
+            SUBMISSION_METHOD_OPTIONS.map((option) => {
+              const checked = selected.includes(option.value);
+              return /* @__PURE__ */ jsxDEV(
+                DropdownMenuCheckboxItem,
+                {
+                  checked,
+                  onCheckedChange: () => onToggle(option.value),
+                  className: "rounded-xl px-3 py-3 pl-9 text-white focus:bg-white/10 focus:text-white data-[disabled]:opacity-50",
+                  children: /* @__PURE__ */ jsxDEV("div", { className: "min-w-0", children: [
+                    /* @__PURE__ */ jsxDEV("div", { className: "truncate text-sm font-medium text-white", children: option.label }, void 0, false, {
+                      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx",
+                      lineNumber: 87,
+                      columnNumber: 19
+                    }, this),
+                    /* @__PURE__ */ jsxDEV("div", { className: "whitespace-normal text-xs leading-5 text-white/60", children: option.description }, void 0, false, {
+                      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx",
+                      lineNumber: 88,
+                      columnNumber: 19
+                    }, this)
+                  ] }, void 0, true, {
+                    fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx",
+                    lineNumber: 86,
+                    columnNumber: 17
+                  }, this)
+                },
+                option.value,
+                false,
+                {
+                  fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx",
+                  lineNumber: 80,
+                  columnNumber: 15
+                },
+                this
+              );
+            }),
+            /* @__PURE__ */ jsxDEV(DropdownMenuSeparator, { className: "mx-2 bg-white/10" }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx",
+              lineNumber: 93,
+              columnNumber: 11
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "px-3 py-2 text-xs leading-5 text-white/55", children: "Quiz Form is exclusive. File Upload, Text Entry, and Link Submission can be combined together." }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx",
+              lineNumber: 94,
+              columnNumber: 11
+            }, this)
+          ]
+        },
+        void 0,
+        true,
+        {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx",
+          lineNumber: 67,
+          columnNumber: 9
+        },
+        this
+      )
+    ] }, void 0, true, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx",
+      lineNumber: 48,
+      columnNumber: 7
+    }, this),
+    error ? /* @__PURE__ */ jsxDEV("p", { className: "mt-1 text-sm font-medium text-red-600", children: error }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx",
+      lineNumber: 99,
+      columnNumber: 16
+    }, this) : null
+  ] }, void 0, true, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx",
+    lineNumber: 46,
+    columnNumber: 5
+  }, this);
+}
+_c = SubmissionMethodsField;
+function getTriggerLabel(selected) {
+  if (selected.length === 0) return "Select submission method";
+  if (selected.length === 1) return getOptionLabel(selected[0]);
+  if (selected.length === 2) return selected.map(getOptionLabel).join(", ");
+  return `${selected.length} methods selected`;
+}
+function getOptionLabel(value) {
+  return SUBMISSION_METHOD_OPTIONS.find((option) => option.value === value)?.label ?? value;
+}
+var _c;
+$RefreshReg$(_c, "SubmissionMethodsField");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/edvana/frontend/src/dashboard/teacher/components/shared/assessment/SubmissionMethodsField.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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QUFBQTtBQUFBLFdBQTRELElBQU87QUFBQSxPQXJEOUU7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQXNEQTtBQUVKO0FBQUNhLEtBNURlZjtBQThEaEIsU0FBU00sZ0JBQWdCSCxVQUE4QjtBQUNyRCxNQUFJQSxTQUFTSSxXQUFXLEVBQUcsUUFBTztBQUNsQyxNQUFJSixTQUFTSSxXQUFXLEVBQUcsUUFBT1MsZUFBZWIsU0FBUyxDQUFDLENBQUM7QUFDNUQsTUFBSUEsU0FBU0ksV0FBVyxFQUFHLFFBQU9KLFNBQVNLLElBQUlRLGNBQWMsRUFBRUMsS0FBSyxJQUFJO0FBQ3hFLFNBQU8sR0FBR2QsU0FBU0ksTUFBTTtBQUMzQjtBQUVBLFNBQVNTLGVBQWVKLE9BQXlCO0FBQy9DLFNBQU9iLDBCQUEwQm1CLEtBQUssQ0FBQ1QsV0FBV0EsT0FBT0csVUFBVUEsS0FBSyxHQUFHQyxTQUFTRDtBQUN0RjtBQUFDLElBQUFHO0FBQUFJLGFBQUFKLElBQUEiLCJuYW1lcyI6WyJDaGV2cm9uRG93biIsIkRyb3Bkb3duTWVudSIsIkRyb3Bkb3duTWVudUNoZWNrYm94SXRlbSIsIkRyb3Bkb3duTWVudUNvbnRlbnQiLCJEcm9wZG93bk1lbnVMYWJlbCIsIkRyb3Bkb3duTWVudVNlcGFyYXRvciIsIkRyb3Bkb3duTWVudVRyaWdnZXIiLCJjbiIsIlNVQk1JU1NJT05fTUVUSE9EX09QVElPTlMiLCJTdWJtaXNzaW9uTWV0aG9kc0ZpZWxkIiwiaWQiLCJlcnJvciIsInNlbGVjdGVkIiwib25Ub2dnbGUiLCJ0cmlnZ2VyTGFiZWwiLCJnZXRUcmlnZ2VyTGFiZWwiLCJsZW5ndGgiLCJtYXAiLCJvcHRpb24iLCJjaGVja2VkIiwiaW5jbHVkZXMiLCJ2YWx1ZSIsImxhYmVsIiwiZGVzY3JpcHRpb24iLCJfYyIsImdldE9wdGlvbkxhYmVsIiwiam9pbiIsImZpbmQiLCIkUmVmcmVzaFJlZyQiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiU3VibWlzc2lvbk1ldGhvZHNGaWVsZC50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ2hlY2ssIENoZXZyb25Eb3duIH0gZnJvbSBcImx1Y2lkZS1yZWFjdFwiO1xuaW1wb3J0IHtcbiAgRHJvcGRvd25NZW51LFxuICBEcm9wZG93bk1lbnVDaGVja2JveEl0ZW0sXG4gIERyb3Bkb3duTWVudUNvbnRlbnQsXG4gIERyb3Bkb3duTWVudUxhYmVsLFxuICBEcm9wZG93bk1lbnVTZXBhcmF0b3IsXG4gIERyb3Bkb3duTWVudVRyaWdnZXIsXG59IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvZHJvcGRvd24tbWVudVwiO1xuaW1wb3J0IHsgY24gfSBmcm9tIFwiQC91dGlscy9jblwiO1xuaW1wb3J0IHtcbiAgU1VCTUlTU0lPTl9NRVRIT0RfT1BUSU9OUyxcbiAgdHlwZSBTdWJtaXNzaW9uTWV0aG9kLFxufSBmcm9tIFwiLi9zdWJtaXNzaW9uTWV0aG9kc1wiO1xuXG50eXBlIFByb3BzID0ge1xuICBpZDogc3RyaW5nO1xuICBlcnJvcj86IHN0cmluZyB8IG51bGw7XG4gIHNlbGVjdGVkOiBTdWJtaXNzaW9uTWV0aG9kW107XG4gIG9uVG9nZ2xlOiAobWV0aG9kOiBTdWJtaXNzaW9uTWV0aG9kKSA9PiB2b2lkO1xufTtcblxuZXhwb3J0IGZ1bmN0aW9uIFN1Ym1pc3Npb25NZXRob2RzRmllbGQoeyBpZCwgZXJyb3IsIHNlbGVjdGVkLCBvblRvZ2dsZSB9OiBQcm9wcykge1xuICBjb25zdCB0cmlnZ2VyTGFiZWwgPSBnZXRUcmlnZ2VyTGFiZWwoc2VsZWN0ZWQpO1xuXG4gIHJldHVybiAoXG4gICAgPGRpdiBjbGFzc05hbWU9XCJ3LWZ1bGxcIj5cbiAgICAgIDxsYWJlbCBodG1sRm9yPXtpZH0gY2xhc3NOYW1lPVwibWItMiBibG9jayB0ZXh0LXNtIHRleHQtd2hpdGVcIj5TdWJtaXNzaW9uIE1ldGhvZDwvbGFiZWw+XG4gICAgICA8RHJvcGRvd25NZW51IG1vZGFsPXtmYWxzZX0+XG4gICAgICAgIDxEcm9wZG93bk1lbnVUcmlnZ2VyIGFzQ2hpbGQ+XG4gICAgICAgICAgPGJ1dHRvblxuICAgICAgICAgICAgaWQ9e2lkfVxuICAgICAgICAgICAgdHlwZT1cImJ1dHRvblwiXG4gICAgICAgICAgICBjbGFzc05hbWU9e2NuKFxuICAgICAgICAgICAgICBcImZsZXggaC0xMiB3LWZ1bGwgaXRlbXMtY2VudGVyIGp1c3RpZnktYmV0d2VlbiBnYXAtMyByb3VuZGVkLTJ4bCBib3JkZXIgcHgtNCB0ZXh0LWxlZnQgdHJhbnNpdGlvblwiLFxuICAgICAgICAgICAgICBcImJvcmRlci13aGl0ZS8yMCBiZy13aGl0ZS8yMCB0ZXh0LXdoaXRlIGhvdmVyOmJnLXdoaXRlLzI1XCIsXG4gICAgICAgICAgICAgIFwiZm9jdXMtdmlzaWJsZTpvdXRsaW5lLW5vbmUgZm9jdXMtdmlzaWJsZTpyaW5nLTIgZm9jdXMtdmlzaWJsZTpyaW5nLXdoaXRlLzYwIGZvY3VzLXZpc2libGU6cmluZy1vZmZzZXQtMFwiLFxuICAgICAgICAgICAgICBlcnJvciAmJiBcImJvcmRlci1yZWQtNTAwLzcwXCJcbiAgICAgICAgICAgICl9XG4gICAgICAgICAgPlxuICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPXtjbihcIm1pbi13LTAgdHJ1bmNhdGUgdGV4dC1zbVwiLCBzZWxlY3RlZC5sZW5ndGggPT09IDAgJiYgXCJ0ZXh0LXdoaXRlLzYwXCIpfT5cbiAgICAgICAgICAgICAge3RyaWdnZXJMYWJlbH1cbiAgICAgICAgICAgIDwvc3Bhbj5cbiAgICAgICAgICAgIDxDaGV2cm9uRG93biBjbGFzc05hbWU9XCJoLTQgdy00IHNocmluay0wIHRleHQtd2hpdGUvNzBcIiAvPlxuICAgICAgICAgIDwvYnV0dG9uPlxuICAgICAgICA8L0Ryb3Bkb3duTWVudVRyaWdnZXI+XG5cbiAgICAgICAgPERyb3Bkb3duTWVudUNvbnRlbnRcbiAgICAgICAgICBhbGlnbj1cInN0YXJ0XCJcbiAgICAgICAgICBzaWRlT2Zmc2V0PXs4fVxuICAgICAgICAgIGNsYXNzTmFtZT1cInctW21pbigyMnJlbSx2YXIoLS1yYWRpeC1kcm9wZG93bi1tZW51LXRyaWdnZXItd2lkdGgpKV0gcm91bmRlZC0yeGwgYm9yZGVyIGJvcmRlci13aGl0ZS8yMCBiZy1bIzFiMjQzMF0vOTUgcC0xIHRleHQtd2hpdGUgc2hhZG93LTJ4bCBiYWNrZHJvcC1ibHVyLXhsXCJcbiAgICAgICAgPlxuICAgICAgICAgIDxEcm9wZG93bk1lbnVMYWJlbCBjbGFzc05hbWU9XCJweC0zIHB5LTIgdGV4dC14cyBmb250LW1lZGl1bSB1cHBlcmNhc2UgdHJhY2tpbmctWzAuMThlbV0gdGV4dC13aGl0ZS81MFwiPlxuICAgICAgICAgICAgU3VibWlzc2lvbiBNZXRob2RcbiAgICAgICAgICA8L0Ryb3Bkb3duTWVudUxhYmVsPlxuICAgICAgICAgIDxEcm9wZG93bk1lbnVTZXBhcmF0b3IgY2xhc3NOYW1lPVwibXgtMiBiZy13aGl0ZS8xMFwiIC8+XG4gICAgICAgICAge1NVQk1JU1NJT05fTUVUSE9EX09QVElPTlMubWFwKChvcHRpb24pID0+IHtcbiAgICAgICAgICAgIGNvbnN0IGNoZWNrZWQgPSBzZWxlY3RlZC5pbmNsdWRlcyhvcHRpb24udmFsdWUpO1xuXG4gICAgICAgICAgICByZXR1cm4gKFxuICAgICAgICAgICAgICA8RHJvcGRvd25NZW51Q2hlY2tib3hJdGVtXG4gICAgICAgICAgICAgICAga2V5PXtvcHRpb24udmFsdWV9XG4gICAgICAgICAgICAgICAgY2hlY2tlZD17Y2hlY2tlZH1cbiAgICAgICAgICAgICAgICBvbkNoZWNrZWRDaGFuZ2U9eygpID0+IG9uVG9nZ2xlKG9wdGlvbi52YWx1ZSl9XG4gICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwicm91bmRlZC14bCBweC0zIHB5LTMgcGwtOSB0ZXh0LXdoaXRlIGZvY3VzOmJnLXdoaXRlLzEwIGZvY3VzOnRleHQtd2hpdGUgZGF0YS1bZGlzYWJsZWRdOm9wYWNpdHktNTBcIlxuICAgICAgICAgICAgICA+XG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJtaW4tdy0wXCI+XG4gICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInRydW5jYXRlIHRleHQtc20gZm9udC1tZWRpdW0gdGV4dC13aGl0ZVwiPntvcHRpb24ubGFiZWx9PC9kaXY+XG4gICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cIndoaXRlc3BhY2Utbm9ybWFsIHRleHQteHMgbGVhZGluZy01IHRleHQtd2hpdGUvNjBcIj57b3B0aW9uLmRlc2NyaXB0aW9ufTwvZGl2PlxuICAgICAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgICA8L0Ryb3Bkb3duTWVudUNoZWNrYm94SXRlbT5cbiAgICAgICAgICAgICk7XG4gICAgICAgICAgfSl9XG4gICAgICAgICAgPERyb3Bkb3duTWVudVNlcGFyYXRvciBjbGFzc05hbWU9XCJteC0yIGJnLXdoaXRlLzEwXCIgLz5cbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInB4LTMgcHktMiB0ZXh0LXhzIGxlYWRpbmctNSB0ZXh0LXdoaXRlLzU1XCI+XG4gICAgICAgICAgICBRdWl6IEZvcm0gaXMgZXhjbHVzaXZlLiBGaWxlIFVwbG9hZCwgVGV4dCBFbnRyeSwgYW5kIExpbmsgU3VibWlzc2lvbiBjYW4gYmUgY29tYmluZWQgdG9nZXRoZXIuXG4gICAgICAgICAgPC9kaXY+XG4gICAgICAgIDwvRHJvcGRvd25NZW51Q29udGVudD5cbiAgICAgIDwvRHJvcGRvd25NZW51PlxuICAgICAge2Vycm9yID8gPHAgY2xhc3NOYW1lPVwibXQtMSB0ZXh0LXNtIGZvbnQtbWVkaXVtIHRleHQtcmVkLTYwMFwiPntlcnJvcn08L3A+IDogbnVsbH1cbiAgICA8L2Rpdj5cbiAgKTtcbn1cblxuZnVuY3Rpb24gZ2V0VHJpZ2dlckxhYmVsKHNlbGVjdGVkOiBTdWJtaXNzaW9uTWV0aG9kW10pIHtcbiAgaWYgKHNlbGVjdGVkLmxlbmd0aCA9PT0gMCkgcmV0dXJuIFwiU2VsZWN0IHN1Ym1pc3Npb24gbWV0aG9kXCI7XG4gIGlmIChzZWxlY3RlZC5sZW5ndGggPT09IDEpIHJldHVybiBnZXRPcHRpb25MYWJlbChzZWxlY3RlZFswXSk7XG4gIGlmIChzZWxlY3RlZC5sZW5ndGggPT09IDIpIHJldHVybiBzZWxlY3RlZC5tYXAoZ2V0T3B0aW9uTGFiZWwpLmpvaW4oXCIsIFwiKTtcbiAgcmV0dXJuIGAke3NlbGVjdGVkLmxlbmd0aH0gbWV0aG9kcyBzZWxlY3RlZGA7XG59XG5cbmZ1bmN0aW9uIGdldE9wdGlvbkxhYmVsKHZhbHVlOiBTdWJtaXNzaW9uTWV0aG9kKSB7XG4gIHJldHVybiBTVUJNSVNTSU9OX01FVEhPRF9PUFRJT05TLmZpbmQoKG9wdGlvbikgPT4gb3B0aW9uLnZhbHVlID09PSB2YWx1ZSk/LmxhYmVsID8/IHZhbHVlO1xufVxuIl0sImZpbGUiOiJDOi9lZHZhbmEvZnJvbnRlbmQvc3JjL2Rhc2hib2FyZC90ZWFjaGVyL2NvbXBvbmVudHMvc2hhcmVkL2Fzc2Vzc21lbnQvU3VibWlzc2lvbk1ldGhvZHNGaWVsZC50c3gifQ==

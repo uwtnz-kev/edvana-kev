@@ -1,0 +1,303 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=a95dedd6"; const Fragment = __vite__cjsImport0_react_jsxDevRuntime["Fragment"]; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import { GraduationCap, LayoutPanelLeft, Sparkles } from "/node_modules/.vite/deps/lucide-react.js?v=a95dedd6";
+import { useNavigate, useSearchParams } from "/node_modules/.vite/deps/react-router-dom.js?v=a95dedd6";
+import { getSubjectIconTheme } from "/src/dashboard/teacher/components/shared/index.ts";
+import { getTeacherSubjectClass, teacherSubjectClasses } from "/src/dashboard/teacher/data/teacherSubjectsByClass.ts";
+import { buildClassSearch, getClassIdFromSearchParams } from "/src/dashboard/teacher/views/subjects/subjectClassRouting.ts";
+export function TeacherFeatureClassEntryGate({
+  entryPath,
+  featureKey,
+  title,
+  subtitle,
+  icon: Icon,
+  infoCardClassName = "",
+  renderHeaderIcon,
+  children
+}) {
+  _s();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const selectedClassId = getClassIdFromSearchParams(searchParams);
+  const selectedClass = getTeacherSubjectClass(selectedClassId);
+  const theme = getSubjectIconTheme(featureKey);
+  const headerIcon = renderHeaderIcon ? renderHeaderIcon({ Icon, theme }) : /* @__PURE__ */ jsxDEV("div", { className: `flex h-12 w-12 items-center justify-center rounded-2xl ${theme.bgClass}`, children: /* @__PURE__ */ jsxDEV(Icon, { className: `h-6 w-6 ${theme.iconClass}` }, void 0, false, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+    lineNumber: 64,
+    columnNumber: 9
+  }, this) }, void 0, false, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+    lineNumber: 63,
+    columnNumber: 3
+  }, this);
+  if (!selectedClass) {
+    return /* @__PURE__ */ jsxDEV("div", { className: "w-full overflow-x-hidden p-4 sm:p-6", style: { overflowX: "hidden" }, children: /* @__PURE__ */ jsxDEV("div", { className: "mx-auto w-full max-w-7xl", children: /* @__PURE__ */ jsxDEV("div", { className: "flex w-full gap-6 overflow-x-hidden", children: [
+      /* @__PURE__ */ jsxDEV("aside", { className: "w-[220px] shrink-0", children: /* @__PURE__ */ jsxDEV("section", { className: "teacher-panel-surface rounded-2xl p-3", children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "px-2 pb-3 pt-1", children: /* @__PURE__ */ jsxDEV("h2", { className: "text-sm font-semibold text-white", children: "Classes" }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+          lineNumber: 76,
+          columnNumber: 19
+        }, this) }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+          lineNumber: 75,
+          columnNumber: 17
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "space-y-2", children: teacherSubjectClasses.map(
+          (teacherClass) => /* @__PURE__ */ jsxDEV(
+            "button",
+            {
+              type: "button",
+              onClick: () => navigate({
+                pathname: entryPath,
+                search: buildClassSearch(teacherClass.classId)
+              }),
+              className: "group flex w-full items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left text-white/90 transition-all duration-200 hover:-translate-y-[1px] hover:border-white/20 hover:bg-white/20 hover:shadow-sm",
+              children: [
+                /* @__PURE__ */ jsxDEV("div", { className: "flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--sidebar-item-active)] text-[var(--accent-primary)] transition-transform duration-200 group-hover:scale-105", children: /* @__PURE__ */ jsxDEV(GraduationCap, { className: "h-4 w-4" }, void 0, false, {
+                  fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+                  lineNumber: 93,
+                  columnNumber: 25
+                }, this) }, void 0, false, {
+                  fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+                  lineNumber: 92,
+                  columnNumber: 23
+                }, this),
+                /* @__PURE__ */ jsxDEV("span", { className: "text-sm font-medium", children: teacherClass.classLabel }, void 0, false, {
+                  fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+                  lineNumber: 95,
+                  columnNumber: 23
+                }, this)
+              ]
+            },
+            teacherClass.classId,
+            true,
+            {
+              fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+              lineNumber: 81,
+              columnNumber: 19
+            },
+            this
+          )
+        ) }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+          lineNumber: 79,
+          columnNumber: 17
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+        lineNumber: 74,
+        columnNumber: 15
+      }, this) }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+        lineNumber: 73,
+        columnNumber: 13
+      }, this),
+      /* @__PURE__ */ jsxDEV("section", { className: "min-w-0 flex-1 space-y-4", children: [
+        /* @__PURE__ */ jsxDEV("header", { className: "teacher-panel-surface rounded-2xl px-6 py-5", children: /* @__PURE__ */ jsxDEV("div", { className: "flex items-center gap-4", children: [
+          headerIcon,
+          /* @__PURE__ */ jsxDEV("div", { children: [
+            /* @__PURE__ */ jsxDEV("h1", { className: "text-2xl font-semibold text-white", children: title }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+              lineNumber: 107,
+              columnNumber: 21
+            }, this),
+            /* @__PURE__ */ jsxDEV("p", { className: "mt-1 text-[var(--text-secondary)]", children: subtitle }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+              lineNumber: 108,
+              columnNumber: 21
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+            lineNumber: 106,
+            columnNumber: 19
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+          lineNumber: 104,
+          columnNumber: 17
+        }, this) }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+          lineNumber: 103,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "grid gap-4 lg:grid-cols-2", children: [
+          /* @__PURE__ */ jsxDEV("section", { className: `teacher-panel-surface rounded-2xl p-6 ${infoCardClassName}`.trim(), children: /* @__PURE__ */ jsxDEV("div", { className: "flex items-start gap-4", children: [
+            /* @__PURE__ */ jsxDEV("div", { className: "flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-blue-500/20 text-blue-400 backdrop-blur", children: /* @__PURE__ */ jsxDEV(LayoutPanelLeft, { className: "h-5 w-5" }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+              lineNumber: 117,
+              columnNumber: 23
+            }, this) }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+              lineNumber: 116,
+              columnNumber: 21
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { children: [
+              /* @__PURE__ */ jsxDEV("p", { className: "text-xs font-semibold uppercase tracking-[0.18em] text-[#1EA896]", children: [
+                title,
+                " Entry"
+              ] }, void 0, true, {
+                fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+                lineNumber: 120,
+                columnNumber: 23
+              }, this),
+              /* @__PURE__ */ jsxDEV("h2", { className: "mt-2 text-xl font-semibold text-[var(--text-primary)]", children: "Start with a class" }, void 0, false, {
+                fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+                lineNumber: 121,
+                columnNumber: 23
+              }, this),
+              /* @__PURE__ */ jsxDEV("p", { className: "mt-2 max-w-2xl text-sm text-[var(--text-secondary)]", children: [
+                "Select a section from the left panel to open the ",
+                title.toLowerCase(),
+                " workspace for that class."
+              ] }, void 0, true, {
+                fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+                lineNumber: 122,
+                columnNumber: 23
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+              lineNumber: 119,
+              columnNumber: 21
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+            lineNumber: 115,
+            columnNumber: 19
+          }, this) }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+            lineNumber: 114,
+            columnNumber: 17
+          }, this),
+          /* @__PURE__ */ jsxDEV("section", { className: `teacher-panel-surface rounded-2xl p-5 ${infoCardClassName}`.trim(), children: [
+            /* @__PURE__ */ jsxDEV("div", { className: "flex items-center gap-3", children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-purple-500/20 text-purple-400 backdrop-blur", children: /* @__PURE__ */ jsxDEV(Sparkles, { className: "h-4 w-4" }, void 0, false, {
+                fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+                lineNumber: 132,
+                columnNumber: 23
+              }, this) }, void 0, false, {
+                fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+                lineNumber: 131,
+                columnNumber: 21
+              }, this),
+              /* @__PURE__ */ jsxDEV("h3", { className: "font-semibold text-white", children: "What happens next" }, void 0, false, {
+                fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+                lineNumber: 134,
+                columnNumber: 21
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+              lineNumber: 130,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ jsxDEV("p", { className: "mt-3 text-sm text-[var(--text-secondary)]", children: [
+              "After you choose a class, this page loads the current ",
+              title.toLowerCase(),
+              " view and keeps the class in the URL."
+            ] }, void 0, true, {
+              fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+              lineNumber: 136,
+              columnNumber: 19
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+            lineNumber: 129,
+            columnNumber: 17
+          }, this),
+          /* @__PURE__ */ jsxDEV("section", { className: `teacher-panel-surface rounded-2xl p-5 ${infoCardClassName}`.trim(), children: [
+            /* @__PURE__ */ jsxDEV("div", { className: "flex items-center gap-3", children: [
+              /* @__PURE__ */ jsxDEV("div", { className: "flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-amber-500/20 text-amber-300 backdrop-blur", children: /* @__PURE__ */ jsxDEV(GraduationCap, { className: "h-4 w-4" }, void 0, false, {
+                fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+                lineNumber: 144,
+                columnNumber: 23
+              }, this) }, void 0, false, {
+                fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+                lineNumber: 143,
+                columnNumber: 21
+              }, this),
+              /* @__PURE__ */ jsxDEV("h3", { className: "font-semibold text-white", children: "Available sections" }, void 0, false, {
+                fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+                lineNumber: 146,
+                columnNumber: 21
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+              lineNumber: 142,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ jsxDEV("p", { className: "mt-3 text-sm text-[var(--text-secondary)]", children: "S1A, S3A, S5B, S6A, and S6B are available in this class-scoped view." }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+              lineNumber: 148,
+              columnNumber: 19
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+            lineNumber: 141,
+            columnNumber: 17
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+          lineNumber: 113,
+          columnNumber: 15
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+        lineNumber: 102,
+        columnNumber: 13
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+      lineNumber: 72,
+      columnNumber: 11
+    }, this) }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+      lineNumber: 71,
+      columnNumber: 9
+    }, this) }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+      lineNumber: 70,
+      columnNumber: 7
+    }, this);
+  }
+  return /* @__PURE__ */ jsxDEV(Fragment, { children: children({ classId: selectedClass.classId, classLabel: selectedClass.classLabel, onBackToEntry: () => navigate(entryPath) }) }, void 0, false, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx",
+    lineNumber: 158,
+    columnNumber: 10
+  }, this);
+}
+_s(TeacherFeatureClassEntryGate, "TWgzSyUhfR1qpSaKODBSa+lc2RA=", false, function() {
+  return [useNavigate, useSearchParams];
+});
+_c = TeacherFeatureClassEntryGate;
+var _c;
+$RefreshReg$(_c, "TeacherFeatureClassEntryGate");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/edvana/frontend/src/dashboard/teacher/views/shared/TeacherFeatureClassEntryGate.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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QVMsRUFBRWUsU0FBU1YsY0FBY1UsU0FBU0MsWUFBWVgsY0FBY1csWUFBWUcsZUFBZUEsTUFBTWpCLFNBQVNWLFNBQVMsRUFBRSxDQUFDLEtBQTlIO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0FBZ0k7QUFDekk7QUFBQ1MsR0FsSGVWLDhCQUE0QjtBQUFBLFVBVXpCUCxhQUNNQyxlQUFlO0FBQUE7QUFBQW1DLEtBWHhCN0I7QUFBNEIsSUFBQTZCO0FBQUFDLGFBQUFELElBQUEiLCJuYW1lcyI6WyJHcmFkdWF0aW9uQ2FwIiwiTGF5b3V0UGFuZWxMZWZ0IiwiU3BhcmtsZXMiLCJ1c2VOYXZpZ2F0ZSIsInVzZVNlYXJjaFBhcmFtcyIsImdldFN1YmplY3RJY29uVGhlbWUiLCJnZXRUZWFjaGVyU3ViamVjdENsYXNzIiwidGVhY2hlclN1YmplY3RDbGFzc2VzIiwiYnVpbGRDbGFzc1NlYXJjaCIsImdldENsYXNzSWRGcm9tU2VhcmNoUGFyYW1zIiwiVGVhY2hlckZlYXR1cmVDbGFzc0VudHJ5R2F0ZSIsImVudHJ5UGF0aCIsImZlYXR1cmVLZXkiLCJ0aXRsZSIsInN1YnRpdGxlIiwiaWNvbiIsIkljb24iLCJpbmZvQ2FyZENsYXNzTmFtZSIsInJlbmRlckhlYWRlckljb24iLCJjaGlsZHJlbiIsIl9zIiwibmF2aWdhdGUiLCJzZWFyY2hQYXJhbXMiLCJzZWxlY3RlZENsYXNzSWQiLCJzZWxlY3RlZENsYXNzIiwidGhlbWUiLCJoZWFkZXJJY29uIiwiYmdDbGFzcyIsImljb25DbGFzcyIsIm92ZXJmbG93WCIsIm1hcCIsInRlYWNoZXJDbGFzcyIsInBhdGhuYW1lIiwic2VhcmNoIiwiY2xhc3NJZCIsImNsYXNzTGFiZWwiLCJ0cmltIiwidG9Mb3dlckNhc2UiLCJvbkJhY2tUb0VudHJ5IiwiX2MiLCIkUmVmcmVzaFJlZyQiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiVGVhY2hlckZlYXR1cmVDbGFzc0VudHJ5R2F0ZS50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHR5cGUgeyBSZWFjdE5vZGUgfSBmcm9tIFwicmVhY3RcIjtcbmltcG9ydCB0eXBlIHsgTHVjaWRlSWNvbiB9IGZyb20gXCJsdWNpZGUtcmVhY3RcIjtcbmltcG9ydCB7IEdyYWR1YXRpb25DYXAsIExheW91dFBhbmVsTGVmdCwgU3BhcmtsZXMgfSBmcm9tIFwibHVjaWRlLXJlYWN0XCI7XG5pbXBvcnQgeyB1c2VOYXZpZ2F0ZSwgdXNlU2VhcmNoUGFyYW1zIH0gZnJvbSBcInJlYWN0LXJvdXRlci1kb21cIjtcbmltcG9ydCB7IGdldFN1YmplY3RJY29uVGhlbWUsIHR5cGUgU3ViamVjdEljb25UaGVtZSB9IGZyb20gXCJAL2Rhc2hib2FyZC90ZWFjaGVyL2NvbXBvbmVudHMvc2hhcmVkXCI7XG5pbXBvcnQgeyBnZXRUZWFjaGVyU3ViamVjdENsYXNzLCB0ZWFjaGVyU3ViamVjdENsYXNzZXMgfSBmcm9tIFwiQC9kYXNoYm9hcmQvdGVhY2hlci9kYXRhL3RlYWNoZXJTdWJqZWN0c0J5Q2xhc3NcIjtcbmltcG9ydCB7IGJ1aWxkQ2xhc3NTZWFyY2gsIGdldENsYXNzSWRGcm9tU2VhcmNoUGFyYW1zIH0gZnJvbSBcIi4uL3N1YmplY3RzL3N1YmplY3RDbGFzc1JvdXRpbmdcIjtcblxudHlwZSBSZW5kZXJBcmdzID0ge1xuICBjbGFzc0lkOiBzdHJpbmc7XG4gIGNsYXNzTGFiZWw6IHN0cmluZztcbiAgb25CYWNrVG9FbnRyeTogKCkgPT4gdm9pZDtcbn07XG5cbnR5cGUgUHJvcHMgPSB7XG4gIGVudHJ5UGF0aDogc3RyaW5nO1xuICBmZWF0dXJlS2V5OiBzdHJpbmc7XG4gIHRpdGxlOiBzdHJpbmc7XG4gIHN1YnRpdGxlOiBzdHJpbmc7XG4gIGljb246IEx1Y2lkZUljb247XG4gIGluZm9DYXJkQ2xhc3NOYW1lPzogc3RyaW5nO1xuICByZW5kZXJIZWFkZXJJY29uPzogKGFyZ3M6IHsgSWNvbjogTHVjaWRlSWNvbjsgdGhlbWU6IFN1YmplY3RJY29uVGhlbWUgfSkgPT4gUmVhY3ROb2RlO1xuICBjaGlsZHJlbjogKGFyZ3M6IFJlbmRlckFyZ3MpID0+IFJlYWN0Tm9kZTtcbn07XG5cbmV4cG9ydCBmdW5jdGlvbiBUZWFjaGVyRmVhdHVyZUNsYXNzRW50cnlHYXRlKHtcbiAgZW50cnlQYXRoLFxuICBmZWF0dXJlS2V5LFxuICB0aXRsZSxcbiAgc3VidGl0bGUsXG4gIGljb246IEljb24sXG4gIGluZm9DYXJkQ2xhc3NOYW1lID0gXCJcIixcbiAgcmVuZGVySGVhZGVySWNvbixcbiAgY2hpbGRyZW4sXG59OiBQcm9wcykge1xuICBjb25zdCBuYXZpZ2F0ZSA9IHVzZU5hdmlnYXRlKCk7XG4gIGNvbnN0IFtzZWFyY2hQYXJhbXNdID0gdXNlU2VhcmNoUGFyYW1zKCk7XG4gIGNvbnN0IHNlbGVjdGVkQ2xhc3NJZCA9IGdldENsYXNzSWRGcm9tU2VhcmNoUGFyYW1zKHNlYXJjaFBhcmFtcyk7XG4gIGNvbnN0IHNlbGVjdGVkQ2xhc3MgPSBnZXRUZWFjaGVyU3ViamVjdENsYXNzKHNlbGVjdGVkQ2xhc3NJZCk7XG4gIGNvbnN0IHRoZW1lID0gZ2V0U3ViamVjdEljb25UaGVtZShmZWF0dXJlS2V5KTtcbiAgY29uc3QgaGVhZGVySWNvbiA9IHJlbmRlckhlYWRlckljb25cbiAgICA/IHJlbmRlckhlYWRlckljb24oeyBJY29uLCB0aGVtZSB9KVxuICAgIDogKFxuICAgICAgPGRpdiBjbGFzc05hbWU9e2BmbGV4IGgtMTIgdy0xMiBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgcm91bmRlZC0yeGwgJHt0aGVtZS5iZ0NsYXNzfWB9PlxuICAgICAgICA8SWNvbiBjbGFzc05hbWU9e2BoLTYgdy02ICR7dGhlbWUuaWNvbkNsYXNzfWB9IC8+XG4gICAgICA8L2Rpdj5cbiAgICApO1xuXG4gIGlmICghc2VsZWN0ZWRDbGFzcykge1xuICAgIHJldHVybiAoXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cInctZnVsbCBvdmVyZmxvdy14LWhpZGRlbiBwLTQgc206cC02XCIgc3R5bGU9e3sgb3ZlcmZsb3dYOiBcImhpZGRlblwiIH19PlxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cIm14LWF1dG8gdy1mdWxsIG1heC13LTd4bFwiPlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCB3LWZ1bGwgZ2FwLTYgb3ZlcmZsb3cteC1oaWRkZW5cIj5cbiAgICAgICAgICAgIDxhc2lkZSBjbGFzc05hbWU9XCJ3LVsyMjBweF0gc2hyaW5rLTBcIj5cbiAgICAgICAgICAgICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwidGVhY2hlci1wYW5lbC1zdXJmYWNlIHJvdW5kZWQtMnhsIHAtM1wiPlxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwicHgtMiBwYi0zIHB0LTFcIj5cbiAgICAgICAgICAgICAgICAgIDxoMiBjbGFzc05hbWU9XCJ0ZXh0LXNtIGZvbnQtc2VtaWJvbGQgdGV4dC13aGl0ZVwiPkNsYXNzZXM8L2gyPlxuICAgICAgICAgICAgICAgIDwvZGl2PlxuXG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJzcGFjZS15LTJcIj5cbiAgICAgICAgICAgICAgICAgIHt0ZWFjaGVyU3ViamVjdENsYXNzZXMubWFwKCh0ZWFjaGVyQ2xhc3MpID0+IChcbiAgICAgICAgICAgICAgICAgICAgPGJ1dHRvblxuICAgICAgICAgICAgICAgICAgICAgIGtleT17dGVhY2hlckNsYXNzLmNsYXNzSWR9XG4gICAgICAgICAgICAgICAgICAgICAgdHlwZT1cImJ1dHRvblwiXG4gICAgICAgICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT5cbiAgICAgICAgICAgICAgICAgICAgICAgIG5hdmlnYXRlKHtcbiAgICAgICAgICAgICAgICAgICAgICAgICAgcGF0aG5hbWU6IGVudHJ5UGF0aCxcbiAgICAgICAgICAgICAgICAgICAgICAgICAgc2VhcmNoOiBidWlsZENsYXNzU2VhcmNoKHRlYWNoZXJDbGFzcy5jbGFzc0lkKSxcbiAgICAgICAgICAgICAgICAgICAgICAgIH0pXG4gICAgICAgICAgICAgICAgICAgICAgfVxuICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImdyb3VwIGZsZXggdy1mdWxsIGl0ZW1zLWNlbnRlciBnYXAtMyByb3VuZGVkLTJ4bCBib3JkZXIgYm9yZGVyLXdoaXRlLzEwIGJnLXdoaXRlLzUgcHgtNCBweS0zIHRleHQtbGVmdCB0ZXh0LXdoaXRlLzkwIHRyYW5zaXRpb24tYWxsIGR1cmF0aW9uLTIwMCBob3ZlcjotdHJhbnNsYXRlLXktWzFweF0gaG92ZXI6Ym9yZGVyLXdoaXRlLzIwIGhvdmVyOmJnLXdoaXRlLzIwIGhvdmVyOnNoYWRvdy1zbVwiXG4gICAgICAgICAgICAgICAgICAgID5cbiAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaC05IHctOSBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgcm91bmRlZC14bCBiZy1bdmFyKC0tc2lkZWJhci1pdGVtLWFjdGl2ZSldIHRleHQtW3ZhcigtLWFjY2VudC1wcmltYXJ5KV0gdHJhbnNpdGlvbi10cmFuc2Zvcm0gZHVyYXRpb24tMjAwIGdyb3VwLWhvdmVyOnNjYWxlLTEwNVwiPlxuICAgICAgICAgICAgICAgICAgICAgICAgPEdyYWR1YXRpb25DYXAgY2xhc3NOYW1lPVwiaC00IHctNFwiIC8+XG4gICAgICAgICAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwidGV4dC1zbSBmb250LW1lZGl1bVwiPnt0ZWFjaGVyQ2xhc3MuY2xhc3NMYWJlbH08L3NwYW4+XG4gICAgICAgICAgICAgICAgICAgIDwvYnV0dG9uPlxuICAgICAgICAgICAgICAgICAgKSl9XG4gICAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICAgIDwvc2VjdGlvbj5cbiAgICAgICAgICAgIDwvYXNpZGU+XG5cbiAgICAgICAgICAgIDxzZWN0aW9uIGNsYXNzTmFtZT1cIm1pbi13LTAgZmxleC0xIHNwYWNlLXktNFwiPlxuICAgICAgICAgICAgICA8aGVhZGVyIGNsYXNzTmFtZT1cInRlYWNoZXItcGFuZWwtc3VyZmFjZSByb3VuZGVkLTJ4bCBweC02IHB5LTVcIj5cbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGdhcC00XCI+XG4gICAgICAgICAgICAgICAgICB7aGVhZGVySWNvbn1cbiAgICAgICAgICAgICAgICAgIDxkaXY+XG4gICAgICAgICAgICAgICAgICAgIDxoMSBjbGFzc05hbWU9XCJ0ZXh0LTJ4bCBmb250LXNlbWlib2xkIHRleHQtd2hpdGVcIj57dGl0bGV9PC9oMT5cbiAgICAgICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPVwibXQtMSB0ZXh0LVt2YXIoLS10ZXh0LXNlY29uZGFyeSldXCI+e3N1YnRpdGxlfTwvcD5cbiAgICAgICAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgICA8L2hlYWRlcj5cblxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQgZ2FwLTQgbGc6Z3JpZC1jb2xzLTJcIj5cbiAgICAgICAgICAgICAgICA8c2VjdGlvbiBjbGFzc05hbWU9e2B0ZWFjaGVyLXBhbmVsLXN1cmZhY2Ugcm91bmRlZC0yeGwgcC02ICR7aW5mb0NhcmRDbGFzc05hbWV9YC50cmltKCl9PlxuICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLXN0YXJ0IGdhcC00XCI+XG4gICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBoLTEwIHctMTAgaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIHJvdW5kZWQteGwgYm9yZGVyIGJvcmRlci13aGl0ZS8xMCBiZy1ibHVlLTUwMC8yMCB0ZXh0LWJsdWUtNDAwIGJhY2tkcm9wLWJsdXJcIj5cbiAgICAgICAgICAgICAgICAgICAgICA8TGF5b3V0UGFuZWxMZWZ0IGNsYXNzTmFtZT1cImgtNSB3LTVcIiAvPlxuICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgICAgICAgPGRpdj5cbiAgICAgICAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9XCJ0ZXh0LXhzIGZvbnQtc2VtaWJvbGQgdXBwZXJjYXNlIHRyYWNraW5nLVswLjE4ZW1dIHRleHQtWyMxRUE4OTZdXCI+e3RpdGxlfSBFbnRyeTwvcD5cbiAgICAgICAgICAgICAgICAgICAgICA8aDIgY2xhc3NOYW1lPVwibXQtMiB0ZXh0LXhsIGZvbnQtc2VtaWJvbGQgdGV4dC1bdmFyKC0tdGV4dC1wcmltYXJ5KV1cIj5TdGFydCB3aXRoIGEgY2xhc3M8L2gyPlxuICAgICAgICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT1cIm10LTIgbWF4LXctMnhsIHRleHQtc20gdGV4dC1bdmFyKC0tdGV4dC1zZWNvbmRhcnkpXVwiPlxuICAgICAgICAgICAgICAgICAgICAgICAgU2VsZWN0IGEgc2VjdGlvbiBmcm9tIHRoZSBsZWZ0IHBhbmVsIHRvIG9wZW4gdGhlIHt0aXRsZS50b0xvd2VyQ2FzZSgpfSB3b3Jrc3BhY2UgZm9yIHRoYXQgY2xhc3MuXG4gICAgICAgICAgICAgICAgICAgICAgPC9wPlxuICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgICAgIDwvc2VjdGlvbj5cblxuICAgICAgICAgICAgICAgIDxzZWN0aW9uIGNsYXNzTmFtZT17YHRlYWNoZXItcGFuZWwtc3VyZmFjZSByb3VuZGVkLTJ4bCBwLTUgJHtpbmZvQ2FyZENsYXNzTmFtZX1gLnRyaW0oKX0+XG4gICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGdhcC0zXCI+XG4gICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBoLTEwIHctMTAgaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIHJvdW5kZWQteGwgYm9yZGVyIGJvcmRlci13aGl0ZS8xMCBiZy1wdXJwbGUtNTAwLzIwIHRleHQtcHVycGxlLTQwMCBiYWNrZHJvcC1ibHVyXCI+XG4gICAgICAgICAgICAgICAgICAgICAgPFNwYXJrbGVzIGNsYXNzTmFtZT1cImgtNCB3LTRcIiAvPlxuICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgICAgICAgPGgzIGNsYXNzTmFtZT1cImZvbnQtc2VtaWJvbGQgdGV4dC13aGl0ZVwiPldoYXQgaGFwcGVucyBuZXh0PC9oMz5cbiAgICAgICAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPVwibXQtMyB0ZXh0LXNtIHRleHQtW3ZhcigtLXRleHQtc2Vjb25kYXJ5KV1cIj5cbiAgICAgICAgICAgICAgICAgICAgQWZ0ZXIgeW91IGNob29zZSBhIGNsYXNzLCB0aGlzIHBhZ2UgbG9hZHMgdGhlIGN1cnJlbnQge3RpdGxlLnRvTG93ZXJDYXNlKCl9IHZpZXcgYW5kIGtlZXBzIHRoZSBjbGFzcyBpbiB0aGUgVVJMLlxuICAgICAgICAgICAgICAgICAgPC9wPlxuICAgICAgICAgICAgICAgIDwvc2VjdGlvbj5cblxuICAgICAgICAgICAgICAgIDxzZWN0aW9uIGNsYXNzTmFtZT17YHRlYWNoZXItcGFuZWwtc3VyZmFjZSByb3VuZGVkLTJ4bCBwLTUgJHtpbmZvQ2FyZENsYXNzTmFtZX1gLnRyaW0oKX0+XG4gICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGdhcC0zXCI+XG4gICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBoLTEwIHctMTAgaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIHJvdW5kZWQteGwgYm9yZGVyIGJvcmRlci13aGl0ZS8xMCBiZy1hbWJlci01MDAvMjAgdGV4dC1hbWJlci0zMDAgYmFja2Ryb3AtYmx1clwiPlxuICAgICAgICAgICAgICAgICAgICAgIDxHcmFkdWF0aW9uQ2FwIGNsYXNzTmFtZT1cImgtNCB3LTRcIiAvPlxuICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgICAgICAgPGgzIGNsYXNzTmFtZT1cImZvbnQtc2VtaWJvbGQgdGV4dC13aGl0ZVwiPkF2YWlsYWJsZSBzZWN0aW9uczwvaDM+XG4gICAgICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT1cIm10LTMgdGV4dC1zbSB0ZXh0LVt2YXIoLS10ZXh0LXNlY29uZGFyeSldXCI+UzFBLCBTM0EsIFM1QiwgUzZBLCBhbmQgUzZCIGFyZSBhdmFpbGFibGUgaW4gdGhpcyBjbGFzcy1zY29wZWQgdmlldy48L3A+XG4gICAgICAgICAgICAgICAgPC9zZWN0aW9uPlxuICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgIDwvc2VjdGlvbj5cbiAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgPC9kaXY+XG4gICAgICA8L2Rpdj5cbiAgICApO1xuICB9XG5cbiAgcmV0dXJuIDw+e2NoaWxkcmVuKHsgY2xhc3NJZDogc2VsZWN0ZWRDbGFzcy5jbGFzc0lkLCBjbGFzc0xhYmVsOiBzZWxlY3RlZENsYXNzLmNsYXNzTGFiZWwsIG9uQmFja1RvRW50cnk6ICgpID0+IG5hdmlnYXRlKGVudHJ5UGF0aCkgfSl9PC8+O1xufVxuIl0sImZpbGUiOiJDOi9lZHZhbmEvZnJvbnRlbmQvc3JjL2Rhc2hib2FyZC90ZWFjaGVyL3ZpZXdzL3NoYXJlZC9UZWFjaGVyRmVhdHVyZUNsYXNzRW50cnlHYXRlLnRzeCJ9

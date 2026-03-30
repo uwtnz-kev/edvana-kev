@@ -24,7 +24,7 @@ export function useAssignmentsWorkspaceState(classId: string) {
   const [search, setSearch] = useState(""); const [statusFilter, setStatusFilter] = useState<AssignmentStatusFilter>("all"); const [page, setPage] = useState(1); const [previewId, setPreviewId] = useState<string | null>(null);
   const normalizedClassId = classId.trim().toLowerCase();
   const classAssignments = useMemo(
-    () => assignments.filter((assignment) => assignment.classLabel.trim().toLowerCase() === normalizedClassId),
+    () => assignments.filter((assignment) => assignment.classId.trim().toLowerCase() === normalizedClassId || assignment.classLabel.trim().toLowerCase() === normalizedClassId),
     [assignments, normalizedClassId],
   );
   const scopedSubjects = useMemo(() => {
@@ -67,6 +67,47 @@ export function useAssignmentsWorkspaceState(classId: string) {
   const { pagedAssignments, totalPages } = getPagedAssignments(sortedAssignments, page);
   const stats = getAssignmentsStats(filteredAssignments);
 
+  useEffect(() => {
+    console.info("[AssignmentsWorkspace] scope", {
+      routeClassId: classId,
+      normalizedClassId,
+      selectedSubjectId,
+      selectedSubjectName,
+      search,
+      statusFilter,
+      assignmentsLength: assignments.length,
+      classAssignmentsLength: classAssignments.length,
+      subjectAssignmentsLength: subjectAssignments.length,
+      filteredAssignmentsLength: filteredAssignments.length,
+      sortedAssignmentsLength: sortedAssignments.length,
+      pagedAssignmentsLength: pagedAssignments.length,
+      classAssignments: classAssignments.map((assignment) => ({
+        id: assignment.id,
+        title: assignment.title,
+        classId: assignment.classId,
+        classLabel: assignment.classLabel,
+        subject: assignment.subject,
+        status: assignment.status,
+      })),
+      subjectAssignments: subjectAssignments.map((assignment) => ({
+        id: assignment.id,
+        title: assignment.title,
+        classId: assignment.classId,
+        classLabel: assignment.classLabel,
+        subject: assignment.subject,
+        status: assignment.status,
+      })),
+      pagedAssignments: pagedAssignments.map((assignment) => ({
+        id: assignment.id,
+        title: assignment.title,
+        classId: assignment.classId,
+        classLabel: assignment.classLabel,
+        subject: assignment.subject,
+        status: assignment.status,
+      })),
+    });
+  }, [assignments, classAssignments, classId, filteredAssignments, normalizedClassId, pagedAssignments, search, selectedSubjectId, selectedSubjectName, statusFilter, subjectAssignments, sortedAssignments]);
+
   useEffect(() => { if (page > totalPages) setPage(totalPages); }, [page, totalPages]);
 
   return {
@@ -85,3 +126,5 @@ export function useAssignmentsWorkspaceState(classId: string) {
     setStatusFilter: (value: AssignmentStatusFilter) => { setStatusFilter(value); setPage(1); },
   };
 }
+
+

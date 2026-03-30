@@ -1,5 +1,5 @@
 // State hook for subject modules loading, expansion, and route context.
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { getSubjectThemeById } from "@/dashboard/teacher/components/shared";
 import { useSubjectFiles } from "@/dashboard/teacher/components/subjects/files/subjectFilesStore";
@@ -12,7 +12,7 @@ import {
   updateSubjectModuleStatus,
   useSubjectModules,
 } from "@/dashboard/teacher/components/subjects/subjectModulesStore";
-import type { SubjectModulePayload } from "@/dashboard/teacher/components/subjects/store/subjectModulesTypes";
+import type { SubjectModuleItem, SubjectModulePayload } from "@/dashboard/teacher/components/subjects/store/subjectModulesTypes";
 import { appendClassIdToPath, getClassIdFromSearchParams } from "../subjectClassRouting";
 import { getSubjectName, getSubjectTitle, type SubjectModulesRouteState } from "./subjectModulesViewHelpers";
 
@@ -21,6 +21,24 @@ type PendingDeleteTarget =
   | { type: "module"; moduleId: string }
   | { type: "submodule"; moduleId: string; submoduleId: string }
   | null;
+
+function getModulesScrollContainer() {
+  return document.querySelector("main.teacher-content-surface");
+}
+
+function hasReachedScrollTop(container: HTMLElement, targetScrollTop: number) {
+  return Math.abs(container.scrollTop - targetScrollTop) <= 1;
+}
+
+function getSearchableText(module: SubjectModuleItem) {
+  return [
+    module.title,
+    module.description,
+    ...module.submodules.flatMap((submodule) => [submodule.title, submodule.description]),
+  ]
+    .join(" ")
+    .toLowerCase();
+}
 
 export function useSubjectModulesViewState() {
   const navigate = useNavigate();
@@ -34,28 +52,145 @@ export function useSubjectModulesViewState() {
   const subjectTitle = useMemo(() => getSubjectTitle(subjectId, routeState), [routeState, subjectId]);
   const modules = useSubjectModules(subjectId);
   const subjectFiles = useSubjectFiles(subjectId);
-  const visibleModules = useMemo(() => modules, [modules]);
-  const [expandedModuleId, setExpandedModuleId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const normalizedSearchQuery = useMemo(() => searchQuery.trim().toLowerCase(), [searchQuery]);
+  const isSearchActive = normalizedSearchQuery.length > 0;
+  const matchingModuleIds = useMemo(() => {
+    if (!isSearchActive) return new Set<string>();
+    return new Set(
+      modules
+        .filter((module) => getSearchableText(module).includes(normalizedSearchQuery))
+        .map((module) => module.id),
+    );
+  }, [isSearchActive, modules, normalizedSearchQuery]);
+  const visibleModules = useMemo(
+    () => (isSearchActive ? modules.filter((module) => matchingModuleIds.has(module.id)) : modules),
+    [isSearchActive, matchingModuleIds, modules],
+  );
+  const allModuleTitles = useMemo(() => modules.map((module) => module.title), [modules]);
+  const initialExpandedModuleId = routeState?.returnModuleId?.trim() || null;
+  const [expandedModuleId, setExpandedModuleId] = useState<string | null>(initialExpandedModuleId);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [pendingDeleteTarget, setPendingDeleteTarget] = useState<PendingDeleteTarget>(null);
+  const restoredScrollStateKeyRef = useRef<string | null>(null);
 
   useEffect(() => {
     setExpandedModuleId((current) => {
       if (!current) return null;
-      return visibleModules.some((module) => module.id === current) ? current : null;
+      return modules.some((module) => module.id === current) ? current : null;
     });
-  }, [visibleModules]);
+  }, [modules]);
+
+  useEffect(() => {
+    const returnModuleId = routeState?.returnModuleId?.trim();
+    if (!returnModuleId) return;
+    if (!modules.some((module) => module.id === returnModuleId)) return;
+
+    setExpandedModuleId(returnModuleId);
+  }, [modules, routeState?.returnModuleId]);
+
+  useEffect(() => {
+    const returnModuleId = routeState?.returnModuleId?.trim();
+    const returnScrollTop = routeState?.returnScrollTop;
+    if (!returnModuleId) return;
+    if (typeof returnScrollTop === "number") return;
+    if (expandedModuleId !== returnModuleId) return;
+
+    navigate(
+      {
+        pathname: location.pathname,
+        search: location.search,
+      },
+      {
+        replace: true,
+        state: {
+          restoreSubjectId: routeState?.restoreSubjectId,
+          subject: routeState?.subject ?? null,
+        },
+      },
+    );
+  }, [expandedModuleId, location.pathname, location.search, navigate, routeState?.restoreSubjectId, routeState?.returnModuleId, routeState?.returnScrollTop, routeState?.subject]);
+
+  useEffect(() => {
+    const returnModuleId = routeState?.returnModuleId?.trim();
+    const returnScrollTop = routeState?.returnScrollTop;
+    if (!returnModuleId) return;
+    if (typeof returnScrollTop !== "number") return;
+    if (expandedModuleId !== returnModuleId) return;
+
+    const restoreKey = `${location.key}:${returnModuleId}:${returnScrollTop}`;
+    if (restoredScrollStateKeyRef.current === restoreKey) return;
+
+    const scrollContainer = getModulesScrollContainer();
+    if (!(scrollContainer instanceof HTMLElement)) return;
+
+    let cancelled = false;
+
+    const restoreScroll = (attemptsRemaining: number) => {
+      requestAnimationFrame(() => {
+        if (cancelled) return;
+
+        scrollContainer.scrollTo({ top: returnScrollTop, behavior: "auto" });
+
+        if (!hasReachedScrollTop(scrollContainer, returnScrollTop) && attemptsRemaining > 0) {
+          restoreScroll(attemptsRemaining - 1);
+          return;
+        }
+
+        restoredScrollStateKeyRef.current = restoreKey;
+        navigate(
+          {
+            pathname: location.pathname,
+            search: location.search,
+          },
+          {
+            replace: true,
+            state: {
+              restoreSubjectId: routeState?.restoreSubjectId,
+              subject: routeState?.subject ?? null,
+            },
+          },
+        );
+      });
+    };
+
+    restoreScroll(4);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [expandedModuleId, location.key, location.pathname, location.search, navigate, routeState?.restoreSubjectId, routeState?.returnModuleId, routeState?.returnScrollTop, routeState?.subject]);
+
+  const openAttachedFile = (fileId: string, moduleId?: string, submoduleId?: string) => {
+    const scrollContainer = getModulesScrollContainer();
+    const returnScrollTop = scrollContainer instanceof HTMLElement ? scrollContainer.scrollTop : undefined;
+    navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/files/${fileId}`, classId), {
+      state: {
+        from: "module",
+        moduleId,
+        restoreSubjectId: subjectId,
+        returnScrollTop,
+        subject: routeState?.subject ?? null,
+        submoduleId,
+      },
+    });
+  };
 
   return {
     expandedModuleId,
     routeState,
     subjectId,
     classId,
+    searchQuery,
+    setSearchQuery,
+    isSearchActive,
+    isModuleExpanded: (moduleId: string) => (isSearchActive ? matchingModuleIds.has(moduleId) : expandedModuleId === moduleId),
     subjectName,
     subjectTitle,
     subjectFiles,
     theme,
     visibleModules,
+    allModuleTitles,
     closeDeleteConfirm: () => {
       setDeleteConfirmOpen(false);
       setPendingDeleteTarget(null);
@@ -79,21 +214,23 @@ export function useSubjectModulesViewState() {
       pendingDeleteTarget?.type === "module" ? "Delete module?" : "Delete submodule?",
     goBack: () => navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}`, classId)),
     goToSubjectsSelection: () => navigate(appendClassIdToPath("/dashboard/teacher/subjects", classId)),
-    openAttachedFile: (fileId: string, moduleId?: string, submoduleId?: string) =>
-      navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/files/${fileId}`, classId), {
-        state: {
-          from: "module",
-          moduleId,
-          restoreSubjectId: subjectId,
-          subject: routeState?.subject ?? null,
-          submoduleId,
-        },
-      }),
+    openAttachedFile,
     openModule: (moduleId: string) =>
       navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/modules/${moduleId}`, classId), {
         state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null },
       }),
-    openSubmodule: (moduleId: string, submoduleId: string) => navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/modules/${moduleId}/submodules/${submoduleId}`, classId), { state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null } }),
+    openSubmodule: (moduleId: string, submoduleId: string) => {
+      const scrollContainer = getModulesScrollContainer();
+      const returnScrollTop = scrollContainer instanceof HTMLElement ? scrollContainer.scrollTop : undefined;
+      navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/modules/${moduleId}/submodules/${submoduleId}`, classId), {
+        state: {
+          restoreSubjectId: subjectId,
+          returnModuleId: moduleId,
+          returnScrollTop,
+          subject: routeState?.subject ?? null,
+        },
+      });
+    },
     publishModule: (moduleId: string) => updateSubjectModuleStatus(subjectId, moduleId, "published"),
     reorderModules: (orderedModuleIds: string[]) => reorderSubjectModules(subjectId, orderedModuleIds),
     reorderSubmodules: (moduleId: string, orderedSubmoduleIds: string[]) => reorderSubjectSubmodules(subjectId, moduleId, orderedSubmoduleIds),
@@ -105,7 +242,10 @@ export function useSubjectModulesViewState() {
       setPendingDeleteTarget({ type: "submodule", moduleId, submoduleId });
       setDeleteConfirmOpen(true);
     },
-    toggleModule: (moduleId: string) => setExpandedModuleId((current) => (current === moduleId ? null : moduleId)),
+    toggleModule: (moduleId: string) => {
+      if (isSearchActive) return;
+      setExpandedModuleId((current) => (current === moduleId ? null : moduleId));
+    },
     updateModule: (moduleId: string, payload: SubjectModulePayload) => updateSubjectModule(subjectId, moduleId, payload),
   };
 }

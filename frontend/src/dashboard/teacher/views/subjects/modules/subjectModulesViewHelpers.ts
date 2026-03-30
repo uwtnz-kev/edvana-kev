@@ -4,6 +4,8 @@ import type { TeacherSubjectNavData } from "@/dashboard/teacher/components/subje
 import type { SubjectModuleItem } from "@/dashboard/teacher/components/subjects/store/subjectModulesTypes";
 
 export type SubjectModulesRouteState = {
+  returnModuleId?: string;
+  returnScrollTop?: number;
   subject?: TeacherSubjectNavData | null;
   restoreSubjectId?: string;
 };
@@ -30,4 +32,3 @@ export function getFallbackModules(modules: SubjectModuleItem[]) {
     submodules: [{ id: "overview", title: "Overview", description: "Initial module overview and lesson goals.", content: "A starter content block for this subject module.", attachedFileIds: [], summary: "A starter content block for this subject module.", order: 0 }],
   }];
 }
-

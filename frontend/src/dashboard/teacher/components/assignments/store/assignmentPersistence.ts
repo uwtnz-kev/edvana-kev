@@ -39,6 +39,17 @@ function mergeSeedAssignments(items: TeacherAssignment[]) {
 
 export function saveAssignments(items: TeacherAssignment[]): TeacherAssignment[] {
   const next = cloneAssignments(items);
+  console.info("[AssignmentsStore] saveAssignments", {
+    length: next.length,
+    firstFive: next.slice(0, 5).map((item) => ({
+      id: item.id,
+      title: item.title,
+      classId: item.classId,
+      classLabel: item.classLabel,
+      subject: item.subject,
+      status: item.status,
+    })),
+  });
   writeStoredJson(ASSIGNMENTS2_STORAGE_KEY, next);
   return next;
 }
@@ -51,10 +62,34 @@ export function loadAssignments(): TeacherAssignment[] {
     const merged = mergeSeedAssignments(parsed);
     const shouldResave = merged.length !== parsed.length || merged.some((item, index) => item.status !== parsed[index]?.status);
     if (shouldResave) saveAssignments(merged);
+    console.info("[AssignmentsStore] loadAssignments parsed", {
+      parsedLength: parsed.length,
+      mergedLength: merged.length,
+      firstFive: merged.slice(0, 5).map((item) => ({
+        id: item.id,
+        title: item.title,
+        classId: item.classId,
+        classLabel: item.classLabel,
+        subject: item.subject,
+        status: item.status,
+      })),
+    });
     return cloneAssignments(merged);
   }
   const seeded = cloneAssignments(seedAssignments);
   saveAssignments(seeded);
+  console.info("[AssignmentsStore] loadAssignments seeded", {
+    seededLength: seeded.length,
+    firstFive: seeded.slice(0, 5).map((item) => ({
+      id: item.id,
+      title: item.title,
+      classId: item.classId,
+      classLabel: item.classLabel,
+      subject: item.subject,
+      status: item.status,
+    })),
+  });
   return seeded;
 }
+
 

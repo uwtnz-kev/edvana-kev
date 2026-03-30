@@ -41,7 +41,7 @@ export default function SupportForm() {
     if (file) {
       // Validate file type and size
       const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
-      const maxSize = 10 * 1024 * 1024; // 10MB
+      const maxSize = 17 * 1024 * 1024; // 17MB
 
       if (!allowedTypes.includes(file.type)) {
         toast({
@@ -55,7 +55,7 @@ export default function SupportForm() {
       if (file.size > maxSize) {
         toast({
           title: "File Too Large",
-          description: "Please upload a file smaller than 10MB.",
+          description: "Please upload a file smaller than 17MB.",
           variant: "destructive",
         });
         return;
@@ -239,3 +239,4 @@ export default function SupportForm() {
     </div>
   );
 }
+

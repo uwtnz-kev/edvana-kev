@@ -33,7 +33,7 @@ export function TeacherAssignmentsHeader({
   return (
     <header className="teacher-panel-surface rounded-2xl px-6 py-5">
       <div className={`flex flex-col sm:flex-row sm:items-center gap-4 ${showCreate ? "sm:justify-between" : "sm:justify-start"}`}>
-        <div className="flex items-center gap-4">
+        <div className="flex min-w-0 items-center gap-4">
           {showBack ? (
             <Button
               type="button"
@@ -49,9 +49,9 @@ export function TeacherAssignmentsHeader({
             <ClipboardList className={`h-6 w-6 ${theme.iconClass}`} />
           </div>
 
-          <div>
+          <div className="min-w-0 flex-1">
             <h1 className="text-2xl font-semibold text-white">{title}</h1>
-            <p className="mt-1 text-[var(--text-secondary)]">{subtitle}</p>
+            <p className="mt-1 truncate text-[var(--text-secondary)]" title={subtitle}>{subtitle}</p>
           </div>
         </div>
 

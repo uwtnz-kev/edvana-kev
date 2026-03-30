@@ -1,0 +1,288 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=a95dedd6"; const Fragment = __vite__cjsImport0_react_jsxDevRuntime["Fragment"]; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=a95dedd6"; const useState = __vite__cjsImport3_react["useState"];
+import { Brain, Send } from "/node_modules/.vite/deps/lucide-react.js?v=a95dedd6";
+export function QuizCreatorForm({ onQuizGenerated }) {
+  _s();
+  const [formData, setFormData] = useState({
+    topic: "",
+    type: "MCQ",
+    questionCount: 5
+  });
+  const [isGenerating, setIsGenerating] = useState(false);
+  const generateMockQuestions = (type, count) => {
+    const questions = [];
+    for (let i = 0; i < count; i++) {
+      const questionType = type === "Mixed" ? i % 2 === 0 ? "MCQ" : "Open" : type;
+      if (questionType === "MCQ") {
+        questions.push({
+          id: `q${i + 1}`,
+          type: "MCQ",
+          question: `Sample MCQ question ${i + 1} about ${formData.topic}?`,
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correctAnswer: "Option A"
+        });
+      } else {
+        questions.push({
+          id: `q${i + 1}`,
+          type: "Open",
+          question: `Explain or discuss ${formData.topic} in detail (Question ${i + 1}).`
+        });
+      }
+    }
+    return questions;
+  };
+  const handleGenerate = async (e) => {
+    e.preventDefault();
+    if (!formData.topic.trim()) return;
+    setIsGenerating(true);
+    await new Promise((resolve) => setTimeout(resolve, 2e3));
+    const newQuiz = {
+      id: `quiz-${Date.now()}`,
+      title: formData.topic,
+      type: formData.type,
+      questions: generateMockQuestions(formData.type, formData.questionCount),
+      createdAt: (/* @__PURE__ */ new Date()).toISOString(),
+      completed: false,
+      totalQuestions: formData.questionCount
+    };
+    onQuizGenerated(newQuiz);
+    setIsGenerating(false);
+    setFormData({ topic: "", type: "MCQ", questionCount: 5 });
+  };
+  return /* @__PURE__ */ jsxDEV("div", { className: "bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6", children: [
+    /* @__PURE__ */ jsxDEV("div", { className: "flex items-center space-x-3 mb-6", children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "w-10 h-10 bg-gradient-to-br from-[#1EA896] to-[#1EA896]/80 rounded-lg flex items-center justify-center", children: /* @__PURE__ */ jsxDEV(Brain, { className: "h-5 w-5 text-white" }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+        lineNumber: 115,
+        columnNumber: 11
+      }, this) }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+        lineNumber: 114,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { children: [
+        /* @__PURE__ */ jsxDEV("h2", { className: "text-xl font-bold text-white", children: "Quiz Generator" }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+          lineNumber: 118,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("p", { className: "text-white/60 text-sm", children: "Create custom quizzes on any topic" }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+          lineNumber: 119,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+        lineNumber: 117,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+      lineNumber: 113,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("form", { onSubmit: handleGenerate, className: "space-y-4", children: [
+      /* @__PURE__ */ jsxDEV("div", { children: [
+        /* @__PURE__ */ jsxDEV("label", { className: "block text-white/80 text-sm font-medium mb-2", children: "Topic or Subject" }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+          lineNumber: 125,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(
+          "textarea",
+          {
+            value: formData.topic,
+            onChange: (e) => setFormData((prev) => ({ ...prev, topic: e.target.value })),
+            placeholder: "Enter the topic you want to be quizzed on...",
+            rows: 3,
+            className: "w-full bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/50 focus:border-[#1EA896]/50 focus:ring-2 focus:ring-[#1EA896]/20 transition-all duration-200 outline-none resize-vertical",
+            required: true
+          },
+          void 0,
+          false,
+          {
+            fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+            lineNumber: 128,
+            columnNumber: 11
+          },
+          this
+        )
+      ] }, void 0, true, {
+        fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+        lineNumber: 124,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4", children: [
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("label", { className: "block text-white/80 text-sm font-medium mb-2", children: "Quiz Type" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+            lineNumber: 140,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "select",
+            {
+              value: formData.type,
+              onChange: (e) => setFormData((prev) => ({ ...prev, type: e.target.value })),
+              className: "w-full bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#1EA896]/50 focus:ring-2 focus:ring-[#1EA896]/20 transition-all duration-200 outline-none",
+              children: [
+                /* @__PURE__ */ jsxDEV("option", { value: "MCQ", className: "bg-black text-white", children: "Multiple Choice (MCQ)" }, void 0, false, {
+                  fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+                  lineNumber: 148,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV("option", { value: "Open", className: "bg-black text-white", children: "Open-ended Questions" }, void 0, false, {
+                  fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+                  lineNumber: 149,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV("option", { value: "Mixed", className: "bg-black text-white", children: "Mixed (MCQ + Open)" }, void 0, false, {
+                  fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+                  lineNumber: 150,
+                  columnNumber: 15
+                }, this)
+              ]
+            },
+            void 0,
+            true,
+            {
+              fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+              lineNumber: 143,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+          lineNumber: 139,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("label", { className: "block text-white/80 text-sm font-medium mb-2", children: "Number of Questions" }, void 0, false, {
+            fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+            lineNumber: 155,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              type: "number",
+              min: "1",
+              max: "20",
+              value: formData.questionCount,
+              onChange: (e) => setFormData((prev) => ({ ...prev, questionCount: parseInt(e.target.value) || 5 })),
+              className: "w-full bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#1EA896]/50 focus:ring-2 focus:ring-[#1EA896]/20 transition-all duration-200 outline-none"
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+              lineNumber: 158,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+          lineNumber: 154,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+        lineNumber: 138,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(
+        "button",
+        {
+          type: "submit",
+          disabled: isGenerating || !formData.topic.trim(),
+          className: "w-full bg-gradient-to-r from-[#FF715B] to-[#FF715B]/80 text-white font-semibold py-3 px-6 rounded-xl hover:shadow-lg hover:shadow-[#FF715B]/25 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2",
+          children: isGenerating ? /* @__PURE__ */ jsxDEV(Fragment, { children: [
+            /* @__PURE__ */ jsxDEV("div", { className: "w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+              lineNumber: 176,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV("span", { children: "Generating Quiz..." }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+              lineNumber: 177,
+              columnNumber: 15
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+            lineNumber: 175,
+            columnNumber: 11
+          }, this) : /* @__PURE__ */ jsxDEV(Fragment, { children: [
+            /* @__PURE__ */ jsxDEV(Send, { className: "h-4 w-4" }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+              lineNumber: 181,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV("span", { children: "Generate Quiz" }, void 0, false, {
+              fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+              lineNumber: 182,
+              columnNumber: 15
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+            lineNumber: 180,
+            columnNumber: 11
+          }, this)
+        },
+        void 0,
+        false,
+        {
+          fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+          lineNumber: 169,
+          columnNumber: 9
+        },
+        this
+      )
+    ] }, void 0, true, {
+      fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+      lineNumber: 123,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx",
+    lineNumber: 112,
+    columnNumber: 5
+  }, this);
+}
+_s(QuizCreatorForm, "2DWqOJJH3VL6usUH/Bvzme2eYpo=");
+_c = QuizCreatorForm;
+var _c;
+$RefreshReg$(_c, "QuizCreatorForm");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/edvana/frontend/src/dashboard/student/components/ai-tutor/quiz-generator/QuizCreatorForm.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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QTtBQUFBO0FBQUE7QUFBQSxtQkFBbUI7QUFBQSxlQUZyQjtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUdBO0FBQUE7QUFBQSxRQWRKO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSxNQWdCQTtBQUFBLFNBOURGO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0ErREE7QUFBQSxPQTFFRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBMkVBO0FBRUo7QUFBQ04sR0F4SWVGLGlCQUFlO0FBQUF1QyxLQUFmdkM7QUFBZSxJQUFBdUM7QUFBQUMsYUFBQUQsSUFBQSIsIm5hbWVzIjpbInVzZVN0YXRlIiwiQnJhaW4iLCJTZW5kIiwiUXVpekNyZWF0b3JGb3JtIiwib25RdWl6R2VuZXJhdGVkIiwiX3MiLCJmb3JtRGF0YSIsInNldEZvcm1EYXRhIiwidG9waWMiLCJ0eXBlIiwicXVlc3Rpb25Db3VudCIsImlzR2VuZXJhdGluZyIsInNldElzR2VuZXJhdGluZyIsImdlbmVyYXRlTW9ja1F1ZXN0aW9ucyIsImNvdW50IiwicXVlc3Rpb25zIiwiaSIsInF1ZXN0aW9uVHlwZSIsInB1c2giLCJpZCIsInF1ZXN0aW9uIiwib3B0aW9ucyIsImNvcnJlY3RBbnN3ZXIiLCJoYW5kbGVHZW5lcmF0ZSIsImUiLCJwcmV2ZW50RGVmYXVsdCIsInRyaW0iLCJQcm9taXNlIiwicmVzb2x2ZSIsInNldFRpbWVvdXQiLCJuZXdRdWl6IiwiRGF0ZSIsIm5vdyIsInRpdGxlIiwiY3JlYXRlZEF0IiwidG9JU09TdHJpbmciLCJjb21wbGV0ZWQiLCJ0b3RhbFF1ZXN0aW9ucyIsInByZXYiLCJ0YXJnZXQiLCJ2YWx1ZSIsInBhcnNlSW50IiwiX2MiLCIkUmVmcmVzaFJlZyQiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiUXVpekNyZWF0b3JGb3JtLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyB1c2VTdGF0ZSB9IGZyb20gXCJyZWFjdFwiO1xuaW1wb3J0IHsgQnJhaW4sIFNlbmQgfSBmcm9tIFwibHVjaWRlLXJlYWN0XCI7XG5cbmludGVyZmFjZSBRdWl6Rm9ybURhdGEge1xuICB0b3BpYzogc3RyaW5nO1xuICB0eXBlOiBcIk1DUVwiIHwgXCJPcGVuXCIgfCBcIk1peGVkXCI7XG4gIHF1ZXN0aW9uQ291bnQ6IG51bWJlcjtcbn1cblxuaW50ZXJmYWNlIFF1aXoge1xuICBpZDogc3RyaW5nO1xuICB0aXRsZTogc3RyaW5nO1xuICB0eXBlOiBcIk1DUVwiIHwgXCJPcGVuXCIgfCBcIk1peGVkXCI7XG4gIHF1ZXN0aW9uczogUXVlc3Rpb25bXTtcbiAgY3JlYXRlZEF0OiBzdHJpbmc7XG4gIGNvbXBsZXRlZD86IGJvb2xlYW47XG4gIHNjb3JlPzogbnVtYmVyO1xuICB0b3RhbFF1ZXN0aW9uczogbnVtYmVyO1xufVxuXG5pbnRlcmZhY2UgUXVlc3Rpb24ge1xuICBpZDogc3RyaW5nO1xuICB0eXBlOiBcIk1DUVwiIHwgXCJPcGVuXCI7XG4gIHF1ZXN0aW9uOiBzdHJpbmc7XG4gIG9wdGlvbnM/OiBzdHJpbmdbXTtcbiAgY29ycmVjdEFuc3dlcj86IHN0cmluZztcbiAgdXNlckFuc3dlcj86IHN0cmluZztcbn1cblxuaW50ZXJmYWNlIFF1aXpDcmVhdG9yRm9ybVByb3BzIHtcbiAgb25RdWl6R2VuZXJhdGVkOiAocXVpejogUXVpeikgPT4gdm9pZDtcbn1cblxuZXhwb3J0IGZ1bmN0aW9uIFF1aXpDcmVhdG9yRm9ybSh7IG9uUXVpekdlbmVyYXRlZCB9OiBRdWl6Q3JlYXRvckZvcm1Qcm9wcykge1xuICBjb25zdCBbZm9ybURhdGEsIHNldEZvcm1EYXRhXSA9IHVzZVN0YXRlPFF1aXpGb3JtRGF0YT4oe1xuICAgIHRvcGljOiBcIlwiLFxuICAgIHR5cGU6IFwiTUNRXCIsXG4gICAgcXVlc3Rpb25Db3VudDogNVxuICB9KTtcbiAgY29uc3QgW2lzR2VuZXJhdGluZywgc2V0SXNHZW5lcmF0aW5nXSA9IHVzZVN0YXRlKGZhbHNlKTtcblxuICBjb25zdCBnZW5lcmF0ZU1vY2tRdWVzdGlvbnMgPSAodHlwZTogXCJNQ1FcIiB8IFwiT3BlblwiIHwgXCJNaXhlZFwiLCBjb3VudDogbnVtYmVyKTogUXVlc3Rpb25bXSA9PiB7XG4gICAgY29uc3QgcXVlc3Rpb25zOiBRdWVzdGlvbltdID0gW107XG4gICAgXG4gICAgZm9yIChsZXQgaSA9IDA7IGkgPCBjb3VudDsgaSsrKSB7XG4gICAgICBjb25zdCBxdWVzdGlvblR5cGUgPSB0eXBlID09PSBcIk1peGVkXCIgPyAoaSAlIDIgPT09IDAgPyBcIk1DUVwiIDogXCJPcGVuXCIpIDogdHlwZTtcbiAgICAgIFxuICAgICAgaWYgKHF1ZXN0aW9uVHlwZSA9PT0gXCJNQ1FcIikge1xuICAgICAgICBxdWVzdGlvbnMucHVzaCh7XG4gICAgICAgICAgaWQ6IGBxJHtpICsgMX1gLFxuICAgICAgICAgIHR5cGU6IFwiTUNRXCIsXG4gICAgICAgICAgcXVlc3Rpb246IGBTYW1wbGUgTUNRIHF1ZXN0aW9uICR7aSArIDF9IGFib3V0ICR7Zm9ybURhdGEudG9waWN9P2AsXG4gICAgICAgICAgb3B0aW9uczogW1wiT3B0aW9uIEFcIiwgXCJPcHRpb24gQlwiLCBcIk9wdGlvbiBDXCIsIFwiT3B0aW9uIERcIl0sXG4gICAgICAgICAgY29ycmVjdEFuc3dlcjogXCJPcHRpb24gQVwiXG4gICAgICAgIH0pO1xuICAgICAgfSBlbHNlIHtcbiAgICAgICAgcXVlc3Rpb25zLnB1c2goe1xuICAgICAgICAgIGlkOiBgcSR7aSArIDF9YCxcbiAgICAgICAgICB0eXBlOiBcIk9wZW5cIixcbiAgICAgICAgICBxdWVzdGlvbjogYEV4cGxhaW4gb3IgZGlzY3VzcyAke2Zvcm1EYXRhLnRvcGljfSBpbiBkZXRhaWwgKFF1ZXN0aW9uICR7aSArIDF9KS5gXG4gICAgICAgIH0pO1xuICAgICAgfVxuICAgIH1cbiAgICBcbiAgICByZXR1cm4gcXVlc3Rpb25zO1xuICB9O1xuXG4gIGNvbnN0IGhhbmRsZUdlbmVyYXRlID0gYXN5bmMgKGU6IFJlYWN0LkZvcm1FdmVudCkgPT4ge1xuICAgIGUucHJldmVudERlZmF1bHQoKTtcbiAgICBpZiAoIWZvcm1EYXRhLnRvcGljLnRyaW0oKSkgcmV0dXJuO1xuXG4gICAgc2V0SXNHZW5lcmF0aW5nKHRydWUpO1xuICAgIFxuICAgIC8vIFNpbXVsYXRlIEFQSSBjYWxsXG4gICAgYXdhaXQgbmV3IFByb21pc2UocmVzb2x2ZSA9PiBzZXRUaW1lb3V0KHJlc29sdmUsIDIwMDApKTtcbiAgICBcbiAgICBjb25zdCBuZXdRdWl6OiBRdWl6ID0ge1xuICAgICAgaWQ6IGBxdWl6LSR7RGF0ZS5ub3coKX1gLFxuICAgICAgdGl0bGU6IGZvcm1EYXRhLnRvcGljLFxuICAgICAgdHlwZTogZm9ybURhdGEudHlwZSxcbiAgICAgIHF1ZXN0aW9uczogZ2VuZXJhdGVNb2NrUXVlc3Rpb25zKGZvcm1EYXRhLnR5cGUsIGZvcm1EYXRhLnF1ZXN0aW9uQ291bnQpLFxuICAgICAgY3JlYXRlZEF0OiBuZXcgRGF0ZSgpLnRvSVNPU3RyaW5nKCksXG4gICAgICBjb21wbGV0ZWQ6IGZhbHNlLFxuICAgICAgdG90YWxRdWVzdGlvbnM6IGZvcm1EYXRhLnF1ZXN0aW9uQ291bnRcbiAgICB9O1xuXG4gICAgb25RdWl6R2VuZXJhdGVkKG5ld1F1aXopO1xuICAgIHNldElzR2VuZXJhdGluZyhmYWxzZSk7XG4gICAgc2V0Rm9ybURhdGEoeyB0b3BpYzogXCJcIiwgdHlwZTogXCJNQ1FcIiwgcXVlc3Rpb25Db3VudDogNSB9KTtcbiAgfTtcblxuICByZXR1cm4gKFxuICAgIDxkaXYgY2xhc3NOYW1lPVwiYmctd2hpdGUvNSBiYWNrZHJvcC1ibHVyLWxnIGJvcmRlciBib3JkZXItd2hpdGUvMTAgcm91bmRlZC0yeGwgcC02XCI+XG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIHNwYWNlLXgtMyBtYi02XCI+XG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwidy0xMCBoLTEwIGJnLWdyYWRpZW50LXRvLWJyIGZyb20tWyMxRUE4OTZdIHRvLVsjMUVBODk2XS84MCByb3VuZGVkLWxnIGZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyXCI+XG4gICAgICAgICAgPEJyYWluIGNsYXNzTmFtZT1cImgtNSB3LTUgdGV4dC13aGl0ZVwiIC8+XG4gICAgICAgIDwvZGl2PlxuICAgICAgICA8ZGl2PlxuICAgICAgICAgIDxoMiBjbGFzc05hbWU9XCJ0ZXh0LXhsIGZvbnQtYm9sZCB0ZXh0LXdoaXRlXCI+UXVpeiBHZW5lcmF0b3I8L2gyPlxuICAgICAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQtd2hpdGUvNjAgdGV4dC1zbVwiPkNyZWF0ZSBjdXN0b20gcXVpenplcyBvbiBhbnkgdG9waWM8L3A+XG4gICAgICAgIDwvZGl2PlxuICAgICAgPC9kaXY+XG5cbiAgICAgIDxmb3JtIG9uU3VibWl0PXtoYW5kbGVHZW5lcmF0ZX0gY2xhc3NOYW1lPVwic3BhY2UteS00XCI+XG4gICAgICAgIDxkaXY+XG4gICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cImJsb2NrIHRleHQtd2hpdGUvODAgdGV4dC1zbSBmb250LW1lZGl1bSBtYi0yXCI+XG4gICAgICAgICAgICBUb3BpYyBvciBTdWJqZWN0XG4gICAgICAgICAgPC9sYWJlbD5cbiAgICAgICAgICA8dGV4dGFyZWFcbiAgICAgICAgICAgIHZhbHVlPXtmb3JtRGF0YS50b3BpY31cbiAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0Rm9ybURhdGEocHJldiA9PiAoeyAuLi5wcmV2LCB0b3BpYzogZS50YXJnZXQudmFsdWUgfSkpfVxuICAgICAgICAgICAgcGxhY2Vob2xkZXI9XCJFbnRlciB0aGUgdG9waWMgeW91IHdhbnQgdG8gYmUgcXVpenplZCBvbi4uLlwiXG4gICAgICAgICAgICByb3dzPXszfVxuICAgICAgICAgICAgY2xhc3NOYW1lPVwidy1mdWxsIGJnLXdoaXRlLzUgYmFja2Ryb3AtYmx1ci1sZyBib3JkZXIgYm9yZGVyLXdoaXRlLzEwIHJvdW5kZWQteGwgcHgtNCBweS0zIHRleHQtd2hpdGUgcGxhY2Vob2xkZXItd2hpdGUvNTAgZm9jdXM6Ym9yZGVyLVsjMUVBODk2XS81MCBmb2N1czpyaW5nLTIgZm9jdXM6cmluZy1bIzFFQTg5Nl0vMjAgdHJhbnNpdGlvbi1hbGwgZHVyYXRpb24tMjAwIG91dGxpbmUtbm9uZSByZXNpemUtdmVydGljYWxcIlxuICAgICAgICAgICAgcmVxdWlyZWRcbiAgICAgICAgICAvPlxuICAgICAgICA8L2Rpdj5cblxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQgZ3JpZC1jb2xzLTEgc206Z3JpZC1jb2xzLTIgZ2FwLTRcIj5cbiAgICAgICAgICA8ZGl2PlxuICAgICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cImJsb2NrIHRleHQtd2hpdGUvODAgdGV4dC1zbSBmb250LW1lZGl1bSBtYi0yXCI+XG4gICAgICAgICAgICAgIFF1aXogVHlwZVxuICAgICAgICAgICAgPC9sYWJlbD5cbiAgICAgICAgICAgIDxzZWxlY3RcbiAgICAgICAgICAgICAgdmFsdWU9e2Zvcm1EYXRhLnR5cGV9XG4gICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0Rm9ybURhdGEocHJldiA9PiAoeyAuLi5wcmV2LCB0eXBlOiBlLnRhcmdldC52YWx1ZSBhcyBhbnkgfSkpfVxuICAgICAgICAgICAgICBjbGFzc05hbWU9XCJ3LWZ1bGwgYmctd2hpdGUvNSBiYWNrZHJvcC1ibHVyLWxnIGJvcmRlciBib3JkZXItd2hpdGUvMTAgcm91bmRlZC14bCBweC00IHB5LTMgdGV4dC13aGl0ZSBmb2N1czpib3JkZXItWyMxRUE4OTZdLzUwIGZvY3VzOnJpbmctMiBmb2N1czpyaW5nLVsjMUVBODk2XS8yMCB0cmFuc2l0aW9uLWFsbCBkdXJhdGlvbi0yMDAgb3V0bGluZS1ub25lXCJcbiAgICAgICAgICAgID5cbiAgICAgICAgICAgICAgPG9wdGlvbiB2YWx1ZT1cIk1DUVwiIGNsYXNzTmFtZT1cImJnLWJsYWNrIHRleHQtd2hpdGVcIj5NdWx0aXBsZSBDaG9pY2UgKE1DUSk8L29wdGlvbj5cbiAgICAgICAgICAgICAgPG9wdGlvbiB2YWx1ZT1cIk9wZW5cIiBjbGFzc05hbWU9XCJiZy1ibGFjayB0ZXh0LXdoaXRlXCI+T3Blbi1lbmRlZCBRdWVzdGlvbnM8L29wdGlvbj5cbiAgICAgICAgICAgICAgPG9wdGlvbiB2YWx1ZT1cIk1peGVkXCIgY2xhc3NOYW1lPVwiYmctYmxhY2sgdGV4dC13aGl0ZVwiPk1peGVkIChNQ1EgKyBPcGVuKTwvb3B0aW9uPlxuICAgICAgICAgICAgPC9zZWxlY3Q+XG4gICAgICAgICAgPC9kaXY+XG5cbiAgICAgICAgICA8ZGl2PlxuICAgICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cImJsb2NrIHRleHQtd2hpdGUvODAgdGV4dC1zbSBmb250LW1lZGl1bSBtYi0yXCI+XG4gICAgICAgICAgICAgIE51bWJlciBvZiBRdWVzdGlvbnNcbiAgICAgICAgICAgIDwvbGFiZWw+XG4gICAgICAgICAgICA8aW5wdXRcbiAgICAgICAgICAgICAgdHlwZT1cIm51bWJlclwiXG4gICAgICAgICAgICAgIG1pbj1cIjFcIlxuICAgICAgICAgICAgICBtYXg9XCIyMFwiXG4gICAgICAgICAgICAgIHZhbHVlPXtmb3JtRGF0YS5xdWVzdGlvbkNvdW50fVxuICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldEZvcm1EYXRhKHByZXYgPT4gKHsgLi4ucHJldiwgcXVlc3Rpb25Db3VudDogcGFyc2VJbnQoZS50YXJnZXQudmFsdWUpIHx8IDUgfSkpfVxuICAgICAgICAgICAgICBjbGFzc05hbWU9XCJ3LWZ1bGwgYmctd2hpdGUvNSBiYWNrZHJvcC1ibHVyLWxnIGJvcmRlciBib3JkZXItd2hpdGUvMTAgcm91bmRlZC14bCBweC00IHB5LTMgdGV4dC13aGl0ZSBmb2N1czpib3JkZXItWyMxRUE4OTZdLzUwIGZvY3VzOnJpbmctMiBmb2N1czpyaW5nLVsjMUVBODk2XS8yMCB0cmFuc2l0aW9uLWFsbCBkdXJhdGlvbi0yMDAgb3V0bGluZS1ub25lXCJcbiAgICAgICAgICAgIC8+XG4gICAgICAgICAgPC9kaXY+XG4gICAgICAgIDwvZGl2PlxuXG4gICAgICAgIDxidXR0b25cbiAgICAgICAgICB0eXBlPVwic3VibWl0XCJcbiAgICAgICAgICBkaXNhYmxlZD17aXNHZW5lcmF0aW5nIHx8ICFmb3JtRGF0YS50b3BpYy50cmltKCl9XG4gICAgICAgICAgY2xhc3NOYW1lPVwidy1mdWxsIGJnLWdyYWRpZW50LXRvLXIgZnJvbS1bI0ZGNzE1Ql0gdG8tWyNGRjcxNUJdLzgwIHRleHQtd2hpdGUgZm9udC1zZW1pYm9sZCBweS0zIHB4LTYgcm91bmRlZC14bCBob3ZlcjpzaGFkb3ctbGcgaG92ZXI6c2hhZG93LVsjRkY3MTVCXS8yNSB0cmFuc2l0aW9uLWFsbCBkdXJhdGlvbi0yMDAgZGlzYWJsZWQ6b3BhY2l0eS01MCBkaXNhYmxlZDpjdXJzb3Itbm90LWFsbG93ZWQgZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgc3BhY2UteC0yXCJcbiAgICAgICAgPlxuICAgICAgICAgIHtpc0dlbmVyYXRpbmcgPyAoXG4gICAgICAgICAgICA8PlxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInctNCBoLTQgYm9yZGVyLTIgYm9yZGVyLXdoaXRlLzMwIGJvcmRlci10LXdoaXRlIHJvdW5kZWQtZnVsbCBhbmltYXRlLXNwaW5cIiAvPlxuICAgICAgICAgICAgICA8c3Bhbj5HZW5lcmF0aW5nIFF1aXouLi48L3NwYW4+XG4gICAgICAgICAgICA8Lz5cbiAgICAgICAgICApIDogKFxuICAgICAgICAgICAgPD5cbiAgICAgICAgICAgICAgPFNlbmQgY2xhc3NOYW1lPVwiaC00IHctNFwiIC8+XG4gICAgICAgICAgICAgIDxzcGFuPkdlbmVyYXRlIFF1aXo8L3NwYW4+XG4gICAgICAgICAgICA8Lz5cbiAgICAgICAgICApfVxuICAgICAgICA8L2J1dHRvbj5cbiAgICAgIDwvZm9ybT5cbiAgICA8L2Rpdj5cbiAgKTtcbn0iXSwiZmlsZSI6IkM6L2VkdmFuYS9mcm9udGVuZC9zcmMvZGFzaGJvYXJkL3N0dWRlbnQvY29tcG9uZW50cy9haS10dXRvci9xdWl6LWdlbmVyYXRvci9RdWl6Q3JlYXRvckZvcm0udHN4In0=

@@ -22,6 +22,11 @@ export function SubjectModuleContentHeader({ state }: Props) {
             <BookOpen className={`h-6 w-6 ${state.theme.iconClass}`} />
           </div>
           <div className="min-w-0 flex-1 overflow-hidden">
+            {state.module?.title && state.submodule?.title ? (
+              <p className="mb-1 text-xs text-[var(--text-secondary)] break-words [overflow-wrap:anywhere] whitespace-normal">
+                Modules / {state.module.title} / {state.submodule.title}
+              </p>
+            ) : null}
             <h1 className="text-2xl font-semibold leading-tight text-[var(--text-primary)] break-words [overflow-wrap:anywhere] whitespace-normal">{state.pageTitle}</h1>
             {state.module?.description ? (
               <p className="mt-1 text-[var(--text-secondary)] break-words [overflow-wrap:anywhere] whitespace-normal">
@@ -34,3 +39,4 @@ export function SubjectModuleContentHeader({ state }: Props) {
     </header>
   );
 }
+

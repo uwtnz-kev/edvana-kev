@@ -12,10 +12,13 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { addSubjectFile, replaceSubjectFile, useSubjectFolders } from "@/dashboard/teacher/components/subjects/files/subjectFilesStore";
+import { validateUploadFile } from "@/dashboard/teacher/components/shared";
+import { buildSubjectFileContentKey, storeSubjectFileContent } from "@/dashboard/teacher/components/subjects/files/subjectFilesBinaryStorage";
+import { addSubjectFile, useSubjectFolders } from "@/dashboard/teacher/components/subjects/files/subjectFilesStore";
 import type { SubjectFileItem, SubjectFileVisibility } from "@/dashboard/teacher/components/subjects/files/subjectFilesTypes";
 import { useSubjectModules } from "@/dashboard/teacher/components/subjects/subjectModulesStore";
 import { getClassIdFromSearchParams } from "@/dashboard/teacher/views/subjects/subjectClassRouting";
+import { buildPersistedPreview, getUploadFilePreviewKind } from "@/dashboard/teacher/views/subject-upload-files/uploadFilesDisplayHelpers";
 import { SubjectFileDuplicateDialog } from "./SubjectFileDuplicateDialog";
 import { findDuplicateFile, generateUniqueName, resolveDuplicateFileLocations, type DuplicateDecision } from "./subjectFileDuplicateUtils";
 import { getSubjectName } from "./uploadModuleHelpers";
@@ -35,26 +38,15 @@ type Props = {
   showAttachExistingFile?: boolean;
 };
 
-const ALLOWED_EXTENSIONS = ["pdf", "doc", "docx", "ppt", "pptx", "xls", "xlsx", "jpg", "jpeg", "png"];
-const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024;
-const UNSUPPORTED_FILE_MESSAGE = "Unsupported file type. Please upload PDF, Word, Excel, PowerPoint, JPG, or PNG files.";
-const FILE_TOO_LARGE_MESSAGE = "File is too large. Maximum allowed size is 10 MB.";
 
-function readFileAsDataUrl(file: File) {
-  return new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(typeof reader.result === "string" ? reader.result : "");
-    reader.onerror = () => reject(reader.error);
-    reader.readAsDataURL(file);
-  });
+function buildLocalUploadId(prefix: string) {
+  try {
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") return `${prefix}-${crypto.randomUUID()}`;
+  } catch {
+  }
+  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
-function validateFile(file: File) {
-  const extension = file.name.split(".").pop()?.toLowerCase() ?? "";
-  if (!ALLOWED_EXTENSIONS.includes(extension)) return UNSUPPORTED_FILE_MESSAGE;
-  if (file.size > MAX_FILE_SIZE_BYTES) return FILE_TOO_LARGE_MESSAGE;
-  return null;
-}
 
 export function SubjectModuleAttachedFilesSection({ availableFiles, selectedFileIds, onAddFile, onRemoveFile, subjectId, enableUploadNewFile = false, idPrefix = "module-attached-files", maxSelectedFiles = Number.POSITIVE_INFINITY, showAttachExistingFile = true }: Props) {
   const location = useLocation();
@@ -101,7 +93,42 @@ export function SubjectModuleAttachedFilesSection({ availableFiles, selectedFile
     setUploadMessage("Uploading file...");
 
     try {
-      const previewUrl = await readFileAsDataUrl(file);
+      const uploadId = buildLocalUploadId("upload-file");
+
+      let previewUrl = "";
+      try {
+        previewUrl = await buildPersistedPreview({
+          file,
+          previewKind: getUploadFilePreviewKind(file),
+          previewUrl: null,
+        }, file.name, "");
+      } catch (error) {
+        console.error("[UploadModule][AttachedFile] buildPersistedPreview failed", {
+          fileName: file.name,
+          mimeType: file.type,
+          sizeBytes: file.size,
+          error,
+        });
+        setUploadTone("error");
+        setUploadMessage("Failed to build file preview for this submodule upload.");
+        return;
+      }
+
+      const contentKey = buildSubjectFileContentKey(uploadId);
+      try {
+        await storeSubjectFileContent(contentKey, file);
+      } catch (error) {
+        console.error("[UploadModule][AttachedFile] storeSubjectFileContent failed", {
+          fileName: file.name,
+          mimeType: file.type,
+          sizeBytes: file.size,
+          contentKey,
+          error,
+        });
+        setUploadTone("error");
+        setUploadMessage("Failed to store file content for this submodule upload.");
+        return;
+      }
       const draftBase = {
         title: file.name,
         description: "",
@@ -110,11 +137,12 @@ export function SubjectModuleAttachedFilesSection({ availableFiles, selectedFile
         mimeType: file.type,
         previewUrl,
         sizeBytes: file.size,
+        blobKey: contentKey,
         folderId: null,
         visibility,
       };
 
-      const finalDraft = decision === "keep-both"
+      const finalDraft = decision === "proceed" && duplicateFile
         ? {
             ...draftBase,
             title: generateUniqueName(draftBase.title, topLevelFiles.map((item) => item.name)),
@@ -122,16 +150,47 @@ export function SubjectModuleAttachedFilesSection({ availableFiles, selectedFile
           }
         : draftBase;
 
-      const maybeSavedFile = decision === "replace" && duplicateFile
-        ? replaceSubjectFile(subjectId, duplicateFile.id, finalDraft)
-        : addSubjectFile(subjectId, finalDraft);
+      let maybeSavedFile: SubjectFileItem | null = null;
+      try {
+        maybeSavedFile = addSubjectFile(subjectId, finalDraft);
+      } catch (error) {
+        console.error("[UploadModule][AttachedFile] addSubjectFile failed", {
+          fileName: file.name,
+          mimeType: file.type,
+          sizeBytes: file.size,
+          error,
+        });
+        setUploadTone("error");
+        setUploadMessage("Failed to save this submodule file.");
+        return;
+      }
 
       if (maybeSavedFile === null) {
-        throw new Error("Failed to save file");
+        console.error("[UploadModule][AttachedFile] addSubjectFile returned null", {
+          fileName: file.name,
+          mimeType: file.type,
+          sizeBytes: file.size,
+        });
+        setUploadTone("error");
+        setUploadMessage("Failed to save this submodule file.");
+        return;
       }
 
       const savedFile = maybeSavedFile;
-      onAddFile(savedFile.id);
+      try {
+        onAddFile(savedFile.id);
+      } catch (error) {
+        console.error("[UploadModule][AttachedFile] onAddFile failed", {
+          fileName: file.name,
+          mimeType: file.type,
+          sizeBytes: file.size,
+          savedFileId: savedFile.id,
+          error,
+        });
+        setUploadTone("error");
+        setUploadMessage("Failed to attach this file to the submodule.");
+        return;
+      }
       setUploadTone("success");
       setUploadMessage("File uploaded and attached successfully.");
       setSelectedUploadName(savedFile.originalFileName);
@@ -159,10 +218,10 @@ export function SubjectModuleAttachedFilesSection({ availableFiles, selectedFile
     }
 
     setSelectedUploadName(file.name);
-    const validationError = validateFile(file);
-    if (validationError) {
+    const validation = validateUploadFile(file);
+    if (!validation.isValid) {
       setUploadTone("error");
-      setUploadMessage(validationError);
+      setUploadMessage(validation.error);
       event.target.value = "";
       return;
     }
@@ -197,7 +256,7 @@ export function SubjectModuleAttachedFilesSection({ availableFiles, selectedFile
       return;
     }
 
-    await completeUpload(pendingFile, "replace", null, decision);
+    await completeUpload(pendingFile, "proceed", null, decision);
   };
 
   const handleDuplicateDecision = async (decision: DuplicateDecision) => {
@@ -211,12 +270,20 @@ export function SubjectModuleAttachedFilesSection({ availableFiles, selectedFile
     await completeUpload(pendingFile, decision, pendingDuplicateFile, pendingDestinationChoice);
   };
 
+  const handleRemoveFile = (fileId: string) => {
+    onRemoveFile(fileId);
+    setUploadMessage(null);
+    setUploadTone("neutral");
+    setSelectedUploadName(null);
+  };
+
   return (
     <>
       <div className="space-y-3 rounded-2xl border border-white/15 bg-white/10 p-4">
         <div>
           <p className="text-sm font-semibold text-white">Attached Files</p>
           <p className="mt-1 text-xs text-[var(--text-secondary)]">Attach existing subject files or upload a new file for this submodule.</p>
+          <p className="mt-1 text-xs text-[var(--text-secondary)]">Attached files are optional supplements. Written submodule content is still required.</p>
         </div>
 
         {showAttachExistingFile ? (
@@ -243,7 +310,9 @@ export function SubjectModuleAttachedFilesSection({ availableFiles, selectedFile
             <input ref={fileInputRef} id={newFileInputId} type="file" className="sr-only" onChange={handleFilePicked} />
             <div className="flex flex-wrap items-center gap-3">
               <Button type="button" onClick={() => fileInputRef.current?.click()} disabled={uploading || hasReachedSelectionLimit} className="rounded-2xl border border-white/20 bg-white/10 text-white hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-60">
-                <Upload className="mr-2 h-4 w-4" />
+                <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-xl border border-amber-400/30 bg-amber-500/15 text-amber-300">
+                  <Upload className="h-4 w-4" />
+                </span>
                 {uploading ? "Uploading..." : "Upload File"}
               </Button>
               {selectedUploadName ? <span className="text-sm text-white/70">{selectedUploadName}</span> : null}
@@ -265,7 +334,7 @@ export function SubjectModuleAttachedFilesSection({ availableFiles, selectedFile
               <div key={file.id} className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs text-white">
                 <Paperclip className="h-3.5 w-3.5 text-cyan-300" />
                 <span className="max-w-[220px] truncate" title={file.name}>{file.name}</span>
-                <button type="button" onClick={() => onRemoveFile(file.id)} className="text-white/65 transition hover:text-white" aria-label={`Remove ${file.name}`}>
+                <button type="button" onClick={() => handleRemoveFile(file.id)} className="text-white/65 transition hover:text-white" aria-label={`Remove ${file.name}`}>
                   <X className="h-3.5 w-3.5" />
                 </button>
               </div>
@@ -292,6 +361,9 @@ export function SubjectModuleAttachedFilesSection({ availableFiles, selectedFile
 
             <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
               <Button type="button" onClick={() => void handleVisibilityDecision("cancel")} className="rounded-2xl border border-white/15 bg-white/10 px-6 py-3 text-white transition-colors duration-200 hover:bg-white/15">
+                <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-xl border border-slate-400/30 bg-slate-500/15 text-slate-300">
+                  <X className="h-4 w-4" />
+                </span>
                 Cancel
               </Button>
               <Button type="button" onClick={() => void handleVisibilityDecision("both")} className="rounded-2xl border border-white/20 bg-white/10 px-6 py-3 font-semibold text-white transition-colors duration-200 hover:bg-white/20">
@@ -322,12 +394,5 @@ export function SubjectModuleAttachedFilesSection({ availableFiles, selectedFile
     </>
   );
 }
-
-
-
-
-
-
-
 
 

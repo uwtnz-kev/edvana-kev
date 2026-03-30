@@ -1,0 +1,165 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=a95dedd6"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import { Check, Pencil, X } from "/node_modules/.vite/deps/lucide-react.js?v=a95dedd6";
+import { Input } from "/src/components/ui/input.tsx";
+import { StatusBadge } from "/src/dashboard/teacher/components/shared/index.ts";
+export function GradeSubmissionRow({ state, submission }) {
+  const isEditing = state.editingSubmissionId === submission.id;
+  return /* @__PURE__ */ jsxDEV("tr", { className: "border-t border-white/10 cursor-pointer hover:bg-white/10", onClick: () => state.openDetails(submission.id), children: [
+    /* @__PURE__ */ jsxDEV("td", { className: "px-4 py-3", children: submission.studentName }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+      lineNumber: 33,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("td", { className: "px-4 py-3", children: submission.className }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+      lineNumber: 33,
+      columnNumber: 62
+    }, this),
+    /* @__PURE__ */ jsxDEV("td", { className: "px-4 py-3", children: submission.assessmentTitle || submission.title }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+      lineNumber: 33,
+      columnNumber: 115
+    }, this),
+    /* @__PURE__ */ jsxDEV("td", { className: "px-4 py-3", children: new Date(submission.submittedAt).toLocaleString() }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+      lineNumber: 33,
+      columnNumber: 194
+    }, this),
+    /* @__PURE__ */ jsxDEV("td", { className: "px-4 py-3", children: /* @__PURE__ */ jsxDEV(StatusBadge, { status: submission.status }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+      lineNumber: 34,
+      columnNumber: 33
+    }, this) }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+      lineNumber: 34,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("td", { className: "px-4 py-3", children: isEditing ? /* @__PURE__ */ jsxDEV("div", { className: "space-y-1", onClick: (event) => event.stopPropagation(), children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "flex items-center gap-2", children: [
+        /* @__PURE__ */ jsxDEV(Input, { autoFocus: true, type: "number", min: 0, max: submission.maxScore, value: state.editingScore, onChange: (event) => {
+          state.setEditingError(null);
+          state.setEditingScore(event.target.value);
+        }, onKeyDown: (event) => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            state.submitScoreUpdate(submission);
+          }
+          if (event.key === "Escape") state.stopEditing();
+        }, onBlur: () => state.submitScoreUpdate(submission), className: "h-8 w-20 bg-white/10 border-white/20 text-white" }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+          lineNumber: 35,
+          columnNumber: 159
+        }, this),
+        /* @__PURE__ */ jsxDEV("span", { className: "text-xs text-white/70", children: [
+          "/ ",
+          submission.maxScore
+        ] }, void 0, true, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+          lineNumber: 35,
+          columnNumber: 621
+        }, this),
+        /* @__PURE__ */ jsxDEV("button", { type: "button", onMouseDown: (event) => event.preventDefault(), onClick: (event) => {
+          event.stopPropagation();
+          state.submitScoreUpdate(submission);
+        }, className: "p-1 rounded-lg hover:bg-white/15 transition-colors duration-200", children: /* @__PURE__ */ jsxDEV(Check, { className: "h-4 w-4 text-green-400" }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+          lineNumber: 35,
+          columnNumber: 921
+        }, this) }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+          lineNumber: 35,
+          columnNumber: 691
+        }, this),
+        /* @__PURE__ */ jsxDEV("button", { type: "button", onMouseDown: (event) => event.preventDefault(), onClick: (event) => {
+          event.stopPropagation();
+          state.stopEditing();
+        }, className: "p-1 rounded-lg hover:bg-white/15 transition-colors duration-200", children: /* @__PURE__ */ jsxDEV(X, { className: "h-4 w-4 text-red-400" }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+          lineNumber: 35,
+          columnNumber: 1188
+        }, this) }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+          lineNumber: 35,
+          columnNumber: 974
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+        lineNumber: 35,
+        columnNumber: 118
+      }, this),
+      state.editingError ? /* @__PURE__ */ jsxDEV("p", { className: "text-xs text-red-300", children: state.editingError }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+        lineNumber: 35,
+        columnNumber: 1263
+      }, this) : null
+    ] }, void 0, true, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+      lineNumber: 35,
+      columnNumber: 46
+    }, this) : /* @__PURE__ */ jsxDEV("div", { className: "flex items-center justify-between gap-2", onClick: (event) => event.stopPropagation(), children: [
+      /* @__PURE__ */ jsxDEV("span", { children: typeof submission.score === "number" ? `${submission.score}/${submission.maxScore}` : "-" }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+        lineNumber: 35,
+        columnNumber: 1442
+      }, this),
+      /* @__PURE__ */ jsxDEV("button", { type: "button", onClick: (event) => {
+        event.stopPropagation();
+        state.startEditing(submission);
+      }, className: "p-1 rounded-lg hover:bg-white/15 transition-colors duration-200", children: /* @__PURE__ */ jsxDEV(Pencil, { className: "h-4 w-4 text-white/70" }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+        lineNumber: 35,
+        columnNumber: 1723
+      }, this) }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+        lineNumber: 35,
+        columnNumber: 1546
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+      lineNumber: 35,
+      columnNumber: 1340
+    }, this) }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+      lineNumber: 35,
+      columnNumber: 7
+    }, this)
+  ] }, submission.id, true, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx",
+    lineNumber: 32,
+    columnNumber: 5
+  }, this);
+}
+_c = GradeSubmissionRow;
+var _c;
+$RefreshReg$(_c, "GradeSubmissionRow");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/edvana/frontend/src/dashboard/teacher/views/grades/submissions/table/GradeSubmissionRow.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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bm1DO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFBNG1DO0FBQUEsTUFBT3pCLE1BQU0wQixlQUFlLHVCQUFDLE9BQUUsV0FBVSx3QkFBd0IxQixnQkFBTTBCLGdCQUEzQztBQUFBO0FBQUE7QUFBQTtBQUFBLGFBQXdELElBQU87QUFBQSxTQUEvd0M7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQUFveEMsSUFBUyx1QkFBQyxTQUFJLFdBQVUsMkNBQTBDLFNBQVMsQ0FBQ1osVUFBVUEsTUFBTUMsZ0JBQWdCLEdBQUc7QUFBQSw2QkFBQyxVQUFNLGlCQUFPZCxXQUFXMEIsVUFBVSxXQUFXLEdBQUcxQixXQUFXMEIsS0FBSyxJQUFJMUIsV0FBV2UsUUFBUSxLQUFLLE9BQTdGO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFBaUc7QUFBQSxNQUFPLHVCQUFDLFlBQU8sTUFBSyxVQUFTLFNBQVMsQ0FBQ0YsVUFBVTtBQUFFQSxjQUFNQyxnQkFBZ0I7QUFBR2YsY0FBTTRCLGFBQWEzQixVQUFVO0FBQUEsTUFBRyxHQUFHLFdBQVUsbUVBQWtFLGlDQUFDLFVBQU8sV0FBVSwyQkFBbEI7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQUF5QyxLQUE3TjtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBQWdPO0FBQUEsU0FBOWE7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQUF1YixLQUEzdkQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQUFrd0Q7QUFBQSxPQUgzdkRBLFdBQVdHLElBQXBCO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0FJQTtBQUVKO0FBQUN5QixLQVRlOUI7QUFBa0IsSUFBQThCO0FBQUFDLGFBQUFELElBQUEiLCJuYW1lcyI6WyJDaGVjayIsIlBlbmNpbCIsIlgiLCJJbnB1dCIsIlN0YXR1c0JhZGdlIiwiR3JhZGVTdWJtaXNzaW9uUm93Iiwic3RhdGUiLCJzdWJtaXNzaW9uIiwiaXNFZGl0aW5nIiwiZWRpdGluZ1N1Ym1pc3Npb25JZCIsImlkIiwib3BlbkRldGFpbHMiLCJzdHVkZW50TmFtZSIsImNsYXNzTmFtZSIsImFzc2Vzc21lbnRUaXRsZSIsInRpdGxlIiwiRGF0ZSIsInN1Ym1pdHRlZEF0IiwidG9Mb2NhbGVTdHJpbmciLCJzdGF0dXMiLCJldmVudCIsInN0b3BQcm9wYWdhdGlvbiIsIm1heFNjb3JlIiwiZWRpdGluZ1Njb3JlIiwic2V0RWRpdGluZ0Vycm9yIiwic2V0RWRpdGluZ1Njb3JlIiwidGFyZ2V0IiwidmFsdWUiLCJrZXkiLCJwcmV2ZW50RGVmYXVsdCIsInN1Ym1pdFNjb3JlVXBkYXRlIiwic3RvcEVkaXRpbmciLCJlZGl0aW5nRXJyb3IiLCJzY29yZSIsInN0YXJ0RWRpdGluZyIsIl9jIiwiJFJlZnJlc2hSZWckIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbIkdyYWRlU3VibWlzc2lvblJvdy50c3giXSwic291cmNlc0NvbnRlbnQiOlsiLy8gUmVuZGVycyBvbmUgc3VibWlzc2lvbiByb3csIGluY2x1ZGluZyBpbmxpbmUgc2NvcmUgZWRpdGluZyBjb250cm9scy5cbmltcG9ydCB7IENoZWNrLCBQZW5jaWwsIFggfSBmcm9tIFwibHVjaWRlLXJlYWN0XCI7XG5pbXBvcnQgeyBJbnB1dCB9IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvaW5wdXRcIjtcbmltcG9ydCB0eXBlIHsgVGVhY2hlckdyYWRlU3VibWlzc2lvbiB9IGZyb20gXCJAL2Rhc2hib2FyZC90ZWFjaGVyL2NvbXBvbmVudHMvZ3JhZGVzXCI7XG5pbXBvcnQgeyBTdGF0dXNCYWRnZSB9IGZyb20gXCJAL2Rhc2hib2FyZC90ZWFjaGVyL2NvbXBvbmVudHMvc2hhcmVkXCI7XG5pbXBvcnQgdHlwZSB7IHVzZUdyYWRlU3VibWlzc2lvbnNTdGF0ZSB9IGZyb20gXCIuLi91c2VHcmFkZVN1Ym1pc3Npb25zU3RhdGVcIjtcblxudHlwZSBQcm9wcyA9IHsgc3RhdGU6IFJldHVyblR5cGU8dHlwZW9mIHVzZUdyYWRlU3VibWlzc2lvbnNTdGF0ZT47IHN1Ym1pc3Npb246IFRlYWNoZXJHcmFkZVN1Ym1pc3Npb24gfTtcblxuZXhwb3J0IGZ1bmN0aW9uIEdyYWRlU3VibWlzc2lvblJvdyh7IHN0YXRlLCBzdWJtaXNzaW9uIH06IFByb3BzKSB7XG4gIGNvbnN0IGlzRWRpdGluZyA9IHN0YXRlLmVkaXRpbmdTdWJtaXNzaW9uSWQgPT09IHN1Ym1pc3Npb24uaWQ7XG4gIHJldHVybiAoXG4gICAgPHRyIGtleT17c3VibWlzc2lvbi5pZH0gY2xhc3NOYW1lPVwiYm9yZGVyLXQgYm9yZGVyLXdoaXRlLzEwIGN1cnNvci1wb2ludGVyIGhvdmVyOmJnLXdoaXRlLzEwXCIgb25DbGljaz17KCkgPT4gc3RhdGUub3BlbkRldGFpbHMoc3VibWlzc2lvbi5pZCl9PlxuICAgICAgPHRkIGNsYXNzTmFtZT1cInB4LTQgcHktM1wiPntzdWJtaXNzaW9uLnN0dWRlbnROYW1lfTwvdGQ+PHRkIGNsYXNzTmFtZT1cInB4LTQgcHktM1wiPntzdWJtaXNzaW9uLmNsYXNzTmFtZX08L3RkPjx0ZCBjbGFzc05hbWU9XCJweC00IHB5LTNcIj57c3VibWlzc2lvbi5hc3Nlc3NtZW50VGl0bGUgfHwgc3VibWlzc2lvbi50aXRsZX08L3RkPjx0ZCBjbGFzc05hbWU9XCJweC00IHB5LTNcIj57bmV3IERhdGUoc3VibWlzc2lvbi5zdWJtaXR0ZWRBdCkudG9Mb2NhbGVTdHJpbmcoKX08L3RkPlxuICAgICAgPHRkIGNsYXNzTmFtZT1cInB4LTQgcHktM1wiPjxTdGF0dXNCYWRnZSBzdGF0dXM9e3N1Ym1pc3Npb24uc3RhdHVzfSAvPjwvdGQ+XG4gICAgICA8dGQgY2xhc3NOYW1lPVwicHgtNCBweS0zXCI+e2lzRWRpdGluZyA/IDxkaXYgY2xhc3NOYW1lPVwic3BhY2UteS0xXCIgb25DbGljaz17KGV2ZW50KSA9PiBldmVudC5zdG9wUHJvcGFnYXRpb24oKX0+PGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMlwiPjxJbnB1dCBhdXRvRm9jdXMgdHlwZT1cIm51bWJlclwiIG1pbj17MH0gbWF4PXtzdWJtaXNzaW9uLm1heFNjb3JlfSB2YWx1ZT17c3RhdGUuZWRpdGluZ1Njb3JlfSBvbkNoYW5nZT17KGV2ZW50KSA9PiB7IHN0YXRlLnNldEVkaXRpbmdFcnJvcihudWxsKTsgc3RhdGUuc2V0RWRpdGluZ1Njb3JlKGV2ZW50LnRhcmdldC52YWx1ZSk7IH19IG9uS2V5RG93bj17KGV2ZW50KSA9PiB7IGlmIChldmVudC5rZXkgPT09IFwiRW50ZXJcIikgeyBldmVudC5wcmV2ZW50RGVmYXVsdCgpOyBzdGF0ZS5zdWJtaXRTY29yZVVwZGF0ZShzdWJtaXNzaW9uKTsgfSBpZiAoZXZlbnQua2V5ID09PSBcIkVzY2FwZVwiKSBzdGF0ZS5zdG9wRWRpdGluZygpOyB9fSBvbkJsdXI9eygpID0+IHN0YXRlLnN1Ym1pdFNjb3JlVXBkYXRlKHN1Ym1pc3Npb24pfSBjbGFzc05hbWU9XCJoLTggdy0yMCBiZy13aGl0ZS8xMCBib3JkZXItd2hpdGUvMjAgdGV4dC13aGl0ZVwiIC8+PHNwYW4gY2xhc3NOYW1lPVwidGV4dC14cyB0ZXh0LXdoaXRlLzcwXCI+LyB7c3VibWlzc2lvbi5tYXhTY29yZX08L3NwYW4+PGJ1dHRvbiB0eXBlPVwiYnV0dG9uXCIgb25Nb3VzZURvd249eyhldmVudCkgPT4gZXZlbnQucHJldmVudERlZmF1bHQoKX0gb25DbGljaz17KGV2ZW50KSA9PiB7IGV2ZW50LnN0b3BQcm9wYWdhdGlvbigpOyBzdGF0ZS5zdWJtaXRTY29yZVVwZGF0ZShzdWJtaXNzaW9uKTsgfX0gY2xhc3NOYW1lPVwicC0xIHJvdW5kZWQtbGcgaG92ZXI6Ymctd2hpdGUvMTUgdHJhbnNpdGlvbi1jb2xvcnMgZHVyYXRpb24tMjAwXCI+PENoZWNrIGNsYXNzTmFtZT1cImgtNCB3LTQgdGV4dC1ncmVlbi00MDBcIiAvPjwvYnV0dG9uPjxidXR0b24gdHlwZT1cImJ1dHRvblwiIG9uTW91c2VEb3duPXsoZXZlbnQpID0+IGV2ZW50LnByZXZlbnREZWZhdWx0KCl9IG9uQ2xpY2s9eyhldmVudCkgPT4geyBldmVudC5zdG9wUHJvcGFnYXRpb24oKTsgc3RhdGUuc3RvcEVkaXRpbmcoKTsgfX0gY2xhc3NOYW1lPVwicC0xIHJvdW5kZWQtbGcgaG92ZXI6Ymctd2hpdGUvMTUgdHJhbnNpdGlvbi1jb2xvcnMgZHVyYXRpb24tMjAwXCI+PFggY2xhc3NOYW1lPVwiaC00IHctNCB0ZXh0LXJlZC00MDBcIiAvPjwvYnV0dG9uPjwvZGl2PntzdGF0ZS5lZGl0aW5nRXJyb3IgPyA8cCBjbGFzc05hbWU9XCJ0ZXh0LXhzIHRleHQtcmVkLTMwMFwiPntzdGF0ZS5lZGl0aW5nRXJyb3J9PC9wPiA6IG51bGx9PC9kaXY+IDogPGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4gZ2FwLTJcIiBvbkNsaWNrPXsoZXZlbnQpID0+IGV2ZW50LnN0b3BQcm9wYWdhdGlvbigpfT48c3Bhbj57dHlwZW9mIHN1Ym1pc3Npb24uc2NvcmUgPT09IFwibnVtYmVyXCIgPyBgJHtzdWJtaXNzaW9uLnNjb3JlfS8ke3N1Ym1pc3Npb24ubWF4U2NvcmV9YCA6IFwiLVwifTwvc3Bhbj48YnV0dG9uIHR5cGU9XCJidXR0b25cIiBvbkNsaWNrPXsoZXZlbnQpID0+IHsgZXZlbnQuc3RvcFByb3BhZ2F0aW9uKCk7IHN0YXRlLnN0YXJ0RWRpdGluZyhzdWJtaXNzaW9uKTsgfX0gY2xhc3NOYW1lPVwicC0xIHJvdW5kZWQtbGcgaG92ZXI6Ymctd2hpdGUvMTUgdHJhbnNpdGlvbi1jb2xvcnMgZHVyYXRpb24tMjAwXCI+PFBlbmNpbCBjbGFzc05hbWU9XCJoLTQgdy00IHRleHQtd2hpdGUvNzBcIiAvPjwvYnV0dG9uPjwvZGl2Pn08L3RkPlxuICAgIDwvdHI+XG4gICk7XG59XG4iXSwiZmlsZSI6IkM6L2VkdmFuYS9mcm9udGVuZC9zcmMvZGFzaGJvYXJkL3RlYWNoZXIvdmlld3MvZ3JhZGVzL3N1Ym1pc3Npb25zL3RhYmxlL0dyYWRlU3VibWlzc2lvblJvdy50c3gifQ==

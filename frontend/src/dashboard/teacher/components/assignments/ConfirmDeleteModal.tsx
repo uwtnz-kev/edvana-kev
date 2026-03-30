@@ -3,6 +3,7 @@
  * ------------------
  * Renders the modal UI for the teacher dashboard a ss ig nm en ts feature.
  */
+import { type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -21,6 +22,7 @@ type Props = {
   confirmLabel?: string;
   cancelLabel?: string;
   onConfirm: () => void;
+  cancelIcon?: LucideIcon;
 };
 
 export function ConfirmDeleteModal({
@@ -31,6 +33,7 @@ export function ConfirmDeleteModal({
   confirmLabel = "Yes delete",
   cancelLabel = "No",
   onConfirm,
+  cancelIcon: CancelIcon,
 }: Props) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -49,6 +52,11 @@ export function ConfirmDeleteModal({
               onClick={() => onOpenChange(false)}
               className="rounded-2xl border border-white/15 bg-white/10 px-6 py-3 text-white transition-colors duration-200 hover:bg-white/15"
             >
+              {CancelIcon ? (
+                <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-xl border border-slate-400/30 bg-slate-500/15 text-slate-300">
+                  <CancelIcon className="h-4 w-4" />
+                </span>
+              ) : null}
               {cancelLabel}
             </Button>
             <Button
@@ -67,4 +75,5 @@ export function ConfirmDeleteModal({
     </Dialog>
   );
 }
+
 

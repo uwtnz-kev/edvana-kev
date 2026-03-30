@@ -8,10 +8,10 @@ type Props = {
 
 const ACTION_ICON_CLASS_BY_VALUE: Record<string, string> = {
   modules: "bg-indigo-500/20 text-indigo-400",
-  "upload-module": "bg-emerald-500/20 text-emerald-400",
-  "upload-module-file": "bg-amber-500/20 text-amber-300",
+  "create-module": "border border-emerald-400/30 bg-emerald-500/15 text-emerald-300",
+  "upload-module-file": "border border-amber-400/30 bg-amber-500/15 text-amber-300",
   files: "bg-sky-500/20 text-sky-400",
-  "upload-files": "bg-amber-500/20 text-amber-300",
+  "upload-files": "border border-amber-400/30 bg-amber-500/15 text-amber-300",
 };
 
 export function SubjectSidebarActionButton({ action, onClick }: Props) {
@@ -31,3 +31,5 @@ export function SubjectSidebarActionButton({ action, onClick }: Props) {
     </button>
   );
 }
+
+

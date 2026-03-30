@@ -3,12 +3,14 @@
  * ---------------------
  * Renders the teacher dashboard teacher dashboard page content.
  */
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   TeacherAssignmentCreateForm,
   TeacherAssignmentCreateHeader,
 } from "@/dashboard/teacher/components/assignments/create";
+import { getTeacherSubjectClass } from "@/dashboard/teacher/data/teacherSubjectsByClass";
 import { Button } from "@/components/ui/button";
+import { getClassIdFromSearchParams } from "./subjects/subjectClassRouting";
 
 type AssignmentsCreateState = {
   subjectId: string;
@@ -34,12 +36,20 @@ function getCreateState(state: unknown): AssignmentsCreateState | null {
 export default function AssignmentsCreateView() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
 
   const createState = getCreateState(location.state);
-  const goToAssignmentsWorkspace = (restoreSubjectId?: string) =>
+  const classId = getClassIdFromSearchParams(searchParams);
+  const selectedClass = getTeacherSubjectClass(classId);
+  const goToAssignmentsWorkspace = (restoreSubjectId?: string, classRouteId?: string) =>
     navigate(
-      { pathname: "/dashboard/teacher/assignments", search: location.search },
-      restoreSubjectId ? { state: { restoreSubjectId } } : undefined,
+      { pathname: "/dashboard/teacher/assignments", search: classRouteId ? `?classId=${encodeURIComponent(classRouteId)}` : location.search },
+      restoreSubjectId ? { state: { restoreSubjectId, viewMode: "workspace" as const } } : undefined,
+    );
+  const goToAssignmentsList = (restoreSubjectId: string, classRouteId: string) =>
+    navigate(
+      { pathname: "/dashboard/teacher/assignments", search: `?classId=${encodeURIComponent(classRouteId)}` },
+      { state: { restoreSubjectId, viewMode: "list" as const } },
     );
 
   if (!createState) {
@@ -75,14 +85,12 @@ export default function AssignmentsCreateView() {
         <TeacherAssignmentCreateForm
           subjectId={createState.subjectId}
           subjectName={createState.subjectName}
+          lockedClassId={selectedClass?.classId}
+          lockedClassLabel={selectedClass?.classLabel}
           onCancel={() => goToAssignmentsWorkspace(createState.subjectId)}
-          onSaved={(subjectId) => goToAssignmentsWorkspace(subjectId)}
+          onSaved={(subjectId, classRouteId) => goToAssignmentsList(subjectId, classRouteId)}
         />
       </div>
     </div>
   );
 }
-
-
-
-

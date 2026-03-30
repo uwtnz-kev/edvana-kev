@@ -16,6 +16,8 @@ function buildId() {
 export function createAssignment(data: CreateAssignmentInput): TeacherAssignment {
   const now = new Date().toISOString();
   const nextItem: TeacherAssignment = { ...data, id: buildId(), createdAt: data.createdAt ?? now };
+  console.info("[AssignmentsStore] createAssignment input", data);
+  console.info("[AssignmentsStore] createAssignment nextItem", nextItem);
   saveAssignments([nextItem, ...loadAssignments()]);
   return cloneAssignment(nextItem);
 }
@@ -51,3 +53,4 @@ export function duplicateAssignment(id: string): TeacherAssignment | null {
 export function publishAssignment(id: string): TeacherAssignment | null { return updateAssignment(id, { status: "published" }); }
 export function closeAssignment(id: string): TeacherAssignment | null { return updateAssignment(id, { status: "closed" }); }
 export const archiveAssignment = closeAssignment;
+

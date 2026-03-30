@@ -1,4 +1,5 @@
 /** Provides derived labels and formatting for assignment preview content. */
+import { resolveAssignmentRules } from "@/dashboard/teacher/components/shared";
 import { getAssessmentStatusBadgeClass } from "@/dashboard/teacher/components/shared/assessment/assessmentVisualStyles";
 import { getAssignmentStatusLabel } from "../assignmentstore";
 import type { TeacherAssignment } from "../AssignmentsTypes";
@@ -17,10 +18,12 @@ export function formatAssignmentDate(dateString: string) {
 }
 
 // Match the existing badge treatments for each assignment state.
-export function getAssignmentStatusClass(status: TeacherAssignment["status"]) {
+export function getAssignmentStatusClass(assignment: TeacherAssignment) {
+  const status = resolveAssignmentRules(assignment, Date.now()).derivedStatus;
   return getAssessmentStatusBadgeClass(status);
 }
 
-export function getAssignmentPreviewStatus(status: TeacherAssignment["status"]) {
+export function getAssignmentPreviewStatus(assignment: TeacherAssignment) {
+  const status = resolveAssignmentRules(assignment, Date.now()).derivedStatus;
   return getAssignmentStatusLabel(status);
 }

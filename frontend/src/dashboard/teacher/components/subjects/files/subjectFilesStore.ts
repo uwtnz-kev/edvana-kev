@@ -37,6 +37,14 @@ function normalizeVisibility(value: unknown): SubjectFileVisibility {
   return value === "module-only" ? "module-only" : "both";
 }
 
+function sanitizePersistedPreviewUrl(previewUrl: string, mimeType: string, blobKey: string | null) {
+  if (!blobKey) return previewUrl;
+  const normalizedMimeType = mimeType.trim().toLowerCase();
+  const isBinaryRenderedPreview = normalizedMimeType.startsWith("image/") || normalizedMimeType === "application/pdf";
+  if (!isBinaryRenderedPreview) return previewUrl;
+  return previewUrl.startsWith("data:") ? "" : previewUrl;
+}
+
 function normalizeFolder(input: unknown, subjectId: string): SubjectFolderItem | null {
   if (!input || typeof input !== "object") return null;
   const source = input as Partial<SubjectFolderItem>;
@@ -68,6 +76,7 @@ function normalizeFile(input: unknown, subjectId: string): SubjectFileItem | nul
     modifiedBy: typeof source.modifiedBy === "string" && source.modifiedBy.trim().length > 0 ? source.modifiedBy : "Teacher",
     sizeBytes: typeof source.sizeBytes === "number" && Number.isFinite(source.sizeBytes) && source.sizeBytes >= 0 ? source.sizeBytes : 0,
     folderId: typeof source.folderId === "string" && source.folderId.trim().length > 0 ? source.folderId : null,
+    blobKey: typeof source.blobKey === "string" && source.blobKey.trim().length > 0 ? source.blobKey : null,
     visibility: normalizeVisibility(source.visibility),
   };
 }
@@ -119,6 +128,36 @@ function mergeSeedData(current: Record<string, SubjectFilesSubjectState>) {
   return merged;
 }
 
+function cleanupLegacyBinaryPreviews(state: Record<string, SubjectFilesSubjectState>) {
+  let changed = false;
+  const nextState = Object.fromEntries(
+    Object.entries(state).map(([subjectId, subjectState]) => {
+      const nextFiles = subjectState.files.map((file) => {
+        const hasBinaryPreview = Boolean(file.blobKey)
+          && (file.mimeType.startsWith("image/") || file.mimeType === "application/pdf")
+          && file.previewUrl.startsWith("data:");
+
+        if (!hasBinaryPreview) {
+          return file;
+        }
+
+        changed = true;
+        return {
+          ...file,
+          previewUrl: "",
+        };
+      });
+
+      return [subjectId, {
+        ...subjectState,
+        files: nextFiles,
+      }];
+    }),
+  );
+
+  return { state: nextState, changed };
+}
+
 function saveState(state: Record<string, SubjectFilesSubjectState>) {
   writeStoredJson(STORAGE_KEY, cloneState(state));
 }
@@ -129,11 +168,22 @@ function loadState() {
     return mergeSeedData({});
   }
 
-  const parsed = parseStoredState(storage.getItem(STORAGE_KEY)) ?? parseStoredState(storage.getItem(LEGACY_STORAGE_KEY));
-  if (parsed) {
-    const merged = mergeSeedData(parsed);
-    saveState(merged);
-    return cloneState(merged);
+  const currentState = parseStoredState(storage.getItem(STORAGE_KEY));
+  if (currentState) {
+    const merged = mergeSeedData(currentState);
+    const cleaned = cleanupLegacyBinaryPreviews(merged);
+    if (cleaned.changed) {
+      saveState(cleaned.state);
+    }
+    return cloneState(cleaned.state);
+  }
+
+  const legacyState = parseStoredState(storage.getItem(LEGACY_STORAGE_KEY));
+  if (legacyState) {
+    const merged = mergeSeedData(legacyState);
+    const cleaned = cleanupLegacyBinaryPreviews(merged);
+    saveState(cleaned.state);
+    return cloneState(cleaned.state);
   }
 
   const seeded = mergeSeedData({});
@@ -197,8 +247,10 @@ export function useSubjectFolders(subjectId: string) {
 }
 
 export function useSubjectFile(subjectId: string, fileId: string) {
-  const files = useSubjectFiles(subjectId);
-  return files.find((file) => file.id === fileId) ?? null;
+  const snapshot = useSyncExternalStore(subscribeToSubjectFiles, () => fileState, () => fileState);
+  return Object.values(snapshot)
+    .flatMap((subjectState) => subjectState.files)
+    .find((file) => file.id === fileId) ?? null;
 }
 
 export function useSubjectFolder(subjectId: string, folderId: string) {
@@ -212,18 +264,21 @@ export function isSubjectFileVisibleInFiles(file: SubjectFileItem) {
 
 export function addSubjectFile(subjectId: string, draft: SubjectFileDraft & { folderId?: string | null }) {
   const timestamp = new Date().toISOString();
+  const normalizedMimeType = draft.mimeType.trim() || inferMimeType(draft.fileName);
+  const normalizedBlobKey = typeof draft.blobKey === "string" && draft.blobKey.trim().length > 0 ? draft.blobKey : null;
   const nextFileBase: Omit<SubjectFileItem, "id" | "folderId"> = {
     subjectId,
     name: draft.title.trim(),
     description: draft.description.trim(),
     category: draft.category.trim() || "General",
     originalFileName: draft.fileName.trim(),
-    mimeType: draft.mimeType.trim() || inferMimeType(draft.fileName),
-    previewUrl: draft.previewUrl,
+    mimeType: normalizedMimeType,
+    previewUrl: sanitizePersistedPreviewUrl(draft.previewUrl, normalizedMimeType, normalizedBlobKey),
     createdAt: timestamp,
     updatedAt: timestamp,
     modifiedBy: "You",
     sizeBytes: draft.sizeBytes,
+    blobKey: normalizedBlobKey,
     visibility: normalizeVisibility(draft.visibility),
   };
 
@@ -278,18 +333,21 @@ export function replaceSubjectFile(subjectId: string, fileId: string, draft: Sub
         ? ensureFolder(subjectState, subjectId, draft.folderName)
         : { subjectState, folderId: null as string | null };
 
+    const normalizedMimeType = draft.mimeType.trim() || inferMimeType(draft.fileName);
+    const normalizedBlobKey = typeof draft.blobKey === "string" && draft.blobKey.trim().length > 0 ? draft.blobKey : null;
     const nextFile: SubjectFileItem = {
       ...existingFile,
       name: draft.title.trim(),
       description: draft.description.trim(),
       category: draft.category.trim() || "General",
       originalFileName: draft.fileName.trim(),
-      mimeType: draft.mimeType.trim() || inferMimeType(draft.fileName),
-      previewUrl: draft.previewUrl,
+      mimeType: normalizedMimeType,
+      previewUrl: sanitizePersistedPreviewUrl(draft.previewUrl, normalizedMimeType, normalizedBlobKey),
       updatedAt: timestamp,
       modifiedBy: "You",
       sizeBytes: draft.sizeBytes,
       folderId: folderResult.folderId,
+      blobKey: normalizedBlobKey,
       visibility: normalizeVisibility(draft.visibility),
     };
     replacedFile = nextFile;
@@ -361,4 +419,3 @@ export function formatSubjectFileSize(sizeBytes: number) {
   if (sizeBytes >= 1024) return `${Math.round(sizeBytes / 1024)} KB`;
   return `${sizeBytes} B`;
 }
-

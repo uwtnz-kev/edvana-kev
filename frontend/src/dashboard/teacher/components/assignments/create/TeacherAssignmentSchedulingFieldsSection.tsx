@@ -1,14 +1,12 @@
-// Renders due date, class, and grading inputs used to schedule the assignment.
+// Renders assignment schedule, scoring, and submission settings above instructions.
 import type { ReactNode } from "react";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { seedClasses2 } from "@/dashboard/teacher/components/assignments";
 import { SubmissionMethodsField } from "@/dashboard/teacher/components/shared/assessment/SubmissionMethodsField";
 import { requiresQuestionBuilder, toggleSubmissionMethod } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
 import { TeacherAssignmentDueDatePicker } from "./TeacherAssignmentDueDatePicker";
 import type { AssignmentFieldProps } from "./assignmentCreateTypes";
 
-type Props = AssignmentFieldProps & { onClassChange: (value: string) => void };
+type Props = AssignmentFieldProps;
 
 export function TeacherAssignmentSchedulingFieldsSection({
   values,
@@ -17,7 +15,6 @@ export function TeacherAssignmentSchedulingFieldsSection({
   onFieldChange,
   onFieldBlur,
   onSubmissionMethodsChange,
-  onClassChange,
 }: Props) {
   const show = (name: keyof typeof errors) => touched[name] && errors[name];
   const questionBuilderActive = requiresQuestionBuilder(values.submissionMethods);
@@ -32,17 +29,6 @@ export function TeacherAssignmentSchedulingFieldsSection({
         <div id="assignment-due-picker" className="w-full [&_button]:h-12 [&_button]:w-full [&_button]:rounded-2xl">
           <TeacherAssignmentDueDatePicker value={values.dueAt} onChange={(nextValue) => onFieldChange("dueAt", nextValue)} onBlur={() => onFieldBlur("dueAt")} />
         </div>
-      </Field>
-
-      <Field label="Class" id="assignment-class-trigger" error={show("classId")}>
-        <Select value={values.classId} onValueChange={onClassChange}>
-          <SelectTrigger id="assignment-class-trigger" className="h-12 w-full rounded-2xl border border-white/20 bg-white/20 text-white data-[placeholder]:text-white [&>svg]:text-white">
-            <SelectValue placeholder="Select class" />
-          </SelectTrigger>
-          <SelectContent className="rounded-2xl border border-white/25 bg-white/25 text-white backdrop-blur-xl">
-            {seedClasses2.map((item) => <SelectItem key={item.id} value={item.id} className="text-white focus:bg-white/30 focus:text-white">{item.label}</SelectItem>)}
-          </SelectContent>
-        </Select>
       </Field>
 
       <Field label="Max Score" id="assignment-max-score" error={show("maxScore")}>
@@ -69,14 +55,9 @@ export function TeacherAssignmentSchedulingFieldsSection({
 function Field({ label, id, error, children }: { label: string; id: string; error: string | null; children: ReactNode }) {
   return (
     <div className="w-full">
-      {/* Keeps repeated schedule field framing and error placement consistent. */}
       <label htmlFor={id} className="mb-2 block text-sm text-white">{label}</label>
       {children}
       {error ? <p className="mt-1 text-sm font-medium text-red-600">{error}</p> : null}
     </div>
   );
 }
-
-
-
-

@@ -1,0 +1,252 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=a95dedd6"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import { Input } from "/src/components/ui/input.tsx";
+import { Textarea } from "/src/components/ui/textarea.tsx";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "/src/components/ui/select.tsx";
+export function QuestionEditorFields({ question, onPatch }) {
+  if (question.questionType === "multiple_choice") return /* @__PURE__ */ jsxDEV(MultipleChoiceEditor, { question, onPatch }, void 0, false, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+    lineNumber: 32,
+    columnNumber: 59
+  }, this);
+  if (question.questionType === "matching") return /* @__PURE__ */ jsxDEV(MatchingEditor, { question, onPatch }, void 0, false, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+    lineNumber: 33,
+    columnNumber: 52
+  }, this);
+  if (question.questionType === "identification") return /* @__PURE__ */ jsxDEV(IdentificationEditor, { question, onPatch }, void 0, false, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+    lineNumber: 34,
+    columnNumber: 58
+  }, this);
+  if (question.questionType === "short_answer") return /* @__PURE__ */ jsxDEV(ShortAnswerEditor, { question, onPatch }, void 0, false, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+    lineNumber: 35,
+    columnNumber: 56
+  }, this);
+  return /* @__PURE__ */ jsxDEV(TrueFalseEditor, { question, onPatch }, void 0, false, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+    lineNumber: 36,
+    columnNumber: 10
+  }, this);
+}
+_c = QuestionEditorFields;
+function MultipleChoiceEditor({ question, onPatch }) {
+  return /* @__PURE__ */ jsxDEV("div", { className: "space-y-3", children: [
+    /* @__PURE__ */ jsxDEV("label", { className: "text-sm text-white", children: "Options" }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+      lineNumber: 42,
+      columnNumber: 7
+    }, this),
+    question.options.map(
+      (option, index) => /* @__PURE__ */ jsxDEV(Input, { value: option, onChange: (event) => {
+        const next = [...question.options];
+        next[index] = event.target.value;
+        onPatch({ options: next });
+      }, placeholder: `Option ${String.fromCharCode(65 + index)}`, className: "h-12 border-white/20 bg-white/20 text-white placeholder:text-white/70" }, `${question.id}-option-${index}`, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+        lineNumber: 44,
+        columnNumber: 7
+      }, this)
+    ),
+    /* @__PURE__ */ jsxDEV("div", { className: "space-y-2", children: [
+      /* @__PURE__ */ jsxDEV("label", { className: "text-sm text-white", children: "Correct Answer" }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+        lineNumber: 47,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(Select, { value: question.correctAnswer, onValueChange: (next) => onPatch({ correctAnswer: next }), children: [
+        /* @__PURE__ */ jsxDEV(SelectTrigger, { className: "h-12 rounded-2xl border border-white/20 bg-white/20 text-white data-[placeholder]:text-white/70", children: /* @__PURE__ */ jsxDEV(SelectValue, { placeholder: "Select correct answer" }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+          lineNumber: 49,
+          columnNumber: 134
+        }, this) }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+          lineNumber: 49,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(SelectContent, { className: "rounded-2xl border border-white/20 bg-[#1b2430]/95 text-white backdrop-blur-xl", children: question.options.map((option, index) => /* @__PURE__ */ jsxDEV(SelectItem, { value: `Option ${String.fromCharCode(65 + index)}`, children: option || `Option ${String.fromCharCode(65 + index)}` }, `${question.id}-correct-${index}`, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+          lineNumber: 51,
+          columnNumber: 54
+        }, this)) }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+          lineNumber: 50,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+        lineNumber: 48,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+      lineNumber: 46,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+    lineNumber: 41,
+    columnNumber: 5
+  }, this);
+}
+_c2 = MultipleChoiceEditor;
+function MatchingEditor({ question, onPatch }) {
+  return /* @__PURE__ */ jsxDEV("div", { className: "space-y-3", children: [
+    /* @__PURE__ */ jsxDEV("label", { className: "text-sm text-white", children: "Matching Pairs" }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+      lineNumber: 62,
+      columnNumber: 7
+    }, this),
+    question.matchingPairs.map(
+      (pair, index) => /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 gap-3 lg:grid-cols-2", children: [
+        /* @__PURE__ */ jsxDEV(Input, { value: pair.left, onChange: (event) => onPatch({ matchingPairs: question.matchingPairs.map((entry) => entry.id === pair.id ? { ...entry, left: event.target.value } : entry) }), placeholder: `Left item ${index + 1}`, className: "h-12 border-white/20 bg-white/20 text-white placeholder:text-white/70" }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+          lineNumber: 65,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(Input, { value: pair.right, onChange: (event) => onPatch({ matchingPairs: question.matchingPairs.map((entry) => entry.id === pair.id ? { ...entry, right: event.target.value } : entry) }), placeholder: `Right item ${index + 1}`, className: "h-12 border-white/20 bg-white/20 text-white placeholder:text-white/70" }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+          lineNumber: 66,
+          columnNumber: 11
+        }, this)
+      ] }, pair.id, true, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+        lineNumber: 64,
+        columnNumber: 7
+      }, this)
+    )
+  ] }, void 0, true, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+    lineNumber: 61,
+    columnNumber: 5
+  }, this);
+}
+_c3 = MatchingEditor;
+function IdentificationEditor({ question, onPatch }) {
+  return /* @__PURE__ */ jsxDEV(SimpleAnswerField, { label: "Expected Answer", value: question.identificationAnswer, onChange: (value) => onPatch({ identificationAnswer: value }), multiline: false }, void 0, false, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+    lineNumber: 74,
+    columnNumber: 10
+  }, this);
+}
+_c4 = IdentificationEditor;
+function ShortAnswerEditor({ question, onPatch }) {
+  return /* @__PURE__ */ jsxDEV(SimpleAnswerField, { label: "Expected Answer", value: question.shortAnswer, onChange: (value) => onPatch({ shortAnswer: value }), multiline: true }, void 0, false, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+    lineNumber: 78,
+    columnNumber: 10
+  }, this);
+}
+_c5 = ShortAnswerEditor;
+function TrueFalseEditor({ question, onPatch }) {
+  return /* @__PURE__ */ jsxDEV("div", { className: "space-y-2", children: [
+    /* @__PURE__ */ jsxDEV("label", { className: "text-sm text-white", children: "Correct Answer" }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+      lineNumber: 84,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(Select, { value: question.trueFalseAnswer, onValueChange: (next) => onPatch({ trueFalseAnswer: next }), children: [
+      /* @__PURE__ */ jsxDEV(SelectTrigger, { className: "h-12 rounded-2xl border border-white/20 bg-white/20 text-white data-[placeholder]:text-white/70", children: /* @__PURE__ */ jsxDEV(SelectValue, { placeholder: "Select true or false" }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+        lineNumber: 86,
+        columnNumber: 132
+      }, this) }, void 0, false, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+        lineNumber: 86,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(SelectContent, { className: "rounded-2xl border border-white/20 bg-[#1b2430]/95 text-white backdrop-blur-xl", children: [
+        /* @__PURE__ */ jsxDEV(SelectItem, { value: "true", children: "True" }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+          lineNumber: 88,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(SelectItem, { value: "false", children: "False" }, void 0, false, {
+          fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+          lineNumber: 89,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+        lineNumber: 87,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+      lineNumber: 85,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+    lineNumber: 83,
+    columnNumber: 5
+  }, this);
+}
+_c6 = TrueFalseEditor;
+function SimpleAnswerField({
+  label,
+  value,
+  onChange,
+  multiline
+}) {
+  return /* @__PURE__ */ jsxDEV("div", { className: "space-y-2", children: [
+    /* @__PURE__ */ jsxDEV("label", { className: "text-sm text-white", children: label }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+      lineNumber: 109,
+      columnNumber: 7
+    }, this),
+    multiline ? /* @__PURE__ */ jsxDEV(Textarea, { value, onChange: (event) => onChange(event.target.value), placeholder: "Enter expected long answer", className: "min-h-[100px] border-white/20 bg-white/20 text-white placeholder:text-white/70" }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+      lineNumber: 111,
+      columnNumber: 7
+    }, this) : /* @__PURE__ */ jsxDEV(Input, { value, onChange: (event) => onChange(event.target.value), placeholder: "Enter expected answer", className: "h-12 border-white/20 bg-white/20 text-white placeholder:text-white/70" }, void 0, false, {
+      fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+      lineNumber: 113,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx",
+    lineNumber: 108,
+    columnNumber: 5
+  }, this);
+}
+_c7 = SimpleAnswerField;
+var _c, _c2, _c3, _c4, _c5, _c6, _c7;
+$RefreshReg$(_c, "QuestionEditorFields");
+$RefreshReg$(_c2, "MultipleChoiceEditor");
+$RefreshReg$(_c3, "MatchingEditor");
+$RefreshReg$(_c4, "IdentificationEditor");
+$RefreshReg$(_c5, "ShortAnswerEditor");
+$RefreshReg$(_c6, "TrueFalseEditor");
+$RefreshReg$(_c7, "SimpleAnswerField");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/edvana/frontend/src/dashboard/teacher/components/questions/builder/QuestionEditorFields.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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QUVKO0FBQUN1QixNQWJRRjtBQWVULFNBQVNHLGtCQUFrQjtBQUFBLEVBQ3pCQztBQUFBQSxFQUNBdkI7QUFBQUEsRUFDQXdCO0FBQUFBLEVBQ0FDO0FBTUYsR0FBRztBQUNELFNBQ0UsdUJBQUMsU0FBSSxXQUFVLGFBQ2I7QUFBQSwyQkFBQyxXQUFNLFdBQVUsc0JBQXNCRixtQkFBdkM7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQUE2QztBQUFBLElBQzVDRSxZQUNDLHVCQUFDLFlBQVMsT0FBYyxVQUFVLENBQUM1QixVQUFVMkIsU0FBUzNCLE1BQU1FLE9BQU9DLEtBQUssR0FBRyxhQUFZLDhCQUE2QixXQUFVLG9GQUE5SDtBQUFBO0FBQUE7QUFBQTtBQUFBLFdBQThNLElBRTlNLHVCQUFDLFNBQU0sT0FBYyxVQUFVLENBQUNILFVBQVUyQixTQUFTM0IsTUFBTUUsT0FBT0MsS0FBSyxHQUFHLGFBQVkseUJBQXdCLFdBQVUsMkVBQXRIO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0FBNkw7QUFBQSxPQUxqTTtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBT0E7QUFFSjtBQUFDMEIsTUFyQlFKO0FBQWlCLElBQUEvQixJQUFBYyxLQUFBTyxLQUFBRyxLQUFBRyxLQUFBRyxLQUFBSztBQUFBQyxhQUFBcEMsSUFBQTtBQUFBb0MsYUFBQXRCLEtBQUE7QUFBQXNCLGFBQUFmLEtBQUE7QUFBQWUsYUFBQVosS0FBQTtBQUFBWSxhQUFBVCxLQUFBO0FBQUFTLGFBQUFOLEtBQUE7QUFBQU0sYUFBQUQsS0FBQSIsIm5hbWVzIjpbIklucHV0IiwiVGV4dGFyZWEiLCJTZWxlY3QiLCJTZWxlY3RDb250ZW50IiwiU2VsZWN0SXRlbSIsIlNlbGVjdFRyaWdnZXIiLCJTZWxlY3RWYWx1ZSIsIlF1ZXN0aW9uRWRpdG9yRmllbGRzIiwicXVlc3Rpb24iLCJvblBhdGNoIiwicXVlc3Rpb25UeXBlIiwiX2MiLCJNdWx0aXBsZUNob2ljZUVkaXRvciIsIm9wdGlvbnMiLCJtYXAiLCJvcHRpb24iLCJpbmRleCIsImV2ZW50IiwibmV4dCIsInRhcmdldCIsInZhbHVlIiwiU3RyaW5nIiwiZnJvbUNoYXJDb2RlIiwiaWQiLCJjb3JyZWN0QW5zd2VyIiwiX2MyIiwiTWF0Y2hpbmdFZGl0b3IiLCJtYXRjaGluZ1BhaXJzIiwicGFpciIsImxlZnQiLCJlbnRyeSIsInJpZ2h0IiwiX2MzIiwiSWRlbnRpZmljYXRpb25FZGl0b3IiLCJpZGVudGlmaWNhdGlvbkFuc3dlciIsIl9jNCIsIlNob3J0QW5zd2VyRWRpdG9yIiwic2hvcnRBbnN3ZXIiLCJfYzUiLCJUcnVlRmFsc2VFZGl0b3IiLCJ0cnVlRmFsc2VBbnN3ZXIiLCJfYzYiLCJTaW1wbGVBbnN3ZXJGaWVsZCIsImxhYmVsIiwib25DaGFuZ2UiLCJtdWx0aWxpbmUiLCJfYzciLCIkUmVmcmVzaFJlZyQiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiUXVlc3Rpb25FZGl0b3JGaWVsZHMudHN4Il0sInNvdXJjZXNDb250ZW50IjpbIi8vIFJlbmRlcnMgcXVlc3Rpb24tdHlwZS1zcGVjaWZpYyBlZGl0b3IgY29udHJvbHMgdXNlZCBpbnNpZGUgdGhlIG1haW4gZWRpdG9yIHBhbmVsLlxuaW1wb3J0IHsgSW5wdXQgfSBmcm9tIFwiQC9jb21wb25lbnRzL3VpL2lucHV0XCI7XG5pbXBvcnQgeyBUZXh0YXJlYSB9IGZyb20gXCJAL2NvbXBvbmVudHMvdWkvdGV4dGFyZWFcIjtcbmltcG9ydCB7IFNlbGVjdCwgU2VsZWN0Q29udGVudCwgU2VsZWN0SXRlbSwgU2VsZWN0VHJpZ2dlciwgU2VsZWN0VmFsdWUgfSBmcm9tIFwiQC9jb21wb25lbnRzL3VpL3NlbGVjdFwiO1xuaW1wb3J0IHR5cGUgeyBRdWVzdGlvbkJ1aWxkZXJRdWVzdGlvbiB9IGZyb20gXCJAL2Rhc2hib2FyZC90ZWFjaGVyL2NvbXBvbmVudHMvcXVlc3Rpb25zL3F1ZXN0aW9uc1N0b3JlXCI7XG5cbnR5cGUgUHJvcHMgPSB7XG4gIHF1ZXN0aW9uOiBRdWVzdGlvbkJ1aWxkZXJRdWVzdGlvbjtcbiAgb25QYXRjaDogKHBhdGNoOiBQYXJ0aWFsPFF1ZXN0aW9uQnVpbGRlclF1ZXN0aW9uPikgPT4gdm9pZDtcbn07XG5cbmV4cG9ydCBmdW5jdGlvbiBRdWVzdGlvbkVkaXRvckZpZWxkcyh7IHF1ZXN0aW9uLCBvblBhdGNoIH06IFByb3BzKSB7XG4gIGlmIChxdWVzdGlvbi5xdWVzdGlvblR5cGUgPT09IFwibXVsdGlwbGVfY2hvaWNlXCIpIHJldHVybiA8TXVsdGlwbGVDaG9pY2VFZGl0b3IgcXVlc3Rpb249e3F1ZXN0aW9ufSBvblBhdGNoPXtvblBhdGNofSAvPjtcbiAgaWYgKHF1ZXN0aW9uLnF1ZXN0aW9uVHlwZSA9PT0gXCJtYXRjaGluZ1wiKSByZXR1cm4gPE1hdGNoaW5nRWRpdG9yIHF1ZXN0aW9uPXtxdWVzdGlvbn0gb25QYXRjaD17b25QYXRjaH0gLz47XG4gIGlmIChxdWVzdGlvbi5xdWVzdGlvblR5cGUgPT09IFwiaWRlbnRpZmljYXRpb25cIikgcmV0dXJuIDxJZGVudGlmaWNhdGlvbkVkaXRvciBxdWVzdGlvbj17cXVlc3Rpb259IG9uUGF0Y2g9e29uUGF0Y2h9IC8+O1xuICBpZiAocXVlc3Rpb24ucXVlc3Rpb25UeXBlID09PSBcInNob3J0X2Fuc3dlclwiKSByZXR1cm4gPFNob3J0QW5zd2VyRWRpdG9yIHF1ZXN0aW9uPXtxdWVzdGlvbn0gb25QYXRjaD17b25QYXRjaH0gLz47XG4gIHJldHVybiA8VHJ1ZUZhbHNlRWRpdG9yIHF1ZXN0aW9uPXtxdWVzdGlvbn0gb25QYXRjaD17b25QYXRjaH0gLz47XG59XG5cbmZ1bmN0aW9uIE11bHRpcGxlQ2hvaWNlRWRpdG9yKHsgcXVlc3Rpb24sIG9uUGF0Y2ggfTogUHJvcHMpIHtcbiAgcmV0dXJuIChcbiAgICA8ZGl2IGNsYXNzTmFtZT1cInNwYWNlLXktM1wiPlxuICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cInRleHQtc20gdGV4dC13aGl0ZVwiPk9wdGlvbnM8L2xhYmVsPlxuICAgICAge3F1ZXN0aW9uLm9wdGlvbnMubWFwKChvcHRpb24sIGluZGV4KSA9PiAoXG4gICAgICAgIDxJbnB1dCBrZXk9e2Ake3F1ZXN0aW9uLmlkfS1vcHRpb24tJHtpbmRleH1gfSB2YWx1ZT17b3B0aW9ufSBvbkNoYW5nZT17KGV2ZW50KSA9PiB7IGNvbnN0IG5leHQgPSBbLi4ucXVlc3Rpb24ub3B0aW9uc107IG5leHRbaW5kZXhdID0gZXZlbnQudGFyZ2V0LnZhbHVlOyBvblBhdGNoKHsgb3B0aW9uczogbmV4dCB9KTsgfX0gcGxhY2Vob2xkZXI9e2BPcHRpb24gJHtTdHJpbmcuZnJvbUNoYXJDb2RlKDY1ICsgaW5kZXgpfWB9IGNsYXNzTmFtZT1cImgtMTIgYm9yZGVyLXdoaXRlLzIwIGJnLXdoaXRlLzIwIHRleHQtd2hpdGUgcGxhY2Vob2xkZXI6dGV4dC13aGl0ZS83MFwiIC8+XG4gICAgICApKX1cbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwic3BhY2UteS0yXCI+XG4gICAgICAgIDxsYWJlbCBjbGFzc05hbWU9XCJ0ZXh0LXNtIHRleHQtd2hpdGVcIj5Db3JyZWN0IEFuc3dlcjwvbGFiZWw+XG4gICAgICAgIDxTZWxlY3QgdmFsdWU9e3F1ZXN0aW9uLmNvcnJlY3RBbnN3ZXJ9IG9uVmFsdWVDaGFuZ2U9eyhuZXh0KSA9PiBvblBhdGNoKHsgY29ycmVjdEFuc3dlcjogbmV4dCB9KX0+XG4gICAgICAgICAgPFNlbGVjdFRyaWdnZXIgY2xhc3NOYW1lPVwiaC0xMiByb3VuZGVkLTJ4bCBib3JkZXIgYm9yZGVyLXdoaXRlLzIwIGJnLXdoaXRlLzIwIHRleHQtd2hpdGUgZGF0YS1bcGxhY2Vob2xkZXJdOnRleHQtd2hpdGUvNzBcIj48U2VsZWN0VmFsdWUgcGxhY2Vob2xkZXI9XCJTZWxlY3QgY29ycmVjdCBhbnN3ZXJcIiAvPjwvU2VsZWN0VHJpZ2dlcj5cbiAgICAgICAgICA8U2VsZWN0Q29udGVudCBjbGFzc05hbWU9XCJyb3VuZGVkLTJ4bCBib3JkZXIgYm9yZGVyLXdoaXRlLzIwIGJnLVsjMWIyNDMwXS85NSB0ZXh0LXdoaXRlIGJhY2tkcm9wLWJsdXIteGxcIj5cbiAgICAgICAgICAgIHtxdWVzdGlvbi5vcHRpb25zLm1hcCgob3B0aW9uLCBpbmRleCkgPT4gPFNlbGVjdEl0ZW0ga2V5PXtgJHtxdWVzdGlvbi5pZH0tY29ycmVjdC0ke2luZGV4fWB9IHZhbHVlPXtgT3B0aW9uICR7U3RyaW5nLmZyb21DaGFyQ29kZSg2NSArIGluZGV4KX1gfT57b3B0aW9uIHx8IGBPcHRpb24gJHtTdHJpbmcuZnJvbUNoYXJDb2RlKDY1ICsgaW5kZXgpfWB9PC9TZWxlY3RJdGVtPil9XG4gICAgICAgICAgPC9TZWxlY3RDb250ZW50PlxuICAgICAgICA8L1NlbGVjdD5cbiAgICAgIDwvZGl2PlxuICAgIDwvZGl2PlxuICApO1xufVxuXG5mdW5jdGlvbiBNYXRjaGluZ0VkaXRvcih7IHF1ZXN0aW9uLCBvblBhdGNoIH06IFByb3BzKSB7XG4gIHJldHVybiAoXG4gICAgPGRpdiBjbGFzc05hbWU9XCJzcGFjZS15LTNcIj5cbiAgICAgIDxsYWJlbCBjbGFzc05hbWU9XCJ0ZXh0LXNtIHRleHQtd2hpdGVcIj5NYXRjaGluZyBQYWlyczwvbGFiZWw+XG4gICAgICB7cXVlc3Rpb24ubWF0Y2hpbmdQYWlycy5tYXAoKHBhaXIsIGluZGV4KSA9PiAoXG4gICAgICAgIDxkaXYga2V5PXtwYWlyLmlkfSBjbGFzc05hbWU9XCJncmlkIGdyaWQtY29scy0xIGdhcC0zIGxnOmdyaWQtY29scy0yXCI+XG4gICAgICAgICAgPElucHV0IHZhbHVlPXtwYWlyLmxlZnR9IG9uQ2hhbmdlPXsoZXZlbnQpID0+IG9uUGF0Y2goeyBtYXRjaGluZ1BhaXJzOiBxdWVzdGlvbi5tYXRjaGluZ1BhaXJzLm1hcCgoZW50cnkpID0+IGVudHJ5LmlkID09PSBwYWlyLmlkID8geyAuLi5lbnRyeSwgbGVmdDogZXZlbnQudGFyZ2V0LnZhbHVlIH0gOiBlbnRyeSkgfSl9IHBsYWNlaG9sZGVyPXtgTGVmdCBpdGVtICR7aW5kZXggKyAxfWB9IGNsYXNzTmFtZT1cImgtMTIgYm9yZGVyLXdoaXRlLzIwIGJnLXdoaXRlLzIwIHRleHQtd2hpdGUgcGxhY2Vob2xkZXI6dGV4dC13aGl0ZS83MFwiIC8+XG4gICAgICAgICAgPElucHV0IHZhbHVlPXtwYWlyLnJpZ2h0fSBvbkNoYW5nZT17KGV2ZW50KSA9PiBvblBhdGNoKHsgbWF0Y2hpbmdQYWlyczogcXVlc3Rpb24ubWF0Y2hpbmdQYWlycy5tYXAoKGVudHJ5KSA9PiBlbnRyeS5pZCA9PT0gcGFpci5pZCA/IHsgLi4uZW50cnksIHJpZ2h0OiBldmVudC50YXJnZXQudmFsdWUgfSA6IGVudHJ5KSB9KX0gcGxhY2Vob2xkZXI9e2BSaWdodCBpdGVtICR7aW5kZXggKyAxfWB9IGNsYXNzTmFtZT1cImgtMTIgYm9yZGVyLXdoaXRlLzIwIGJnLXdoaXRlLzIwIHRleHQtd2hpdGUgcGxhY2Vob2xkZXI6dGV4dC13aGl0ZS83MFwiIC8+XG4gICAgICAgIDwvZGl2PlxuICAgICAgKSl9XG4gICAgPC9kaXY+XG4gICk7XG59XG5cbmZ1bmN0aW9uIElkZW50aWZpY2F0aW9uRWRpdG9yKHsgcXVlc3Rpb24sIG9uUGF0Y2ggfTogUHJvcHMpIHtcbiAgcmV0dXJuIDxTaW1wbGVBbnN3ZXJGaWVsZCBsYWJlbD1cIkV4cGVjdGVkIEFuc3dlclwiIHZhbHVlPXtxdWVzdGlvbi5pZGVudGlmaWNhdGlvbkFuc3dlcn0gb25DaGFuZ2U9eyh2YWx1ZSkgPT4gb25QYXRjaCh7IGlkZW50aWZpY2F0aW9uQW5zd2VyOiB2YWx1ZSB9KX0gbXVsdGlsaW5lPXtmYWxzZX0gLz47XG59XG5cbmZ1bmN0aW9uIFNob3J0QW5zd2VyRWRpdG9yKHsgcXVlc3Rpb24sIG9uUGF0Y2ggfTogUHJvcHMpIHtcbiAgcmV0dXJuIDxTaW1wbGVBbnN3ZXJGaWVsZCBsYWJlbD1cIkV4cGVjdGVkIEFuc3dlclwiIHZhbHVlPXtxdWVzdGlvbi5zaG9ydEFuc3dlcn0gb25DaGFuZ2U9eyh2YWx1ZSkgPT4gb25QYXRjaCh7IHNob3J0QW5zd2VyOiB2YWx1ZSB9KX0gbXVsdGlsaW5lIC8+O1xufVxuXG5mdW5jdGlvbiBUcnVlRmFsc2VFZGl0b3IoeyBxdWVzdGlvbiwgb25QYXRjaCB9OiBQcm9wcykge1xuICByZXR1cm4gKFxuICAgIDxkaXYgY2xhc3NOYW1lPVwic3BhY2UteS0yXCI+XG4gICAgICA8bGFiZWwgY2xhc3NOYW1lPVwidGV4dC1zbSB0ZXh0LXdoaXRlXCI+Q29ycmVjdCBBbnN3ZXI8L2xhYmVsPlxuICAgICAgPFNlbGVjdCB2YWx1ZT17cXVlc3Rpb24udHJ1ZUZhbHNlQW5zd2VyfSBvblZhbHVlQ2hhbmdlPXsobmV4dCkgPT4gb25QYXRjaCh7IHRydWVGYWxzZUFuc3dlcjogbmV4dCBhcyBcInRydWVcIiB8IFwiZmFsc2VcIiB9KX0+XG4gICAgICAgIDxTZWxlY3RUcmlnZ2VyIGNsYXNzTmFtZT1cImgtMTIgcm91bmRlZC0yeGwgYm9yZGVyIGJvcmRlci13aGl0ZS8yMCBiZy13aGl0ZS8yMCB0ZXh0LXdoaXRlIGRhdGEtW3BsYWNlaG9sZGVyXTp0ZXh0LXdoaXRlLzcwXCI+PFNlbGVjdFZhbHVlIHBsYWNlaG9sZGVyPVwiU2VsZWN0IHRydWUgb3IgZmFsc2VcIiAvPjwvU2VsZWN0VHJpZ2dlcj5cbiAgICAgICAgPFNlbGVjdENvbnRlbnQgY2xhc3NOYW1lPVwicm91bmRlZC0yeGwgYm9yZGVyIGJvcmRlci13aGl0ZS8yMCBiZy1bIzFiMjQzMF0vOTUgdGV4dC13aGl0ZSBiYWNrZHJvcC1ibHVyLXhsXCI+XG4gICAgICAgICAgPFNlbGVjdEl0ZW0gdmFsdWU9XCJ0cnVlXCI+VHJ1ZTwvU2VsZWN0SXRlbT5cbiAgICAgICAgICA8U2VsZWN0SXRlbSB2YWx1ZT1cImZhbHNlXCI+RmFsc2U8L1NlbGVjdEl0ZW0+XG4gICAgICAgIDwvU2VsZWN0Q29udGVudD5cbiAgICAgIDwvU2VsZWN0PlxuICAgIDwvZGl2PlxuICApO1xufVxuXG5mdW5jdGlvbiBTaW1wbGVBbnN3ZXJGaWVsZCh7XG4gIGxhYmVsLFxuICB2YWx1ZSxcbiAgb25DaGFuZ2UsXG4gIG11bHRpbGluZSxcbn06IHtcbiAgbGFiZWw6IHN0cmluZztcbiAgdmFsdWU6IHN0cmluZztcbiAgb25DaGFuZ2U6ICh2YWx1ZTogc3RyaW5nKSA9PiB2b2lkO1xuICBtdWx0aWxpbmU6IGJvb2xlYW47XG59KSB7XG4gIHJldHVybiAoXG4gICAgPGRpdiBjbGFzc05hbWU9XCJzcGFjZS15LTJcIj5cbiAgICAgIDxsYWJlbCBjbGFzc05hbWU9XCJ0ZXh0LXNtIHRleHQtd2hpdGVcIj57bGFiZWx9PC9sYWJlbD5cbiAgICAgIHttdWx0aWxpbmUgPyAoXG4gICAgICAgIDxUZXh0YXJlYSB2YWx1ZT17dmFsdWV9IG9uQ2hhbmdlPXsoZXZlbnQpID0+IG9uQ2hhbmdlKGV2ZW50LnRhcmdldC52YWx1ZSl9IHBsYWNlaG9sZGVyPVwiRW50ZXIgZXhwZWN0ZWQgbG9uZyBhbnN3ZXJcIiBjbGFzc05hbWU9XCJtaW4taC1bMTAwcHhdIGJvcmRlci13aGl0ZS8yMCBiZy13aGl0ZS8yMCB0ZXh0LXdoaXRlIHBsYWNlaG9sZGVyOnRleHQtd2hpdGUvNzBcIiAvPlxuICAgICAgKSA6IChcbiAgICAgICAgPElucHV0IHZhbHVlPXt2YWx1ZX0gb25DaGFuZ2U9eyhldmVudCkgPT4gb25DaGFuZ2UoZXZlbnQudGFyZ2V0LnZhbHVlKX0gcGxhY2Vob2xkZXI9XCJFbnRlciBleHBlY3RlZCBhbnN3ZXJcIiBjbGFzc05hbWU9XCJoLTEyIGJvcmRlci13aGl0ZS8yMCBiZy13aGl0ZS8yMCB0ZXh0LXdoaXRlIHBsYWNlaG9sZGVyOnRleHQtd2hpdGUvNzBcIiAvPlxuICAgICAgKX1cbiAgICA8L2Rpdj5cbiAgKTtcbn1cblxyXG5cclxuIl0sImZpbGUiOiJDOi9lZHZhbmEvZnJvbnRlbmQvc3JjL2Rhc2hib2FyZC90ZWFjaGVyL2NvbXBvbmVudHMvcXVlc3Rpb25zL2J1aWxkZXIvUXVlc3Rpb25FZGl0b3JGaWVsZHMudHN4In0=
