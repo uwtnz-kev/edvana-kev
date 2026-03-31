@@ -14,6 +14,7 @@ import {
   TeacherExamEditForm,
   TeacherExamEditHeader,
 } from "@/dashboard/teacher/components/exams/edit";
+import { TEACHER_ROUTES } from "@/dashboard/teacher/routes";
 
 type ExamsEditState = {
   restoreSubjectId?: string;
@@ -41,7 +42,7 @@ export default function ExamsEditView() {
   const restoreSubjectId = exam ? getRestoreSubjectId(location.state, exam.subject) : null;
 
   const goBack = () => {
-    navigate("/dashboard/teacher/exams", {
+    navigate({ pathname: TEACHER_ROUTES.EXAMS, search: location.search }, {
       state: { restoreSubjectId: restoreSubjectId ?? undefined },
     });
   };
@@ -58,7 +59,7 @@ export default function ExamsEditView() {
           <div className="mt-5">
             <Button
               type="button"
-              onClick={() => navigate("/dashboard/teacher/exams")}
+              onClick={() => navigate({ pathname: TEACHER_ROUTES.EXAMS, search: location.search })}
               className="bg-white/20 hover:bg-white/30 text-[var(--text-primary)] border border-white/20 rounded-2xl"
             >
               Back
@@ -83,6 +84,3 @@ export default function ExamsEditView() {
     </div>
   );
 }
-
-
-

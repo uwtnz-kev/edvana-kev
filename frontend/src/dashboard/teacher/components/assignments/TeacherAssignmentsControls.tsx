@@ -26,7 +26,6 @@ const statusOptions: Array<{ value: AssignmentStatusFilter; label: string }> = [
   { value: "all", label: "All status" },
   { value: "draft", label: "Draft" },
   { value: "published", label: "Published" },
-  { value: "ongoing", label: "Ongoing" },
   { value: "closed", label: "Closed" },
 ];
 
@@ -51,7 +50,7 @@ export function TeacherAssignmentsControls({
             <Input
               value={search}
               onChange={(event) => onSearchChange(event.target.value)}
-              placeholder="Search title, grade, or class"
+              placeholder="Search title"
               disabled={disabled}
               className="pl-9 bg-white/10 border-white/10 backdrop-blur-xl rounded-2xl text-white placeholder:text-white/60"
             />
@@ -78,8 +77,3 @@ export function TeacherAssignmentsControls({
     </div>
   );
 }
-
-
-
-
-

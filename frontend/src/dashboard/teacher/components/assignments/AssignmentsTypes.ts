@@ -13,7 +13,12 @@ export type AssignmentAttachment = {
   size: number;
   type: string;
   lastModified: number;
+  blobKey?: string;
 };
+
+export type AssignmentRepublishAudience =
+  | { mode: "class" }
+  | { mode: "students"; studentIds: string[] };
 
 export interface TeacherAssignment {
   id: string;
@@ -29,13 +34,13 @@ export interface TeacherAssignment {
   totalQuestions: number;
   totalSubmissions: number;
   pendingToGrade: number;
-  estimatedMinutes: number;
   submissionMethods: SubmissionMethod[];
   instructions?: string;
   questionsText?: string;
   attachments?: AssignmentAttachment[];
   rubric?: string;
   maxScore?: number;
+  republishAudience?: AssignmentRepublishAudience;
 }
 
 export interface TeacherSubject2 {
@@ -48,7 +53,7 @@ export interface TeacherClass2 {
   label: string;
 }
 
-export type AssignmentStatusFilter = "all" | AssignmentStatus | "ongoing";
+export type AssignmentStatusFilter = "all" | AssignmentStatus;
 
 export interface AssignmentFilters {
   query: string;
@@ -61,6 +66,5 @@ export interface AssignmentStats {
   grading: number;
   completionRate: number;
 }
-
 
 

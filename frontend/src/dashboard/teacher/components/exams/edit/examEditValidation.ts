@@ -1,6 +1,12 @@
 // Defines validation rules and save checks for exam editing.
-import { requiresQuestionBuilder, validateSubmissionMethods } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
+import { requiresQuestionBuilder } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
 import type { FieldName, FormErrors, FormValues } from "../create/examCreateTypes";
+
+function validateExamSubmissionMethods(methods: FormValues["submissionMethods"]) {
+  return methods.length === 1 && methods[0] === "quiz_form"
+    ? null
+    : "Exams use Quiz Form only.";
+}
 
 export function validateExamEditField(name: FieldName, value: FormValues[FieldName], values: FormValues): string | null {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -8,12 +14,12 @@ export function validateExamEditField(name: FieldName, value: FormValues[FieldNa
   if (name === "title" && trimmed.length === 0) return "Title is required.";
   if (name === "instructions" && trimmed.length === 0) return "Instructions are required.";
   if (name === "questionsText" && requiresQuestionBuilder(values.submissionMethods) && trimmed.length === 0) return "Questions are required.";
-  if (name === "scheduledAt" && trimmed.length === 0) return "Scheduled date is required.";
+  if (name === "scheduledAt" && trimmed.length === 0) return "Close date and time is required.";
   if (name === "classId" && trimmed.length === 0) return "Class is required.";
   if (name === "durationMinutes") return validatePositiveValue(trimmed, "Duration", "greater than 0.");
   if (name === "totalAttempts") return validateWholeNumber(trimmed);
   if (name === "totalQuestions") return requiresQuestionBuilder(values.submissionMethods) ? validatePositiveValue(trimmed, "Total number of questions", "greater than 0.") : null;
-  if (name === "submissionMethods") return validateSubmissionMethods(value as FormValues["submissionMethods"]);
+  if (name === "submissionMethods") return validateExamSubmissionMethods(value as FormValues["submissionMethods"]);
   if (name === "maxScore") return validatePositiveValue(trimmed, "Max score", "a positive number.");
   return null;
 }

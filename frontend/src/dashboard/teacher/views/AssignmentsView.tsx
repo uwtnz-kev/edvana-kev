@@ -3,9 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ClipboardList, Plus, Upload } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
-  seedSubjects2,
-  TeacherAssignmentPreviewModal,
-  TeacherAssignmentsHeader,
+  seedSubjects2,  TeacherAssignmentsHeader,
   TeacherAssignmentsSubjectSidebar,
   type TeacherSubject2,
 } from "@/dashboard/teacher/components/assignments";
@@ -145,13 +143,6 @@ function AssignmentsListWorkspace({
     <div className="w-full overflow-x-hidden p-4 sm:p-6" style={{ overflowX: "hidden" }}>
       <AssignmentsWorkspaceHeader workspace={workspaceView} onBackToClassEntry={onBackToClassEntry} />
       <AssignmentsWorkspaceContent workspace={workspaceView} />
-      <TeacherAssignmentPreviewModal
-        assignment={workspaceView.previewAssignment}
-        open={Boolean(workspaceView.previewAssignment)}
-        onOpenChange={(isOpen) => {
-          if (!isOpen) workspaceView.setPreviewId(null);
-        }}
-      />
     </div>
   );
 }
@@ -360,3 +351,8 @@ function AssignmentsContentShell({
     </section>
   );
 }
+
+
+
+
+

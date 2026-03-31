@@ -19,3 +19,8 @@ export function getAssignmentStatusChipLabel(assignment: TeacherAssignment) {
   const status = resolveAssignmentRules(assignment, Date.now()).derivedStatus;
   return getAssignmentStatusLabel(status);
 }
+
+export function getAssignmentDerivedStatus(assignment: TeacherAssignment) {
+  return resolveAssignmentRules(assignment, Date.now()).derivedStatus;
+}
+

@@ -12,7 +12,6 @@ export const initialValues: FormValues = {
   classId: "",
   classLabel: "",
   accessCode: "",
-  estimatedMinutes: "",
   totalAttempts: "",
   totalQuestions: String(DEFAULT_TOTAL_QUESTIONS),
   submissionMethods: DEFAULT_SUBMISSION_METHODS,
@@ -27,7 +26,6 @@ export const initialTouched: TouchedState = {
   classId: false,
   classLabel: false,
   accessCode: false,
-  estimatedMinutes: false,
   totalAttempts: false,
   totalQuestions: false,
   submissionMethods: false,
@@ -47,9 +45,9 @@ export const FIELD_IDS: Record<FieldName, string> = {
   classId: "assignment-class-trigger",
   classLabel: "assignment-class-trigger",
   accessCode: "assignment-access-code",
-  estimatedMinutes: "assignment-estimated",
   totalAttempts: "assignment-total-attempts",
   totalQuestions: "assignment-total-questions",
   submissionMethods: "assignment-submission-methods",
   maxScore: "assignment-max-score",
 };
+

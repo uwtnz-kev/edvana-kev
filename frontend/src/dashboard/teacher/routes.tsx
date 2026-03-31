@@ -5,6 +5,17 @@
  */
 export const TEACHER_ROUTES = {
   ROOT: "/dashboard/teacher",
+  ASSIGNMENTS: "/dashboard/teacher/assignments",
+  ASSIGNMENTS_CREATE: "/dashboard/teacher/assignments/create",
+  ASSIGNMENTS_UPLOAD: "/dashboard/teacher/assignments/upload",
+  ASSIGNMENTS_PREVIEW: "/dashboard/teacher/assignments/:assignmentId/preview",
+  ASSIGNMENTS_EDIT: "/dashboard/teacher/assignments/:assignmentId/edit",
+  ASSIGNMENTS_REPUBLISH: "/dashboard/teacher/assignments/:assignmentId/republish",
+  EXAMS: "/dashboard/teacher/exams",
+  EXAMS_CREATE: "/dashboard/teacher/exams/create",
+  EXAMS_PREVIEW: "/dashboard/teacher/exams/:examId/preview",
+  EXAMS_EDIT: "/dashboard/teacher/exams/:examId/edit",
+  EXAMS_REPUBLISH: "/dashboard/teacher/exams/:examId/republish",
   GRADES: "/dashboard/teacher/grades",
   GRADES_WORKSPACE: "/dashboard/teacher/grades/workspace",
   GRADES_WORKSPACE_ITEM: "/dashboard/teacher/grades/workspace/:itemId",
@@ -28,4 +39,3 @@ export const TEACHER_ROUTES = {
   MESSAGES: "/dashboard/teacher/messages",
   MESSAGE_DETAILS: "/dashboard/teacher/messages/:messageId",
 } as const;
-

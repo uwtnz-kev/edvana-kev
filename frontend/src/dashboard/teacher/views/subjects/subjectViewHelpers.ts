@@ -29,5 +29,3 @@ export function getSubjectSidebarActions(subjectId: string, classId?: string | n
     { value: "upload-files", label: "Upload Files", icon: Upload, to: appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/upload-files`, classId) },
   ] satisfies SubjectSidebarAction[];
 }
-
-

@@ -21,6 +21,7 @@ interface Assignment {
   submissionMethods?: SubmissionMethod[];
   classId?: string;
   classLabel?: string;
+  teacherAssignmentId?: string;
 }
 
 interface AssignmentListProps {
@@ -41,7 +42,8 @@ const mockAssignments: Assignment[] = [
     attemptCount: 1,
     submissionMethods: ["text_entry"],
     classId: "math-a",
-    classLabel: "Math A"
+    classLabel: "Math A",
+    teacherAssignmentId: "a2-001"
   },
   {
     id: 2,
@@ -83,7 +85,8 @@ const mockAssignments: Assignment[] = [
     type: "homework",
     submissionMethods: ["file_upload"],
     classId: "bio-1",
-    classLabel: "Biology 1"
+    classLabel: "Biology 1",
+    teacherAssignmentId: "assignment-5"
   },
   {
     id: 5,
@@ -98,7 +101,8 @@ const mockAssignments: Assignment[] = [
     attemptCount: 0,
     submissionMethods: ["text_entry", "file_upload"],
     classId: "phy-1",
-    classLabel: "Physics 1"
+    classLabel: "Physics 1",
+    teacherAssignmentId: "a2-004"
   },
   {
     id: 6,
@@ -129,7 +133,8 @@ const mockAssignments: Assignment[] = [
     accessCode: "CHEM-LOCK",
     submissionMethods: ["text_entry"],
     classId: "chem-1",
-    classLabel: "Chemistry 1"
+    classLabel: "Chemistry 1",
+    teacherAssignmentId: "a2-003"
   },
   {
     id: 8,
@@ -157,7 +162,8 @@ const mockAssignments: Assignment[] = [
     attemptCount: 2,
     submissionMethods: ["quiz_form"],
     classId: "math-a",
-    classLabel: "Math A"
+    classLabel: "Math A",
+    teacherAssignmentId: "a2-001"
   },
   {
     id: 10,
@@ -170,7 +176,8 @@ const mockAssignments: Assignment[] = [
     type: "project",
     submissionMethods: ["link_submission"],
     classId: "bio-1",
-    classLabel: "Biology 1"
+    classLabel: "Biology 1",
+    teacherAssignmentId: "assignment-5"
   },
   {
     id: 11,
@@ -463,3 +470,5 @@ export function AssignmentList({ filter = "all" }: AssignmentListProps) {
     </div>
   );
 }
+
+

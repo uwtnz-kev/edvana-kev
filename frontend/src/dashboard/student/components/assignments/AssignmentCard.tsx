@@ -2,6 +2,7 @@ import { useMemo, useState, type ChangeEvent } from "react";
 import { Calendar, Clock, BookOpen, FileText, AlertCircle, KeyRound, RefreshCcw, Link2, Unlock, Lock } from "lucide-react";
 import { resolveAssignmentRules } from "@/dashboard/teacher/components/shared";
 import type { SubmissionMethod } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
+import { recordStudentAssignmentSubmission, useStudentAssignmentSubmissionState } from "@/dashboard/teacher/components/assignments";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "../shared/StatusBadge";
 
@@ -21,6 +22,7 @@ interface AssignmentCardProps {
   submissionMethods?: SubmissionMethod[];
   classId?: string;
   classLabel?: string;
+  teacherAssignmentId?: string;
 }
 
 export function AssignmentCard({
@@ -37,6 +39,7 @@ export function AssignmentCard({
   totalAttempts,
   attemptCount,
   submissionMethods = [],
+  teacherAssignmentId,
 }: AssignmentCardProps) {
   const rules = resolveAssignmentRules(
     {
@@ -56,6 +59,7 @@ export function AssignmentCard({
   const [textEntryValue, setTextEntryValue] = useState("");
   const [linkValue, setLinkValue] = useState("");
   const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
+  const hasSubmittedAssignment = useStudentAssignmentSubmissionState(teacherAssignmentId);
 
   const isOverdue = status === "pending" && new Date(dueDate) < new Date();
   const actualStatus = rules.derivedStatus === "closed"
@@ -118,6 +122,11 @@ export function AssignmentCard({
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedFileName(event.target.files?.[0]?.name ?? null);
+  };
+
+  const handleSubmitAssignment = () => {
+    if (!canSubmit || hasSubmittedAssignment) return;
+    if (teacherAssignmentId) recordStudentAssignmentSubmission(teacherAssignmentId);
   };
 
   return (
@@ -259,10 +268,11 @@ export function AssignmentCard({
 
           <Button
             type="button"
-            disabled={!canSubmit}
+            disabled={!canSubmit || hasSubmittedAssignment}
+            onClick={handleSubmitAssignment}
             className="rounded-2xl border border-white/20 bg-white/15 px-5 text-white hover:bg-white/25 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Submit Assignment
+            {hasSubmittedAssignment ? "Submitted" : "Submit Assignment"}
           </Button>
         </div>
       ) : null}

@@ -6,5 +6,11 @@ export {
   deleteExam,
   duplicateExam,
   publishExam,
+  republishExam,
   updateExam,
 } from "./examMutations";
+export {
+  loadExamSubmissionRecords,
+  recordStudentExamSubmission,
+  useTeacherExamSubmissionTotal,
+} from "./examSubmissionRecords";

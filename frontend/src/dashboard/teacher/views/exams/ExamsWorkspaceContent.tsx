@@ -13,8 +13,8 @@ export function ExamsWorkspaceContent({ workspace }: Props) {
       <section className="flex-1 min-w-0 space-y-4">
         <TeacherExamsHeader title="Exams" subtitle={`Subject: ${workspace.selectedSubject.name}`} subjectName={workspace.selectedSubject.name} showBack showCreate onBack={workspace.onBack} canCreate={workspace.canCreate} onCreate={workspace.onCreate} />
         <ExamsWorkspaceFilters workspace={workspace} />
+        <TeacherExamList exams={workspace.pagedExams} selectedSubject={workspace.selectedSubject} onPreview={workspace.onPreview} onPublish={workspace.onPublish} onRepublish={workspace.onRepublish} onDelete={workspace.onDelete} onCreate={workspace.onCreate} />
         <ExamsWorkspacePagination page={workspace.page} totalPages={workspace.totalPages} onPageChange={workspace.setPage} />
-        <TeacherExamList exams={workspace.pagedExams} selectedSubject={workspace.selectedSubject} onPreview={workspace.onPreview} onDuplicate={workspace.onDuplicate} onPublish={workspace.onPublish} onEdit={workspace.onEdit} onDelete={workspace.onDelete} onCreate={workspace.onCreate} />
       </section>
     </div>
   );

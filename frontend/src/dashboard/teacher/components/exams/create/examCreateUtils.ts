@@ -1,8 +1,14 @@
 // Provides validation, draft restoration, and attachment helpers for exam creation.
-import { normalizeSubmissionMethods, requiresQuestionBuilder, validateSubmissionMethods } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
+import { normalizeSubmissionMethods, requiresQuestionBuilder } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
 import { buildAssessmentAttachmentId, formatAssessmentFileSize } from "@/dashboard/teacher/components/shared/assessment/assessmentAttachmentHelpers";
 import { initialValues } from "./examCreateConstants";
 import type { ExamCreateLocationState, FieldName, FormErrors, FormValues } from "./examCreateTypes";
+
+function validateExamSubmissionMethods(methods: FormValues["submissionMethods"]) {
+  return methods.length === 1 && methods[0] === "quiz_form"
+    ? null
+    : "Exams use Quiz Form only.";
+}
 
 // Validates fields in one place so all extracted sections share consistent rules.
 export function validateField(name: FieldName, value: FormValues[FieldName], values: FormValues): string | null {
@@ -11,12 +17,12 @@ export function validateField(name: FieldName, value: FormValues[FieldName], val
   if (name === "title" && trimmed.length === 0) return "Title is required.";
   if (name === "instructions" && trimmed.length === 0) return "Instructions are required.";
   if (name === "questionsText" && requiresQuestionBuilder(values.submissionMethods) && trimmed.length === 0) return "Questions are required.";
-  if (name === "scheduledAt" && trimmed.length === 0) return "Scheduled date is required.";
+  if (name === "scheduledAt" && trimmed.length === 0) return "Close date and time is required.";
   if (name === "classId" && trimmed.length === 0) return "Class is required.";
   if (name === "durationMinutes") return validatePositiveNumber(trimmed, "Duration", "greater than 0.");
   if (name === "totalAttempts") return validateWholeNumber(trimmed);
   if (name === "totalQuestions") return requiresQuestionBuilder(values.submissionMethods) ? validatePositiveNumber(trimmed, "Total number of questions", "greater than 0.") : null;
-  if (name === "submissionMethods") return validateSubmissionMethods(value as FormValues["submissionMethods"]);
+  if (name === "submissionMethods") return validateExamSubmissionMethods(value as FormValues["submissionMethods"]);
   if (name === "maxScore") return validatePositiveNumber(trimmed, "Max score", "a positive number.");
   return null;
 }
@@ -44,7 +50,7 @@ export function resolveFormValues(state: ExamCreateLocationState | null): FormVa
   return {
     ...initialValues,
     ...formDraft,
-    submissionMethods: normalizeSubmissionMethods(formDraft?.submissionMethods),
+    submissionMethods: normalizeSubmissionMethods(formDraft?.submissionMethods).includes("quiz_form") ? ["quiz_form"] : ["quiz_form"],
     questionsText: typeof fromBuilder === "string" ? fromBuilder : typeof formDraft?.questionsText === "string" ? formDraft.questionsText : "",
   };
 }

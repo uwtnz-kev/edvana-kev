@@ -13,7 +13,6 @@ export {
   reorderSubjectModules,
   reorderSubjectSubmodules,
   subscribeToSubjectModules,
-  updateSubjectModule,
   updateSubjectModuleStatus,
   useSubjectModules,
 } from "./store";

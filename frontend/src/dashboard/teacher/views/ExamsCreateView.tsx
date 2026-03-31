@@ -9,6 +9,7 @@ import {
   TeacherExamCreateForm,
   TeacherExamCreateHeader,
 } from "@/dashboard/teacher/components/exams/create";
+import { TEACHER_ROUTES } from "@/dashboard/teacher/routes";
 
 type ExamsCreateState = {
   subjectId: string;
@@ -48,7 +49,7 @@ export default function ExamsCreateView() {
           <div className="mt-5">
             <Button
               type="button"
-              onClick={() => navigate("/dashboard/teacher/exams")}
+              onClick={() => navigate({ pathname: TEACHER_ROUTES.EXAMS, search: location.search })}
               className="bg-white/20 hover:bg-white/30 text-[var(--text-primary)] border border-white/20 rounded-2xl"
             >
               Back
@@ -65,7 +66,7 @@ export default function ExamsCreateView() {
         <TeacherExamCreateHeader
           subjectName={createState.subjectName}
           onBack={() =>
-            navigate("/dashboard/teacher/exams", {
+            navigate({ pathname: TEACHER_ROUTES.EXAMS, search: location.search }, {
               state: { restoreSubjectId: createState.subjectId },
             })
           }
@@ -75,12 +76,12 @@ export default function ExamsCreateView() {
           subjectId={createState.subjectId}
           subjectName={createState.subjectName}
           onCancel={() =>
-            navigate("/dashboard/teacher/exams", {
+            navigate({ pathname: TEACHER_ROUTES.EXAMS, search: location.search }, {
               state: { restoreSubjectId: createState.subjectId },
             })
           }
           onSaved={(subjectId) =>
-            navigate("/dashboard/teacher/exams", {
+            navigate({ pathname: TEACHER_ROUTES.EXAMS, search: location.search }, {
               state: { restoreSubjectId: subjectId },
             })
           }
@@ -89,8 +90,3 @@ export default function ExamsCreateView() {
     </div>
   );
 }
-
-
-
-
-

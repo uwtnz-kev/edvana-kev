@@ -8,11 +8,10 @@ import {
   deleteSubjectSubmodule,
   reorderSubjectModules,
   reorderSubjectSubmodules,
-  updateSubjectModule,
   updateSubjectModuleStatus,
   useSubjectModules,
 } from "@/dashboard/teacher/components/subjects/subjectModulesStore";
-import type { SubjectModuleItem, SubjectModulePayload } from "@/dashboard/teacher/components/subjects/store/subjectModulesTypes";
+import type { SubjectModuleItem } from "@/dashboard/teacher/components/subjects/store/subjectModulesTypes";
 import { appendClassIdToPath, getClassIdFromSearchParams } from "../subjectClassRouting";
 import { getSubjectName, getSubjectTitle, type SubjectModulesRouteState } from "./subjectModulesViewHelpers";
 
@@ -67,7 +66,6 @@ export function useSubjectModulesViewState() {
     () => (isSearchActive ? modules.filter((module) => matchingModuleIds.has(module.id)) : modules),
     [isSearchActive, matchingModuleIds, modules],
   );
-  const allModuleTitles = useMemo(() => modules.map((module) => module.title), [modules]);
   const initialExpandedModuleId = routeState?.returnModuleId?.trim() || null;
   const [expandedModuleId, setExpandedModuleId] = useState<string | null>(initialExpandedModuleId);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
@@ -190,7 +188,6 @@ export function useSubjectModulesViewState() {
     subjectFiles,
     theme,
     visibleModules,
-    allModuleTitles,
     closeDeleteConfirm: () => {
       setDeleteConfirmOpen(false);
       setPendingDeleteTarget(null);
@@ -215,10 +212,6 @@ export function useSubjectModulesViewState() {
     goBack: () => navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}`, classId)),
     goToSubjectsSelection: () => navigate(appendClassIdToPath("/dashboard/teacher/subjects", classId)),
     openAttachedFile,
-    openModule: (moduleId: string) =>
-      navigate(appendClassIdToPath(`/dashboard/teacher/subjects/${subjectId}/modules/${moduleId}`, classId), {
-        state: { restoreSubjectId: subjectId, subject: routeState?.subject ?? null },
-      }),
     openSubmodule: (moduleId: string, submoduleId: string) => {
       const scrollContainer = getModulesScrollContainer();
       const returnScrollTop = scrollContainer instanceof HTMLElement ? scrollContainer.scrollTop : undefined;
@@ -246,6 +239,5 @@ export function useSubjectModulesViewState() {
       if (isSearchActive) return;
       setExpandedModuleId((current) => (current === moduleId ? null : moduleId));
     },
-    updateModule: (moduleId: string, payload: SubjectModulePayload) => updateSubjectModule(subjectId, moduleId, payload),
   };
 }

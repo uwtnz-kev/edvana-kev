@@ -1,5 +1,5 @@
 // Renders the module overview card and basic title input.
-import { BookOpen } from "lucide-react";
+import { BookOpen, Upload } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { SubjectIconTheme } from "@/dashboard/teacher/components/shared/subjectIconTheme";
@@ -15,19 +15,27 @@ type Props = {
   onTitleChange: (value: string) => void;
   onTitleBlur: () => void;
   showDescriptionField?: boolean;
+  variant?: "create" | "upload";
 };
 
 export function UploadModuleBasicFields(props: Props) {
+  const variant = props.variant ?? "create";
+  const HeroIcon = variant === "upload" ? Upload : BookOpen;
+  const eyebrow = variant === "upload" ? "SUBJECT MODULE UPLOAD" : "SUBJECT MODULE CREATION";
+  const helperText = variant === "upload"
+    ? `Build a module for ${props.subjectTitle} using uploaded submodule files.`
+    : `Add a new module for ${props.subjectTitle} by filling out the details below.`;
+
   return (
     <>
       <div className="flex items-start gap-4">
         <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${props.theme.bgClass}`}>
-          <BookOpen className={`h-6 w-6 ${props.theme.iconClass}`} />
+          <HeroIcon className={`h-6 w-6 ${props.theme.iconClass}`} />
         </div>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#1EA896]">Subject Module Creation</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#1EA896]">{eyebrow}</p>
           <h2 className="mt-2 text-lg font-semibold text-white">{props.subjectTitle}</h2>
-          <p className="mt-1 text-sm text-[var(--text-secondary)]">Add a new module for {props.subjectTitle} by filling out the details below.</p>
+          <p className="mt-1 text-sm text-[var(--text-secondary)]">{helperText}</p>
         </div>
       </div>
 
@@ -52,4 +60,3 @@ export function UploadModuleBasicFields(props: Props) {
     </>
   );
 }
-

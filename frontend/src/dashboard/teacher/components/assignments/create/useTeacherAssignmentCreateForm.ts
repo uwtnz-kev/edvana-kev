@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useRef, useState, type ChangeEvent, type Dispatch, type SetStateAction } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { createAssignment, loadAssignments, seedClasses2, type AssignmentAttachment } from "@/dashboard/teacher/components/assignments";
+import { buildSubjectFileContentKey, storeSubjectFileContent } from "@/dashboard/teacher/components/subjects/files/subjectFilesBinaryStorage";
 import { clearCreateDraft as clearQuestionDraft, createQuestionBuilderDraftId } from "@/dashboard/teacher/components/questions/questionsStore";
 import {
   findDuplicateAssignmentFile,
@@ -12,8 +13,13 @@ import {
 } from "@/dashboard/teacher/components/shared";
 import { getQuestionBuilderPersistenceValues, requiresQuestionBuilder, type SubmissionMethod } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
 import { FIELD_IDS, allTouched, initialTouched, initialValues } from "./assignmentCreateConstants";
-import { buildAttachmentId, buildErrors, canSaveAssignment, resolveFormValues } from "./assignmentCreateUtils";
+import { buildErrors, canSaveAssignment, resolveFormValues } from "./assignmentCreateUtils";
 import type { AssignmentCreateLocationState, FieldName, FormValues, TeacherAssignmentCreateFormProps, TouchedState } from "./assignmentCreateTypes";
+import { buildAssessmentAttachmentId } from "@/dashboard/teacher/components/shared/assessment/assessmentAttachmentHelpers";
+
+type DraftAssignmentAttachment = AssignmentAttachment & {
+  file?: File;
+};
 
 export function useTeacherAssignmentCreateForm({ onSaved, subjectId, subjectName, lockedClassId, lockedClassLabel }: Pick<TeacherAssignmentCreateFormProps, "onSaved" | "subjectId" | "subjectName" | "lockedClassId" | "lockedClassLabel">) {
   const navigate = useNavigate();
@@ -22,7 +28,7 @@ export function useTeacherAssignmentCreateForm({ onSaved, subjectId, subjectName
   const [questionDraftId] = useState(() => locationState?.questionDraftId?.trim() ? locationState.questionDraftId : createQuestionBuilderDraftId("assignment"));
   const [values, setValues] = useState<FormValues>(() => applyLockedClass(initialValues, lockedClassId, lockedClassLabel));
   const [touched, setTouched] = useState(initialTouched);
-  const [attachments, setAttachments] = useState<AssignmentAttachment[]>([]);
+  const [attachments, setAttachments] = useState<DraftAssignmentAttachment[]>([]);
   const [attachmentsError, setAttachmentsError] = useState<string | null>(null);
   const [isQuestionsPreviewOpen, setIsQuestionsPreviewOpen] = useState(false);
   const [duplicateDialogOpen, setDuplicateDialogOpen] = useState(false);
@@ -85,7 +91,7 @@ export function useTeacherAssignmentCreateForm({ onSaved, subjectId, subjectName
   };
 
   const processPickedAttachments = (files: File[], skipDuplicateCheckForCurrent = false) => {
-    const nextAttachments: AssignmentAttachment[] = [];
+    const nextAttachments: DraftAssignmentAttachment[] = [];
     let nextError: string | null = null;
 
     for (const [index, file] of files.entries()) {
@@ -115,7 +121,8 @@ export function useTeacherAssignmentCreateForm({ onSaved, subjectId, subjectName
         }
       }
 
-      nextAttachments.push({ id: buildAttachmentId(), name: file.name, size: file.size, type: file.type, lastModified: file.lastModified });
+      const attachmentId = buildAssessmentAttachmentId();
+      nextAttachments.push({ id: attachmentId, name: file.name, size: file.size, type: file.type, lastModified: file.lastModified, blobKey: buildSubjectFileContentKey(attachmentId), file });
       skipDuplicateCheckForCurrent = false;
     }
 
@@ -154,7 +161,8 @@ export function useTeacherAssignmentCreateForm({ onSaved, subjectId, subjectName
     setDuplicateDialogOpen(false);
 
     try {
-      setAttachments((prev) => [...prev, { id: buildAttachmentId(), name: pendingDuplicateFile.name, size: pendingDuplicateFile.size, type: pendingDuplicateFile.type, lastModified: pendingDuplicateFile.lastModified }]);
+      const attachmentId = buildAssessmentAttachmentId();
+      setAttachments((prev) => [...prev, { id: attachmentId, name: pendingDuplicateFile.name, size: pendingDuplicateFile.size, type: pendingDuplicateFile.type, lastModified: pendingDuplicateFile.lastModified, blobKey: buildSubjectFileContentKey(attachmentId), file: pendingDuplicateFile }]);
       setAttachmentsError(null);
       const remainingFiles = pendingRemainingFiles;
       setPendingDuplicateMatch(null);
@@ -166,12 +174,32 @@ export function useTeacherAssignmentCreateForm({ onSaved, subjectId, subjectName
     }
   };
 
-  const persistAssignment = () => {
+  const persistAssignment = async () => {
     const dueDate = new Date(values.dueAt);
     const accessCode = values.accessCode.trim() || undefined;
     const maxScore = values.maxScore.trim() ? Number(values.maxScore.trim()) : undefined;
     const questionBuilderValues = getQuestionBuilderPersistenceValues(values.submissionMethods, values.questionsText, values.totalQuestions);
-    const payload = { title: values.title.trim(), subject: subjectName, classId: values.classLabel.trim().toLowerCase(), classLabel: values.classLabel, dueAt: Number.isNaN(dueDate.getTime()) ? new Date().toISOString() : dueDate.toISOString(), status: "draft" as const, totalAttempts: Number(values.totalAttempts), totalQuestions: questionBuilderValues.totalQuestions, totalSubmissions: 0, pendingToGrade: 0, estimatedMinutes: Number(values.estimatedMinutes), submissionMethods: values.submissionMethods, instructions: values.instructions.trim(), questionsText: questionBuilderValues.questionsText, attachments: allowsFileUpload && attachments.length ? attachments : undefined, maxScore: typeof maxScore === "number" && Number.isFinite(maxScore) ? maxScore : undefined, accessCode };
+    const persistedAttachments: AssignmentAttachment[] = attachments.map((attachment) => ({
+      id: attachment.id,
+      name: attachment.name,
+      size: attachment.size,
+      type: attachment.type,
+      lastModified: attachment.lastModified,
+      blobKey: attachment.blobKey,
+    }));
+
+    try {
+      await Promise.all(
+        attachments
+          .filter((attachment) => attachment.file && attachment.blobKey)
+          .map((attachment) => storeSubjectFileContent(attachment.blobKey as string, attachment.file as File)),
+      );
+    } catch {
+      setAttachmentsError("Failed to store attachment file. Please try again.");
+      return;
+    }
+
+    const payload = { title: values.title.trim(), subject: subjectName, classId: values.classLabel.trim().toLowerCase(), classLabel: values.classLabel, dueAt: Number.isNaN(dueDate.getTime()) ? new Date().toISOString() : dueDate.toISOString(), status: "draft" as const, totalAttempts: Number(values.totalAttempts), totalQuestions: questionBuilderValues.totalQuestions, totalSubmissions: 0, pendingToGrade: 0, submissionMethods: values.submissionMethods, instructions: values.instructions.trim(), questionsText: questionBuilderValues.questionsText, attachments: persistedAttachments.length ? persistedAttachments : undefined, maxScore: typeof maxScore === "number" && Number.isFinite(maxScore) ? maxScore : undefined, accessCode };
     console.info("[AssignmentsCreate] onSave", {
       routeSubjectId: subjectId,
       routeSubjectName: subjectName,
@@ -184,7 +212,7 @@ export function useTeacherAssignmentCreateForm({ onSaved, subjectId, subjectName
     onSaved(subjectId, values.classLabel.trim().toLowerCase() || undefined);
   };
 
-  const onSave = () => {
+  const onSave = async () => {
     if (!canSaveAssignment(errors)) return markInvalidFields(errors, setTouched);
 
     const duplicateResult = findDuplicateAssignmentTitle(
@@ -199,7 +227,7 @@ export function useTeacherAssignmentCreateForm({ onSaved, subjectId, subjectName
       return;
     }
 
-    persistAssignment();
+    await persistAssignment();
   };
 
   const handleTitleDuplicateDecision = async (decision: "proceed" | "cancel") => {
@@ -213,7 +241,7 @@ export function useTeacherAssignmentCreateForm({ onSaved, subjectId, subjectName
     setTitleDuplicateDialogOpen(false);
 
     try {
-      persistAssignment();
+      await persistAssignment();
     } finally {
       setTitleDuplicateDecisionBusy(false);
       setPendingTitleDuplicateMatch(null);
@@ -265,3 +293,7 @@ function markInvalidFields(errors: ReturnType<typeof buildErrors>, setTouched: D
   const firstInvalid = (Object.keys(FIELD_IDS) as FieldName[]).find((field) => Boolean(errors[field]));
   document.getElementById(firstInvalid ? FIELD_IDS[firstInvalid] : "")?.scrollIntoView({ behavior: "smooth", block: "center" });
 }
+
+
+
+

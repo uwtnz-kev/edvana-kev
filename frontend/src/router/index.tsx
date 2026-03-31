@@ -38,14 +38,18 @@ import SubjectFileViewer from "@/dashboard/teacher/views/subjects/files/SubjectF
 import TeacherStudentsView from "@/dashboard/teacher/views/StudentsView";
 import AssignmentsView from "@/dashboard/teacher/views/AssignmentsView";
 import AssignmentsCreateView from "@/dashboard/teacher/views/AssignmentsCreateView";
+import AssignmentsPreviewView from "@/dashboard/teacher/views/AssignmentsPreviewView";
 import AssignmentsEditView from "@/dashboard/teacher/views/AssignmentsEditView";
 import AssignmentsUploadView from "@/dashboard/teacher/views/AssignmentsUploadView";
+import AssignmentsRepublishView from "@/dashboard/teacher/views/AssignmentsRepublishView";
 import AnnouncementsView from "@/dashboard/teacher/views/AnnouncementsView";
 import AnnouncementCreateView from "@/dashboard/teacher/views/AnnouncementCreateView";
 import AnnouncementEditView from "@/dashboard/teacher/views/AnnouncementEditView";
 import ExamsView from "@/dashboard/teacher/views/ExamsView";
 import ExamsCreateView from "@/dashboard/teacher/views/ExamsCreateView";
 import ExamsEditView from "@/dashboard/teacher/views/ExamsEditView";
+import ExamsPreviewView from "@/dashboard/teacher/views/ExamsPreviewView";
+import ExamsRepublishView from "@/dashboard/teacher/views/ExamsRepublishView";
 import QuizView from "@/dashboard/teacher/views/QuizView";
 import QuizCreateView from "@/dashboard/teacher/views/QuizCreateView";
 import QuizEditView from "@/dashboard/teacher/views/QuizEditView";
@@ -163,6 +167,8 @@ export function AppRouter() {
             <Route index element={<AssignmentsView />} />
             <Route path="create" element={<AssignmentsCreateView />} />
             <Route path="upload" element={<AssignmentsUploadView />} />
+            <Route path=":assignmentId/preview" element={<AssignmentsPreviewView />} />
+            <Route path=":assignmentId/republish" element={<AssignmentsRepublishView />} />
             <Route path=":assignmentId/edit" element={<AssignmentsEditView />} />
           </Route>
           <Route path="announcements">
@@ -173,6 +179,8 @@ export function AppRouter() {
           <Route path="exams">
             <Route index element={<ExamsView />} />
             <Route path="create" element={<ExamsCreateView />} />
+            <Route path=":examId/preview" element={<ExamsPreviewView />} />
+            <Route path=":examId/republish" element={<ExamsRepublishView />} />
             <Route path=":examId/edit" element={<ExamsEditView />} />
           </Route>
           <Route path="quiz">
@@ -291,6 +299,17 @@ export function AppRouter() {
 }
 
 export default AppRouter;
+
+
+
+
+
+
+
+
+
+
+
 
 
 

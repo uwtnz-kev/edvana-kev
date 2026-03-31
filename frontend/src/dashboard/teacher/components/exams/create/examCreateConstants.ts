@@ -13,7 +13,7 @@ export const initialValues: FormValues = {
   classLabel: "",
   accessCode: "",
   durationMinutes: "",
-  totalAttempts: "",
+  totalAttempts: "1",
   totalQuestions: String(DEFAULT_TOTAL_QUESTIONS),
   submissionMethods: DEFAULT_SUBMISSION_METHODS,
   rubric: "",

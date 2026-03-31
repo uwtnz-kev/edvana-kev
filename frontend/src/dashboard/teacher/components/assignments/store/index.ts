@@ -12,5 +12,14 @@ export {
   deleteAssignment,
   duplicateAssignment,
   publishAssignment,
+  republishAssignment,
   updateAssignment,
 } from "./assignmentMutations";
+export {
+  getStudentAssignmentSubmissionCount,
+  hasStudentSubmittedAssignment,
+  loadAssignmentSubmissionRecords,
+  recordStudentAssignmentSubmission,
+  useStudentAssignmentSubmissionState,
+  useTeacherAssignmentSubmissionTotal,
+} from "./assignmentSubmissionRecords";

@@ -14,7 +14,6 @@ export const INITIAL_TOUCHED: TouchedState = {
   classId: false,
   classLabel: false,
   accessCode: false,
-  estimatedMinutes: false,
   totalAttempts: false,
   totalQuestions: false,
   submissionMethods: false,
@@ -35,7 +34,6 @@ export const FIELD_IDS: Record<FieldName, string> = {
   classId: "assignment-edit-class-trigger",
   classLabel: "assignment-edit-class-trigger",
   accessCode: "assignment-edit-access-code",
-  estimatedMinutes: "assignment-edit-estimated",
   totalAttempts: "assignment-edit-total-attempts",
   totalQuestions: "assignment-edit-total-questions",
   submissionMethods: "assignment-edit-submission-methods",
@@ -52,7 +50,6 @@ export function toInitialValues(assignment: TeacherAssignment): FormValues {
     classId: assignment.classId,
     classLabel: assignment.classLabel,
     accessCode: assignment.accessCode ?? "",
-    estimatedMinutes: String(assignment.estimatedMinutes),
     totalAttempts: String(assignment.totalAttempts ?? 1),
     totalQuestions: String(assignment.totalQuestions ?? DEFAULT_TOTAL_QUESTIONS),
     submissionMethods: hydrateSubmissionMethods(assignment),
@@ -68,3 +65,4 @@ export function formatFileSize(sizeInBytes: number) {
 export function buildAttachmentId() {
   return buildAssessmentAttachmentId();
 }
+

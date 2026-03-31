@@ -99,7 +99,6 @@ export default function AssignmentsUploadView() {
   const [file, setFile] = useState<File | null>(null);
   const [description, setDescription] = useState("");
   const [dueAt, setDueAt] = useState("");
-  const [estimatedMinutes, setEstimatedMinutes] = useState("");
   const [maxScore, setMaxScore] = useState("");
   const [accessCode, setAccessCode] = useState("");
   const [totalAttempts, setTotalAttempts] = useState("");
@@ -110,7 +109,6 @@ export default function AssignmentsUploadView() {
   const [fileError, setFileError] = useState<string | null>(null);
   const [submissionMethodsError, setSubmissionMethodsError] = useState<string | null>(null);
   const [dueAtError, setDueAtError] = useState<string | null>(null);
-  const [estimatedMinutesError, setEstimatedMinutesError] = useState<string | null>(null);
   const [maxScoreError, setMaxScoreError] = useState<string | null>(null);
   const [totalAttemptsError, setTotalAttemptsError] = useState<string | null>(null);
   const [duplicateDialogOpen, setDuplicateDialogOpen] = useState(false);
@@ -136,7 +134,6 @@ export default function AssignmentsUploadView() {
     setFile(null);
     setDescription("");
     setDueAt("");
-    setEstimatedMinutes("");
     setMaxScore("");
     setAccessCode("");
     setTotalAttempts("");
@@ -147,7 +144,6 @@ export default function AssignmentsUploadView() {
     setFileError(null);
     setSubmissionMethodsError(null);
     setDueAtError(null);
-    setEstimatedMinutesError(null);
     setMaxScoreError(null);
     setTotalAttemptsError(null);
     setDuplicateDialogOpen(false);
@@ -197,19 +193,6 @@ export default function AssignmentsUploadView() {
       }
     }
     setFileError(null);
-
-    if (estimatedMinutes.trim().length === 0) {
-      setEstimatedMinutesError("Estimated minutes is required.");
-      isValid = false;
-    } else {
-      const parsed = Number(estimatedMinutes.trim());
-      if (!Number.isFinite(parsed) || parsed <= 0) {
-        setEstimatedMinutesError("Estimated minutes must be greater than 0.");
-        isValid = false;
-      } else {
-        setEstimatedMinutesError(null);
-      }
-    }
 
     if (dueAt.trim().length === 0) {
       setDueAtError("Due date is required.");
@@ -340,7 +323,6 @@ export default function AssignmentsUploadView() {
         totalQuestions: 0,
         totalSubmissions: 0,
         pendingToGrade: 0,
-        estimatedMinutes: Number(estimatedMinutes.trim()),
         submissionMethods,
         instructions: description.trim() || undefined,
         accessCode: accessCode.trim() || undefined,
@@ -521,24 +503,6 @@ export default function AssignmentsUploadView() {
             </div>
 
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-              <div className="w-full">
-                <label htmlFor="assignment-estimated" className="mb-2 block text-sm text-white">Estimated Minutes</label>
-                <Input
-                  id="assignment-estimated"
-                  type="number"
-                  min={1}
-                  value={estimatedMinutes}
-                  onChange={(event) => {
-                    setEstimatedMinutes(event.target.value);
-                    setEstimatedMinutesError(null);
-                    setUploadStatus("idle");
-                    setUploadMessage(null);
-                  }}
-                  placeholder="45"
-                  className="h-12 w-full rounded-2xl border-white/20 bg-white/20 text-white placeholder:text-white/70"
-                />
-                {estimatedMinutesError ? <p className="mt-1 text-sm font-medium text-red-600">{estimatedMinutesError}</p> : null}
-              </div>
 
               <div className="w-full">
                 <label htmlFor="assignment-due-picker" className="mb-2 block text-sm text-white">Due At</label>
@@ -867,6 +831,10 @@ export default function AssignmentsUploadView() {
     </div>
   );
 }
+
+
+
+
 
 
 

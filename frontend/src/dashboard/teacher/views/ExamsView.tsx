@@ -1,6 +1,5 @@
 // Orchestrates the exams workspace by composing extracted page sections.
 import { ClipboardList } from "lucide-react";
-import { TeacherExamPreviewModal } from "@/dashboard/teacher/components/exams";
 import { DEFAULT_SUBJECT_ICON_THEME } from "@/dashboard/teacher/components/exams/ExamsTheme";
 import { ExamsWorkspaceContent } from "./exams/ExamsWorkspaceContent";
 import { ExamsWorkspaceHeader } from "./exams/ExamsWorkspaceHeader";
@@ -22,25 +21,18 @@ export default function ExamsView() {
         </div>
       )}
     >
-      {({ onBackToEntry }) => <ExamsScopedWorkspace onBackToEntry={onBackToEntry} />}
+      {({ classId, onBackToEntry }) => <ExamsScopedWorkspace classId={classId} onBackToEntry={onBackToEntry} />}
     </TeacherFeatureClassEntryGate>
   );
 }
 
-function ExamsScopedWorkspace({ onBackToEntry }: { onBackToEntry: () => void }) {
-  const workspace = useExamsWorkspaceState();
+function ExamsScopedWorkspace({ classId, onBackToEntry }: { classId: string; onBackToEntry: () => void }) {
+  const workspace = useExamsWorkspaceState(classId);
 
   return (
     <div className="w-full overflow-x-hidden p-4 sm:p-6" style={{ overflowX: "hidden" }}>
       <ExamsWorkspaceHeader workspace={workspace} onBackToClassEntry={onBackToEntry} />
       <ExamsWorkspaceContent workspace={workspace} />
-      <TeacherExamPreviewModal
-        exam={workspace.previewExam}
-        open={Boolean(workspace.previewExam)}
-        onOpenChange={(isOpen) => {
-          if (!isOpen) workspace.setPreviewId(null);
-        }}
-      />
     </div>
   );
 }

@@ -21,7 +21,7 @@ type Props = {
 export function TeacherQuizCard({ onDelete, onDuplicate, onEdit, onPreview, onPublish, quiz }: Props) {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [republishOpen, setRepublishOpen] = useState(false);
-  const eligibleStudents = getRepublishEligibleStudents(quiz);
+  const eligibleStudents = getRepublishEligibleStudents({ classLabel: quiz.classLabel, subject: quiz.subject });
 
   const handleRepublishConfirm = (payload: RepublishAssignmentPayload) => {
     console.info("Republish quiz payload", { quizId: quiz.id, payload });
@@ -37,4 +37,6 @@ export function TeacherQuizCard({ onDelete, onDuplicate, onEdit, onPreview, onPu
     </article>
   );
 }
+
+
 

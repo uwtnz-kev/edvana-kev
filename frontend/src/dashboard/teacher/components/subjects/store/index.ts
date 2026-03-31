@@ -10,6 +10,5 @@ export {
   deleteSubjectSubmodule,
   reorderSubjectModules,
   reorderSubjectSubmodules,
-  updateSubjectModule,
   updateSubjectModuleStatus,
 } from "./subjectModulesMutations";

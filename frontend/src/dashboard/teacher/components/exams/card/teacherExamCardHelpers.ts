@@ -1,15 +1,10 @@
 // Provides formatting and style helpers for the teacher exam card.
 import { getAssessmentStatusBadgeClass } from "@/dashboard/teacher/components/shared/assessment/assessmentVisualStyles";
 import type { TeacherExam } from "../ExamsTypes";
+import { formatExamCloseDate, getExamDerivedStatus } from "../examStatus";
 
 export function formatExamDate(dateISO: string) {
-  const date = new Date(dateISO);
-  if (Number.isNaN(date.getTime())) return "No schedule";
-  return date.toLocaleDateString(undefined, {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
+  return formatExamCloseDate(dateISO);
 }
 
 export function getExamStatusLabel(status: TeacherExam["status"]) {
@@ -18,6 +13,10 @@ export function getExamStatusLabel(status: TeacherExam["status"]) {
   return "Draft";
 }
 
-export function getExamStatusChipClass(status: TeacherExam["status"]) {
-  return getAssessmentStatusBadgeClass(status);
+export function getExamStatusChipClass(exam: TeacherExam) {
+  return getAssessmentStatusBadgeClass(getExamDerivedStatus(exam));
+}
+
+export function getExamDerivedStatusLabel(exam: TeacherExam) {
+  return getExamStatusLabel(getExamDerivedStatus(exam));
 }

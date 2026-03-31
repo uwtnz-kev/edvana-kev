@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { deleteAssignment, duplicateAssignment, loadAssignments, publishAssignment, seedSubjects2, type AssignmentStatusFilter, type TeacherAssignment, type TeacherSubject2 } from "@/dashboard/teacher/components/assignments";
+import { TEACHER_ROUTES } from "@/dashboard/teacher/routes";
 import { filterAssignments, getAssignmentsStats, getPagedAssignments, sortAssignments } from "./assignmentsViewHelpers";
 
 type AssignmentsRestoreState = { restoreSubjectId?: string; resetToHome?: boolean };
@@ -21,7 +22,7 @@ export function useAssignmentsWorkspaceState(classId: string) {
   const location = useLocation();
   const [assignments, setAssignments] = useState<TeacherAssignment[]>(() => loadAssignments());
   const [subjects] = useState<TeacherSubject2[]>(() => seedSubjects2);
-  const [search, setSearch] = useState(""); const [statusFilter, setStatusFilter] = useState<AssignmentStatusFilter>("all"); const [page, setPage] = useState(1); const [previewId, setPreviewId] = useState<string | null>(null);
+  const [search, setSearch] = useState(""); const [statusFilter, setStatusFilter] = useState<AssignmentStatusFilter>("all"); const [page, setPage] = useState(1);
   const normalizedClassId = classId.trim().toLowerCase();
   const classAssignments = useMemo(
     () => assignments.filter((assignment) => assignment.classId.trim().toLowerCase() === normalizedClassId || assignment.classLabel.trim().toLowerCase() === normalizedClassId),
@@ -37,8 +38,7 @@ export function useAssignmentsWorkspaceState(classId: string) {
   const processedLocationKeyRef = useRef<string | null>(null);
   const selectedSubject = useMemo(() => scopedSubjects.find((subject) => subject.id === selectedSubjectId) ?? null, [scopedSubjects, selectedSubjectId]);
   const selectedSubjectName = selectedSubject?.name ?? null;
-  const previewAssignment = useMemo(() => classAssignments.find((assignment) => assignment.id === previewId) ?? null, [classAssignments, previewId]);
-  const resetFilters = () => { setSearch(""); setStatusFilter("all"); setPage(1); setPreviewId(null); };
+  const resetFilters = () => { setSearch(""); setStatusFilter("all"); setPage(1); };
   const refreshAssignments = () => setAssignments(loadAssignments());
 
   useEffect(() => {
@@ -56,7 +56,6 @@ export function useAssignmentsWorkspaceState(classId: string) {
     if (!state?.restoreSubjectId) return;
 
     setSelectedSubjectId(scopedSubjects.some((subject) => subject.id === state.restoreSubjectId) ? state.restoreSubjectId : null);
-    setPreviewId(null);
     refreshAssignments();
   }, [location.key, location.state, scopedSubjects]);
 
@@ -111,20 +110,18 @@ export function useAssignmentsWorkspaceState(classId: string) {
   useEffect(() => { if (page > totalPages) setPage(totalPages); }, [page, totalPages]);
 
   return {
-    assignments: classAssignments, filteredAssignments, pagedAssignments, page, previewAssignment, search, selectedSubject, selectedSubjectId, selectedSubjectName, stats, statusFilter, subjects: scopedSubjects, totalPages,
+    assignments: classAssignments, filteredAssignments, pagedAssignments, page, search, selectedSubject, selectedSubjectId, selectedSubjectName, stats, statusFilter, subjects: scopedSubjects, totalPages,
     onBack: () => { setSelectedSubjectId(null); resetFilters(); },
     onCreate: () => { if (!selectedSubjectId || !selectedSubjectName) return; navigate({ pathname: "/dashboard/teacher/assignments/create", search: location.search }, { state: { subjectId: selectedSubjectId, subjectName: selectedSubjectName } }); },
-    onDelete: (id: string) => { deleteAssignment(id); if (previewId === id) setPreviewId(null); refreshAssignments(); },
+    onDelete: (id: string) => { deleteAssignment(id); refreshAssignments(); },
     onDuplicate: (id: string) => { duplicateAssignment(id); refreshAssignments(); },
     onEdit: (id: string) => navigate({ pathname: `/dashboard/teacher/assignments/${id}/edit`, search: location.search }, { state: { restoreSubjectId: selectedSubjectId ?? undefined } }),
-    onPreview: (id: string) => setPreviewId(id),
+    onPreview: (id: string) => navigate({ pathname: `${TEACHER_ROUTES.ASSIGNMENTS}/${id}/preview`, search: location.search }, { state: { restoreSubjectId: selectedSubjectId ?? undefined, viewMode: "list" as const } }),
     onPublish: (id: string) => { publishAssignment(id); refreshAssignments(); },
+    onRepublish: (id: string) => navigate({ pathname: `${TEACHER_ROUTES.ASSIGNMENTS}/${id}/republish`, search: location.search }, { state: { restoreSubjectId: selectedSubjectId ?? undefined, viewMode: "list" as const } }),
     setPage,
-    setPreviewId,
     setSearch: (value: string) => { setSearch(value); setPage(1); },
     setSelectedSubjectId,
     setStatusFilter: (value: AssignmentStatusFilter) => { setStatusFilter(value); setPage(1); },
   };
 }
-
-

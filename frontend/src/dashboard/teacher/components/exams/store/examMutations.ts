@@ -1,4 +1,5 @@
 // Applies persisted exam mutations while preserving immutable results for callers.
+import type { RepublishAssignmentPayload } from "@/dashboard/teacher/components/assignments/republish/republishTypes";
 import type { TeacherExam } from "../ExamsTypes";
 import { cloneExam } from "./examNormalizers";
 import { loadExams, saveExams } from "./examPersistence";
@@ -49,3 +50,9 @@ export function duplicateExam(id: string): TeacherExam | null {
 }
 
 export function publishExam(id: string): TeacherExam | null { return updateExam(id, { status: "published" }); }
+export function republishExam(id: string, payload: RepublishAssignmentPayload): TeacherExam | null {
+  return updateExam(id, {
+    status: "published",
+    scheduledAt: payload.closesAt,
+  });
+}

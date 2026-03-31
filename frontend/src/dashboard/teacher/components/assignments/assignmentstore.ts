@@ -15,6 +15,7 @@ export {
   getAssignmentStatusLabel,
   loadAssignments,
   publishAssignment,
+  republishAssignment,
   saveAssignments,
   updateAssignment,
 } from "./store";

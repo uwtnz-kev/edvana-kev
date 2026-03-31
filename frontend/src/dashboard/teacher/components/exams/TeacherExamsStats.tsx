@@ -3,14 +3,14 @@
  * -----------------
  * Renders summary metrics for the teacher dashboard e xa ms feature.
  */
-import { CalendarClock, CheckCircle2, ClipboardCheck, FileText } from "lucide-react";
+import { CheckCircle2, ClipboardCheck, FileText, Lock } from "lucide-react";
 import type { ReactNode } from "react";
 
 export interface TeacherExamsStatsData {
   total: number;
   published: number;
   drafts: number;
-  scheduledSoon: number;
+  closed: number;
 }
 
 type Props = {
@@ -65,14 +65,11 @@ export function TeacherExamsStats({ stats }: Props) {
         iconClassName="rounded-xl p-3 bg-blue-500/15 text-blue-300"
       />
       <StatCard
-        label="Scheduled Soon"
-        value={stats.scheduledSoon}
-        icon={<CalendarClock className="h-5 w-5" />}
+        label="Closed"
+        value={stats.closed}
+        icon={<Lock className="h-5 w-5" />}
         iconClassName="rounded-xl p-3 bg-amber-500/15 text-amber-300"
       />
     </div>
   );
 }
-
-
-

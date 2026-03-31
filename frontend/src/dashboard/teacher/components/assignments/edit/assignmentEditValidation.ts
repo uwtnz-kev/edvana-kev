@@ -10,7 +10,6 @@ export function validateAssignmentEditField(name: FieldName, value: FormValues[F
   if (name === "questionsText" && requiresQuestionBuilder(values.submissionMethods) && trimmed.length === 0) return "Questions are required.";
   if (name === "dueAt" && trimmed.length === 0) return "Due date is required.";
   if (name === "classId" && trimmed.length === 0) return "Class is required.";
-  if (name === "estimatedMinutes") return validatePositive(trimmed, "Estimated minutes", "greater than 0.");
   if (name === "totalAttempts") return validateWholeNumber(trimmed);
   if (name === "totalQuestions") return requiresQuestionBuilder(values.submissionMethods) ? validatePositive(trimmed, "Total number questions", "greater than 0.") : null;
   if (name === "submissionMethods") return validateSubmissionMethods(value as FormValues["submissionMethods"]);
@@ -47,10 +46,10 @@ export function canSaveAssignmentEdit(errors: FormErrors) {
     !errors.questionsText &&
     !errors.dueAt &&
     !errors.classId &&
-    !errors.estimatedMinutes &&
     !errors.totalAttempts &&
     !errors.totalQuestions &&
     !errors.submissionMethods &&
     !errors.maxScore
   );
 }
+

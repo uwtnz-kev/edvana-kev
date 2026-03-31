@@ -1,5 +1,6 @@
 // Applies persisted assignment mutations while preserving immutable results for callers.
 import type { TeacherAssignment } from "../AssignmentsTypes";
+import type { RepublishAssignmentPayload } from "../republish/republishTypes";
 import { cloneAssignment } from "./assignmentNormalizers";
 import { loadAssignments, saveAssignments } from "./assignmentPersistence";
 import type { CreateAssignmentInput, UpdateAssignmentInput } from "./assignmentStoreTypes";
@@ -52,5 +53,11 @@ export function duplicateAssignment(id: string): TeacherAssignment | null {
 
 export function publishAssignment(id: string): TeacherAssignment | null { return updateAssignment(id, { status: "published" }); }
 export function closeAssignment(id: string): TeacherAssignment | null { return updateAssignment(id, { status: "closed" }); }
+export function republishAssignment(id: string, payload: RepublishAssignmentPayload): TeacherAssignment | null {
+  return updateAssignment(id, {
+    status: "published",
+    dueAt: payload.closesAt,
+    republishAudience: payload.mode === "class" ? { mode: "class" } : { mode: "students", studentIds: [...payload.studentIds] },
+  });
+}
 export const archiveAssignment = closeAssignment;
-

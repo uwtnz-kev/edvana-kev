@@ -3,8 +3,7 @@ import type { ReactNode } from "react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { seedClasses2 } from "@/dashboard/teacher/components/exams";
-import { SubmissionMethodsField } from "@/dashboard/teacher/components/shared/assessment/SubmissionMethodsField";
-import { requiresQuestionBuilder, toggleSubmissionMethod } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
+import { requiresQuestionBuilder } from "@/dashboard/teacher/components/shared/assessment/submissionMethods";
 import { TeacherExamDueDatePicker } from "./TeacherExamDueDatePicker";
 import type { ExamFieldProps } from "./examCreateTypes";
 
@@ -16,7 +15,6 @@ export function TeacherExamSchedulingFieldsSection({
   touched,
   onFieldChange,
   onFieldBlur,
-  onSubmissionMethodsChange,
   onClassChange,
 }: Props) {
   const show = (name: keyof typeof errors) => touched[name] && errors[name];
@@ -28,7 +26,7 @@ export function TeacherExamSchedulingFieldsSection({
         <Input id="exam-duration" type="number" min={1} value={values.durationMinutes} onChange={(event) => onFieldChange("durationMinutes", event.target.value)} onBlur={() => onFieldBlur("durationMinutes")} placeholder="60" className="h-12 w-full rounded-2xl border-white/20 bg-white/20 text-white placeholder:text-white/70" />
       </Field>
 
-      <Field label="Scheduled At" id="exam-scheduled-picker" error={show("scheduledAt")}>
+      <Field label="Close Date & Time" id="exam-scheduled-picker" error={show("scheduledAt")}>
         <div id="exam-scheduled-picker" className="w-full [&_button]:h-12 [&_button]:w-full [&_button]:rounded-2xl">
           <TeacherExamDueDatePicker value={values.scheduledAt} onChange={(nextValue) => onFieldChange("scheduledAt", nextValue)} onBlur={() => onFieldBlur("scheduledAt")} />
         </div>
@@ -54,14 +52,23 @@ export function TeacherExamSchedulingFieldsSection({
       </Field>
 
       <Field label="Total Attempts" id="exam-total-attempts" error={show("totalAttempts")}>
-        <Input id="exam-total-attempts" type="number" min={1} step={1} value={values.totalAttempts} onChange={(event) => onFieldChange("totalAttempts", event.target.value)} onBlur={() => onFieldBlur("totalAttempts")} placeholder="Enter total attempts" className="h-12 w-full rounded-2xl border border-white/25 bg-white/20 text-white placeholder:text-white/70" />
+        <Input id="exam-total-attempts" type="number" min={1} step={1} value={values.totalAttempts} onChange={(event) => onFieldChange("totalAttempts", event.target.value)} onBlur={() => onFieldBlur("totalAttempts")} placeholder="1" className="h-12 w-full rounded-2xl border border-white/25 bg-white/20 text-white placeholder:text-white/70" />
       </Field>
 
       <Field label="Total Questions" id="exam-total-questions" error={show("totalQuestions")}>
         <Input id="exam-total-questions" type="number" min={questionBuilderActive ? 1 : 0} disabled={!questionBuilderActive} value={values.totalQuestions} onChange={(event) => onFieldChange("totalQuestions", event.target.value)} onBlur={() => onFieldBlur("totalQuestions")} className="h-12 w-full rounded-2xl border border-white/25 bg-white/20 text-white placeholder:text-white/70 disabled:cursor-not-allowed disabled:opacity-70" />
       </Field>
 
-      <SubmissionMethodsField id="exam-submission-methods" error={show("submissionMethods")} selected={values.submissionMethods} onToggle={(method) => onSubmissionMethodsChange(toggleSubmissionMethod(values.submissionMethods, method))} />
+      <div className="w-full">
+        <label htmlFor="exam-submission-methods" className="mb-2 block text-sm text-white">Submission Method</label>
+        <div id="exam-submission-methods" className="rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white">
+          <div className="font-medium">Quiz Form</div>
+          <p className="mt-1 text-xs leading-5 text-white/60">
+            Exams use the Edvana quiz-form flow only. File upload, text entry, and link submission are not available here.
+          </p>
+        </div>
+        {show("submissionMethods") ? <p className="mt-1 text-sm font-medium text-red-600">{show("submissionMethods")}</p> : null}
+      </div>
     </div>
   );
 }
@@ -69,14 +76,9 @@ export function TeacherExamSchedulingFieldsSection({
 function Field({ label, id, error, children }: { label: string; id: string; error: string | null; children: ReactNode }) {
   return (
     <div className="w-full">
-      {/* Keeps repeated schedule field framing and error placement consistent. */}
       <label htmlFor={id} className="mb-2 block text-sm text-white">{label}</label>
       {children}
       {error ? <p className="mt-1 text-sm font-medium text-red-600">{error}</p> : null}
     </div>
   );
 }
-
-
-
-

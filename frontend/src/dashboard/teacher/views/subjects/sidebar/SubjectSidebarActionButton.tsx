@@ -31,5 +31,3 @@ export function SubjectSidebarActionButton({ action, onClick }: Props) {
     </button>
   );
 }
-
-

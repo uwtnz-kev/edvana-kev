@@ -14,7 +14,3 @@ export * from "./TeacherExamsControls";
 export * from "./TeacherExamList";
 export * from "./TeacherExamCard";
 export * from "./TeacherExamEmptyState";
-export * from "./TeacherExamPreviewModal";
-
-
-

@@ -1,5 +1,5 @@
 // Applies in-memory subject module updates for publish state and new modules.
-import { createSubjectModule, sortModulesByOrder, sortSubmodulesByOrder } from "./subjectModulesFactories";
+import { createSubjectModule, sortModulesByOrder } from "./subjectModulesFactories";
 import { updateSubjectModulesState } from "./subjectModulesPersistence";
 import type { SubjectModuleItem, SubjectModulePayload } from "./subjectModulesTypes";
 
@@ -33,36 +33,6 @@ export function addSubjectModule(subjectId: string, payload: SubjectModulePayloa
   });
 
   return nextModule;
-}
-
-export function updateSubjectModule(subjectId: string, moduleId: string, payload: SubjectModulePayload) {
-  let updatedModule: SubjectModuleItem | null = null;
-
-  updateSubjectModulesState((current) => ({
-    ...current,
-    [subjectId]: sortModulesByOrder((current[subjectId] ?? []).map((module) => {
-      if (module.id !== moduleId) return module;
-      updatedModule = {
-        ...module,
-        title: payload.title,
-        description: payload.description,
-        attachedFileIds: payload.attachedFileIds ?? module.attachedFileIds,
-        lessons: payload.submodules.length || module.lessons,
-        submodules: sortSubmodulesByOrder(payload.submodules.map((submodule, index) => ({
-          id: module.submodules[index]?.id ?? `submodule-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-          title: submodule.title,
-          description: submodule.description,
-          content: submodule.content,
-          attachedFileIds: submodule.attachedFileIds ?? module.submodules[index]?.attachedFileIds ?? [],
-          summary: submodule.description,
-          order: module.submodules[index]?.order ?? index,
-        }))),
-      };
-      return updatedModule;
-    })),
-  }));
-
-  return updatedModule;
 }
 
 export function reorderSubjectModules(subjectId: string, orderedModuleIds: string[]) {

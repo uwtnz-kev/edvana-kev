@@ -10,8 +10,12 @@ export {
   duplicateExam,
   getExamById,
   getExamStats,
+  loadExamSubmissionRecords,
   loadExams,
   publishExam,
+  recordStudentExamSubmission,
+  republishExam,
   saveExams,
   updateExam,
+  useTeacherExamSubmissionTotal,
 } from "./store";

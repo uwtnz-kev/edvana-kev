@@ -11,7 +11,7 @@ import { useSubjectModules } from "@/dashboard/teacher/components/subjects/subje
 import { SubjectModuleAttachedFilesSection } from "@/dashboard/teacher/components/subjects/upload/SubjectModuleAttachedFilesSection";
 import { UploadModuleBasicFields } from "@/dashboard/teacher/components/subjects/upload/UploadModuleBasicFields";
 import { UploadModuleHeader } from "@/dashboard/teacher/components/subjects/upload/UploadModuleHeader";
-import { createEmptySubmodule, getSubjectName, getSubjectTitle, isSubmoduleBlank, saveSubjectModule } from "@/dashboard/teacher/components/subjects/upload/uploadModuleHelpers";
+import { createEmptySubmodule, getSubjectName, getSubjectTitle, saveSubjectModule } from "@/dashboard/teacher/components/subjects/upload/uploadModuleHelpers";
 import type { SubjectUploadParams, SubjectUploadRouteState, SubmoduleDraft } from "@/dashboard/teacher/components/subjects/upload/uploadModuleTypes";
 import { buildModuleErrors } from "@/dashboard/teacher/components/subjects/upload/uploadModuleValidation";
 import { appendClassIdToPath, getClassIdFromSearchParams } from "./subjects/subjectClassRouting";
@@ -95,6 +95,7 @@ export default function SubjectUploadModuleFileView() {
           title="Upload Module"
           subjectName={subjectName}
           theme={theme}
+          variant="upload"
           onBack={() => navigate(subjectRoute, { state: { restoreSubjectId: subjectId, subject: state?.subject ?? null } })}
         />
 
@@ -111,6 +112,7 @@ export default function SubjectUploadModuleFileView() {
               onTitleChange={setModuleTitle}
               onTitleBlur={() => setTitleTouched(true)}
               showDescriptionField={false}
+              variant="upload"
             />
 
             <div className="space-y-2">
@@ -133,7 +135,7 @@ export default function SubjectUploadModuleFileView() {
               </div>
 
               <div className="space-y-4">
-                {submodules.map((submodule, index) => (
+                {submodules.map((submodule) => (
                   <div key={submodule.id} className="space-y-4 rounded-2xl border border-white/15 bg-white/10 p-4">
                     <div className="flex items-start justify-between gap-4">
                       <div />
@@ -214,16 +216,3 @@ export default function SubjectUploadModuleFileView() {
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -34,7 +34,6 @@ export function SubjectModulesList({ state }: Props) {
                 key={module.id}
                 module={module}
                 availableFiles={state.subjectFiles}
-                existingModuleTitles={state.allModuleTitles}
                 isExpanded={state.isModuleExpanded(module.id)}
                 onDeleteModule={state.requestDeleteModule}
                 onDeleteSubmodule={state.requestDeleteSubmodule}
@@ -42,7 +41,6 @@ export function SubjectModulesList({ state }: Props) {
                 onOpenSubmodule={state.openSubmodule}
                 onPublish={state.publishModule}
                 onReorderSubmodules={state.reorderSubmodules}
-                onSaveModule={state.updateModule}
                 onToggle={state.toggleModule}
                 theme={state.theme}
               />
@@ -65,4 +63,3 @@ export function SubjectModulesList({ state }: Props) {
     </>
   );
 }
-

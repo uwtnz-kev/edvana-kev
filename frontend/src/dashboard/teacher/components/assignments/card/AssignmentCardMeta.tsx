@@ -1,5 +1,6 @@
 // Renders subject, status, and scheduling metadata for the assignment card.
-import { CalendarDays, Clock3 } from "lucide-react";
+import { CalendarDays } from "lucide-react";
+import { useTeacherAssignmentSubmissionTotal } from "../store/assignmentSubmissionRecords";
 import type { TeacherAssignment } from "../AssignmentsTypes";
 import { formatAssignmentDate } from "./assignmentCardHelpers";
 
@@ -14,6 +15,8 @@ function Dot() {
 }
 
 export function AssignmentCardMeta({ assignment }: Props) {
+  const totalSubmissions = useTeacherAssignmentSubmissionTotal(assignment.id, assignment.totalSubmissions);
+
   return (
     <div className="space-y-1.5">
       <div className="flex items-center gap-1 overflow-hidden">
@@ -23,11 +26,7 @@ export function AssignmentCardMeta({ assignment }: Props) {
       <div className="flex flex-wrap items-center gap-1.5 text-[11px] text-white/80">
         <span className="inline-flex min-w-0 items-center gap-1"><CalendarDays className="h-3 w-3 shrink-0 text-white/60" /><span className="truncate">Due: {formatAssignmentDate(assignment.dueAt)}</span></span>
         <Dot />
-        <span className="inline-flex min-w-0 items-center gap-1"><Clock3 className="h-3 w-3 shrink-0 text-white/60" /><span className="truncate">Est: {assignment.estimatedMinutes} min</span></span>
-        <Dot />
-        <span className="truncate">Submissions: {assignment.totalSubmissions}</span>
-        <Dot />
-        <span className="truncate">Pending: {assignment.pendingToGrade}</span>
+        <span className="truncate">Submissions: {totalSubmissions}</span>
       </div>
     </div>
   );

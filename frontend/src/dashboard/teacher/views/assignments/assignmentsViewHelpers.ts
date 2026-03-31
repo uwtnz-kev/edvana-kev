@@ -8,13 +8,11 @@ function isAssignmentClosed(assignment: TeacherAssignment, now = Date.now()) {
   if (assignment.status === "closed") return true;
   if (assignment.status !== "published") return false;
   const dueAt = new Date(assignment.dueAt).getTime();
-  return Number.isFinite(dueAt) && dueAt < now;
+  return Number.isFinite(dueAt) && dueAt <= now;
 }
 
-function isAssignmentOngoing(assignment: TeacherAssignment, now = Date.now()) {
-  if (assignment.status !== "published") return false;
-  const dueAt = new Date(assignment.dueAt).getTime();
-  return !Number.isFinite(dueAt) || dueAt >= now;
+function isAssignmentPublished(assignment: TeacherAssignment, now = Date.now()) {
+  return assignment.status === "published" && !isAssignmentClosed(assignment, now);
 }
 
 export function sortAssignments(items: TeacherAssignment[]) {
@@ -26,14 +24,22 @@ export function filterAssignments(items: TeacherAssignment[], search: string, st
   return items.filter((assignment) => {
     const matchesStatus =
       statusFilter === "all"
-      || (statusFilter === "ongoing" ? isAssignmentOngoing(assignment, now) : false)
-      || (statusFilter === "closed" ? isAssignmentClosed(assignment, now) : assignment.status === statusFilter);
+      || (statusFilter === "closed"
+        ? isAssignmentClosed(assignment, now)
+        : statusFilter === "published"
+          ? isAssignmentPublished(assignment, now)
+          : assignment.status === statusFilter);
     return matchesStatus && (query.length === 0 || `${assignment.title} ${assignment.classLabel}`.toLowerCase().includes(query));
   });
 }
 
-export function getAssignmentsStats(items: TeacherAssignment[]): TeacherAssignmentsStatsData {
-  return { total: items.length, published: items.filter((assignment) => assignment.status === "published").length, drafts: items.filter((assignment) => assignment.status === "draft").length, pendingToGrade: items.reduce((sum, assignment) => sum + assignment.pendingToGrade, 0) };
+export function getAssignmentsStats(items: TeacherAssignment[], now = Date.now()): TeacherAssignmentsStatsData {
+  return {
+    total: items.length,
+    published: items.filter((assignment) => isAssignmentPublished(assignment, now)).length,
+    drafts: items.filter((assignment) => assignment.status === "draft").length,
+    pendingToGrade: items.reduce((sum, assignment) => sum + assignment.pendingToGrade, 0),
+  };
 }
 
 export function getPagedAssignments(items: TeacherAssignment[], page: number) {

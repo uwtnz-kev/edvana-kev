@@ -16,7 +16,6 @@ export type FormValues = {
   classId: string;
   classLabel: string;
   accessCode: string;
-  estimatedMinutes: string;
   totalAttempts: string;
   totalQuestions: string;
   submissionMethods: SubmissionMethod[];
@@ -49,3 +48,4 @@ export type AssignmentEditAttachmentSectionProps = {
   onRemoveAttachment: (id: string) => void;
   onClearAttachments: () => void;
 };
+

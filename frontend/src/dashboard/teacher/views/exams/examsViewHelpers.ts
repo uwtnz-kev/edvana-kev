@@ -2,6 +2,7 @@
 import type { TeacherExamsStatsData } from "@/dashboard/teacher/components/exams/TeacherExamsStats";
 import type { TeacherExam } from "@/dashboard/teacher/components/exams";
 import type { ExamStatusFilter } from "@/dashboard/teacher/components/exams/TeacherExamsControls";
+import { getExamDerivedStatus } from "@/dashboard/teacher/components/exams/examStatus";
 
 export const DEFAULT_PAGE_SIZE = 6;
 
@@ -12,15 +13,18 @@ export function sortExams(items: TeacherExam[]) {
 export function filterExams(items: TeacherExam[], search: string, statusFilter: ExamStatusFilter) {
   const query = search.toLowerCase().trim();
   return items.filter((exam) => {
-    const matchesStatus = statusFilter === "all" || exam.status === statusFilter;
+    const matchesStatus = statusFilter === "all" || getExamDerivedStatus(exam) === statusFilter;
     return matchesStatus && (query.length === 0 || `${exam.title} ${exam.classLabel}`.toLowerCase().includes(query));
   });
 }
 
 export function getExamsStats(items: TeacherExam[]): TeacherExamsStatsData {
-  const now = Date.now();
-  const sevenDaysFromNow = now + 7 * 24 * 60 * 60 * 1000;
-  return { total: items.length, published: items.filter((exam) => exam.status === "published").length, drafts: items.filter((exam) => exam.status === "draft").length, scheduledSoon: items.filter((exam) => { const t = new Date(exam.scheduledAt).getTime(); return Number.isFinite(t) && t >= now && t <= sevenDaysFromNow; }).length };
+  return {
+    total: items.length,
+    published: items.filter((exam) => getExamDerivedStatus(exam) === "published").length,
+    drafts: items.filter((exam) => getExamDerivedStatus(exam) === "draft").length,
+    closed: items.filter((exam) => getExamDerivedStatus(exam) === "closed").length,
+  };
 }
 
 export function getPagedExams(items: TeacherExam[], page: number, pageSize = DEFAULT_PAGE_SIZE) {

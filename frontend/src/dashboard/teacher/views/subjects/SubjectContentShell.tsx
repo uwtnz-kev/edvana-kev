@@ -26,5 +26,3 @@ export function SubjectContentShell({ selectedSubjectData, selectedSubjectTheme 
     </section>
   );
 }
-
-

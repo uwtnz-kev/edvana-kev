@@ -1,4 +1,5 @@
 // Renders the builder footer actions and unsaved-changes confirmation dialog.
+import { Check, Save, X } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -34,8 +35,18 @@ export function QuestionPreviewPanel({
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-[var(--text-secondary)]">Total Points: <span className="font-semibold text-white">{totalPoints}</span></p>
           <div className="flex items-center gap-3">
-            <Button type="button" onClick={onCancel} className="rounded-2xl border border-white/25 bg-white/20 text-white hover:bg-white/30">Cancel</Button>
-            <Button type="button" onClick={onSave} className="rounded-2xl border border-white/25 bg-white/20 px-6 text-white hover:bg-white/30">Save</Button>
+            <Button type="button" onClick={onCancel} className="rounded-2xl border border-white/25 bg-white/20 text-white hover:bg-white/30">
+              <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-xl border border-slate-400/30 bg-slate-500/15 text-slate-300">
+                <X className="h-4 w-4" />
+              </span>
+              Cancel
+            </Button>
+            <Button type="button" onClick={onSave} className="rounded-2xl border border-white/25 bg-white/20 px-6 text-white hover:bg-white/30">
+              <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-xl border border-emerald-400/30 bg-emerald-500/15 text-emerald-300">
+                <Save className="h-4 w-4" />
+              </span>
+              Save
+            </Button>
           </div>
         </div>
       </section>
@@ -47,8 +58,18 @@ export function QuestionPreviewPanel({
             <AlertDialogDescription className="text-[var(--text-secondary)]">You have unsaved changes. If you proceed, your changes will not be saved.</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="rounded-2xl border border-white/20 bg-white/10 text-white hover:bg-white/20">No</AlertDialogCancel>
-            <AlertDialogAction onClick={onConfirmBack} className="rounded-2xl border border-white/20 bg-white/20 text-white hover:bg-white/30">Yes</AlertDialogAction>
+            <AlertDialogCancel className="rounded-2xl border border-white/20 bg-white/10 text-white hover:bg-white/20">
+              <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-xl border border-slate-400/30 bg-slate-500/15 text-slate-300">
+                <X className="h-4 w-4" />
+              </span>
+              No
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={onConfirmBack} className="rounded-2xl border border-white/20 bg-white/20 text-white hover:bg-white/30">
+              <span className="mr-2 inline-flex h-7 w-7 items-center justify-center rounded-xl border border-emerald-400/30 bg-emerald-500/15 text-emerald-300">
+                <Check className="h-4 w-4" />
+              </span>
+              Yes
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

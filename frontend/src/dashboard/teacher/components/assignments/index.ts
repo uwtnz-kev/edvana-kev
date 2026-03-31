@@ -6,6 +6,7 @@
 export * from "./AssignmentsTypes";
 export * from "./AssignmentsMock";
 export * from "./assignmentstore";
+export * from "./store/assignmentSubmissionRecords";
 export * from "./TeacherAssignmentsSubjectSidebar";
 export * from "./TeacherAssignmentsHome";
 export * from "./TeacherAssignmentsHeader";
@@ -15,5 +16,3 @@ export * from "./TeacherAssignmentList";
 export * from "./TeacherAssignmentCard";
 export * from "./TeacherAssignmentEmptyState";
 export * from "./TeacherAssignmentPreviewModal";
-
-

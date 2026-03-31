@@ -21,10 +21,6 @@ export function TeacherAssignmentSchedulingFieldsSection({
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-      <Field label="Estimated Minutes" id="assignment-estimated" error={show("estimatedMinutes")}>
-        <Input id="assignment-estimated" type="number" min={1} value={values.estimatedMinutes} onChange={(event) => onFieldChange("estimatedMinutes", event.target.value)} onBlur={() => onFieldBlur("estimatedMinutes")} placeholder="45" className="h-12 w-full rounded-2xl border-white/20 bg-white/20 text-white placeholder:text-white/70" />
-      </Field>
-
       <Field label="Due At" id="assignment-due-picker" error={show("dueAt")}>
         <div id="assignment-due-picker" className="w-full [&_button]:h-12 [&_button]:w-full [&_button]:rounded-2xl">
           <TeacherAssignmentDueDatePicker value={values.dueAt} onChange={(nextValue) => onFieldChange("dueAt", nextValue)} onBlur={() => onFieldBlur("dueAt")} />

@@ -51,14 +51,15 @@ export function useTeacherExamEditForm({ exam, onSaved }: Props) {
     },
     onFieldBlur: (name: FieldName) => setTouched((current) => ({ ...current, [name]: true })),
     onFieldChange: (name: FieldName, value: string) => setValues((current) => ({ ...current, [name]: value })),
-    onSubmissionMethodsChange: (methods: SubmissionMethod[]) => {
-      const nextRequiresBuilder = requiresQuestionBuilder(methods);
+    onSubmissionMethodsChange: (_methods: SubmissionMethod[]) => {
+      const normalizedMethods: SubmissionMethod[] = ["quiz_form"];
+      const nextRequiresBuilder = requiresQuestionBuilder(normalizedMethods);
       setValues((current) => {
         const currentRequiresBuilder = requiresQuestionBuilder(current.submissionMethods);
         if (currentRequiresBuilder && !nextRequiresBuilder && current.totalQuestions !== "0") previousQuestionCountRef.current = current.totalQuestions;
         return {
           ...current,
-          submissionMethods: methods,
+          submissionMethods: normalizedMethods,
           totalQuestions: nextRequiresBuilder ? (current.totalQuestions === "0" ? previousQuestionCountRef.current : current.totalQuestions) : "0",
         };
       });
@@ -86,9 +87,10 @@ export function useTeacherExamEditForm({ exam, onSaved }: Props) {
       const scheduledAtDate = new Date(values.scheduledAt);
       const accessCode = values.accessCode.trim().length > 0 ? values.accessCode.trim() : undefined;
       const maxScore = values.maxScore.trim().length > 0 ? Number(values.maxScore.trim()) : undefined;
-      const questionBuilderValues = getQuestionBuilderPersistenceValues(values.submissionMethods, values.questionsText, values.totalQuestions);
-      if (!requiresQuestionBuilder(values.submissionMethods)) clearQuestionsForBuilder("exam", exam.id);
-      const updated = updateExam(exam.id, { title: values.title.trim(), classId: values.classId, classLabel: values.classLabel, scheduledAt: Number.isNaN(scheduledAtDate.getTime()) ? exam.scheduledAt : scheduledAtDate.toISOString(), durationMinutes: Number(values.durationMinutes), totalAttempts: Number(values.totalAttempts), totalQuestions: questionBuilderValues.totalQuestions, submissionMethods: values.submissionMethods, instructions: values.instructions.trim(), questionsText: questionBuilderValues.questionsText, attachments: attachments.length > 0 ? attachments : undefined, rubric: values.rubric.trim() || undefined, maxScore: typeof maxScore === "number" && Number.isFinite(maxScore) ? maxScore : undefined, accessCode });
+      const normalizedSubmissionMethods: SubmissionMethod[] = ["quiz_form"];
+      const questionBuilderValues = getQuestionBuilderPersistenceValues(normalizedSubmissionMethods, values.questionsText, values.totalQuestions);
+      if (!requiresQuestionBuilder(normalizedSubmissionMethods)) clearQuestionsForBuilder("exam", exam.id);
+      const updated = updateExam(exam.id, { title: values.title.trim(), classId: values.classId, classLabel: values.classLabel, scheduledAt: Number.isNaN(scheduledAtDate.getTime()) ? exam.scheduledAt : scheduledAtDate.toISOString(), durationMinutes: Number(values.durationMinutes), totalAttempts: Number(values.totalAttempts), totalQuestions: questionBuilderValues.totalQuestions, submissionMethods: normalizedSubmissionMethods, instructions: values.instructions.trim(), questionsText: questionBuilderValues.questionsText, attachments: attachments.length > 0 ? attachments : undefined, rubric: values.rubric.trim() || undefined, maxScore: typeof maxScore === "number" && Number.isFinite(maxScore) ? maxScore : undefined, accessCode });
       if (updated) onSaved();
     },
     openQuestionsPreview: () => setIsQuestionsPreviewOpen(true),

@@ -65,7 +65,7 @@ export function useTeacherAssignmentEditForm({ assignment, onSaved }: Pick<Teach
     const maxScore = values.maxScore.trim() ? Number(values.maxScore.trim()) : undefined;
     const questionBuilderValues = getQuestionBuilderPersistenceValues(values.submissionMethods, values.questionsText, values.totalQuestions);
     if (!requiresQuestionBuilder(values.submissionMethods)) clearQuestionsForBuilder("assignment", assignment.id);
-    const updated = updateAssignment(assignment.id, { title: values.title.trim(), classId: values.classId, classLabel: values.classLabel, dueAt: Number.isNaN(dueDate.getTime()) ? assignment.dueAt : dueDate.toISOString(), estimatedMinutes: Number(values.estimatedMinutes), totalAttempts: Number(values.totalAttempts), totalQuestions: questionBuilderValues.totalQuestions, submissionMethods: values.submissionMethods, instructions: values.instructions.trim(), questionsText: questionBuilderValues.questionsText, attachments: attachments.length ? attachments : undefined, rubric: values.rubric.trim() || undefined, maxScore: typeof maxScore === "number" && Number.isFinite(maxScore) ? maxScore : undefined, accessCode });
+    const updated = updateAssignment(assignment.id, { title: values.title.trim(), classId: values.classId, classLabel: values.classLabel, dueAt: Number.isNaN(dueDate.getTime()) ? assignment.dueAt : dueDate.toISOString(), totalAttempts: Number(values.totalAttempts), totalQuestions: questionBuilderValues.totalQuestions, submissionMethods: values.submissionMethods, instructions: values.instructions.trim(), questionsText: questionBuilderValues.questionsText, attachments: attachments.length ? attachments : undefined, rubric: values.rubric.trim() || undefined, maxScore: typeof maxScore === "number" && Number.isFinite(maxScore) ? maxScore : undefined, accessCode });
     if (updated) onSaved();
   };
 
@@ -78,3 +78,4 @@ function markInvalidFields(errors: ReturnType<typeof buildAssignmentEditErrors>,
   const firstInvalid = (Object.keys(FIELD_IDS) as FieldName[]).find((field) => Boolean(errors[field]));
   document.getElementById(firstInvalid ? FIELD_IDS[firstInvalid] : "")?.scrollIntoView({ behavior: "smooth", block: "center" });
 }
+

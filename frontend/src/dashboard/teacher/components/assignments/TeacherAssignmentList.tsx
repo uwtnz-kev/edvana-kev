@@ -1,7 +1,7 @@
 /**
- * TeacherAssignmentList
+ * TeacherAssignmentCard
  * ---------------------
- * Renders the T ea ch er As si gn me nt Li st UI for the teacher dashboard a ss ig nm en ts feature.
+ * Renders the T ea ch er As si gn me nt Ca rd UI for the teacher dashboard a ss ig nm en ts feature.
  */
 import { TeacherAssignmentCard } from "./TeacherAssignmentCard";
 import { TeacherAssignmentEmptyState } from "./TeacherAssignmentEmptyState";
@@ -13,6 +13,7 @@ type Props = {
   onPreview: (id: string) => void;
   onDuplicate: (id: string) => void;
   onPublish: (id: string) => void;
+  onRepublish: (id: string) => void;
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
   onCreate: () => void;
@@ -24,6 +25,7 @@ export function TeacherAssignmentList({
   onPreview,
   onDuplicate,
   onPublish,
+  onRepublish,
   onEdit,
   onDelete,
   onCreate,
@@ -61,6 +63,7 @@ export function TeacherAssignmentList({
             onPreview={onPreview}
             onDuplicate={onDuplicate}
             onPublish={onPublish}
+            onRepublish={onRepublish}
             onEdit={onEdit}
             onDelete={onDelete}
           />
