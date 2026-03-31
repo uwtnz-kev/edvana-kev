@@ -12,8 +12,12 @@ export {
   getQuizStats,
   loadQuiz,
   loadQuizzes2,
+  loadQuizSubmissionRecords,
   publishQuiz,
+  recordStudentQuizSubmission,
+  republishQuiz,
   saveQuiz,
   saveQuizzes2,
   updateQuiz,
+  useTeacherQuizSubmissionTotal,
 } from "./store";

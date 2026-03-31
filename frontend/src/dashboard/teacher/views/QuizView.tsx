@@ -1,7 +1,7 @@
 // Orchestrates the quiz workspace by composing extracted page sections.
 import { ClipboardList } from "lucide-react";
-import { TeacherQuizPreviewModal } from "@/dashboard/teacher/components/quiz";
 import { DEFAULT_SUBJECT_ICON_THEME } from "@/dashboard/teacher/components/quiz/QuizTheme";
+import { TEACHER_ROUTES } from "@/dashboard/teacher/routes";
 import { QuizWorkspaceContent } from "./quiz/QuizWorkspaceContent";
 import { QuizWorkspaceHeader } from "./quiz/QuizWorkspaceHeader";
 import { useQuizWorkspaceState } from "./quiz/useQuizWorkspaceState";
@@ -10,7 +10,7 @@ import { TeacherFeatureClassEntryGate } from "./shared/TeacherFeatureClassEntryG
 export default function QuizView() {
   return (
     <TeacherFeatureClassEntryGate
-      entryPath="/dashboard/teacher/quiz"
+      entryPath={TEACHER_ROUTES.QUIZZES}
       featureKey="quiz"
       title="Quiz"
       subtitle="Choose a class to open the quiz workspace"
@@ -22,25 +22,18 @@ export default function QuizView() {
         </div>
       )}
     >
-      {({ onBackToEntry }) => <QuizScopedWorkspace onBackToEntry={onBackToEntry} />}
+      {({ classId, onBackToEntry }) => <QuizScopedWorkspace classId={classId} onBackToEntry={onBackToEntry} />}
     </TeacherFeatureClassEntryGate>
   );
 }
 
-function QuizScopedWorkspace({ onBackToEntry }: { onBackToEntry: () => void }) {
-  const workspace = useQuizWorkspaceState();
+function QuizScopedWorkspace({ classId, onBackToEntry }: { classId: string; onBackToEntry: () => void }) {
+  const workspace = useQuizWorkspaceState(classId);
 
   return (
     <div className="w-full overflow-x-hidden p-4 sm:p-6" style={{ overflowX: "hidden" }}>
       <QuizWorkspaceHeader workspace={workspace} onBackToClassEntry={onBackToEntry} />
       <QuizWorkspaceContent workspace={workspace} />
-      <TeacherQuizPreviewModal
-        quiz={workspace.previewQuiz}
-        open={Boolean(workspace.previewQuiz)}
-        onOpenChange={(isOpen) => {
-          if (!isOpen) workspace.setPreviewId(null);
-        }}
-      />
     </div>
   );
 }

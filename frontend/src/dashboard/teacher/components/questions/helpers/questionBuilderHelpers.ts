@@ -14,7 +14,7 @@ export function parseAssessmentType(value: string | null): QuestionBuilderAssess
 }
 
 export function getCreateBackRoute(type: QuestionBuilderAssessmentType) {
-  if (type === "quiz") return "/dashboard/teacher/quiz/create";
+  if (type === "quiz") return "/dashboard/teacher/quizzes/create";
   if (type === "assignment") return "/dashboard/teacher/assignments/create";
   return "/dashboard/teacher/exams/create";
 }

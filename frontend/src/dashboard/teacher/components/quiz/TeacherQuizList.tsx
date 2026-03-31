@@ -11,9 +11,8 @@ type Props = {
   quizzes: TeacherQuiz[];
   selectedSubject: TeacherSubject2 | null;
   onPreview: (id: string) => void;
-  onDuplicate: (id: string) => void;
   onPublish: (id: string) => void;
-  onEdit: (id: string) => void;
+  onRepublish: (id: string) => void;
   onDelete: (id: string) => void;
   onCreate: () => void;
 };
@@ -22,9 +21,8 @@ export function TeacherQuizList({
   quizzes,
   selectedSubject,
   onPreview,
-  onDuplicate,
   onPublish,
-  onEdit,
+  onRepublish,
   onDelete,
   onCreate,
 }: Props) {
@@ -48,18 +46,19 @@ export function TeacherQuizList({
   }
 
   return (
-    <div className="space-y-3 transition-all duration-300">
-      <p className="text-white/60 text-sm">Showing {quizzes.length} quiz records</p>
+    <div className="space-y-4 transition-all duration-300">
+      <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/60">
+        Showing {quizzes.length} quiz records
+      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {quizzes.map((quiz) => (
           <TeacherQuizCard
             key={quiz.id}
             quiz={quiz}
             onPreview={onPreview}
-            onDuplicate={onDuplicate}
             onPublish={onPublish}
-            onEdit={onEdit}
+            onRepublish={onRepublish}
             onDelete={onDelete}
           />
         ))}
@@ -67,5 +66,3 @@ export function TeacherQuizList({
     </div>
   );
 }
-
-

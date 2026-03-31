@@ -14,7 +14,3 @@ export * from "./TeacherQuizControls";
 export * from "./TeacherQuizList";
 export * from "./TeacherQuizCard";
 export * from "./TeacherQuizEmptyState";
-export * from "./TeacherQuizPreviewModal";
-
-
-

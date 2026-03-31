@@ -3,31 +3,21 @@
  * ----------------
  * Renders summary metrics for the teacher dashboard q ui z feature.
  */
-import { CalendarClock, CheckCircle2, ClipboardCheck, FileText } from "lucide-react";
+import { CheckCircle2, ClipboardCheck, FileText, Lock } from "lucide-react";
 import type { ReactNode } from "react";
 
 export interface TeacherQuizStatsData {
   total: number;
   published: number;
   drafts: number;
-  dueSoon: number;
+  closed: number;
 }
 
 type Props = {
   stats: TeacherQuizStatsData;
 };
 
-function StatCard({
-  label,
-  value,
-  icon,
-  iconClassName,
-}: {
-  label: string;
-  value: string | number;
-  icon: ReactNode;
-  iconClassName: string;
-}) {
+function StatCard({ label, value, icon, iconClassName }: { label: string; value: string | number; icon: ReactNode; iconClassName: string }) {
   return (
     <div className="group rounded-2xl teacher-panel-surface p-4 teacher-panel-hover-lift">
       <div className="flex items-center gap-3">
@@ -46,33 +36,10 @@ function StatCard({
 export function TeacherQuizStats({ stats }: Props) {
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-      <StatCard
-        label="Total"
-        value={stats.total}
-        icon={<ClipboardCheck className="h-5 w-5" />}
-        iconClassName="rounded-xl p-3 bg-[var(--sidebar-item-active)] text-[var(--accent-primary)]"
-      />
-      <StatCard
-        label="Published"
-        value={stats.published}
-        icon={<CheckCircle2 className="h-5 w-5" />}
-        iconClassName="rounded-xl p-3 bg-emerald-500/15 text-emerald-300"
-      />
-      <StatCard
-        label="Drafts"
-        value={stats.drafts}
-        icon={<FileText className="h-5 w-5" />}
-        iconClassName="rounded-xl p-3 bg-blue-500/15 text-blue-300"
-      />
-      <StatCard
-        label="Due Soon"
-        value={stats.dueSoon}
-        icon={<CalendarClock className="h-5 w-5" />}
-        iconClassName="rounded-xl p-3 bg-amber-500/15 text-amber-300"
-      />
+      <StatCard label="Total" value={stats.total} icon={<ClipboardCheck className="h-5 w-5" />} iconClassName="rounded-xl p-3 bg-[var(--sidebar-item-active)] text-[var(--accent-primary)]" />
+      <StatCard label="Published" value={stats.published} icon={<CheckCircle2 className="h-5 w-5" />} iconClassName="rounded-xl p-3 bg-emerald-500/15 text-emerald-300" />
+      <StatCard label="Drafts" value={stats.drafts} icon={<FileText className="h-5 w-5" />} iconClassName="rounded-xl p-3 bg-blue-500/15 text-blue-300" />
+      <StatCard label="Closed" value={stats.closed} icon={<Lock className="h-5 w-5" />} iconClassName="rounded-xl p-3 bg-amber-500/15 text-amber-300" />
     </div>
   );
 }
-
-
-

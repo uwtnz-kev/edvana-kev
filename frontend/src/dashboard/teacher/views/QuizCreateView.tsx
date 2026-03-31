@@ -9,6 +9,7 @@ import {
   TeacherQuizCreateForm,
   TeacherQuizCreateHeader,
 } from "@/dashboard/teacher/components/quiz/create";
+import { TEACHER_ROUTES } from "@/dashboard/teacher/routes";
 
 type QuizCreateState = {
   subjectId: string;
@@ -48,7 +49,7 @@ export default function QuizCreateView() {
           <div className="mt-5">
             <Button
               type="button"
-              onClick={() => navigate("/dashboard/teacher/quiz")}
+              onClick={() => navigate({ pathname: TEACHER_ROUTES.QUIZZES, search: location.search })}
               className="bg-white/20 hover:bg-white/30 text-[var(--text-primary)] border border-white/20 rounded-2xl"
             >
               Back
@@ -65,7 +66,7 @@ export default function QuizCreateView() {
         <TeacherQuizCreateHeader
           subjectName={createState.subjectName}
           onBack={() =>
-            navigate("/dashboard/teacher/quiz", {
+            navigate({ pathname: TEACHER_ROUTES.QUIZZES, search: location.search }, {
               state: { restoreSubjectId: createState.subjectId },
             })
           }
@@ -75,12 +76,12 @@ export default function QuizCreateView() {
           subjectId={createState.subjectId}
           subjectName={createState.subjectName}
           onCancel={() =>
-            navigate("/dashboard/teacher/quiz", {
+            navigate({ pathname: TEACHER_ROUTES.QUIZZES, search: location.search }, {
               state: { restoreSubjectId: createState.subjectId },
             })
           }
           onSaved={(subjectId) =>
-            navigate("/dashboard/teacher/quiz", {
+            navigate({ pathname: TEACHER_ROUTES.QUIZZES, search: location.search }, {
               state: { restoreSubjectId: subjectId },
             })
           }
@@ -89,8 +90,3 @@ export default function QuizCreateView() {
     </div>
   );
 }
-
-
-
-
-

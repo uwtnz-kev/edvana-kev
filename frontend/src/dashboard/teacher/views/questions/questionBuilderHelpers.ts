@@ -5,7 +5,7 @@ import type { QuestionBuilderAssessmentType } from "@/dashboard/teacher/componen
 export { parseAssessmentType };
 
 export function getEditBackRoute(type: QuestionBuilderAssessmentType, itemId: string) {
-  if (type === "quiz") return `/dashboard/teacher/quiz/${itemId}/edit`;
+  if (type === "quiz") return `/dashboard/teacher/quizzes/${itemId}/edit`;
   if (type === "assignment") return `/dashboard/teacher/assignments/${itemId}/edit`;
   return `/dashboard/teacher/exams/${itemId}/edit`;
 }

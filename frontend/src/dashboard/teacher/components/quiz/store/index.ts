@@ -14,5 +14,11 @@ export {
   deleteQuiz,
   duplicateQuiz,
   publishQuiz,
+  republishQuiz,
   updateQuiz,
 } from "./quizMutations";
+export {
+  loadQuizSubmissionRecords,
+  recordStudentQuizSubmission,
+  useTeacherQuizSubmissionTotal,
+} from "./quizSubmissionRecords";

@@ -53,6 +53,8 @@ import ExamsRepublishView from "@/dashboard/teacher/views/ExamsRepublishView";
 import QuizView from "@/dashboard/teacher/views/QuizView";
 import QuizCreateView from "@/dashboard/teacher/views/QuizCreateView";
 import QuizEditView from "@/dashboard/teacher/views/QuizEditView";
+import QuizPreviewView from "@/dashboard/teacher/views/QuizPreviewView";
+import QuizRepublishView from "@/dashboard/teacher/views/QuizRepublishView";
 import TeacherScheduleView from "@/dashboard/teacher/views/ScheduleView";
 import TeacherSupportView from "@/dashboard/teacher/views/SupportView";
 import TeacherGeneralSettingsView from "@/dashboard/teacher/views/settings/GeneralSettingsView";
@@ -183,9 +185,11 @@ export function AppRouter() {
             <Route path=":examId/republish" element={<ExamsRepublishView />} />
             <Route path=":examId/edit" element={<ExamsEditView />} />
           </Route>
-          <Route path="quiz">
+          <Route path="quizzes">
             <Route index element={<QuizView />} />
             <Route path="create" element={<QuizCreateView />} />
+            <Route path=":quizId/preview" element={<QuizPreviewView />} />
+            <Route path=":quizId/republish" element={<QuizRepublishView />} />
             <Route path=":quizId/edit" element={<QuizEditView />} />
           </Route>
           <Route path="schedule" element={<TeacherScheduleView />} />
@@ -299,6 +303,7 @@ export function AppRouter() {
 }
 
 export default AppRouter;
+
 
 
 

@@ -1,4 +1,5 @@
 // Applies persisted quiz mutations while preserving immutable results for callers.
+import type { RepublishAssignmentPayload } from "@/dashboard/teacher/components/assignments/republish/republishTypes";
 import type { TeacherQuiz } from "../QuizTypes";
 import { cloneQuiz } from "./quizNormalizers";
 import { loadQuizzes2, saveQuizzes2 } from "./quizPersistence";
@@ -15,7 +16,6 @@ function buildId() {
 
 export function createQuiz(data: CreateQuizInput): TeacherQuiz {
   const now = new Date().toISOString();
-  // Defaults are filled here so create callers can provide partial draft data.
   const nextItem: TeacherQuiz = { ...data, difficulty: data.difficulty ?? "medium", type: data.type ?? "mcq", id: buildId(), createdAt: data.createdAt ?? now };
   saveQuizzes2([nextItem, ...loadQuizzes2()]);
   return cloneQuiz(nextItem);
@@ -51,4 +51,11 @@ export function duplicateQuiz(id: string): TeacherQuiz | null {
 
 export function publishQuiz(id: string): TeacherQuiz | null {
   return updateQuiz(id, { status: "published" });
+}
+
+export function republishQuiz(id: string, payload: RepublishAssignmentPayload): TeacherQuiz | null {
+  return updateQuiz(id, {
+    status: "published",
+    dueAt: payload.closesAt,
+  });
 }

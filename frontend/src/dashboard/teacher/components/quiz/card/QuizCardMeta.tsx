@@ -1,7 +1,9 @@
 // Renders metadata chips and summary values for the teacher quiz card.
-import { CalendarDays, Clock3, HelpCircle, Layers } from "lucide-react";
+import { CalendarDays, FolderOpen, GraduationCap, TrendingUp } from "lucide-react";
 import type { TeacherQuiz } from "../QuizTypes";
-import { formatQuizDate, getQuizStatusClass, getQuizStatusLabel } from "./quizCardHelpers";
+import { getBaseQuizSubmissionCount, getQuizPreviewRoster } from "../preview/quizPreviewStudentData";
+import { useTeacherQuizSubmissionTotal } from "../store/quizSubmissionRecords";
+import { formatQuizDate, getQuizDerivedStatusLabel, getQuizStatusClass } from "./quizCardHelpers";
 
 type Props = { quiz: TeacherQuiz };
 
@@ -10,19 +12,26 @@ function Chip({ label, className = "" }: { className?: string; label: string }) 
 }
 
 export function QuizCardMeta({ quiz }: Props) {
+  const roster = getQuizPreviewRoster(quiz);
+  const totalSubmissions = useTeacherQuizSubmissionTotal(quiz.id, getBaseQuizSubmissionCount(quiz, roster.length));
+  const submissionRate = roster.length > 0 ? `${Math.round((Math.min(totalSubmissions, roster.length) / roster.length) * 100)}%` : "0%";
+
   return (
-    <>
+    <div className="space-y-1.5">
       <div className="flex flex-wrap gap-2">
         <Chip label={quiz.subject} className="bg-white/10 border-white/20 text-white" />
         <Chip label={quiz.classLabel} className="bg-white/10 border-white/20 text-white" />
-        <Chip label={getQuizStatusLabel(quiz.status)} className={getQuizStatusClass(quiz.status)} />
+        <Chip label={getQuizDerivedStatusLabel(quiz)} className={getQuizStatusClass(quiz)} />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-        <div className="flex items-center gap-2 text-white/80"><CalendarDays className="h-4 w-4 text-white/60" /><span>Due: {formatQuizDate(quiz.dueAt)}</span></div>
-        <div className="flex items-center gap-2 text-white/80"><Clock3 className="h-4 w-4 text-white/60" /><span>Duration: {quiz.durationMinutes} min</span></div>
-        <div className="flex items-center gap-2 text-white/80"><Layers className="h-4 w-4 text-white/60" /><span>Questions: {quiz.totalQuestions}</span></div>
-        <div className="flex items-center gap-2 text-white/80"><HelpCircle className="h-4 w-4 text-white/60" /><span>Max Score: {quiz.maxScore ?? "-"}</span></div>
+      <div className="flex flex-wrap items-center gap-1.5 text-[11px] text-white/80">
+        <span className="inline-flex min-w-0 items-center gap-1"><CalendarDays className="h-3 w-3 shrink-0 text-white/60" /><span className="truncate">Due: {formatQuizDate(quiz.dueAt)}</span></span>
+        <span className="shrink-0 text-white/35">&bull;</span>
+        <span className="inline-flex items-center gap-1"><GraduationCap className="h-3 w-3 shrink-0 text-white/60" /><span>{quiz.totalAttempts} attempt{quiz.totalAttempts === 1 ? "" : "s"}</span></span>
+        <span className="shrink-0 text-white/35">&bull;</span>
+        <span className="inline-flex items-center gap-1"><FolderOpen className="h-3 w-3 shrink-0 text-white/60" /><span>Submissions: {Math.min(totalSubmissions, roster.length)}</span></span>
+        <span className="shrink-0 text-white/35">&bull;</span>
+        <span className="inline-flex items-center gap-1"><TrendingUp className="h-3 w-3 shrink-0 text-white/60" /><span>Rate: {submissionRate}</span></span>
       </div>
-    </>
+    </div>
   );
 }
